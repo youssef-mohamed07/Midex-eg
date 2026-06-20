@@ -16,6 +16,7 @@ function midex_register_blocks() {
 	$style = 'midex-tailwind';
 
 	$blocks = array(
+		'contact-form'       => 'midex_render_contact_form_block',
 		'request-quote'      => 'midex_render_request_quote_block',
 		'solution-intro'     => 'midex_render_solution_intro_block',
 		'solution-specs'     => 'midex_render_solution_specs_block',
@@ -44,6 +45,10 @@ add_action( 'init', 'midex_register_blocks' );
  * @return string
  */
 function midex_render_request_quote_block( $attributes ) {
+	if ( midex_is_contact_page() ) {
+		return midex_render_contact_form();
+	}
+
 	$post_id  = get_the_ID();
 	$headline = isset( $attributes['headline'] ) ? $attributes['headline'] : __( 'Request a Quote', 'midex' );
 	$text     = isset( $attributes['text'] ) ? $attributes['text'] : __( 'Tell us about your project and our team will respond with pricing and lead times.', 'midex' );

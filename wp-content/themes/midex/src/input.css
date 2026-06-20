@@ -336,6 +336,41 @@ main.wp-block-group > section:first-child {
 	color: var(--color-midex-navy);
 }
 
+.midex-header--overlay:not(.is-scrolled):not(.is-menu-open) .midex-lang-switcher ul {
+	border-color: rgb(255 255 255 / 0.25);
+	background: rgb(255 255 255 / 0.1);
+}
+
+.midex-header--overlay:not(.is-scrolled):not(.is-menu-open) .midex-lang-switcher a:not([aria-current="true"]) {
+	color: rgb(255 255 255 / 0.85);
+}
+
+.midex-header--overlay:not(.is-scrolled):not(.is-menu-open) .midex-lang-switcher a:not([aria-current="true"]):hover {
+	background: rgb(255 255 255 / 0.12);
+	color: #fff;
+}
+
+.midex-header--overlay:not(.is-scrolled):not(.is-menu-open) .midex-lang-switcher a[aria-current="true"] {
+	background: rgb(255 255 255 / 0.2);
+	color: #fff;
+}
+
+/* Arabic RTL layout tweaks */
+.midex-rtl .midex-menu,
+.midex-rtl .midex-menu-mobile {
+	text-align: right;
+}
+
+.midex-rtl .mx-container {
+	direction: rtl;
+}
+
+.midex-rtl .midex-header__brand,
+.midex-rtl [data-midex-nav-toggle],
+.midex-rtl .midex-lang-switcher {
+	direction: ltr;
+}
+
 .midex-header--overlay.is-scrolled {
 	border-color: rgb(132 206 205 / 0.3);
 	background: rgb(255 255 255 / 0.95);

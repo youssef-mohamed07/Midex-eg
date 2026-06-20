@@ -48,7 +48,7 @@ function midex_render_site_header() {
 	<header class="<?php echo esc_attr( $header_class ); ?>" data-midex-header>
 		<div class="mx-container">
 			<div class="flex h-[72px] items-center justify-between gap-4">
-				<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="midex-header__brand shrink-0">
+				<a href="<?php echo esc_url( midex_home_url() ); ?>" class="midex-header__brand shrink-0">
 					<img src="<?php echo esc_url( midex_asset_url( 'images/brand/logo-white.png' ) ); ?>" alt="<?php esc_attr_e( 'Midex', 'midex' ); ?>" class="midex-header__logo midex-header__logo--light h-12 w-auto max-w-[200px] sm:h-14 lg:h-[58px]" width="242" height="117" decoding="async" />
 					<img src="<?php echo esc_url( midex_asset_url( 'images/brand/logo-dark.png' ) ); ?>" alt="<?php esc_attr_e( 'Midex', 'midex' ); ?>" class="midex-header__logo midex-header__logo--dark h-12 w-auto max-w-[200px] sm:h-14 lg:h-[58px]" width="242" height="117" decoding="async" />
 				</a>
@@ -69,6 +69,7 @@ function midex_render_site_header() {
 				</nav>
 
 				<div class="flex items-center gap-3">
+					<?php echo midex_render_language_switcher( 'hidden sm:block' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					<a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>" class="mx-btn mx-btn-primary hidden !py-2.5 !px-5 !text-sm sm:inline-flex">
 						<?php esc_html_e( 'Contact Us', 'midex' ); ?>
 					</a>
@@ -97,6 +98,7 @@ function midex_render_site_header() {
 				<a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>" class="mx-btn mx-btn-primary mt-4 w-full justify-center">
 					<?php esc_html_e( 'Contact Us', 'midex' ); ?>
 				</a>
+				<?php echo midex_render_language_switcher( 'mt-4 justify-center' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			</nav>
 		</div>
 	</header>

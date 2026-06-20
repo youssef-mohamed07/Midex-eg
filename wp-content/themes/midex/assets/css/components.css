@@ -265,14 +265,181 @@
 
 .midex-contact-grid {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	grid-template-columns: 1fr;
+	gap: 1rem;
+}
+
+.midex-contact-layout {
+	display: grid;
+	grid-template-columns: 1fr;
 	gap: 2rem;
+	align-items: start;
+	margin-top: 2rem;
+}
+
+@media (min-width: 960px) {
+	.midex-contact-layout {
+		grid-template-columns: minmax(260px, 38%) minmax(0, 1fr);
+		gap: 2.5rem;
+	}
+}
+
+.midex-contact-page > h1 {
+	margin-bottom: 0.75rem;
+}
+
+.midex-contact-page > p {
+	max-width: 42rem;
+	color: var(--wp--preset--color--muted);
+	margin-bottom: 0;
+}
+
+.midex-contact-page-wrap {
+	padding-bottom: 4rem;
+}
+
+.midex-contact-hero {
+	padding-top: 2rem;
+	padding-bottom: 0.5rem;
+}
+
+.midex-contact-hero__title {
+	margin-bottom: 0.75rem !important;
+	font-size: clamp(2rem, 4vw, 2.75rem) !important;
+	color: #093d5e;
+}
+
+.midex-contact-hero__intro {
+	max-width: 42rem;
+	color: rgba(45, 50, 57, 0.8);
+	margin-top: 0 !important;
+	font-size: 1.0625rem;
 }
 
 .midex-contact-card {
 	background: var(--wp--preset--color--surface);
 	padding: 1.5rem;
 	border-radius: 0.75rem;
+	border: 1px solid rgba(9, 61, 94, 0.06);
+}
+
+.midex-contact-card h3 {
+	margin: 0 0 0.75rem;
+	font-size: 1.0625rem;
+	color: var(--wp--preset--color--navy, #093d5e);
+}
+
+.midex-contact-card p {
+	margin: 0;
+	line-height: 1.6;
+}
+
+.midex-contact-form-card {
+	background: #fff;
+	border: 1px solid rgba(9, 61, 94, 0.08);
+	border-radius: 1rem;
+	padding: 1.75rem;
+	box-shadow: 0 12px 40px rgba(9, 61, 94, 0.08);
+}
+
+.midex-contact-form-section {
+	margin: 0;
+}
+
+.midex-form-grid {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 1rem;
+	margin-top: 1.5rem;
+}
+
+@media (min-width: 640px) {
+	.midex-form-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+.midex-form-field {
+	display: flex;
+	flex-direction: column;
+	gap: 0.375rem;
+}
+
+.midex-form-field--full {
+	grid-column: 1 / -1;
+}
+
+.midex-form-field label {
+	font-size: 0.875rem;
+	font-weight: 600;
+	color: #093d5e;
+}
+
+.midex-form-field label span {
+	color: #0086f0;
+}
+
+.midex-form-field input,
+.midex-form-field select,
+.midex-form-field textarea {
+	width: 100%;
+	border: 1px solid rgba(9, 61, 94, 0.15);
+	border-radius: 0.625rem;
+	background: #fff;
+	padding: 0.75rem 0.875rem;
+	font: inherit;
+	color: #2d3239;
+	transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.midex-form-field input:focus,
+.midex-form-field select:focus,
+.midex-form-field textarea:focus {
+	outline: none;
+	border-color: #84cecd;
+	box-shadow: 0 0 0 3px rgba(132, 206, 205, 0.25);
+}
+
+.midex-form-field textarea {
+	resize: vertical;
+	min-height: 8rem;
+}
+
+.midex-form-context {
+	margin-top: 1rem;
+	padding: 0.875rem 1rem;
+	border-radius: 0.625rem;
+	background: rgba(132, 206, 205, 0.15);
+	border: 1px solid rgba(132, 206, 205, 0.35);
+	font-size: 0.9375rem;
+	color: #093d5e;
+}
+
+.midex-form-notice {
+	margin-top: 1rem;
+	padding: 0.875rem 1rem;
+	border-radius: 0.625rem;
+	font-size: 0.9375rem;
+}
+
+.midex-form-notice--success {
+	background: rgba(132, 206, 205, 0.18);
+	border: 1px solid rgba(132, 206, 205, 0.45);
+	color: #093d5e;
+}
+
+.midex-form-notice--error {
+	background: rgba(220, 38, 38, 0.08);
+	border: 1px solid rgba(220, 38, 38, 0.25);
+	color: #991b1b;
+}
+
+.midex-form-honeypot {
+	position: absolute;
+	left: -9999px;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
 }
 
 .midex-archive-header {

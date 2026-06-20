@@ -78,16 +78,14 @@ function midex_image_label( $relative ) {
  */
 function midex_product_title( $relative ) {
 	$map = array(
-		'images/products/product-1755761833.png'    => 'Automatic Orbital welding',
-		'images/products/product-1755701549.png'    => 'Sanitary Centrifugal Self-Priming Pump',
-		'images/products/product-1755771798.png'    => 'Sanitary Non-Self Priming Pump',
-		'images/products/product-1756043795.png'    => 'Hygienic UV Unit',
-		'images/products/product-1756043967.png'    => 'Sanitary Vent Filter Housing',
-		'images/products/product-1756044128.jpeg'   => 'Reverse Osmosis (RO) double pass station',
-		'images/products/product-1756044128.png'    => 'RO Double Pass Station (Alt)',
-		'images/products/product-1755700607.png'    => 'Super-Heated Water Sanitization',
-		'images/products/product-1755704733.png'    => 'Sanitary Drain',
-		'images/products/product-ro-station.jpg'    => 'RO Purified Water Station',
+		'images/products/product-1724113383.jpg'   => 'Automatic Orbital welding',
+		'images/products/product-1725277641.webp'  => 'Sanitary Centrifugal Self-Priming Pump',
+		'images/products/product-1725277634.jpg'   => 'Sanitary Non-Self Priming Pump',
+		'images/products/product-1725239313.jpeg'  => 'Hygienic UV Unit',
+		'images/products/product-1725239365.jpg'   => 'Sanitary Vent Filter Housing',
+		'images/products/product-1725277406.webp'  => 'Reverse Osmosis (RO) double pass station',
+		'images/products/product-1725277497.webp'  => 'Super-Heated Water Sanitization',
+		'images/products/product-1725238681.webp'  => 'Sanitary Drain',
 	);
 
 	return $map[ $relative ] ?? midex_image_label( $relative );
@@ -147,17 +145,15 @@ function midex_service_excerpt( $relative ) {
  */
 function midex_partner_name( $relative ) {
 	$map = array(
-		'images/partners/partner-1755767513.png'   => 'GEA',
-		'images/partners/partner-1755770920.jpeg'  => 'HRS',
-		'images/partners/partner-1756042052.png'   => 'EVOGUARD',
-		'images/partners/partner-1756120693.png'   => 'Burkert',
-		'images/partners/partner-valex.png'        => 'Valex',
-		'images/partners/partner-sentec.png'       => 'Sentec',
-		'images/partners/partner-1756207804.png'   => 'Partner',
-		'images/partners/partner-1756371761.png'   => 'Partner',
-		'images/exclusive/sing-tao.webp'           => 'SING TAO',
-		'images/exclusive/truvia.jpg'             => 'Truvia',
-		'images/exclusive/eternal-water.jpg'       => 'Eternal Water',
+		'images/partners/partner-1755761833.png'  => 'GEA',
+		'images/partners/partner-1755701549.png'  => 'HRS',
+		'images/partners/partner-1755771798.png'  => 'EVOGUARD',
+		'images/partners/partner-1756043795.png'  => 'Burkert',
+		'images/partners/partner-1756043967.png'  => 'Valex',
+		'images/partners/partner-1756044128.jpeg' => 'SenTec',
+		'images/exclusive/sing-tao.png'           => 'SING TAO',
+		'images/exclusive/truvia.png'             => 'Truvia',
+		'images/exclusive/eternal-water.png'      => 'Eternal Water',
 	);
 
 	return $map[ $relative ] ?? midex_image_label( $relative );
@@ -202,37 +198,43 @@ function midex_get_news_items() {
 			'title'   => __( 'Delta Care Purified Water Station', 'midex' ),
 			'date'    => 'Jul 9, 2024',
 			'excerpt' => __( 'Design and execution of a Reverse Osmosis purified water station.', 'midex' ),
-			'image'   => 'images/events/event-1756814991.jpg',
+			'image'   => 'images/news/news-1725286541.webp',
 		),
 		array(
 			'title'   => __( 'VACSERA Upgraded RO-EDI Station', 'midex' ),
 			'date'    => 'Sep 2, 2024',
 			'excerpt' => __( 'Successfully upgraded the RO-EDI purified water station capacity.', 'midex' ),
-			'image'   => 'images/events/event-1756820572.jpg',
+			'image'   => 'images/news/news-1725287028.webp',
+		),
+		array(
+			'title'   => __( 'Future Pharma Installations Success', 'midex' ),
+			'date'    => 'Sep 2, 2024',
+			'excerpt' => __( 'Major success implementing compressed air and pure gas systems.', 'midex' ),
+			'image'   => 'images/news/news-1725287019.webp',
 		),
 		array(
 			'title'   => __( 'MEVAC Five — Water & Steam Distribution', 'midex' ),
 			'date'    => 'Aug 21, 2025',
 			'excerpt' => __( 'Integrated water and steam piping in compliance with GMP standards.', 'midex' ),
-			'image'   => 'images/events/event-1755506196.jpg',
+			'image'   => 'images/news/news-1755767513.png',
 		),
 		array(
 			'title'   => __( 'MARS WRIGLEY Soft Water Line', 'midex' ),
 			'date'    => 'Aug 24, 2025',
 			'excerpt' => __( '1,500 meters of stainless-steel soft water distribution installed.', 'midex' ),
-			'image'   => 'images/events/event-1755506209.jpg',
+			'image'   => 'images/news/news-1756042052.png',
 		),
 		array(
 			'title'   => __( 'SPIMACO Pharmaceutical Water Network', 'midex' ),
 			'date'    => 'Aug 26, 2025',
 			'excerpt' => __( 'Purified Water Station with 2.5 m³/h capacity and advanced monitoring.', 'midex' ),
-			'image'   => 'images/events/event-1755506225.jpg',
+			'image'   => 'images/news/news-1756207804.png',
 		),
 		array(
 			'title'   => __( 'Otsuka PW Piping Network', 'midex' ),
 			'date'    => 'Apr 22, 2026',
 			'excerpt' => __( 'Stainless steel piping works for a new production line within the PW network.', 'midex' ),
-			'image'   => 'images/products/product-ro-station.jpg',
+			'image'   => 'images/news/news-1776871937.png',
 		),
 	);
 
@@ -257,10 +259,14 @@ function midex_get_news_items() {
  */
 function midex_event_caption( $relative ) {
 	$map = array(
-		'images/events/event-1756197164.jpg' => __( 'Mirror finish showcase', 'midex' ),
-		'images/events/event-1756197177.jpg' => __( 'Pickling & passivation', 'midex' ),
-		'images/events/event-1756722653.jpg' => __( 'Mechanical polishing', 'midex' ),
-		'images/events/event-1756820572.jpg' => __( 'Project commissioning', 'midex' ),
+		'images/events/event-1755506196.jpg' => __( 'Industry exhibition', 'midex' ),
+		'images/events/event-1755506209.jpg' => __( 'Project showcase', 'midex' ),
+		'images/events/event-1755506225.jpg' => __( 'On-site commissioning', 'midex' ),
+		'images/events/event-1755506266.jpg' => __( 'Engineering team', 'midex' ),
+		'images/events/event-1755506276.jpg' => __( 'Facility visit', 'midex' ),
+		'images/events/event-1755759833.jpg' => __( 'Trade fair booth', 'midex' ),
+		'images/events/event-1756814991.jpg' => __( 'Purified water project', 'midex' ),
+		'images/events/event-1756820572.png' => __( 'Project commissioning', 'midex' ),
 	);
 
 	return $map[ $relative ] ?? midex_image_label( $relative );
@@ -338,9 +344,9 @@ function midex_product_thumbnail_url( $post_id ) {
  */
 function midex_blog_fallback_image( $index ) {
 	$pool = array_merge(
+		midex_list_images( 'blog' ),
 		midex_list_images( 'events' ),
-		midex_list_images( 'products' ),
-		midex_list_images( 'partners' )
+		midex_list_images( 'products' )
 	);
 
 	if ( empty( $pool ) ) {

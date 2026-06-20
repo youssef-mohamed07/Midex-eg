@@ -161,6 +161,70 @@ wp theme activate midex
 
 ---
 
+## Multilingual (English, Arabic, German)
+
+**English is the default language.** Arabic and German are added with the free [Polylang](https://wordpress.org/plugins/polylang/) plugin. The theme includes a language switcher in the header and RTL support for Arabic.
+
+### 1) Install Polylang
+
+```bash
+wp plugin install polylang --activate
+wp midex polylang-setup
+```
+
+Or: **Plugins → Add New → Polylang → Install → Activate** — the theme auto-runs setup on first admin visit.
+
+The `wp midex polylang-setup` command creates **English (default), Arabic, and German** translations for pages, menus, categories, and theme strings.
+
+### 2) Add languages
+
+Go to **Languages → Languages** and add:
+
+| Language | Locale | Slug | Default | RTL |
+|----------|--------|------|---------|-----|
+| English | en_US | en | ✓ Yes | No |
+| Arabic | ar | ar | No | ✓ Yes |
+| German | de_DE | de | No | No |
+
+### 3) URL structure (recommended)
+
+**Settings → Languages → URL modifications:**
+
+- **Different languages in directories**
+- Hide URL language information for default language → **on** (English URLs stay `/products/`, Arabic `/ar/products/`, German `/de/products/`)
+
+### 4) Translate content
+
+For each page, product, and menu item:
+
+1. Edit the English version
+2. In the **Languages** box, click **+** to create the Arabic or German translation
+3. Fill in translated title and content
+
+Homepage sections use theme strings — translate them under **Languages → String translations** (group: **Midex Theme**).
+
+### 5) Menus per language
+
+**Appearance → Menus** — create or assign a menu for each language and link it in **Languages → Settings → Custom menu**.
+
+### 6) After setup
+
+```bash
+wp rewrite flush
+```
+
+**Result:**
+
+| Language | Example URL |
+|----------|-------------|
+| English (default) | `http://127.0.0.1:8080/products/` |
+| Arabic | `http://127.0.0.1:8080/ar/products/` |
+| German | `http://127.0.0.1:8080/de/products/` |
+
+The header shows **EN | AR | DE** when Polylang is active.
+
+---
+
 ## License
 
 All rights reserved — Midex for Integrated Projects and Contracting.

@@ -36,6 +36,13 @@ function midex_enqueue_brand_assets() {
 		array( 'midex-fonts-poppins' ),
 		MIDEX_VERSION
 	);
+
+	wp_enqueue_style(
+		'midex-components',
+		midex_asset_url( 'css/components.css' ),
+		array( 'midex-tailwind' ),
+		MIDEX_VERSION
+	);
 }
 add_action( 'wp_enqueue_scripts', 'midex_enqueue_brand_assets', 10 );
 

@@ -1,0 +1,474 @@
+@import "tailwindcss";
+
+@source "../**/*.php";
+@source "../**/*.html";
+@source "../assets/js/**/*.js";
+
+@theme {
+	--color-midex-navy: #093d5e;
+	--color-midex-navy-dark: #062a42;
+	--color-midex-mint: #84cecd;
+	--color-midex-mint-light: #a8e0df;
+	--color-midex-blue: #0086f0;
+	--color-midex-gray: #2d3239;
+	--color-midex-surface: #f0f7fb;
+
+	--font-display: "Poppins", ui-sans-serif, system-ui, sans-serif;
+	--font-body: "GE Dinar One", "Poppins", ui-sans-serif, sans-serif;
+
+	--animate-fade-up: fade-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+	--animate-fade-in: fade-in 0.7s ease forwards;
+	--animate-scale-in: scale-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+	--animate-float: float 6s ease-in-out infinite;
+	--animate-shimmer: shimmer 2.5s linear infinite;
+	--animate-marquee: marquee 40s linear infinite;
+	--animate-marquee-reverse: marquee-reverse 40s linear infinite;
+	--animate-ken-burns: ken-burns 18s ease-out infinite alternate;
+	--animate-pulse-glow: pulse-glow 3s ease-in-out infinite;
+}
+
+@keyframes fade-up {
+	from { opacity: 0; transform: translateY(40px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+
+@keyframes scale-in {
+	from { opacity: 0; transform: scale(0.92); }
+	to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes float {
+	0%, 100% { transform: translateY(0); }
+	50% { transform: translateY(-12px); }
+}
+
+@keyframes shimmer {
+	0% { background-position: -200% center; }
+	100% { background-position: 200% center; }
+}
+
+@keyframes marquee {
+	from { transform: translateX(0); }
+	to { transform: translateX(-50%); }
+}
+
+@keyframes marquee-reverse {
+	from { transform: translateX(-50%); }
+	to { transform: translateX(0); }
+}
+
+@keyframes ken-burns {
+	from { transform: scale(1); }
+	to { transform: scale(1.12); }
+}
+
+@keyframes pulse-glow {
+	0%, 100% { box-shadow: 0 0 20px rgba(132, 206, 205, 0.2); }
+	50% { box-shadow: 0 0 40px rgba(132, 206, 205, 0.45); }
+}
+
+@layer base {
+	html { scroll-behavior: smooth; }
+
+	body {
+		@apply font-body text-midex-navy antialiased bg-white;
+	}
+
+	h1, h2, h3, h4, h5, h6 {
+		@apply font-display;
+	}
+}
+
+@layer components {
+	.mx-container {
+		@apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+	}
+
+	.mx-section {
+		@apply py-20 lg:py-28;
+	}
+
+	.mx-section-title {
+		@apply font-display text-3xl font-bold tracking-tight text-midex-navy sm:text-4xl lg:text-5xl;
+	}
+
+	.mx-section-subtitle {
+		@apply mt-4 max-w-2xl text-base text-midex-gray/80 sm:text-lg;
+	}
+
+	.mx-badge {
+		@apply inline-flex items-center gap-2 rounded-full border border-midex-mint/40 bg-midex-mint/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-midex-navy backdrop-blur-sm;
+	}
+
+	.mx-btn {
+		@apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-300;
+	}
+
+	.mx-btn-primary {
+		@apply bg-midex-navy text-white shadow-md shadow-midex-navy/20 hover:-translate-y-0.5 hover:bg-midex-blue hover:shadow-lg hover:shadow-midex-blue/25;
+	}
+
+	.mx-btn-outline {
+		@apply border-2 border-white/70 bg-white/10 text-white backdrop-blur-sm hover:border-white hover:bg-white hover:text-midex-navy;
+	}
+
+	.mx-btn-mint {
+		@apply bg-gradient-to-r from-midex-mint to-midex-mint-light font-semibold text-midex-navy shadow-md shadow-midex-mint/25 hover:-translate-y-0.5 hover:shadow-lg hover:brightness-105;
+	}
+
+	.mx-card {
+		@apply overflow-hidden rounded-2xl border border-midex-navy/5 bg-white shadow-sm transition-all duration-500 hover:-translate-y-2 hover:border-midex-mint/40 hover:shadow-2xl hover:shadow-midex-navy/10;
+	}
+
+	.mx-reveal {
+		@apply opacity-0 translate-y-8 transition-all duration-700 ease-out;
+	}
+
+	.mx-reveal.is-visible {
+		@apply opacity-100 translate-y-0;
+	}
+
+	/* WordPress navigation */
+	.midex-nav .wp-block-navigation-item__content {
+		@apply font-display text-sm font-medium text-midex-navy transition-colors duration-200 hover:text-midex-blue no-underline;
+	}
+
+	/* Site header / footer — reset WP block styles */
+	.midex-header,
+	.midex-footer {
+		@apply w-full max-w-none m-0 p-0;
+	}
+
+	.midex-header .midex-menu,
+	.midex-header .midex-menu-mobile {
+		@apply list-none m-0 p-0;
+	}
+
+	.midex-header .midex-menu > li,
+	.midex-header .midex-menu-mobile > li {
+		@apply list-none m-0;
+	}
+
+	.midex-header .midex-menu-mobile ul {
+		@apply list-none m-0 p-0;
+	}
+
+	.midex-header a {
+		@apply no-underline;
+	}
+
+	.midex-footer a {
+		@apply no-underline;
+	}
+
+	/* Product pages */
+	.midex-products-main,
+	.midex-products-page,
+	.midex-single-product {
+		@apply m-0 max-w-none p-0;
+	}
+
+	.midex-page-hero h1,
+	.midex-page-hero p,
+	.midex-page-hero .midex-breadcrumb a,
+	.midex-page-hero .midex-breadcrumb span {
+		@apply text-inherit;
+	}
+
+	.midex-product-content h2,
+	.midex-product-content h3,
+	.midex-product-content p,
+	.midex-product-content li {
+		@apply text-midex-gray/90;
+	}
+
+	.midex-pagination ul {
+		@apply flex flex-wrap items-center justify-center gap-2 list-none m-0 p-0;
+	}
+
+	.midex-pagination a,
+	.midex-pagination span {
+		@apply inline-flex min-w-10 items-center justify-center rounded-lg border border-midex-navy/10 px-3 py-2 text-sm font-medium no-underline transition-colors;
+	}
+
+	.midex-pagination a {
+		@apply bg-white text-midex-navy hover:border-midex-mint hover:bg-midex-surface;
+	}
+
+	.midex-pagination .current {
+		@apply border-midex-navy bg-midex-navy text-white;
+	}
+
+	/* Kill WP layout padding on template wrapper */
+	.wp-site-blocks > header,
+	.wp-site-blocks > footer,
+	.wp-block-template-part {
+		@apply max-w-none m-0 p-0;
+	}
+
+	main.wp-block-group,
+	.wp-site-blocks > main {
+		@apply m-0 p-0 max-w-none;
+	}
+}
+
+@layer utilities {
+	.mx-gradient-text {
+		@apply bg-gradient-to-r from-midex-navy via-midex-blue to-midex-mint bg-clip-text text-transparent;
+	}
+
+	.mx-mesh-bg {
+		background-image:
+			radial-gradient(at 20% 30%, rgba(132, 206, 205, 0.25) 0, transparent 50%),
+			radial-gradient(at 80% 20%, rgba(0, 134, 240, 0.12) 0, transparent 45%),
+			radial-gradient(at 50% 80%, rgba(9, 61, 94, 0.08) 0, transparent 50%);
+	}
+}
+
+/*
+ * Unlayered overrides — WordPress global styles are unlayered and beat Tailwind @layer.
+ * These must stay outside @layer and load via tailwind.css after global-styles.
+ */
+
+/* Remove 24px gap WordPress adds between header and main */
+.wp-site-blocks > header,
+.wp-site-blocks > main,
+.wp-site-blocks > footer {
+	margin-block-start: 0;
+	margin-block-end: 0;
+}
+
+.wp-site-blocks > main {
+	padding: 0;
+	max-width: none;
+}
+
+.wp-site-blocks {
+	padding-top: 0 !important;
+	padding-bottom: 0 !important;
+}
+
+:where(.wp-site-blocks) > * {
+	margin-block-start: 0;
+}
+
+main.wp-block-group.is-layout-flow > *:first-child,
+main.wp-block-group > section:first-child {
+	margin-block-start: 0;
+}
+
+/* Homepage: header + hero as one full-bleed unit */
+.midex-hero-shell {
+	position: relative;
+}
+
+.midex-hero-shell > *,
+.midex-hero-shell.is-layout-flow > *,
+.midex-hero-shell [data-midex-slider] {
+	margin-block-start: 0 !important;
+}
+
+.midex-header__brand {
+	display: block;
+	line-height: 0;
+}
+
+.midex-header__logo--light {
+	display: none;
+}
+
+.midex-header__logo--dark {
+	display: block;
+}
+
+.midex-header--overlay:not(.is-scrolled):not(.is-menu-open) .midex-header__logo--light {
+	display: block;
+}
+
+.midex-header--overlay:not(.is-scrolled):not(.is-menu-open) .midex-header__logo--dark {
+	display: none;
+}
+
+.midex-header--overlay.is-scrolled .midex-header__logo--light,
+.midex-header--overlay.is-menu-open .midex-header__logo--light {
+	display: none;
+}
+
+.midex-header--overlay.is-scrolled .midex-header__logo--dark,
+.midex-header--overlay.is-menu-open .midex-header__logo--dark {
+	display: block;
+}
+
+.midex-header--overlay:not(.is-scrolled) .midex-menu > li > a {
+	color: rgb(255 255 255 / 0.92);
+}
+
+.midex-header--overlay:not(.is-scrolled) .midex-menu > li > a:hover,
+.midex-header--overlay:not(.is-scrolled) .midex-menu > li > a:focus-visible {
+	background: rgb(255 255 255 / 0.12);
+	color: #fff;
+}
+
+.midex-header--overlay:not(.is-scrolled) .midex-menu > li > a.bg-midex-surface {
+	background: rgb(255 255 255 / 0.15);
+	color: #fff;
+}
+
+.midex-header--overlay:not(.is-scrolled) [data-midex-nav-toggle] {
+	border-color: rgb(255 255 255 / 0.35);
+	color: #fff;
+}
+
+.midex-header--overlay:not(.is-scrolled) .mx-btn-primary {
+	border: 2px solid rgb(255 255 255 / 0.7);
+	background: rgb(255 255 255 / 0.12);
+	box-shadow: none;
+	color: #fff;
+}
+
+.midex-header--overlay:not(.is-scrolled) .mx-btn-primary:hover {
+	background: #fff;
+	color: var(--color-midex-navy);
+}
+
+.midex-header--overlay.is-scrolled {
+	border-color: rgb(132 206 205 / 0.3);
+	background: rgb(255 255 255 / 0.95);
+	box-shadow: 0 1px 3px 0 rgb(9 61 94 / 0.08);
+	backdrop-filter: blur(12px);
+}
+
+.midex-header--overlay.is-menu-open,
+.midex-header--overlay.is-menu-open.is-scrolled {
+	border-color: rgb(132 206 205 / 0.3);
+	background: #fff;
+	box-shadow: 0 4px 24px rgb(9 61 94 / 0.12);
+}
+
+.midex-header--overlay.is-menu-open .midex-menu > li > a,
+.midex-header--overlay.is-menu-open [data-midex-nav-toggle] {
+	color: var(--color-midex-navy);
+}
+
+.midex-header--overlay.is-menu-open [data-midex-nav-toggle] {
+	border-color: rgb(9 61 94 / 0.1);
+}
+
+.midex-header--overlay.is-menu-open .mx-btn-primary {
+	border: 0;
+	background-color: var(--color-midex-navy);
+	color: #fff;
+}
+
+[data-midex-slider] h1,
+[data-midex-slider] h2 {
+	color: #fff;
+}
+
+[data-midex-slider] p {
+	color: rgb(255 255 255 / 0.85);
+}
+
+.bg-midex-navy .mx-section-title,
+.bg-midex-navy h2,
+.bg-midex-navy h3 {
+	color: #fff;
+}
+
+.bg-midex-navy .mx-section-subtitle,
+.bg-midex-navy p {
+	color: rgb(255 255 255 / 0.75);
+}
+
+.bg-midex-navy article h3 {
+	color: #fff;
+}
+
+.from-midex-navy h2,
+[class*="from-midex-navy"] h2,
+[class*="from-midex-navy"] p {
+	color: #fff;
+}
+
+[class*="from-midex-navy"] p {
+	color: rgb(255 255 255 / 0.75);
+}
+
+a.mx-btn {
+	text-decoration: none;
+}
+
+a.mx-btn-primary {
+	background-color: var(--color-midex-navy);
+	color: #fff;
+	box-shadow: 0 10px 15px -3px rgb(9 61 94 / 0.25);
+}
+
+a.mx-btn-primary:hover {
+	background-color: var(--color-midex-blue);
+	color: #fff;
+}
+
+a.mx-btn-outline {
+	border: 2px solid rgb(255 255 255 / 0.65);
+	background-color: rgb(255 255 255 / 0.12);
+	color: #fff;
+}
+
+a.mx-btn-outline:hover {
+	border-color: #fff;
+	background-color: #fff;
+	color: var(--color-midex-navy);
+}
+
+a.mx-btn-mint {
+	background: linear-gradient(to right, var(--color-midex-mint), var(--color-midex-mint-light));
+	color: var(--color-midex-navy);
+	box-shadow: 0 10px 15px -3px rgb(132 206 205 / 0.35);
+}
+
+a.mx-btn-mint:hover {
+	color: var(--color-midex-navy);
+}
+
+.midex-footer,
+.midex-footer p {
+	color: rgb(255 255 255 / 0.7);
+}
+
+.midex-footer a {
+	color: rgb(255 255 255 / 0.75);
+}
+
+.midex-footer a:hover {
+	color: var(--color-midex-mint);
+}
+
+.midex-footer a.text-midex-mint,
+.midex-footer a[href^="mailto:"] {
+	color: var(--color-midex-mint);
+}
+
+.midex-footer a.text-midex-mint:hover,
+.midex-footer a[href^="mailto:"]:hover {
+	color: #fff;
+}
+
+.midex-page-hero h1,
+.midex-page-hero .font-display {
+	color: inherit;
+}
+
+.midex-single-product h1 {
+	color: var(--color-midex-navy);
+}
+
+.midex-page-hero.bg-gradient-to-br.from-midex-navy h1,
+.midex-page-hero.bg-gradient-to-br.from-midex-navy p {
+	color: #fff;
+}

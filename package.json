@@ -1,0 +1,15 @@
+{
+	"name": "midex-theme",
+	"private": true,
+	"version": "1.0.0",
+	"description": "Midex WordPress block theme",
+	"scripts": {
+		"start": "brew services start mariadb 2>/dev/null; php -S 127.0.0.1:8080 router.php",
+		"stop": "pkill -f 'php -S 127.0.0.1:8080 router.php' || true",
+		"build:css": "npm run build:css --prefix wp-content/themes/midex",
+		"watch:css": "npm run watch:css --prefix wp-content/themes/midex"
+	},
+	"devDependencies": {
+		"@wordpress/scripts": "^30.15.0"
+	}
+}

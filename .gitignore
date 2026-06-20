@@ -1,0 +1,10 @@
+.env
+wp-config.php
+wp-content/uploads/
+wp-content/upgrade/
+wp-content/cache/
+*.log
+.DS_Store
+node_modules/
+vendor/
+wp-content/themes/midex/node_modules/

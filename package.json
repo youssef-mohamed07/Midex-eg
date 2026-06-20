@@ -1,16 +1,29 @@
 {
-	"name": "midex-theme",
-	"private": true,
-	"version": "1.0.0",
-	"description": "Midex WordPress block theme",
-	"scripts": {
-		"start": "brew services start mariadb 2>/dev/null; php -S 127.0.0.1:8080 router.php",
-		"stop": "pkill -f 'php -S 127.0.0.1:8080 router.php' || true",
-		"build:css": "npm run build:css --prefix wp-content/themes/midex",
-		"watch:css": "npm run watch:css --prefix wp-content/themes/midex",
-		"sync:images": "bash scripts/sync-images.sh"
-	},
-	"devDependencies": {
-		"@wordpress/scripts": "^30.15.0"
-	}
+  "name": "midex",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Midex corporate website — Next.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "sync:images": "bash scripts/sync-images.sh"
+  },
+  "dependencies": {
+    "next": "16.2.9",
+    "next-intl": "^4.13.0",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.9",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
 }

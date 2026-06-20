@@ -1,0 +1,303 @@
+@import "tailwindcss";
+
+@theme {
+  --color-midex-navy: #093d5e;
+  --color-midex-navy-dark: #062a42;
+  --color-midex-mint: #84cecd;
+  --color-midex-mint-light: #a8e0df;
+  --color-midex-blue: #0086f0;
+  --color-midex-gray: #2d3239;
+  --color-midex-surface: #f0f7fb;
+
+  --font-display: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Poppins", ui-sans-serif, system-ui, sans-serif;
+
+  --animate-fade-up: fade-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-fade-in: fade-in 0.7s ease forwards;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-ken-burns: ken-burns 18s ease-out infinite alternate;
+  --animate-marquee: marquee 45s linear infinite;
+  --animate-marquee-reverse: marquee-reverse 45s linear infinite;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes ken-burns {
+  from { transform: scale(1); }
+  to { transform: scale(1.12); }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes marquee-reverse {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+
+  body {
+    @apply font-body text-midex-navy antialiased bg-white;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+@layer components {
+  .mx-container {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .mx-section {
+    @apply py-20 lg:py-28;
+  }
+
+  .mx-section-title {
+    @apply font-display text-3xl font-bold tracking-tight text-midex-navy sm:text-4xl lg:text-5xl;
+  }
+
+  .mx-section-subtitle {
+    @apply mt-4 max-w-2xl text-base text-midex-gray/80 sm:text-lg;
+  }
+
+  .mx-badge {
+    @apply inline-flex items-center gap-2 rounded-full border border-midex-mint/40 bg-midex-mint/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-midex-navy backdrop-blur-sm;
+  }
+
+  .mx-btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-300 no-underline;
+  }
+
+  .mx-btn-primary {
+    @apply bg-midex-navy text-white shadow-md shadow-midex-navy/20 hover:-translate-y-0.5 hover:bg-midex-blue hover:shadow-lg hover:shadow-midex-blue/25;
+  }
+
+  .mx-btn-outline {
+    @apply border-2 border-white/70 bg-white/10 text-white backdrop-blur-sm hover:border-white hover:bg-white hover:text-midex-navy;
+  }
+
+  .mx-btn-mint {
+    @apply bg-gradient-to-r from-midex-mint to-midex-mint-light font-semibold text-midex-navy shadow-md shadow-midex-mint/25 hover:-translate-y-0.5 hover:shadow-lg hover:brightness-105;
+  }
+
+  .mx-card {
+    @apply overflow-hidden rounded-2xl border border-midex-navy/5 bg-white shadow-sm transition-all duration-500 hover:-translate-y-2 hover:border-midex-mint/40 hover:shadow-2xl hover:shadow-midex-navy/10;
+  }
+
+  .mx-marquee-track {
+    @apply flex w-max items-center gap-4;
+    animation: marquee 35s linear infinite;
+    will-change: transform;
+  }
+
+  .mx-marquee-track--reverse {
+    animation: marquee-reverse 35s linear infinite;
+  }
+
+  .mx-marquee-fade {
+    @apply relative w-full overflow-hidden;
+  }
+
+  .mx-marquee-fade::before,
+  .mx-marquee-fade::after {
+    content: "";
+    @apply pointer-events-none absolute inset-y-0 z-10 w-12 sm:w-20;
+  }
+
+  .mx-marquee-fade::before {
+    @apply left-0 bg-gradient-to-r from-midex-surface/95 to-transparent;
+  }
+
+  .mx-marquee-fade::after {
+    @apply right-0 bg-gradient-to-l from-midex-surface/95 to-transparent;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mx-marquee-track,
+    .mx-marquee-track--reverse {
+      animation: none;
+    }
+  }
+
+  .mx-reveal {
+    @apply opacity-0 translate-y-8 transition-all duration-700 ease-out;
+  }
+
+  .mx-reveal.is-visible {
+    @apply opacity-100 translate-y-0;
+  }
+
+  .mx-mesh-bg {
+    background:
+      radial-gradient(circle at 20% 20%, rgba(132, 206, 205, 0.15), transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(0, 134, 240, 0.1), transparent 50%);
+  }
+
+  .midex-page-hero {
+    --midex-header-height: 72px;
+    position: relative;
+    margin-top: calc(-1 * var(--midex-header-height));
+    overflow: hidden;
+    background-color: var(--color-midex-navy);
+    padding-top: calc(var(--midex-header-height) * 2 + 2.5rem);
+    padding-bottom: 3rem;
+  }
+
+  .midex-page-hero--compact {
+    padding-top: calc(var(--midex-header-height) * 2 + 1.75rem);
+    padding-bottom: 2rem;
+  }
+
+  @media (min-width: 1024px) {
+    .midex-page-hero {
+      padding-top: calc(var(--midex-header-height) * 2 + 3rem);
+      padding-bottom: 4rem;
+    }
+
+    .midex-page-hero--compact {
+      padding-top: calc(var(--midex-header-height) * 2 + 2rem);
+      padding-bottom: 2.5rem;
+    }
+  }
+
+  .midex-contact-layout {
+    @apply grid gap-8 lg:grid-cols-[minmax(260px,38%)_1fr] lg:gap-10;
+  }
+
+  .midex-contact-card {
+    @apply rounded-xl border border-midex-navy/5 bg-midex-surface p-6;
+  }
+
+  .midex-contact-form-card {
+    @apply rounded-2xl border border-midex-navy/8 bg-white p-7 shadow-xl shadow-midex-navy/8;
+  }
+
+  .midex-form-grid {
+    @apply mt-6 grid gap-4 sm:grid-cols-2;
+  }
+
+  .midex-form-field {
+    @apply flex flex-col gap-1.5;
+  }
+
+  .midex-form-field--full {
+    @apply sm:col-span-2;
+  }
+
+  .midex-form-field label {
+    @apply text-sm font-semibold text-midex-navy;
+  }
+
+  .midex-form-field input,
+  .midex-form-field select,
+  .midex-form-field textarea {
+    @apply w-full rounded-[0.625rem] border border-midex-navy/15 bg-white px-3.5 py-3 text-midex-gray transition focus:border-midex-mint focus:outline-none focus:ring-3 focus:ring-midex-mint/25;
+  }
+
+  .midex-form-context {
+    @apply mt-4 rounded-[0.625rem] border border-midex-mint/35 bg-midex-mint/15 px-4 py-3.5 text-sm text-midex-navy;
+  }
+
+  .midex-form-notice {
+    @apply mt-4 rounded-[0.625rem] px-4 py-3.5 text-sm;
+  }
+
+  .midex-form-notice--success {
+    @apply border border-midex-mint/45 bg-midex-mint/18 text-midex-navy;
+  }
+
+  .midex-form-notice--error {
+    @apply border border-red-300 bg-red-50 text-red-800;
+  }
+
+  .midex-form-honeypot {
+    @apply absolute -left-[9999px] h-px w-px overflow-hidden;
+  }
+}
+
+.midex-header--overlay:not(.is-scrolled) .midex-header__logo--dark {
+  display: none;
+}
+
+.midex-header--overlay:not(.is-scrolled) .midex-header__logo--light {
+  display: block;
+}
+
+.midex-header--overlay.is-scrolled .midex-header__logo--light,
+.midex-header:not(.midex-header--overlay) .midex-header__logo--light {
+  display: none;
+}
+
+.midex-header--overlay.is-scrolled .midex-header__logo--dark,
+.midex-header:not(.midex-header--overlay) .midex-header__logo--dark {
+  display: block;
+}
+
+.midex-header--overlay:not(.is-scrolled) {
+  @apply border-transparent bg-transparent shadow-none;
+}
+
+.midex-header--overlay:not(.is-scrolled) .midex-menu > li > a,
+.midex-header--overlay:not(.is-scrolled) .midex-menu > li > button {
+  @apply text-white hover:text-midex-mint;
+}
+
+.midex-header--overlay.is-scrolled,
+.midex-header:not(.midex-header--overlay) {
+  @apply border-midex-mint/30 bg-white/95 shadow-sm backdrop-blur-md;
+}
+
+/* Desktop nav dropdown + flyout */
+.midex-nav-dropdown {
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(0.5rem);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+}
+
+.group:hover > .midex-nav-dropdown,
+.group:focus-within > .midex-nav-dropdown {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.midex-nav-flyout {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.2s ease, visibility 0.2s;
+}
+
+.midex-nav-sub:hover > .midex-nav-flyout,
+.midex-nav-sub:focus-within > .midex-nav-flyout {
+  visibility: visible;
+  opacity: 1;
+}
+
+.midex-nav-sub:hover > a .midex-nav-arrow,
+.midex-nav-sub:focus-within > a .midex-nav-arrow {
+  color: var(--color-midex-blue);
+}
+
+.midex-mobile-nav {
+  -webkit-overflow-scrolling: touch;
+}

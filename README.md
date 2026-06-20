@@ -1,132 +1,102 @@
-# Midex-eg
+# Midex
 
-**Midex for Integrated Projects and Contracting** — a WordPress block theme with a product catalog, solution pages, and quote request forms.
+**Midex for Integrated Projects and Contracting** — corporate website for pharmaceutical, food, and cosmetics engineering.
+
+Built with **Next.js 16**, React 19, Tailwind CSS 4, and **next-intl** (English / Arabic / German).
+
+---
+
+## Features
+
+- **Multilingual** — EN (default), AR (RTL), DE with flag language switcher in the header
+- **Localized content** — products, solutions, blog, news, services, and testimonials translated per locale
+- **SEO collection** — per-page meta titles, descriptions, Open Graph, Twitter cards, JSON-LD, `sitemap.xml`, and `robots.txt`
+- **Responsive UI** — shared layout, hero, stats, testimonials carousel, client logo marquee, contact form
+- **Static generation** — product, solution, and blog routes pre-rendered at build time
 
 ---
 
 ## Requirements
 
-| Tool | Purpose |
+| Tool | Version |
 |------|---------|
-| [PHP](https://www.php.net/) 8.0+ | Run WordPress |
-| [MariaDB](https://mariadb.org/) or MySQL | Database |
-| [Node.js](https://nodejs.org/) 18+ | Build CSS (Tailwind) |
-| [WP-CLI](https://wp-cli.org/) | WordPress setup from the terminal (optional but recommended) |
-
-On macOS, install dependencies with Homebrew:
+| [Node.js](https://nodejs.org/) | 20+ |
 
 ```bash
-brew install php mariadb node wp-cli
+brew install node
 ```
 
 ---
 
-## Quick start (after cloning)
-
-### 1) Clone the repository
+## Quick start
 
 ```bash
 git clone https://github.com/youssef-mohamed07/Midex-eg.git
 cd Midex-eg
-```
 
-### 2) Install Node packages (for CSS build)
-
-```bash
 npm install
-npm install --prefix wp-content/themes/midex
-npm run build:css
+npm run sync:images   # optional — download images from midex-eg.org
+cp .env.example .env.local   # optional — see Environment
+npm run dev
 ```
 
-### 3) Start the database
+Open **http://localhost:3000**
 
-```bash
-brew services start mariadb
-```
-
-### 4) First-time WordPress setup
-
-> `wp-config.php` is not committed to GitHub for security. Create it locally:
-
-```bash
-# Create the database
-mariadb -u "$(whoami)" -e "CREATE DATABASE IF NOT EXISTS midex_wp CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
-
-# Create wp-config.php (adjust user/password for your machine)
-wp config create \
-  --dbname=midex_wp \
-  --dbuser="$(whoami)" \
-  --dbpass='' \
-  --dbhost='localhost:/tmp/mysql.sock' \
-  --force
-
-# Install WordPress
-wp core install \
-  --url='http://127.0.0.1:8080' \
-  --title='Midex' \
-  --admin_user=admin \
-  --admin_password=admin \
-  --admin_email=admin@midex.local \
-  --skip-email
-
-# Activate the theme and set permalinks
-wp theme activate midex
-wp rewrite structure '/%postname%/' --hard
-```
-
-If `--dbhost='localhost:/tmp/mysql.sock'` does not work, try `--dbhost='127.0.0.1'` or `--dbhost='localhost'`.
-
-### 5) Start the local server
-
-```bash
-npm start
-```
-
-Open in your browser: **http://127.0.0.1:8080**
-
-| | |
-|---|---|
-| **Admin** | http://127.0.0.1:8080/wp-admin |
-| **Username** | `admin` |
-| **Password** | `admin` |
-
-Stop the server:
-
-```bash
-npm run stop
-```
+| Language | Example |
+|----------|---------|
+| English (default) | `/products` |
+| Arabic (RTL) | `/ar/products` |
+| German | `/de/products` |
 
 ---
 
-## Theme development (CSS)
+## Scripts
 
-When editing Tailwind files in `wp-content/themes/midex/src/input.css`:
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Dev server (port 3000) |
+| `npm run build` | Production build |
+| `npm run start` | Serve production build |
+| `npm run lint` | ESLint |
+| `npm run sync:images` | Sync images into `public/images/` |
+
+---
+
+## Environment
+
+Create `.env.local` from `.env.example`:
 
 ```bash
-# One-off build
-npm run build:css
+# Production site URL (canonical links, sitemap, Open Graph)
+NEXT_PUBLIC_SITE_URL=https://www.midex-eg.com
 
-# Watch for changes during development
-npm run watch:css
+# Contact form email (production)
+RESEND_API_KEY=re_...
+CONTACT_FROM=Midex Website <noreply@midex-eg.com>
 ```
+
+- **Development:** contact form submissions are logged to the terminal.
+- **Production:** set `RESEND_API_KEY` for email delivery to `sales@midex-eg.com`.
 
 ---
 
 ## Project structure
 
 ```
-Midex-eg/
-├── router.php                      # Router for PHP built-in server
-├── package.json                    # npm scripts (start / build:css)
-├── wp-config-sample.php            # WordPress config template
-├── wp-content/themes/midex/        # Custom theme
-│   ├── templates/                  # Page layouts
-│   ├── parts/                      # Header & footer
-│   ├── inc/                        # PHP: menus, blocks, setup
-│   ├── src/input.css               # Tailwind source
-│   └── assets/                     # CSS, JS, images
-├── wp-admin/                       # WordPress core
-└── wp-includes/                    # WordPress core
+Midex/
+├── src/
+│   ├── app/[locale]/       # App Router pages + API routes
+│   ├── components/         # UI, layout, home, products, solutions, blog…
+│   ├── content/            # Products, solutions, site data
+│   │   ├── i18n/           # AR / DE content overlays
+│   │   └── seo/            # SEO entries (CMS-ready)
+│   ├── cms/collections/    # SEO collection schema
+│   ├── lib/seo/            # Metadata, JSON-LD, sitemap helpers
+│   └── i18n/               # next-intl routing & navigation
+├── messages/               # UI strings (en, ar, de)
+├── public/images/          # Static assets
+├── scripts/sync-images.sh
+└── package.json
 ```
 
 ---
@@ -134,94 +104,36 @@ Midex-eg/
 ## Site map
 
 ```
-Home
-├── Products          → /products/
-├── Solutions         → /solutions/
-├── Blog              → /blog/
-├── About Us          → /about-us/
-└── Contact           → /contact/
+/                              Home
+/about-us                      About
+/contact                       Contact form
+/products                      Product catalog
+/products/[slug]               Product detail
+/products/category/[slug]      Category redirect → catalog filter
+/solutions                     Solutions overview
+/solutions/group/[slug]        Solution group
+/solutions/group/[slug]/[child] Service detail
+/solutions/[slug]              Featured solution
+/blog                          Blog listing
+/blog/[slug]                   Blog post
+/sitemap.xml                   SEO sitemap
+/robots.txt                    Robots rules
 ```
 
 ---
 
-## Reset site content (menus & pages)
+## SEO content
 
-```bash
-wp option delete midex_site_setup_complete
-wp theme activate midex
-```
+Edit SEO per page/locale in `src/content/seo/entries.ts`. The collection schema lives in `src/cms/collections/seo.ts` and can be mapped to a headless CMS later.
 
----
-
-## Notes
-
-- **wp-config.php** and **wp-content/uploads/** are excluded from Git — each developer creates them locally.
-- Compiled CSS lives in `assets/css/tailwind.css`; run `npm run build:css` after any style changes.
-- For production: deploy to a PHP + MySQL host, create a database, and copy `wp-config-sample.php` to `wp-config.php` with your hosting credentials.
+Templates support placeholders such as `{title}` and `{description}` for dynamic routes (products, blog posts, solutions).
 
 ---
 
-## Multilingual (English, Arabic, German)
+## Contact
 
-**English is the default language.** Arabic and German are added with the free [Polylang](https://wordpress.org/plugins/polylang/) plugin. The theme includes a language switcher in the header and RTL support for Arabic.
-
-### 1) Install Polylang
-
-```bash
-wp plugin install polylang --activate
-wp midex polylang-setup
-```
-
-Or: **Plugins → Add New → Polylang → Install → Activate** — the theme auto-runs setup on first admin visit.
-
-The `wp midex polylang-setup` command creates **English (default), Arabic, and German** translations for pages, menus, categories, and theme strings.
-
-### 2) Add languages
-
-Go to **Languages → Languages** and add:
-
-| Language | Locale | Slug | Default | RTL |
-|----------|--------|------|---------|-----|
-| English | en_US | en | ✓ Yes | No |
-| Arabic | ar | ar | No | ✓ Yes |
-| German | de_DE | de | No | No |
-
-### 3) URL structure (recommended)
-
-**Settings → Languages → URL modifications:**
-
-- **Different languages in directories**
-- Hide URL language information for default language → **on** (English URLs stay `/products/`, Arabic `/ar/products/`, German `/de/products/`)
-
-### 4) Translate content
-
-For each page, product, and menu item:
-
-1. Edit the English version
-2. In the **Languages** box, click **+** to create the Arabic or German translation
-3. Fill in translated title and content
-
-Homepage sections use theme strings — translate them under **Languages → String translations** (group: **Midex Theme**).
-
-### 5) Menus per language
-
-**Appearance → Menus** — create or assign a menu for each language and link it in **Languages → Settings → Custom menu**.
-
-### 6) After setup
-
-```bash
-wp rewrite flush
-```
-
-**Result:**
-
-| Language | Example URL |
-|----------|-------------|
-| English (default) | `http://127.0.0.1:8080/products/` |
-| Arabic | `http://127.0.0.1:8080/ar/products/` |
-| German | `http://127.0.0.1:8080/de/products/` |
-
-The header shows **EN | AR | DE** when Polylang is active.
+- **Email:** sales@midex-eg.com
+- **Phone:** 01026228403 / 01006683803
 
 ---
 

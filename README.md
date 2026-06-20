@@ -8,7 +8,7 @@ Built with **Next.js 16**, React 19, Tailwind CSS 4, and **next-intl** (English 
 
 ## Features
 
-- **Multilingual** — EN (default), AR (RTL), DE with flag language switcher in the header
+- **Multilingual** — EN, AR (RTL), DE with flag language switcher; locale prefix on every URL (`/en`, `/ar`, `/de`); first visit locale detected from IP country (falls back to browser language)
 - **Localized content** — products, solutions, blog, news, services, and testimonials translated per locale
 - **SEO collection** — per-page meta titles, descriptions, Open Graph, Twitter cards, JSON-LD, `sitemap.xml`, and `robots.txt`
 - **Responsive UI** — shared layout, hero, stats, testimonials carousel, client logo marquee, contact form
@@ -40,13 +40,15 @@ cp .env.example .env.local   # optional — see Environment
 npm run dev
 ```
 
-Open **http://localhost:3000**
+Open **http://localhost:3000** — you are redirected to a locale-prefixed path (e.g. `/en`, `/ar`, `/de`).
 
 | Language | Example |
 |----------|---------|
-| English (default) | `/products` |
+| English | `/en/products` |
 | Arabic (RTL) | `/ar/products` |
 | German | `/de/products` |
+
+**Default locale on first visit:** inferred from the visitor's IP country (Egypt and Arab countries → Arabic, DACH → German, otherwise English). If geo is unavailable (local dev), the browser `Accept-Language` header is used. Users can override via the header language switcher (stored in a cookie).
 
 ---
 
@@ -104,18 +106,20 @@ Midex/
 ## Site map
 
 ```
-/                              Home
-/about-us                      About
-/contact                       Contact form
-/products                      Product catalog
-/products/[slug]               Product detail
-/products/category/[slug]      Category redirect → catalog filter
-/solutions                     Solutions overview
-/solutions/group/[slug]        Solution group
-/solutions/group/[slug]/[child] Service detail
-/solutions/[slug]              Featured solution
-/blog                          Blog listing
-/blog/[slug]                   Blog post
+/en/                           Home (English)
+/ar/                           Home (Arabic, RTL)
+/de/                           Home (German)
+/en/about-us                   About
+/en/contact                    Contact form
+/en/products                   Product catalog
+/en/products/[slug]            Product detail
+/en/products/category/[slug]   Category redirect → catalog filter
+/en/solutions                  Solutions overview
+/en/solutions/group/[slug]     Solution group
+/en/solutions/group/[slug]/[child] Service detail
+/en/solutions/[slug]           Featured solution
+/en/blog                       Blog listing
+/en/blog/[slug]                Blog post
 /sitemap.xml                   SEO sitemap
 /robots.txt                    Robots rules
 ```

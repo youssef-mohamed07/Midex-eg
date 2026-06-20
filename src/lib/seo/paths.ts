@@ -3,7 +3,6 @@ import { getSiteUrl, siteConfig } from "@/lib/seo/config";
 
 export function localizedPath(path: string, locale: Locale): string {
   const normalized = path.startsWith("/") ? path : `/${path}`;
-  if (locale === siteConfig.defaultLocale) return normalized === "/" ? "/" : normalized;
   return normalized === "/" ? `/${locale}` : `/${locale}${normalized}`;
 }
 

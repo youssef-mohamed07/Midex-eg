@@ -54,9 +54,6 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} dir={dir} className={poppins.variable}>
-      <head>
-        <link rel="icon" href="/images/brand/favicon.svg" type="image/svg+xml" />
-      </head>
       <body className="font-body antialiased">
         <NextIntlClientProvider messages={messages}>
           <Header />

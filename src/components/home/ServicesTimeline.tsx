@@ -76,7 +76,7 @@ function MobileDot({ side }: { side: "left" | "right" }) {
   return (
     <span
       ref={ref}
-      className={`${className} mx-timeline-dot absolute top-8 block h-3 w-3 rounded-full border-2 border-white bg-midex-mint shadow-sm ring-4 ring-midex-mint/20 -start-[1.65rem] lg:hidden`}
+      className={`${className} mx-timeline-dot absolute top-6 block h-2.5 w-2.5 rounded-full border-2 border-white bg-midex-mint shadow-sm ring-2 ring-midex-mint/20 -start-[1.35rem] sm:top-8 sm:h-3 sm:w-3 sm:ring-4 sm:-start-[1.65rem] lg:hidden`}
       aria-hidden
     />
   );
@@ -102,7 +102,7 @@ function ServiceCard({
       }`}
     >
       <div ref={ref} className={`${className} w-full`}>
-        <figure className="mx-card group relative aspect-[3/4] w-full overflow-hidden sm:aspect-[16/10]">
+        <figure className="mx-card group relative aspect-card w-full overflow-hidden sm:aspect-[16/10]">
         <div className="absolute inset-0">
           <Image
             src={service.image}
@@ -128,25 +128,25 @@ function ServiceCard({
         />
 
         <span
-          className="pointer-events-none absolute end-5 top-5 font-display text-5xl font-bold tabular-nums leading-none text-white/10 sm:text-6xl"
+          className="pointer-events-none absolute end-4 top-4 font-display text-4xl font-bold tabular-nums leading-none text-white/10 sm:end-5 sm:top-5 sm:text-6xl"
           aria-hidden
         >
           {step}
         </span>
 
         <figcaption
-          className={`absolute inset-x-0 bottom-0 flex flex-col px-5 pb-5 pt-16 sm:px-6 sm:pb-6 sm:pt-20 ${
+          className={`absolute inset-x-0 bottom-0 flex flex-col px-4 pb-4 pt-12 sm:px-6 sm:pb-6 sm:pt-20 ${
             side === "left" ? "lg:items-end lg:text-end" : "lg:items-start lg:text-start"
           }`}
         >
-          <span className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-midex-mint">
-            <span className="h-px w-6 bg-midex-mint/70" aria-hidden />
+          <span className="inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-midex-mint sm:text-[11px]">
+            <span className="h-px w-5 bg-midex-mint/70 sm:w-6" aria-hidden />
             {step}
           </span>
-          <h3 className="mt-2 font-display text-xl font-bold leading-snug text-white sm:text-2xl">
+          <h3 className="mt-1.5 font-display text-lg font-bold leading-snug text-white sm:mt-2 sm:text-2xl">
             {service.title}
           </h3>
-          <p className="mt-2 max-w-sm text-sm leading-relaxed text-white/75 sm:text-[15px]">
+          <p className="mt-1.5 max-w-sm text-[13px] leading-relaxed text-white/75 sm:mt-2 sm:text-[15px]">
             {service.excerpt}
           </p>
         </figcaption>
@@ -164,7 +164,7 @@ export function ServicesTimeline({ services }: { services: Service[] }) {
         aria-hidden
       />
 
-      <ol className="relative space-y-10 border-s-2 border-midex-line ps-8 lg:space-y-0 lg:border-0 lg:ps-0">
+      <ol className="relative space-y-6 border-s-2 border-midex-line ps-6 sm:space-y-8 sm:ps-8 lg:space-y-0 lg:border-0 lg:ps-0">
         {services.map((service, index) => {
           const side: "left" | "right" = index % 2 === 0 ? "left" : "right";
           const step = String(index + 1).padStart(2, "0");

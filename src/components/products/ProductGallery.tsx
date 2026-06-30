@@ -31,8 +31,8 @@ export function ProductGallery({ images, alt }: Props) {
         {t("galleryTitle")}
       </p>
 
-      <div className="overflow-hidden rounded-2xl border border-midex-line bg-midex-surface/40">
-        <div className="relative flex aspect-[4/3] max-h-80 items-center justify-center p-5 sm:aspect-square sm:max-h-none sm:p-8">
+      <div className="overflow-hidden rounded-xl border border-midex-line bg-midex-surface/40 sm:rounded-2xl">
+        <div className="relative flex aspect-card-tall max-h-56 items-center justify-center p-3 sm:aspect-square sm:max-h-none sm:p-8">
           <Image
             key={current}
             src={current}
@@ -87,7 +87,7 @@ export function ProductGallery({ images, alt }: Props) {
                 aria-selected={selected}
                 aria-label={t("galleryView", { number: index + 1 })}
                 onClick={() => setActive(index)}
-                className={`relative h-16 w-16 shrink-0 overflow-hidden rounded-xl border bg-white p-1.5 transition-all sm:h-[4.5rem] sm:w-[4.5rem] ${
+                className={`relative h-14 w-14 shrink-0 overflow-hidden rounded-lg border bg-white p-1 transition-all sm:h-[4.5rem] sm:w-[4.5rem] sm:rounded-xl sm:p-1.5 ${
                   selected
                     ? "border-midex-blue ring-2 ring-midex-blue/25"
                     : "border-midex-line hover:border-midex-mint/50"

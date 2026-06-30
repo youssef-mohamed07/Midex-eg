@@ -34,7 +34,7 @@ function SectionHeading({
 }) {
   const center = align === "center";
   return (
-    <div className={center ? "mx-auto mb-14 max-w-2xl text-center" : "mb-12 max-w-3xl"}>
+    <div className={center ? "mx-auto mb-8 max-w-2xl text-center sm:mb-12 lg:mb-14" : "mb-8 max-w-3xl sm:mb-10 lg:mb-12"}>
       <span
         className={`mx-eyebrow ${center ? "mx-eyebrow--center" : ""} ${dark ? "mx-eyebrow--light" : ""}`}
       >

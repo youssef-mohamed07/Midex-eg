@@ -20,14 +20,14 @@ export async function AboutPageContent() {
 
       <section className="mx-section bg-white">
         <div className="mx-container">
-          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-            <div className="relative overflow-hidden rounded-2xl border border-midex-line shadow-lg">
+          <div className="grid items-center gap-6 sm:gap-10 lg:grid-cols-2 lg:gap-16">
+            <div className="relative overflow-hidden rounded-xl border border-midex-line shadow-lg sm:rounded-2xl">
               <Image
                 src="/images/hero/slide-2.png"
                 alt="Midex engineering"
                 width={900}
                 height={600}
-                className="aspect-[4/3] w-full object-cover"
+                className="aspect-card-tall w-full object-cover sm:aspect-[4/3]"
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 priority
               />
@@ -50,7 +50,7 @@ export async function AboutPageContent() {
 
       <AboutTimeline />
 
-      <section className="relative overflow-hidden bg-midex-navy mx-mesh-bg py-16 lg:py-20">
+      <section className="relative overflow-hidden bg-midex-navy mx-mesh-bg py-12 sm:py-16 lg:py-20">
         <div className="mx-grid-overlay pointer-events-none absolute inset-0" />
         <div className="relative mx-container">
           <div className="mx-auto max-w-3xl text-center">

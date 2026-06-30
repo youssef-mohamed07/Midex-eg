@@ -177,22 +177,22 @@
   }
 
   .mx-section {
-    @apply py-14 sm:py-20 lg:py-28;
+    @apply py-10 sm:py-16 lg:py-28;
   }
 
   .mx-section--tight {
-    @apply py-14 lg:py-20;
+    @apply py-10 sm:py-14 lg:py-20;
   }
 
   .mx-section-title {
     @apply font-display font-bold text-midex-navy;
-    font-size: clamp(1.85rem, 1.1rem + 2.6vw, 3.1rem);
-    line-height: 1.07;
+    font-size: clamp(1.5rem, 0.95rem + 2.2vw, 3.1rem);
+    line-height: 1.1;
     letter-spacing: -0.025em;
   }
 
   .mx-section-subtitle {
-    @apply mt-4 max-w-2xl text-base leading-relaxed text-midex-gray/75 sm:text-lg;
+    @apply mt-3 max-w-2xl text-sm leading-relaxed text-midex-gray/75 sm:mt-4 sm:text-base lg:text-lg;
   }
 
   /* Editorial eyebrow — a refined alternative to the pill badge */
@@ -275,13 +275,32 @@
   }
 
   .mx-card {
-    @apply relative overflow-hidden rounded-2xl border border-midex-line bg-white shadow-sm;
+    @apply relative overflow-hidden rounded-xl border border-midex-line bg-white shadow-sm sm:rounded-2xl;
     transition: transform 0.5s var(--ease-premium), box-shadow 0.5s var(--ease-premium),
       border-color 0.4s ease;
   }
 
   .mx-card:hover {
-    @apply -translate-y-1.5 border-midex-mint/45 shadow-xl;
+    @apply -translate-y-1 border-midex-mint/45 shadow-lg sm:-translate-y-1.5 sm:shadow-xl;
+  }
+
+  /* Compact image card ratio on mobile */
+  .aspect-card {
+    aspect-ratio: 2 / 1;
+  }
+
+  .aspect-card-tall {
+    aspect-ratio: 3 / 2;
+  }
+
+  @media (min-width: 640px) {
+    .aspect-card {
+      aspect-ratio: 16 / 10;
+    }
+
+    .aspect-card-tall {
+      aspect-ratio: 4 / 3;
+    }
   }
 
   .mx-service-card .mx-card {
@@ -452,13 +471,13 @@
     margin-top: calc(-1 * var(--midex-header-height));
     overflow: hidden;
     background-color: var(--color-midex-navy);
-    padding-top: calc(var(--midex-header-height) * 2 + 2.5rem);
-    padding-bottom: 3rem;
+    padding-top: calc(var(--midex-header-height) * 2 + 1.75rem);
+    padding-bottom: 2rem;
   }
 
   .midex-page-hero--compact {
-    padding-top: calc(var(--midex-header-height) * 2 + 1.75rem);
-    padding-bottom: 2rem;
+    padding-top: calc(var(--midex-header-height) * 2 + 1.25rem);
+    padding-bottom: 1.5rem;
   }
 
   @media (min-width: 1024px) {
@@ -529,7 +548,6 @@
 }
 
 .midex-header {
-  overflow-x: hidden;
   max-width: 100%;
   transform: translateY(0);
   transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);

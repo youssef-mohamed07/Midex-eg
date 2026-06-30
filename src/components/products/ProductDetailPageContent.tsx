@@ -77,15 +77,15 @@ export async function ProductDetailPageContent({ slug }: Props) {
 
       <section className="mx-section bg-white">
         <div className="mx-container">
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(280px,360px)] lg:items-start lg:gap-14">
-            <aside className="order-1 space-y-6 lg:order-2 lg:col-start-2 lg:sticky lg:top-24 lg:self-start">
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(280px,360px)] lg:items-start lg:gap-14">
+            <aside className="order-1 space-y-4 sm:space-y-6 lg:order-2 lg:col-start-2 lg:sticky lg:top-24 lg:self-start">
               <ProductGallery images={galleryImages} alt={product.title} />
 
-              <div className="rounded-2xl border border-midex-line bg-white p-5 shadow-sm">
+              <div className="rounded-xl border border-midex-line bg-white p-4 shadow-sm sm:rounded-2xl sm:p-5">
                 <p className="text-xs font-semibold uppercase tracking-wider text-midex-blue">
                   {categoryLabel}
                 </p>
-                <p className="mt-2 font-display text-lg font-bold text-midex-navy">
+                <p className="mt-1.5 font-display text-base font-bold text-midex-navy sm:mt-2 sm:text-lg">
                   {product.title}
                 </p>
                 <Link
@@ -113,7 +113,7 @@ export async function ProductDetailPageContent({ slug }: Props) {
               </div>
             </aside>
 
-            <div className="order-2 space-y-10 lg:order-1 lg:col-start-1 lg:row-start-1">
+            <div className="order-2 space-y-6 sm:space-y-10 lg:order-1 lg:col-start-1 lg:row-start-1">
               <div>
                 <span className="mx-eyebrow">Midex</span>
                 <h2 className="mx-section-title mt-4">{t("overview")}</h2>
@@ -183,7 +183,7 @@ export async function ProductDetailPageContent({ slug }: Props) {
           </div>
 
           {related.length > 0 && (
-            <div className="mt-16 border-t border-midex-line pt-14">
+            <div className="mt-10 border-t border-midex-line pt-8 sm:mt-16 sm:pt-14">
               <div className="flex flex-wrap items-end justify-between gap-4">
                 <h2 className="font-display text-xl font-bold text-midex-navy sm:text-2xl">
                   {t("relatedProductsTitle")}
@@ -204,9 +204,9 @@ export async function ProductDetailPageContent({ slug }: Props) {
                   <Link
                     key={item.slug}
                     href={`/products/${item.slug}`}
-                    className="group flex items-center gap-3 rounded-xl border border-midex-line bg-midex-surface/40 p-4 no-underline transition-all hover:border-midex-mint/45 hover:bg-white hover:shadow-sm"
+                    className="group flex items-center gap-2.5 rounded-lg border border-midex-line bg-midex-surface/40 p-3 no-underline transition-all hover:border-midex-mint/45 hover:bg-white hover:shadow-sm sm:gap-3 sm:rounded-xl sm:p-4"
                   >
-                    <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-lg bg-white p-1">
+                    <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-md bg-white p-1 sm:h-14 sm:w-14 sm:rounded-lg">
                       <Image
                         src={item.image}
                         alt={item.title}

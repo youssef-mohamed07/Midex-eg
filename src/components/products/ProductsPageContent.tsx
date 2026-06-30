@@ -29,7 +29,7 @@ function ProductRow({
     <article className="group mx-card grid overflow-hidden no-underline md:grid-cols-[minmax(140px,220px)_1fr] lg:grid-cols-[minmax(160px,260px)_1fr]">
       <Link
         href={`/products/${product.slug}`}
-        className="relative flex aspect-[4/3] items-center justify-center bg-midex-surface/80 p-6 md:aspect-auto md:min-h-[180px]"
+        className="relative flex aspect-card-tall items-center justify-center bg-midex-surface/80 p-4 md:aspect-auto md:min-h-[180px] sm:p-6"
       >
         <Image
           src={product.image}
@@ -41,20 +41,20 @@ function ProductRow({
         />
       </Link>
 
-      <div className="flex flex-col justify-center border-t border-midex-line p-5 md:border-t-0 md:border-s md:p-6 lg:p-8">
-        <p className="text-[11px] font-semibold uppercase tracking-wider text-midex-blue">
+      <div className="flex flex-col justify-center border-t border-midex-line p-3.5 md:border-t-0 md:border-s md:p-6 lg:p-8">
+        <p className="text-[10px] font-semibold uppercase tracking-wider text-midex-blue sm:text-[11px]">
           {categoryLabel}
         </p>
         <Link
           href={`/products/${product.slug}`}
-          className="mt-2 font-display text-lg font-bold leading-snug text-midex-navy no-underline transition-colors group-hover:text-midex-blue sm:text-xl"
+          className="mt-1.5 font-display text-base font-bold leading-snug text-midex-navy no-underline transition-colors group-hover:text-midex-blue sm:mt-2 sm:text-xl"
         >
           {product.title}
         </Link>
         <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-midex-gray/75 sm:text-base">
           {product.excerpt}
         </p>
-        <div className="mt-5 flex flex-wrap items-center gap-4">
+        <div className="mt-4 flex flex-wrap items-center gap-3 sm:mt-5 sm:gap-4">
           <Link
             href={`/products/${product.slug}`}
             className="mx-link-arrow text-sm no-underline"

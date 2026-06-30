@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
@@ -264,8 +265,13 @@ export function Header() {
   const [headerVisible, setHeaderVisible] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
   const [openMobileKeys, setOpenMobileKeys] = useState<Set<string>>(new Set());
+  const [mounted, setMounted] = useState(false);
   const lastScrollY = useRef(0);
   const scrollTicking = useRef(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const toggleMobileKey = (key: string) => {
     setOpenMobileKeys((prev) => {
@@ -504,47 +510,50 @@ export function Header() {
         </div>
       </div>
 
-      {menuOpen && (
-        <>
-          <button
-            type="button"
-            className="midex-mobile-backdrop pointer-events-auto fixed inset-0 z-[45] bg-midex-navy-dark/55 backdrop-blur-[2px] lg:hidden"
-            aria-label={t("close")}
-            onClick={closeMenu}
-          />
+      {mounted &&
+        menuOpen &&
+        createPortal(
+          <>
+            <button
+              type="button"
+              className="midex-mobile-backdrop pointer-events-auto fixed inset-0 z-[45] bg-midex-navy-dark/55 backdrop-blur-[2px] lg:hidden"
+              aria-label={t("close")}
+              onClick={closeMenu}
+            />
 
-          <div className="midex-mobile-nav pointer-events-auto fixed inset-x-3 top-[calc(0.75rem+3.5rem+0.5rem)] z-[55] flex max-h-[min(calc(100dvh-5.5rem),640px)] flex-col overflow-hidden rounded-2xl border border-white/60 bg-white shadow-2xl shadow-midex-navy/20 sm:inset-x-5 lg:hidden">
-            <nav
-              aria-label="Mobile navigation"
-              className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain"
-            >
-              <ul className="space-y-1.5 p-3">
-                {navItems.map((item) => (
-                  <MobileNavItem
-                    key={item.href}
-                    item={item}
-                    openKeys={openMobileKeys}
-                    toggleKey={toggleMobileKey}
-                    onNavigate={closeMenu}
-                  />
-                ))}
-              </ul>
+            <div className="midex-mobile-nav pointer-events-auto fixed inset-x-3 top-[calc(0.75rem+3.5rem+0.5rem)] z-[55] flex max-h-[min(calc(100dvh-5.5rem),640px)] flex-col overflow-hidden rounded-2xl border border-white/60 bg-white shadow-2xl shadow-midex-navy/20 sm:inset-x-5 lg:hidden">
+              <nav
+                aria-label="Mobile navigation"
+                className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain"
+              >
+                <ul className="space-y-1.5 p-3">
+                  {navItems.map((item) => (
+                    <MobileNavItem
+                      key={item.href}
+                      item={item}
+                      openKeys={openMobileKeys}
+                      toggleKey={toggleMobileKey}
+                      onNavigate={closeMenu}
+                    />
+                  ))}
+                </ul>
 
-              <div className="mt-auto space-y-4 border-t border-midex-line/80 bg-midex-surface/30 px-4 py-4">
-                <Link
-                  href="/contact"
-                  onClick={closeMenu}
-                  className="group mx-btn mx-btn-primary w-full justify-center"
-                >
-                  {t("contactUs")}
-                  <span className="mx-arrow">→</span>
-                </Link>
-                <LanguageSwitcher className="justify-center" />
-              </div>
-            </nav>
-          </div>
-        </>
-      )}
+                <div className="mt-auto space-y-4 border-t border-midex-line/80 bg-midex-surface/30 px-4 py-4">
+                  <Link
+                    href="/contact"
+                    onClick={closeMenu}
+                    className="group mx-btn mx-btn-primary w-full justify-center"
+                  >
+                    {t("contactUs")}
+                    <span className="mx-arrow">→</span>
+                  </Link>
+                  <LanguageSwitcher className="justify-center" />
+                </div>
+              </nav>
+            </div>
+          </>,
+          document.body,
+        )}
     </header>
   );
 }

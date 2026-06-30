@@ -62,7 +62,7 @@ function MobileDot({ side }: { side: "left" | "right" }) {
   return (
     <span
       ref={ref}
-      className={`${className} mx-timeline-dot absolute top-6 block h-3 w-3 rounded-full border-2 border-white bg-midex-mint shadow-sm ring-4 ring-midex-mint/20 -start-[1.65rem] lg:hidden`}
+      className={`${className} mx-timeline-dot absolute top-5 block h-2.5 w-2.5 rounded-full border-2 border-white bg-midex-mint shadow-sm ring-2 ring-midex-mint/20 -start-[1.35rem] sm:top-6 sm:h-3 sm:w-3 sm:ring-4 sm:-start-[1.65rem] lg:hidden`}
       aria-hidden
     />
   );
@@ -86,14 +86,14 @@ function TimelineCard({
           : "lg:col-start-2 lg:justify-self-start lg:ps-12 lg:text-start"
       }`}
     >
-      <div className="rounded-2xl border border-midex-line bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
-        <span className="font-display text-sm font-bold tabular-nums text-midex-blue">
+      <div className="rounded-xl border border-midex-line bg-white p-4 shadow-sm transition-shadow hover:shadow-md sm:rounded-2xl sm:p-6">
+        <span className="font-display text-xs font-bold tabular-nums text-midex-blue sm:text-sm">
           {item.step}
         </span>
-        <h3 className="mt-2 font-display text-lg font-bold text-midex-navy sm:text-xl">
+        <h3 className="mt-1.5 font-display text-base font-bold text-midex-navy sm:mt-2 sm:text-xl">
           {item.title}
         </h3>
-        <p className="mt-2 text-sm leading-relaxed text-midex-gray/75 sm:text-base">
+        <p className="mt-1.5 text-[13px] leading-relaxed text-midex-gray/75 sm:mt-2 sm:text-base">
           {item.text}
         </p>
       </div>
@@ -109,7 +109,7 @@ export function TimelineTrack({ items }: { items: TimelineItem[] }) {
         aria-hidden
       />
 
-      <ol className="relative space-y-8 border-s-2 border-midex-line ps-8 lg:space-y-0 lg:border-0 lg:ps-0">
+      <ol className="relative space-y-5 border-s-2 border-midex-line ps-6 sm:space-y-8 sm:ps-8 lg:space-y-0 lg:border-0 lg:ps-0">
         {items.map((item, index) => {
           const side: "left" | "right" = index % 2 === 0 ? "left" : "right";
 

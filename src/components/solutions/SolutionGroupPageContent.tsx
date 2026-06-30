@@ -95,7 +95,7 @@ export async function SolutionGroupPageContent({ slug }: Props) {
               )}
             </div>
 
-            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-midex-line shadow-lg">
+            <div className="relative aspect-card-tall overflow-hidden rounded-xl border border-midex-line shadow-lg sm:rounded-2xl sm:aspect-[4/3]">
               <Image
                 src={group.image}
                 alt={label}

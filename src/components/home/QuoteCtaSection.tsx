@@ -8,19 +8,19 @@ export async function QuoteCtaSection() {
   const tc = await getTranslations("nav");
 
   return (
-    <section className="bg-white py-16 lg:py-24">
+    <section className="bg-white py-10 sm:py-16 lg:py-24">
       <div className="mx-container">
-        <div className="relative overflow-hidden rounded-[1.5rem] bg-midex-navy px-5 py-10 shadow-2xl mx-mesh-bg sm:rounded-[2rem] sm:px-8 sm:py-12 lg:px-16 lg:py-16">
+        <div className="relative overflow-hidden rounded-[1.25rem] bg-midex-navy px-4 py-8 shadow-2xl mx-mesh-bg sm:rounded-[2rem] sm:px-8 sm:py-12 lg:px-16 lg:py-16">
           <div className="mx-grid-overlay pointer-events-none absolute inset-0" />
           <div className="pointer-events-none absolute inset-0 overflow-hidden">
             <div className="absolute -end-16 -top-16 h-64 w-64 rounded-full bg-midex-mint/15 blur-3xl" />
             <div className="absolute -bottom-20 start-1/3 h-64 w-64 rounded-full bg-midex-blue/15 blur-3xl" />
           </div>
 
-          <div className="relative grid gap-10 lg:grid-cols-[1fr_auto] lg:items-center lg:gap-16">
+          <div className="relative grid gap-6 sm:gap-10 lg:grid-cols-[1fr_auto] lg:items-center lg:gap-16">
             <div>
               <span className="mx-eyebrow mx-eyebrow--light">Midex</span>
-              <h2 className="mt-4 font-display text-3xl font-bold leading-tight text-white sm:text-4xl">
+              <h2 className="mt-3 font-display text-2xl font-bold leading-tight text-white sm:mt-4 sm:text-4xl">
                 {t("quoteTitle")}
               </h2>
               <p className="mt-4 max-w-xl text-base leading-relaxed text-white/70">

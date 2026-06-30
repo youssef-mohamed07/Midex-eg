@@ -41,9 +41,9 @@ function PersonAvatar({ name }: { name: string }) {
   return (
     <div className="relative mx-auto shrink-0 transition-transform duration-500 group-hover:scale-105">
       <div className="absolute -inset-0.5 rounded-full bg-gradient-to-br from-midex-mint/45 to-midex-blue/35 blur-[2px] opacity-70 transition-opacity duration-500 group-hover:opacity-100" />
-      <div className="relative flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-midex-navy to-midex-blue shadow-md ring-[3px] ring-white transition-shadow duration-500 group-hover:shadow-lg group-hover:ring-midex-mint/40">
+      <div className="relative flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-midex-navy to-midex-blue shadow-md ring-2 ring-white transition-shadow duration-500 group-hover:shadow-lg group-hover:ring-midex-mint/40 sm:h-16 sm:w-16 sm:ring-[3px]">
         <svg
-          className="h-7 w-7 text-white/95 transition-transform duration-500 group-hover:scale-110"
+          className="h-6 w-6 text-white/95 transition-transform duration-500 group-hover:scale-110 sm:h-7 sm:w-7"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -71,11 +71,11 @@ function PersonAvatar({ name }: { name: string }) {
 function TestimonialCard({ item, index }: { item: Testimonial; index: number }) {
   return (
     <figure
-      className="group mx-testimonial-card flex h-full flex-col rounded-2xl border border-midex-line/80 bg-white/95 p-5 shadow-lg shadow-midex-navy/5 backdrop-blur-sm transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1.5 hover:border-midex-mint/45 hover:shadow-xl hover:shadow-midex-navy/10 sm:p-7"
+      className="group mx-testimonial-card flex h-full flex-col rounded-xl border border-midex-line/80 bg-white/95 p-4 shadow-lg shadow-midex-navy/5 backdrop-blur-sm transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1.5 hover:border-midex-mint/45 hover:shadow-xl hover:shadow-midex-navy/10 sm:rounded-2xl sm:p-7"
       style={{ animationDelay: `${index * 120}ms` }}
     >
       <PersonAvatar name={item.name} />
-      <blockquote className="mt-5 flex-1 text-sm leading-relaxed text-midex-gray/85 transition-colors duration-300 group-hover:text-midex-gray sm:text-[15px] sm:leading-[1.65]">
+      <blockquote className="mt-4 flex-1 text-[13px] leading-relaxed text-midex-gray/85 transition-colors duration-300 group-hover:text-midex-gray sm:mt-5 sm:text-[15px] sm:leading-[1.65]">
         &ldquo;{item.quote}&rdquo;
       </blockquote>
       <figcaption className="mt-5 border-t border-midex-line pt-4 text-center transition-colors duration-300 group-hover:border-midex-mint/30">
@@ -138,7 +138,7 @@ export function TestimonialsSlider({
       </div>
 
       <div className="relative mx-container">
-        <div className="mb-8 text-center sm:mb-10 lg:mb-12">
+        <div className="mb-6 text-center sm:mb-10 lg:mb-12">
           <span className="mx-eyebrow mx-eyebrow--center">Midex</span>
           <h2 className="mx-section-title mt-4">{title}</h2>
         </div>

@@ -43,10 +43,10 @@ function FeaturedPost({
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className="group block overflow-hidden rounded-3xl border border-midex-line bg-white shadow-md no-underline transition-all duration-500 hover:-translate-y-1 hover:border-midex-mint/45 hover:shadow-xl"
+      className="group block overflow-hidden rounded-xl border border-midex-line bg-white shadow-md no-underline transition-all duration-500 hover:-translate-y-1 hover:border-midex-mint/45 hover:shadow-xl sm:rounded-2xl lg:rounded-3xl"
     >
       <div className="grid lg:grid-cols-2">
-        <div className="relative aspect-[16/10] min-h-[220px] lg:aspect-auto lg:min-h-[340px]">
+        <div className="relative aspect-card min-h-0 lg:aspect-auto lg:min-h-[340px]">
           <Image
             src={post.image}
             alt={post.title}
@@ -56,20 +56,20 @@ function FeaturedPost({
             priority
           />
         </div>
-        <div className="flex flex-col justify-center p-7 sm:p-8 lg:p-10">
+        <div className="flex flex-col justify-center p-4 sm:p-8 lg:p-10">
           <PostMeta
             date={post.date}
             category={post.category}
             readTime={post.readTime}
             readLabel={readLabel}
           />
-          <h3 className="mt-4 font-display text-2xl font-bold leading-tight text-midex-navy transition-colors group-hover:text-midex-blue sm:text-3xl">
+          <h3 className="mt-3 font-display text-lg font-bold leading-tight text-midex-navy transition-colors group-hover:text-midex-blue sm:mt-4 sm:text-3xl">
             {post.title}
           </h3>
-          <p className="mt-4 line-clamp-3 text-base leading-relaxed text-midex-gray/75">
+          <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-midex-gray/75 sm:mt-4 sm:line-clamp-3 sm:text-base">
             {post.excerpt}
           </p>
-          <span className="mx-link-arrow mt-6 text-sm">
+          <span className="mx-link-arrow mt-4 text-sm sm:mt-6">
             {readPostLabel}
             <span className="mx-arrow">→</span>
           </span>
@@ -89,9 +89,9 @@ function PostCard({
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-midex-line bg-white no-underline shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-midex-mint/45 hover:shadow-lg"
+      className="group flex h-full flex-col overflow-hidden rounded-xl border border-midex-line bg-white no-underline shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-midex-mint/45 hover:shadow-lg sm:rounded-2xl"
     >
-      <div className="relative aspect-[16/10] overflow-hidden">
+      <div className="relative aspect-card overflow-hidden">
         <Image
           src={post.image}
           alt={post.title}
@@ -100,14 +100,14 @@ function PostCard({
           sizes="(max-width: 768px) 100vw, 33vw"
         />
       </div>
-      <div className="flex flex-1 flex-col p-5 sm:p-6">
+      <div className="flex flex-1 flex-col p-3.5 sm:p-6">
         <PostMeta
           date={post.date}
           category={post.category}
           readTime={post.readTime}
           readLabel={readLabel}
         />
-        <h3 className="mt-3 font-display text-lg font-bold leading-snug text-midex-navy transition-colors group-hover:text-midex-blue">
+        <h3 className="mt-2 font-display text-base font-bold leading-snug text-midex-navy transition-colors group-hover:text-midex-blue sm:mt-3 sm:text-lg">
           {post.title}
         </h3>
         <p className="mt-2 line-clamp-2 flex-1 text-sm leading-relaxed text-midex-gray/70">
@@ -135,7 +135,7 @@ export async function NewsSection({ locale }: Props) {
     <section className="mx-section bg-white">
       <div className="mx-container">
         <RevealOnScroll>
-          <div className="mb-10 flex flex-col gap-5 sm:mb-12 lg:flex-row lg:items-end lg:justify-between">
+          <div className="mb-6 flex flex-col gap-4 sm:mb-10 sm:gap-5 lg:mb-12 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-2xl">
               <span className="mx-eyebrow">Midex</span>
               <h2 className="mx-section-title mt-4">{t("blogTitle")}</h2>
@@ -159,7 +159,7 @@ export async function NewsSection({ locale }: Props) {
         </RevealOnScroll>
 
         {rest.length > 0 && (
-          <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-4 grid gap-3 sm:mt-6 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
             {rest.map((post, index) => (
               <RevealOnScroll key={post.slug} delay={(index + 1) * 80}>
                 <PostCard post={post} readLabel={tb("minRead")} />

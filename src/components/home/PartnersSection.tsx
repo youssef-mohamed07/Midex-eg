@@ -15,14 +15,14 @@ function PartnerMarquee() {
         {track.map((partner, index) => (
           <div
             key={`${partner.name}-${index}`}
-            className="flex h-16 w-36 shrink-0 items-center justify-center rounded-xl border border-midex-line/70 bg-white px-4 shadow-sm sm:h-[4.5rem] sm:w-40"
+            className="flex h-14 w-32 shrink-0 items-center justify-center rounded-lg border border-midex-line/70 bg-white px-3 shadow-sm sm:h-[4.5rem] sm:w-40 sm:rounded-xl sm:px-4"
           >
             <Image
               src={partner.image}
               alt={partner.name}
               width={140}
               height={64}
-              className="max-h-10 w-auto max-w-full object-contain sm:max-h-11"
+              className="max-h-8 w-auto max-w-full object-contain sm:max-h-11"
             />
           </div>
         ))}

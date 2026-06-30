@@ -20,11 +20,11 @@ function EventCard({
 
   return (
     <figure
-      className={`group relative overflow-hidden rounded-2xl border border-midex-line bg-midex-navy shadow-sm transition-all duration-500 hover:-translate-y-0.5 hover:border-midex-mint/40 hover:shadow-lg ${className}`}
+      className={`group relative overflow-hidden rounded-xl border border-midex-line bg-midex-navy shadow-sm transition-all duration-500 hover:-translate-y-0.5 hover:border-midex-mint/40 hover:shadow-lg sm:rounded-2xl ${className}`}
     >
       <div
         className={`relative w-full overflow-hidden ${
-          featured ? "aspect-[16/10] sm:aspect-[16/9]" : "aspect-[4/3]"
+          featured ? "aspect-card sm:aspect-[16/9]" : "aspect-card-tall"
         }`}
       >
         <Image
@@ -49,7 +49,7 @@ function EventCard({
           </span>
         )}
 
-        <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-midex-navy/95 via-midex-navy/70 to-transparent px-4 pb-4 pt-10 sm:px-5 sm:pb-5 sm:pt-12">
+        <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-midex-navy/95 via-midex-navy/70 to-transparent px-3 pb-3 pt-8 sm:px-5 sm:pb-5 sm:pt-12">
           {event.date && (
             <time className="text-[11px] font-semibold uppercase tracking-wider text-midex-mint">
               {event.date}
@@ -57,7 +57,7 @@ function EventCard({
           )}
           <h3
             className={`mt-1 font-display font-bold leading-snug text-white ${
-              featured ? "text-lg sm:text-xl lg:text-2xl" : "text-sm sm:text-base"
+              featured ? "text-base sm:text-xl lg:text-2xl" : "text-xs sm:text-base"
             }`}
           >
             {event.title}
@@ -91,7 +91,7 @@ export function EventsSection() {
   return (
     <section className="mx-section bg-white">
       <div className="mx-container">
-        <div className="mb-10 flex flex-col gap-4 sm:mb-12 lg:flex-row lg:items-end lg:justify-between">
+        <div className="mb-6 flex flex-col gap-3 sm:mb-10 sm:gap-4 lg:mb-12 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-2xl">
             <span className="mx-eyebrow">Midex</span>
             <h2 className="mx-section-title mt-4">{t("ourEvents")}</h2>

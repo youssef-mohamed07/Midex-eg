@@ -47,10 +47,11 @@ export function ContactForm() {
 
   return (
     <div className="midex-contact-form-card">
-      <h2 className="font-display text-2xl font-bold text-midex-navy">
+      <span className="mx-eyebrow">Midex</span>
+      <h2 className="mt-3 font-display text-2xl font-bold text-midex-navy sm:text-3xl">
         {t("sendMessage")}
       </h2>
-      <p className="mt-2 text-sm text-midex-gray/80">{t("formIntro")}</p>
+      <p className="mt-2 text-sm leading-relaxed text-midex-gray/75">{t("formIntro")}</p>
 
       {state === "success" && (
         <div className="midex-form-notice midex-form-notice--success" role="status">
@@ -142,10 +143,11 @@ export function ContactForm() {
 
         <button
           type="submit"
-          className="mx-btn mx-btn-primary mt-6 w-full sm:w-auto"
+          className="group mx-btn mx-btn-primary mt-8 w-full sm:w-auto"
           disabled={state === "loading"}
         >
-          {state === "loading" ? "…" : `${t("submit")} →`}
+          {state === "loading" ? "…" : t("submit")}
+          {state !== "loading" && <span className="mx-arrow">→</span>}
         </button>
       </form>
     </div>

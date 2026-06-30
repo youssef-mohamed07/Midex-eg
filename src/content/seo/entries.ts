@@ -63,21 +63,24 @@ export const seoEntries: SeoEntry[] = [
     title: "Contact Midex | Quotes & Engineering Support",
     description:
       "Request a quote or speak with our engineering team about purified water systems, products, and turnkey solutions. sales@midex-eg.com",
-    openGraph: { type: "website" },
+    openGraph: { type: "website", image: "/images/hero/slide-3.png" },
+    twitter: { card: "summary_large_image", image: "/images/hero/slide-3.png" },
     structuredData: { type: "ContactPage" },
   }),
   entry("contact", "ar", {
     title: "اتصل بميدكس | عروض أسعار ودعم هندسي",
     description:
       "اطلب عرض سعر أو تحدث مع فريق الهندسة حول أنظمة المياه المعالجة والمنتجات والحلول المتكاملة.",
-    openGraph: { type: "website" },
+    openGraph: { type: "website", image: "/images/hero/slide-3.png" },
+    twitter: { card: "summary_large_image", image: "/images/hero/slide-3.png" },
     structuredData: { type: "ContactPage" },
   }),
   entry("contact", "de", {
     title: "Midex Kontakt | Angebote & Engineering-Support",
     description:
       "Fordern Sie ein Angebot an oder sprechen Sie mit unserem Team über Reinwassersysteme, Produkte und Turnkey-Lösungen.",
-    openGraph: { type: "website" },
+    openGraph: { type: "website", image: "/images/hero/slide-3.png" },
+    twitter: { card: "summary_large_image", image: "/images/hero/slide-3.png" },
     structuredData: { type: "ContactPage" },
   }),
 
@@ -125,19 +128,22 @@ export const seoEntries: SeoEntry[] = [
   entry("product-category", "en", {
     title: "{title} | Midex Product Categories",
     description: "{description} Explore hygienic components and request a quote.",
-    openGraph: { type: "website" },
+    openGraph: { type: "website", image: "{image}" },
+    twitter: { card: "summary_large_image", image: "{image}" },
     structuredData: { type: "CollectionPage" },
   }),
   entry("product-category", "ar", {
     title: "{title} | فئات منتجات ميدكس",
     description: "{description} استكشف المكونات الصحية واطلب عرض سعر.",
-    openGraph: { type: "website" },
+    openGraph: { type: "website", image: "{image}" },
+    twitter: { card: "summary_large_image", image: "{image}" },
     structuredData: { type: "CollectionPage" },
   }),
   entry("product-category", "de", {
     title: "{title} | Midex Produktkategorien",
     description: "{description} Hygienische Komponenten entdecken und Angebot anfordern.",
-    openGraph: { type: "website" },
+    openGraph: { type: "website", image: "{image}" },
+    twitter: { card: "summary_large_image", image: "{image}" },
     structuredData: { type: "CollectionPage" },
   }),
 

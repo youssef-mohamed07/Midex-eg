@@ -293,6 +293,8 @@ export const contentDe: LocaleContent = {
     solutions: {
       description:
         "Upgrade und Re-Engineering bestehender PW-, WFI- und Verteilungssysteme ohne Störung validierter Produktion.",
+      intro:
+        "Einen validierten Versorgungssystem mitten in der Produktion zu ersetzen, ist selten praktikabel — dennoch ändern sich Kapazitäts-, Leistungs- und Layout-Anforderungen. Midex-Modifikationen erweitern bestehende PW- und WFI-Infrastruktur, ohne Ihre Qualifizierung zu gefährden: kontrolliertes Change Management, aktualisierte As-Built-Dokumentation und verifizierte Leistung halten die Produktion am Laufen, während sich das System weiterentwickelt.",
       children: {
         "pw-station-modification": {
           label: "Reinwasserstations-Modifikation",

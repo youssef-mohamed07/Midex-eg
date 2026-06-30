@@ -2,17 +2,26 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { Poppins } from "next/font/google";
+import { Poppins, Sora } from "next/font/google";
 import { routing } from "@/i18n/routing";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { FloatingSocialButton } from "@/components/layout/FloatingSocialButton";
 import { getSiteUrl, siteConfig } from "@/lib/seo/config";
+import { buildSiteIcons } from "@/lib/seo/metadata";
 import "../globals.css";
 
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-poppins",
+  display: "swap",
+});
+
+const sora = Sora({
+  subsets: ["latin"],
+  weight: ["500", "600", "700", "800"],
+  variable: "--font-sora",
   display: "swap",
 });
 
@@ -27,6 +36,8 @@ export async function generateMetadata(): Promise<Metadata> {
     authors: [{ name: siteConfig.legalName, url: getSiteUrl() }],
     creator: siteConfig.name,
     publisher: siteConfig.name,
+    icons: buildSiteIcons(),
+    manifest: "/manifest.webmanifest",
     formatDetection: {
       email: false,
       address: false,
@@ -53,12 +64,13 @@ export default async function LocaleLayout({
   const dir = locale === "ar" ? "rtl" : "ltr";
 
   return (
-    <html lang={locale} dir={dir} className={poppins.variable}>
-      <body className="font-body antialiased">
+    <html lang={locale} dir={dir} className={`${poppins.variable} ${sora.variable}`}>
+      <body className="overflow-x-hidden font-body antialiased">
         <NextIntlClientProvider messages={messages}>
           <Header />
-          <main>{children}</main>
+          <main className="overflow-x-hidden">{children}</main>
           <Footer />
+          <FloatingSocialButton />
         </NextIntlClientProvider>
       </body>
     </html>

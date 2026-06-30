@@ -1,5 +1,6 @@
 import type { ResolvedSeo } from "@/content/seo/types";
-import { siteConfig, getSiteUrl } from "@/lib/seo/config";
+import { getSiteUrl, siteConfig } from "@/lib/seo/config";
+import { toAbsoluteImageUrl } from "@/lib/seo/images";
 
 type JsonLdInput = {
   seo: ResolvedSeo;
@@ -15,6 +16,8 @@ export function buildOrganizationJsonLd() {
     name: siteConfig.name,
     legalName: siteConfig.legalName,
     url: getSiteUrl(),
+    logo: toAbsoluteImageUrl(siteConfig.brandIcon),
+    image: toAbsoluteImageUrl(siteConfig.defaultOgImage),
     email: siteConfig.email,
     telephone: siteConfig.phones,
     address: {
@@ -25,7 +28,11 @@ export function buildOrganizationJsonLd() {
       postalCode: siteConfig.address.postalCode,
       addressCountry: siteConfig.address.country,
     },
-    sameAs: [siteConfig.social.linkedIn],
+    sameAs: [
+      siteConfig.social.linkedIn,
+      siteConfig.social.twitter,
+      siteConfig.social.whatsApp,
+    ].filter(Boolean),
   };
 }
 
@@ -49,6 +56,7 @@ export function buildPageJsonLd({ seo, breadcrumbs, article, product }: JsonLdIn
     description: seo.description,
     url: seo.canonicalUrl,
     inLanguage: seo.locale,
+    ...(seo.openGraph.image ? { image: seo.openGraph.image } : {}),
     isPartOf: {
       "@type": "WebSite",
       name: siteConfig.name,
@@ -69,6 +77,7 @@ export function buildPageJsonLd({ seo, breadcrumbs, article, product }: JsonLdIn
   }
 
   if (type === "Article" && article) {
+    page.headline = seo.title;
     page.datePublished = article.datePublished;
     page.dateModified = article.dateModified ?? article.datePublished;
     page.author = {
@@ -79,6 +88,10 @@ export function buildPageJsonLd({ seo, breadcrumbs, article, product }: JsonLdIn
       "@type": "Organization",
       name: siteConfig.name,
       url: getSiteUrl(),
+      logo: {
+        "@type": "ImageObject",
+        url: toAbsoluteImageUrl(siteConfig.brandIcon),
+      },
     };
   }
 
@@ -89,6 +102,9 @@ export function buildPageJsonLd({ seo, breadcrumbs, article, product }: JsonLdIn
       "@type": "Brand",
       name: siteConfig.name,
     };
+    if (seo.openGraph.image) {
+      page.image = seo.openGraph.image;
+    }
   }
 
   return page;

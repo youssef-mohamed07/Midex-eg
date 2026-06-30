@@ -10,18 +10,30 @@ function PostMeta({
   category,
   readTime,
   readLabel,
+  light = false,
 }: {
   date: string;
   category: string;
   readTime: number;
   readLabel: string;
+  light?: boolean;
 }) {
   return (
-    <div className="flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-wider">
-      <span className="rounded-full bg-midex-mint/20 px-3 py-1 text-midex-navy">{category}</span>
-      <span className="text-midex-blue">{date}</span>
-      <span className="text-midex-gray/50">·</span>
-      <span className="text-midex-gray/60">
+    <div
+      className={`flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-medium ${
+        light ? "text-white/75" : "text-midex-gray/65"
+      }`}
+    >
+      <span
+        className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider ${
+          light ? "bg-white/15 text-midex-mint" : "bg-midex-surface text-midex-blue"
+        }`}
+      >
+        {category}
+      </span>
+      <time>{date}</time>
+      <span aria-hidden>·</span>
+      <span>
         {readTime} {readLabel}
       </span>
     </div>
@@ -32,100 +44,117 @@ export async function BlogPageContent() {
   const locale = (await getLocale()) as Locale;
   const t = await getTranslations("blog");
   const blogPosts = getLocalizedBlogPosts(locale);
+
+  if (blogPosts.length === 0) return null;
+
   const [featured, ...rest] = blogPosts;
 
   return (
     <>
-      <PageHero title={t("title")} subtitle={t("subtitle")} />
+      <PageHero title={t("title")} subtitle={t("subtitle")} eyebrow="Midex" compact />
 
-      <section className="mx-section bg-midex-surface">
+      <section className="mx-section bg-white">
         <div className="mx-container">
-          <p className="text-xs font-semibold uppercase tracking-wider text-midex-blue">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-midex-blue">
             {t("featured")}
           </p>
 
           <Link
             href={`/blog/${featured.slug}`}
-            className="group mx-card mt-4 block overflow-hidden no-underline lg:grid lg:grid-cols-2"
+            className="group mt-5 block overflow-hidden rounded-3xl border border-midex-line bg-white shadow-lg no-underline transition-all duration-500 hover:-translate-y-1 hover:border-midex-mint/40 hover:shadow-xl lg:mt-6"
           >
-            <div className="relative aspect-[16/10] overflow-hidden lg:aspect-auto lg:min-h-[360px]">
-              <Image
-                src={featured.image}
-                alt={featured.title}
-                fill
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                priority
-              />
+            <div className="grid lg:grid-cols-2">
+              <div className="relative aspect-[16/10] min-h-[240px] lg:aspect-auto lg:min-h-[380px]">
+                <Image
+                  src={featured.image}
+                  alt={featured.title}
+                  fill
+                  className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
+                  sizes="(max-width: 1024px) 100vw, 640px"
+                  priority
+                />
+              </div>
+
+              <div className="flex flex-col justify-center p-8 lg:p-10 xl:p-12">
+                <PostMeta
+                  date={featured.date}
+                  category={featured.category}
+                  readTime={featured.readTime}
+                  readLabel={t("minRead")}
+                />
+                <h2 className="mt-4 font-display text-2xl font-bold leading-tight text-midex-navy transition-colors group-hover:text-midex-blue sm:text-3xl">
+                  {featured.title}
+                </h2>
+                <p className="mt-4 line-clamp-3 text-base leading-relaxed text-midex-gray/75">
+                  {featured.excerpt}
+                </p>
+                <span className="mx-link-arrow mt-6 text-sm">
+                  {t("readPost")}
+                  <span className="mx-arrow">→</span>
+                </span>
+              </div>
             </div>
-            <div className="flex flex-col justify-center p-8 lg:p-10">
-              <PostMeta
-                date={featured.date}
-                category={featured.category}
-                readTime={featured.readTime}
-                readLabel={t("minRead")}
-              />
-              <h2 className="mt-4 font-display text-2xl font-bold text-midex-navy transition group-hover:text-midex-blue lg:text-3xl">
-                {featured.title}
+          </Link>
+
+          {rest.length > 0 && (
+            <>
+              <div className="mx-hairline my-14 lg:my-16" />
+
+              <h2 className="font-display text-2xl font-bold text-midex-navy sm:text-3xl">
+                {t("latestPosts")}
               </h2>
-              <p className="mt-3 leading-relaxed text-midex-gray/80">{featured.excerpt}</p>
-              <span className="mt-6 inline-flex text-sm font-semibold text-midex-blue">
-                {t("readPost")} →
-              </span>
-            </div>
-          </Link>
+
+              <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {rest.map((post) => (
+                  <Link
+                    key={post.slug}
+                    href={`/blog/${post.slug}`}
+                    className="group flex h-full flex-col overflow-hidden rounded-2xl border border-midex-line bg-white no-underline shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-midex-mint/45 hover:shadow-lg"
+                  >
+                    <div className="relative aspect-[16/10] overflow-hidden">
+                      <Image
+                        src={post.image}
+                        alt={post.title}
+                        fill
+                        className="object-cover transition-transform duration-600 group-hover:scale-[1.05]"
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                      />
+                      <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-midex-navy/50 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+                    </div>
+                    <div className="flex flex-1 flex-col p-5 sm:p-6">
+                      <PostMeta
+                        date={post.date}
+                        category={post.category}
+                        readTime={post.readTime}
+                        readLabel={t("minRead")}
+                      />
+                      <h3 className="mt-3 font-display text-lg font-bold leading-snug text-midex-navy transition-colors group-hover:text-midex-blue">
+                        {post.title}
+                      </h3>
+                      <p className="mt-2 line-clamp-2 flex-1 text-sm leading-relaxed text-midex-gray/70">
+                        {post.excerpt}
+                      </p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </>
+          )}
         </div>
       </section>
 
-      <section className="mx-section bg-white">
+      <section className="border-t border-midex-line bg-midex-surface py-14 lg:py-16">
         <div className="mx-container">
-          <h2 className="font-display text-2xl font-bold text-midex-navy sm:text-3xl">
-            {t("latestPosts")}
-          </h2>
-
-          <div className="mt-8 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {rest.map((post) => (
-              <Link
-                key={post.slug}
-                href={`/blog/${post.slug}`}
-                className="group mx-card block overflow-hidden no-underline"
-              >
-                <div className="relative aspect-[16/10] overflow-hidden">
-                  <Image
-                    src={post.image}
-                    alt={post.title}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                  />
-                </div>
-                <div className="p-6">
-                  <PostMeta
-                    date={post.date}
-                    category={post.category}
-                    readTime={post.readTime}
-                    readLabel={t("minRead")}
-                  />
-                  <h3 className="mt-3 font-display text-lg font-bold text-midex-navy transition group-hover:text-midex-blue">
-                    {post.title}
-                  </h3>
-                  <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-midex-gray/75">
-                    {post.excerpt}
-                  </p>
-                </div>
-              </Link>
-            ))}
+          <div className="flex flex-col items-center gap-6 rounded-2xl border border-midex-line bg-white p-8 text-center shadow-sm sm:p-10 lg:flex-row lg:justify-between lg:text-start">
+            <div className="max-w-xl">
+              <h2 className="font-display text-2xl font-bold text-midex-navy">{t("ctaTitle")}</h2>
+              <p className="mt-3 text-base leading-relaxed text-midex-gray/75">{t("ctaText")}</p>
+            </div>
+            <Link className="group mx-btn mx-btn-primary shrink-0" href="/contact">
+              {t("ctaButton")}
+              <span className="mx-arrow">→</span>
+            </Link>
           </div>
-        </div>
-      </section>
-
-      <section className="bg-midex-navy mx-mesh-bg py-16">
-        <div className="mx-container text-center">
-          <h2 className="font-display text-3xl font-bold text-white">{t("ctaTitle")}</h2>
-          <p className="mx-auto mt-4 max-w-2xl text-white/75">{t("ctaText")}</p>
-          <Link className="mx-btn mx-btn-mint mt-8 inline-flex" href="/contact">
-            {t("ctaButton")} →
-          </Link>
         </div>
       </section>
     </>

@@ -30,17 +30,13 @@ function HeroBody({
         <span className="mx-badge mb-4 border-white/20 bg-white/10 text-white">{badge}</span>
       )}
       {eyebrow && (
-        <p className="text-xs font-semibold uppercase tracking-wider text-midex-mint">{eyebrow}</p>
+        <span className="mx-eyebrow mx-eyebrow--light mb-4">{eyebrow}</span>
       )}
-      <h1
-        className={`font-display text-4xl font-bold tracking-tight text-white sm:text-5xl ${
-          eyebrow ? "mt-2" : ""
-        }`}
-      >
+      <h1 className="font-display text-3xl font-bold leading-[1.07] tracking-tight text-white break-words sm:text-4xl sm:text-5xl lg:text-[3.25rem]">
         {title}
       </h1>
       {subtitle && (
-        <p className="mt-4 max-w-2xl text-lg leading-relaxed text-white/75">{subtitle}</p>
+        <p className="mt-4 max-w-2xl text-base leading-relaxed text-white/75 sm:text-lg">{subtitle}</p>
       )}
       {children}
     </div>
@@ -67,8 +63,11 @@ export function PageHero({
     <section
       className={`midex-page-hero mx-mesh-bg ${compact ? "midex-page-hero--compact" : ""}`}
     >
-      <div className="pointer-events-none absolute -left-20 top-32 h-64 w-64 rounded-full bg-midex-mint/15 blur-3xl" />
-      <div className="pointer-events-none absolute -right-20 bottom-0 h-72 w-72 rounded-full bg-midex-blue/10 blur-3xl" />
+      <div className="mx-grid-overlay pointer-events-none absolute inset-0" />
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="pointer-events-none absolute -start-20 top-32 h-64 w-64 rounded-full bg-midex-mint/15 blur-3xl" />
+        <div className="pointer-events-none absolute -end-20 bottom-0 h-72 w-72 rounded-full bg-midex-blue/10 blur-3xl" />
+      </div>
 
       <div className="relative mx-container">
         {breadcrumbs}

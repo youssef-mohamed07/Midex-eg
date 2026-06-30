@@ -9,6 +9,11 @@ export type ProductTranslation = {
   description: string;
 };
 
+export type ProductCategoryDetailsTranslation = {
+  highlights: string[];
+  specs: { label: string; value: string }[];
+};
+
 export type ServiceTranslation = {
   title: string;
   excerpt: string;
@@ -39,10 +44,12 @@ export type BlogPostTranslation = {
 export type SolutionChildTranslation = {
   label: string;
   excerpt: string;
+  intro?: string;
 };
 
 export type SolutionGroupTranslation = {
   description: string;
+  intro?: string;
   children: Record<string, SolutionChildTranslation>;
 };
 
@@ -56,6 +63,7 @@ export type SolutionTranslation = {
 export type LocaleContent = {
   productCategories: Record<string, ProductCategoryTranslation>;
   products: Record<string, ProductTranslation>;
+  productCategoryDetails?: Record<string, ProductCategoryDetailsTranslation>;
   services: ServiceTranslation[];
   newsItems: NewsTranslation[];
   events: Record<string, EventTranslation>;

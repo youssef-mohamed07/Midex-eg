@@ -47,7 +47,7 @@ export async function SolutionChildPageContent({ slug, childSlug }: Props) {
           />
         }
         media={
-          <div className="relative aspect-[16/11] overflow-hidden rounded-2xl border border-white/10 shadow-2xl shadow-black/20">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 shadow-2xl shadow-black/20 sm:aspect-[16/11]">
             <Image
               src={child.image}
               alt={child.label}
@@ -61,12 +61,12 @@ export async function SolutionChildPageContent({ slug, childSlug }: Props) {
       />
 
       <section className="mx-section bg-white">
-        <div className="mx-container grid gap-12 lg:grid-cols-[1fr_320px] lg:gap-16">
+        <div className="mx-container grid gap-8 sm:gap-10 lg:grid-cols-[1fr_320px] lg:gap-16">
           <div>
             <h2 className="font-display text-2xl font-bold text-midex-navy sm:text-3xl">
               {t("introduction")}
             </h2>
-            <p className="mt-5 max-w-3xl text-lg leading-relaxed text-midex-gray/85">
+            <p className="mt-5 max-w-3xl text-base leading-relaxed text-midex-gray/85 sm:text-lg">
               {t("childIntro", { service: child.label })}
             </p>
 

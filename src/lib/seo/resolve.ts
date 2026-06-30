@@ -5,45 +5,44 @@ import { getSeoEntry, getSeoOverride } from "@/content/seo/entries";
 import type { ResolvedSeo, SeoEntry, SeoTemplateContext } from "@/content/seo/types";
 import { getSiteUrl, parseLocale, siteConfig } from "@/lib/seo/config";
 import {
+  interpolateSeoTemplate,
+  resolveTemplateImage,
+  toAbsoluteImageUrl,
+} from "@/lib/seo/images";
+import {
   absoluteUrl,
   buildAlternateUrls,
   localizedPath,
   resolvePathFromRoute,
 } from "@/lib/seo/paths";
 
-function interpolate(template: string, context: SeoTemplateContext = {}) {
-  return template.replace(/\{(\w+)\}/g, (_, key: string) => context[key]?.trim() ?? "");
-}
-
 function applyTemplate(entry: SeoEntry, context: SeoTemplateContext) {
-  const ogImage = entry.openGraph?.image
-    ? interpolate(entry.openGraph.image, context)
-    : undefined;
-
-  const twitterImage = entry.twitter?.image
-    ? interpolate(entry.twitter.image, context)
-    : ogImage;
+  const ogImage = resolveTemplateImage(entry.openGraph?.image, context);
+  const twitterImage =
+    resolveTemplateImage(entry.twitter?.image, context) ?? ogImage;
 
   return {
-    title: interpolate(entry.title, context).trim(),
-    description: interpolate(entry.description, context).trim(),
+    title: interpolateSeoTemplate(entry.title, context).trim(),
+    description: interpolateSeoTemplate(entry.description, context).trim(),
     focusKeyword: entry.focusKeyword,
     keywords: entry.keywords,
     openGraph: {
       ...entry.openGraph,
       title: entry.openGraph?.title
-        ? interpolate(entry.openGraph.title, context)
+        ? interpolateSeoTemplate(entry.openGraph.title, context)
         : undefined,
       description: entry.openGraph?.description
-        ? interpolate(entry.openGraph.description, context)
+        ? interpolateSeoTemplate(entry.openGraph.description, context)
         : undefined,
-      image: ogImage || entry.openGraph?.image,
+      image: ogImage,
     },
     twitter: {
       ...entry.twitter,
-      title: entry.twitter?.title ? interpolate(entry.twitter.title, context) : undefined,
+      title: entry.twitter?.title
+        ? interpolateSeoTemplate(entry.twitter.title, context)
+        : undefined,
       description: entry.twitter?.description
-        ? interpolate(entry.twitter.description, context)
+        ? interpolateSeoTemplate(entry.twitter.description, context)
         : undefined,
       image: twitterImage,
     },
@@ -78,6 +77,7 @@ export function resolveSeo({
     const fallbackTitle = context.title ?? siteConfig.name;
     const fallbackDescription =
       context.description ?? context.excerpt ?? siteConfig.legalName;
+    const fallbackImage = toAbsoluteImageUrl(context.image);
 
     return {
       title: fallbackTitle,
@@ -86,8 +86,18 @@ export function resolveSeo({
       path,
       locale,
       robots: { index: true, follow: true },
-      openGraph: { type: "website", title: fallbackTitle, description: fallbackDescription },
-      twitter: { card: "summary_large_image", title: fallbackTitle, description: fallbackDescription },
+      openGraph: {
+        type: "website",
+        title: fallbackTitle,
+        description: fallbackDescription,
+        image: fallbackImage,
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: fallbackTitle,
+        description: fallbackDescription,
+        image: fallbackImage,
+      },
       alternates: buildAlternateUrls(path),
     };
   }
@@ -97,17 +107,11 @@ export function resolveSeo({
 
   const ogTitle = resolved.openGraph.title ?? resolved.title;
   const ogDescription = resolved.openGraph.description ?? resolved.description;
-  const ogImagePath = resolved.openGraph.image || siteConfig.defaultOgImage;
-  const ogImageUrl = ogImagePath.startsWith("http")
-    ? ogImagePath
-    : `${getSiteUrl()}${ogImagePath}`;
+  const ogImageUrl = toAbsoluteImageUrl(resolved.openGraph.image);
 
   const twitterTitle = resolved.twitter.title ?? ogTitle;
   const twitterDescription = resolved.twitter.description ?? ogDescription;
-  const twitterImagePath = resolved.twitter.image ?? ogImagePath;
-  const twitterImageUrl = twitterImagePath.startsWith("http")
-    ? twitterImagePath
-    : `${getSiteUrl()}${twitterImagePath}`;
+  const twitterImageUrl = toAbsoluteImageUrl(resolved.twitter.image ?? resolved.openGraph.image);
 
   const robots = {
     index: resolved.robots?.index ?? true,

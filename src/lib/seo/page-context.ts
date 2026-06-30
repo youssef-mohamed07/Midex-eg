@@ -2,6 +2,7 @@ import {
   getLocalizedBlogPost,
   getLocalizedProduct,
   getLocalizedProductCategories,
+  getLocalizedProductsByCategory,
   getLocalizedSolution,
   getLocalizedSolutionChild,
   getLocalizedSolutionGroup,
@@ -31,10 +32,14 @@ export async function getProductCategorySeoContext(slug: string, locale: Locale)
   const category = categories[slug];
   if (!category) return null;
 
+  const products = getLocalizedProductsByCategory(slug, locale);
+  const image = products[0]?.image;
+
   return {
     context: {
       title: category.label,
       description: category.description,
+      image,
     } satisfies SeoTemplateContext,
   };
 }

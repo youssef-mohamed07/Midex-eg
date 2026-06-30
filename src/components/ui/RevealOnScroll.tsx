@@ -2,7 +2,14 @@
 
 import { useEffect, useRef } from "react";
 
-export function RevealOnScroll({ children }: { children: React.ReactNode }) {
+type RevealProps = {
+  children: React.ReactNode;
+  /** Stagger delay in milliseconds */
+  delay?: number;
+  className?: string;
+};
+
+export function RevealOnScroll({ children, delay = 0, className = "" }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -16,7 +23,7 @@ export function RevealOnScroll({ children }: { children: React.ReactNode }) {
           observer.unobserve(el);
         }
       },
-      { threshold: 0.12 },
+      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
     );
 
     observer.observe(el);
@@ -24,7 +31,11 @@ export function RevealOnScroll({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <div ref={ref} className="mx-reveal">
+    <div
+      ref={ref}
+      className={`mx-reveal ${className}`}
+      style={delay ? { transitionDelay: `${delay}ms` } : undefined}
+    >
       {children}
     </div>
   );

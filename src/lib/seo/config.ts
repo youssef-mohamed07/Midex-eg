@@ -16,9 +16,17 @@ export const siteConfig = {
   },
   social: {
     linkedIn: "https://www.linkedin.com/company/midex-eg",
+    twitter: "https://x.com/midex_eg",
+    whatsApp: "https://wa.me/201026228403",
   },
+  brandIcon: "/images/brand/favicon.svg",
   defaultOgImage: "/images/hero/slide-1.png",
   twitterHandle: "@midex_eg",
+  openGraphLocales: {
+    en: "en_US",
+    ar: "ar_EG",
+    de: "de_DE",
+  } as const,
 };
 
 export function getSiteUrl() {

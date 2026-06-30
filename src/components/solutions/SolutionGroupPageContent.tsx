@@ -4,21 +4,19 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { PageHero } from "@/components/layout/PageHero";
 import { SolutionBreadcrumbs } from "@/components/solutions/SolutionBreadcrumbs";
+import {
+  SolutionGroupCard,
+  SolutionServiceCard,
+} from "@/components/solutions/SolutionCards";
+import { SolutionsCta } from "@/components/solutions/SolutionsCta";
 import { getGroupLabel } from "@/components/solutions/solution-labels";
 import {
   getLocalizedSolutionGroup,
+  getLocalizedSolutionGroupHighlights,
   getLocalizedSolutionGroups,
 } from "@/content/i18n";
 import { type Locale } from "@/i18n/routing";
 import { getQuoteUrl } from "@/content/products";
-
-function ChevronRight({ className = "h-4 w-4" }: { className?: string }) {
-  return (
-    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-    </svg>
-  );
-}
 
 type Props = { slug: string };
 
@@ -31,6 +29,7 @@ export async function SolutionGroupPageContent({ slug }: Props) {
   const tn = await getTranslations("nav");
   const tc = await getTranslations("products");
   const label = getGroupLabel(group, tn);
+  const highlights = getLocalizedSolutionGroupHighlights(group.slug, locale);
   const otherGroups = getLocalizedSolutionGroups(locale).filter(
     (item) => item.slug !== group.slug,
   );
@@ -38,9 +37,10 @@ export async function SolutionGroupPageContent({ slug }: Props) {
   return (
     <>
       <PageHero
-        badge={`${group.children.length} ${t("services")}`}
+        eyebrow={`${group.children.length} ${t("services")}`}
         title={label}
         subtitle={group.description}
+        compact
         breadcrumbs={
           <SolutionBreadcrumbs
             light
@@ -50,92 +50,124 @@ export async function SolutionGroupPageContent({ slug }: Props) {
             ]}
           />
         }
-        media={
-          <div className="relative hidden aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 shadow-2xl shadow-black/20 lg:block">
-            <Image
-              src={group.image}
-              alt={label}
-              fill
-              className="object-cover"
-              sizes="340px"
-              priority
-            />
-          </div>
-        }
-      />
-
-      <section className="mx-section bg-midex-surface">
-        <div className="mx-container">
-          <h2 className="font-display text-2xl font-bold text-midex-navy sm:text-3xl">
-            {t("groupServicesTitle")}
-          </h2>
-          <p className="mt-3 max-w-2xl text-midex-gray/80">{t("groupServicesSubtitle")}</p>
-
-          <div className="mt-10 grid gap-6 sm:grid-cols-2">
-            {group.children.map((child) => (
-              <Link
-                key={child.slug}
-                href={`/solutions/group/${group.slug}/${child.slug}`}
-                className="group mx-card overflow-hidden no-underline"
-              >
-                <div className="relative aspect-[16/10] overflow-hidden">
-                  <Image
-                    src={child.image}
-                    alt={child.label}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    sizes="(max-width: 640px) 100vw, 50vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-midex-navy/80 via-midex-navy/20 to-transparent opacity-80 transition-opacity group-hover:opacity-100" />
-                  <div className="absolute bottom-0 left-0 right-0 p-5">
-                    <h3 className="font-display text-lg font-bold text-white sm:text-xl">
-                      {child.label}
-                    </h3>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between gap-4 p-5">
-                  <p className="text-sm leading-relaxed text-midex-gray/75">{child.excerpt}</p>
-                  <ChevronRight className="h-5 w-5 shrink-0 text-midex-blue transition group-hover:translate-x-0.5" />
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="mx-section bg-white">
-        <div className="mx-container">
-          <h2 className="font-display text-2xl font-bold text-midex-navy">
-            {t("otherGroups")}
-          </h2>
-          <div className="mt-6 grid gap-4 sm:grid-cols-3">
-            {otherGroups.map((item) => (
-              <Link
-                key={item.slug}
-                href={`/solutions/group/${item.slug}`}
-                className="rounded-xl border border-midex-navy/8 bg-midex-surface p-5 no-underline transition hover:border-midex-mint/50 hover:shadow-md"
-              >
-                <p className="font-display font-bold text-midex-navy">
-                  {getGroupLabel(item, tn)}
-                </p>
-                <p className="mt-2 text-sm text-midex-gray/70">
-                  {item.children.length} {t("services")}
-                </p>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-midex-navy mx-mesh-bg py-16">
-        <div className="mx-container text-center">
-          <h2 className="font-display text-3xl font-bold text-white">{t("ctaTitle")}</h2>
-          <p className="mx-auto mt-4 max-w-2xl text-white/75">{t("ctaText")}</p>
-          <Link className="mx-btn mx-btn-mint mt-8 inline-flex" href={getQuoteUrl(label)}>
-            {tc("requestQuote")} →
+      >
+        <div className="mt-6 flex flex-wrap gap-3">
+          <Link
+            className="group mx-btn mx-btn-primary border-white/20 bg-white text-midex-navy hover:bg-midex-mint hover:text-midex-navy"
+            href={getQuoteUrl(label)}
+          >
+            {tc("requestQuote")}
+            <span className="mx-arrow">→</span>
+          </Link>
+          <Link
+            className="mx-btn border border-white/25 bg-transparent text-white hover:border-white/40 hover:bg-white/10"
+            href="/solutions"
+          >
+            {t("allGroups")}
           </Link>
         </div>
+      </PageHero>
+
+      <section className="border-b border-midex-line bg-white py-12 lg:py-16">
+        <div className="mx-container">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(280px,400px)] lg:items-center lg:gap-14">
+            <div>
+              <span className="mx-eyebrow">Midex</span>
+              <h2 className="mt-3 font-display text-2xl font-bold tracking-tight text-midex-navy sm:text-3xl">
+                {t("groupImportanceTitle")}
+              </h2>
+              <p className="mt-5 text-base leading-relaxed text-midex-gray/80 sm:text-lg">
+                {group.intro}
+              </p>
+
+              {highlights.length > 0 && (
+                <ul className="mt-8 grid gap-3 sm:grid-cols-2">
+                  {highlights.map((item) => (
+                    <li
+                      key={item}
+                      className="flex items-start gap-3 rounded-xl border border-midex-navy/8 bg-midex-surface/60 px-4 py-3 text-sm leading-relaxed text-midex-gray/85"
+                    >
+                      <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-midex-mint" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+
+            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-midex-line shadow-lg">
+              <Image
+                src={group.image}
+                alt={label}
+                fill
+                className="object-cover object-center"
+                sizes="(max-width: 1024px) 100vw, 400px"
+                priority
+              />
+              <div
+                className="absolute inset-0 bg-gradient-to-t from-midex-navy/35 to-transparent"
+                aria-hidden
+              />
+            </div>
+          </div>
+        </div>
       </section>
+
+      <section className="mx-section--tight bg-midex-surface">
+        <div className="mx-container">
+          <div className="mb-8 max-w-2xl">
+            <span className="mx-eyebrow">Midex</span>
+            <h2 className="mt-3 font-display text-2xl font-bold text-midex-navy sm:text-[1.85rem]">
+              {t("groupServicesTitle")}
+            </h2>
+            <p className="mt-2 text-sm leading-relaxed text-midex-gray/70">
+              {t("groupServicesSubtitle")}
+            </p>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
+            {group.children.map((child) => (
+              <SolutionServiceCard
+                key={child.slug}
+                href={`/solutions/group/${group.slug}/${child.slug}`}
+                image={child.image}
+                label={child.label}
+                excerpt={child.excerpt}
+                viewLabel={t("viewSolution")}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {otherGroups.length > 0 && (
+        <section className="mx-section--tight border-t border-midex-line bg-white">
+          <div className="mx-container">
+            <div className="mb-8">
+              <span className="mx-eyebrow">Midex</span>
+              <h2 className="mt-3 font-display text-2xl font-bold text-midex-navy">
+                {t("otherGroups")}
+              </h2>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {otherGroups.map((item, index) => (
+                <SolutionGroupCard
+                  key={item.slug}
+                  href={`/solutions/group/${item.slug}`}
+                  image={item.image}
+                  label={getGroupLabel(item, tn)}
+                  description={item.description}
+                  meta={`${item.children.length} ${t("services")}`}
+                  index={index}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      <SolutionsCta quoteSubject={label} />
     </>
   );
 }

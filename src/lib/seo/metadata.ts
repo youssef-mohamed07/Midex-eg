@@ -4,7 +4,9 @@ import type { Metadata } from "next";
 import type { SeoRouteKey } from "@/cms/collections/seo";
 import type { SeoTemplateContext } from "@/content/seo/types";
 import { siteConfig } from "@/lib/seo/config";
+import { buildOgImageMeta } from "@/lib/seo/images";
 import { resolveSeo } from "@/lib/seo/resolve";
+import { routing } from "@/i18n/routing";
 
 type BuildSeoMetadataInput = {
   routeKey: SeoRouteKey;
@@ -13,6 +15,14 @@ type BuildSeoMetadataInput = {
   context?: SeoTemplateContext;
   slug?: string;
 };
+
+export function buildSiteIcons(): NonNullable<Metadata["icons"]> {
+  return {
+    icon: [{ url: siteConfig.brandIcon, type: "image/svg+xml" }],
+    shortcut: siteConfig.brandIcon,
+    apple: [{ url: "/apple-icon", sizes: "180x180", type: "image/png" }],
+  };
+}
 
 export function buildSeoMetadata(input: BuildSeoMetadataInput): Metadata {
   const seo = resolveSeo(input);
@@ -24,6 +34,21 @@ export function buildSeoMetadata(input: BuildSeoMetadataInput): Metadata {
 
   const ogType =
     seo.openGraph.type === "product" ? "website" : (seo.openGraph.type ?? "website");
+
+  const ogLocale =
+    siteConfig.openGraphLocales[seo.locale as keyof typeof siteConfig.openGraphLocales] ??
+    seo.locale;
+
+  const alternateLocales = routing.locales
+    .filter((item) => item !== seo.locale)
+    .map(
+      (item) =>
+        siteConfig.openGraphLocales[item as keyof typeof siteConfig.openGraphLocales] ?? item,
+    );
+
+  const shareImage = seo.openGraph.image
+    ? buildOgImageMeta(seo.openGraph.image, seo.openGraph.title ?? seo.title)
+    : undefined;
 
   return {
     title: seo.title,
@@ -39,11 +64,10 @@ export function buildSeoMetadata(input: BuildSeoMetadataInput): Metadata {
       description: seo.openGraph.description ?? seo.description,
       url: seo.canonicalUrl,
       siteName: siteConfig.name,
-      locale: seo.locale,
+      locale: ogLocale,
+      alternateLocale: alternateLocales,
       type: ogType,
-      images: seo.openGraph.image
-        ? [{ url: seo.openGraph.image, alt: seo.openGraph.title ?? seo.title }]
-        : undefined,
+      images: shareImage ? [shareImage] : undefined,
     },
     twitter: {
       card: seo.twitter.card,

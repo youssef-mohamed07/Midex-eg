@@ -2,6 +2,7 @@ import type { Locale } from "@/i18n/routing";
 import {
   products as baseProducts,
   productCategories as baseProductCategories,
+  getProductCategoryDetails,
   type Product,
 } from "@/content/products";
 import {
@@ -71,6 +72,17 @@ export function getLocalizedProductsByCategory(category: string | undefined, loc
   const list = getLocalizedProducts(locale);
   if (!category) return list;
   return list.filter((product) => product.category === category);
+}
+
+export function getLocalizedProductCategoryDetails(category: string, locale: Locale) {
+  const base = getProductCategoryDetails(category);
+  const content = getContent(locale);
+  const translated = content?.productCategoryDetails?.[category];
+
+  return {
+    highlights: translated?.highlights ?? base.highlights,
+    specs: translated?.specs ?? base.specs,
+  };
 }
 
 export function getLocalizedServices(locale: Locale) {
@@ -149,6 +161,7 @@ function localizeSolutionChild(
     ...child,
     label: translated?.label ?? child.label,
     excerpt: translated?.excerpt ?? child.excerpt,
+    intro: translated?.intro ?? child.intro,
   };
 }
 
@@ -159,6 +172,7 @@ export function getLocalizedSolutionGroups(locale: Locale): SolutionGroup[] {
     return {
       ...group,
       description: translated?.description ?? group.description,
+      intro: translated?.intro ?? group.intro,
       children: group.children.map((child) =>
         localizeSolutionChild(child, group.slug, content),
       ),

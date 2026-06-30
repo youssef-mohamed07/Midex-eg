@@ -21,14 +21,14 @@ function LogoMarquee({
         {track.map((logo, index) => (
           <div
             key={`${logo}-${index}`}
-            className="flex h-[72px] w-[148px] shrink-0 items-center justify-center rounded-xl border border-midex-navy/10 bg-white px-4 shadow-sm sm:h-20 sm:w-[168px]"
+            className="group flex h-[72px] w-[148px] shrink-0 items-center justify-center rounded-xl border border-midex-line bg-white px-4 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-midex-mint/45 hover:shadow-md sm:h-20 sm:w-[168px]"
           >
             <Image
               src={logo}
               alt=""
               width={128}
               height={64}
-              className="max-h-11 w-auto max-w-full object-contain sm:max-h-12"
+              className="max-h-11 w-auto max-w-full object-contain transition-transform duration-300 group-hover:scale-105 sm:max-h-12"
             />
           </div>
         ))}
@@ -45,15 +45,14 @@ export function ClientsSection({ title, subtitle }: Props) {
   return (
     <section className="overflow-hidden border-y border-midex-navy/8 bg-midex-surface/80 py-10 lg:py-12">
       <div className="mx-container">
-        <div className="mb-6 text-center lg:mb-8">
-          <span className="mx-badge mb-3">Midex</span>
-          <h2 className="mx-section-title text-midex-navy">{title}</h2>
-          <p className="mx-section-subtitle mx-auto mt-3 text-midex-gray/80">{subtitle}</p>
-          <div className="mx-auto mt-4 h-1 w-12 rounded-full bg-gradient-to-r from-midex-mint to-midex-blue" />
+        <div className="mx-auto mb-8 max-w-2xl text-center lg:mb-10">
+          <span className="mx-eyebrow mx-eyebrow--center">Midex</span>
+          <h2 className="mx-section-title mt-4">{title}</h2>
+          <p className="mx-section-subtitle mx-auto">{subtitle}</p>
         </div>
       </div>
 
-      <div className="relative left-1/2 w-screen -translate-x-1/2 space-y-4" dir="ltr">
+      <div className="w-full space-y-4 overflow-hidden" dir="ltr">
         <LogoMarquee logos={rowA} />
         <LogoMarquee logos={rowB} reverse />
       </div>

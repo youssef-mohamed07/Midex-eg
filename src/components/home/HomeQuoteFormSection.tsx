@@ -20,9 +20,7 @@ export async function HomeQuoteFormSection() {
         </RevealOnScroll>
 
         <div className="grid gap-8 lg:grid-cols-[minmax(280px,340px)_1fr] lg:items-start lg:gap-10 xl:gap-12">
-          <RevealOnScroll delay={50}>
-            <QuoteFormAside />
-          </RevealOnScroll>
+          <QuoteFormAside />
 
           <RevealOnScroll delay={100}>
             <div className="midex-contact-form-card rounded-[1.5rem] p-6 shadow-xl shadow-midex-navy/8 sm:p-8 lg:p-10 xl:p-12">

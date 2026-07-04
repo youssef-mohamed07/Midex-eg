@@ -1,14 +1,16 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { OurValuesSection } from "@/components/about/OurValuesSection";
+import { CertificationsSection } from "@/components/about/CertificationsSection";
 import { AboutTimeline } from "@/components/about/AboutTimeline";
+import { CaseStudiesSection } from "@/components/home/CaseStudiesSection";
 import { EventsSection } from "@/components/home/EventsSection";
+import { FaqSection } from "@/components/home/FaqSection";
 import { PageHero } from "@/components/layout/PageHero";
 import { StatsSection } from "@/components/home/StatsSection";
 import { StorySection } from "@/components/sections/StorySection";
 import { stats } from "@/content/site";
 import { getQuoteUrl } from "@/content/products";
-
-const standardKeys = ["standard1", "standard2", "standard3", "standard4", "standard5"] as const;
 
 export async function AboutPageContent() {
   const t = await getTranslations("about");
@@ -21,33 +23,13 @@ export async function AboutPageContent() {
 
       <StorySection cta={{ href: "/solutions", label: t("exploreSolutions") }} />
 
+      <OurValuesSection />
+
       <EventsSection />
 
       <AboutTimeline />
 
-      <section className="mx-section">
-        <div className="mx-container">
-          <div className="relative overflow-hidden rounded-2xl bg-midex-navy mx-mesh-bg px-5 py-10 sm:px-8 sm:py-12 lg:px-12 lg:py-14">
-            <div className="mx-grid-overlay pointer-events-none absolute inset-0" />
-            <div className="relative mx-auto max-w-3xl text-center">
-              <span className="mx-eyebrow mx-eyebrow--center mx-eyebrow--light">Midex</span>
-              <h2 className="mx-section-title mt-4 !text-white">{t("standardsTitle")}</h2>
-              <p className="mx-section-subtitle mx-auto !text-white/70">{t("standardsText")}</p>
-            </div>
-
-            <div className="relative mt-8 flex flex-wrap justify-center gap-2.5 sm:mt-10 sm:gap-3">
-              {standardKeys.map((key) => (
-                <span
-                  key={key}
-                  className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold text-white backdrop-blur-sm sm:px-5 sm:py-2.5"
-                >
-                  {t(key)}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      <CertificationsSection />
 
       <StatsSection
         title={th("statsTitle")}
@@ -57,6 +39,10 @@ export async function AboutPageContent() {
           label: th(stat.labelKey),
         }))}
       />
+
+      <CaseStudiesSection />
+
+      <FaqSection />
 
       <section className="mx-section--tight">
         <div className="mx-container">

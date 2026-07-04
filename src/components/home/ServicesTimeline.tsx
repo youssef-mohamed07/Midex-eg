@@ -88,14 +88,14 @@ function TimelineStepNumber({ step, side }: { step: string; side: "left" | "righ
   return (
     <div
       ref={ref}
-      className={`${className} flex items-center ${
+      className={`${className} hidden items-center lg:flex ${
         side === "left"
-          ? "mb-3 justify-end pe-2 sm:mb-0 sm:pe-0 lg:col-start-2 lg:mb-0 lg:justify-start lg:ps-12"
-          : "mb-3 justify-start ps-2 sm:mb-0 sm:ps-0 lg:col-start-1 lg:mb-0 lg:justify-end lg:pe-12"
+          ? "lg:col-start-2 lg:justify-start lg:ps-12"
+          : "lg:col-start-1 lg:justify-end lg:pe-12"
       }`}
       aria-hidden
     >
-      <span className="font-display text-6xl font-bold tabular-nums leading-none text-midex-navy/[0.08] sm:text-7xl lg:text-8xl xl:text-9xl">
+      <span className="font-display text-8xl font-bold tabular-nums leading-none text-midex-navy/[0.08] xl:text-9xl">
         {step}
       </span>
     </div>
@@ -105,9 +105,11 @@ function TimelineStepNumber({ step, side }: { step: string; side: "left" | "righ
 function ServiceCard({
   service,
   side,
+  step,
 }: {
   service: Service;
   side: "left" | "right";
+  step: string;
 }) {
   const { ref, className } = useRevealOnScroll<HTMLDivElement>(side);
 
@@ -121,51 +123,56 @@ function ServiceCard({
     >
       <div ref={ref} className={`${className} w-full`}>
         <figure className="mx-card group relative aspect-card w-full overflow-hidden sm:aspect-[16/10]">
-        <div className="absolute inset-0">
-          <Image
-            src={service.image}
-            alt={service.title}
-            fill
-            className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]"
-            sizes="(max-width: 1024px) 100vw, 480px"
+          <span className="absolute start-4 top-4 z-10 font-display text-sm font-bold tabular-nums text-white/90 sm:start-5 sm:top-5 sm:text-base lg:hidden">
+            {step}
+          </span>
+          <div className="absolute inset-0">
+            <Image
+              src={service.image}
+              alt={service.title}
+              fill
+              className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]"
+              sizes="(max-width: 1024px) 100vw, 480px"
+            />
+          </div>
+
+          <div
+            className="absolute inset-0 bg-gradient-to-t from-midex-navy via-midex-navy/55 to-midex-navy/15 transition-opacity duration-500 group-hover:via-midex-navy/65"
+            aria-hidden
           />
-        </div>
 
-        <div
-          className="absolute inset-0 bg-gradient-to-t from-midex-navy via-midex-navy/55 to-midex-navy/15 transition-opacity duration-500 group-hover:via-midex-navy/65"
-          aria-hidden
-        />
+          <div
+            className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+            style={{
+              background:
+                "radial-gradient(ellipse 80% 60% at 50% 100%, rgba(132, 206, 205, 0.22), transparent 70%)",
+            }}
+            aria-hidden
+          />
 
-        <div
-          className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-          style={{
-            background:
-              "radial-gradient(ellipse 80% 60% at 50% 100%, rgba(132, 206, 205, 0.22), transparent 70%)",
-          }}
-          aria-hidden
-        />
-
-        <figcaption
-          className={`absolute inset-x-0 bottom-0 flex flex-col px-4 pb-4 pt-12 sm:px-6 sm:pb-6 sm:pt-20 ${
-            side === "left" ? "lg:items-end lg:text-end" : "lg:items-start lg:text-start"
-          }`}
-        >
-          <h3 className="font-display text-lg font-bold leading-snug text-white sm:text-2xl">
-            {service.title}
-          </h3>
-          <p className="mt-1.5 max-w-sm text-[13px] leading-relaxed text-white/75 sm:mt-2 sm:text-[15px]">
-            {service.excerpt}
-          </p>
-        </figcaption>
-      </figure>
+          <figcaption
+            className={`absolute inset-x-0 bottom-0 flex flex-col px-4 pb-4 pt-12 sm:px-6 sm:pb-6 sm:pt-20 ${
+              side === "left" ? "lg:items-end lg:text-end" : "lg:items-start lg:text-start"
+            }`}
+          >
+            <h3 className="font-display text-lg font-bold leading-snug text-white sm:text-2xl">
+              {service.title}
+            </h3>
+            <p className="mt-1.5 max-w-sm text-[13px] leading-relaxed text-white/75 sm:mt-2 sm:text-[15px]">
+              {service.excerpt}
+            </p>
+          </figcaption>
+        </figure>
       </div>
     </article>
   );
 }
 
 export function ServicesTimeline({ services }: { services: Service[] }) {
+  if (services.length === 0) return null;
+
   return (
-    <div className="relative mx-auto max-w-4xl">
+    <div className="relative mx-auto mt-8 max-w-4xl sm:mt-10">
       <div
         className="absolute bottom-0 top-0 hidden w-px bg-gradient-to-b from-midex-mint/50 via-midex-blue to-midex-mint/50 lg:left-1/2 lg:block lg:-translate-x-px"
         aria-hidden
@@ -186,7 +193,7 @@ export function ServicesTimeline({ services }: { services: Service[] }) {
 
               {side === "right" && <TimelineStepNumber step={step} side={side} />}
 
-              <ServiceCard service={service} side={side} />
+              <ServiceCard service={service} side={side} step={step} />
 
               {side === "left" && <TimelineStepNumber step={step} side={side} />}
             </li>

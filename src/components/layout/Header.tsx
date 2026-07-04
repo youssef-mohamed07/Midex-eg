@@ -1,12 +1,21 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import {
   getLocalizedProductCategories,
+  getLocalizedProducts,
   getLocalizedSolutionGroups,
 } from "@/content/i18n";
 import { type Locale } from "@/i18n/routing";
@@ -24,6 +33,220 @@ type NavItem = {
   children?: NavLink[];
 };
 
+type ProductCategoryEntry = {
+  slug: string;
+  label: string;
+  description: string;
+  image?: string;
+};
+
+type SolutionGroupNav = {
+  slug: string;
+  label: string;
+  menuLabel?: string;
+  description: string;
+  image: string;
+  href: string;
+  children: { slug: string; label: string; href: string }[];
+};
+
+type MegaKind = "products" | "solutions";
+
+const HeaderMegaProductsPanel = memo(function HeaderMegaProductsPanel({
+  categories,
+  allLabel,
+  featuredImage,
+}: {
+  categories: ProductCategoryEntry[];
+  allLabel: string;
+  featuredImage: string;
+}) {
+  return (
+    <div>
+      <div className="mb-5 flex items-center justify-between gap-4">
+        <h3 className="font-display text-lg font-bold text-midex-navy">{allLabel}</h3>
+        <Link href="/products" className="mx-link-arrow text-sm no-underline">
+          {allLabel}
+          <span className="mx-arrow">→</span>
+        </Link>
+      </div>
+
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5 lg:grid-rows-2">
+        <Link
+          href="/products"
+          className="group relative col-span-2 min-h-[11rem] overflow-hidden rounded-xl no-underline sm:min-h-[12rem] lg:col-span-1 lg:row-span-2 lg:min-h-0"
+        >
+          <Image
+            src={featuredImage}
+            alt={allLabel}
+            fill
+            className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+            sizes="240px"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-midex-navy/90 via-midex-navy/25 to-midex-navy/5" />
+          <span className="absolute inset-x-0 bottom-0 p-4 font-display text-base font-bold text-white">
+            {allLabel}
+          </span>
+        </Link>
+
+        {categories.map((category) => (
+          <Link
+            key={category.slug}
+            href={`/products/category/${category.slug}`}
+            className="group relative aspect-[5/4] overflow-hidden rounded-xl no-underline lg:aspect-auto lg:min-h-[9.5rem]"
+          >
+            {category.image ? (
+              <Image
+                src={category.image}
+                alt={category.label}
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-[1.05]"
+                sizes="(max-width: 1280px) 20vw, 180px"
+              />
+            ) : (
+              <div className="absolute inset-0 bg-midex-surface" />
+            )}
+            <div className="absolute inset-0 bg-gradient-to-t from-midex-navy/80 via-midex-navy/10 to-transparent" />
+            <span className="absolute inset-x-0 bottom-0 p-3 text-sm font-semibold leading-snug text-white">
+              {category.label}
+            </span>
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+});
+
+const HeaderMegaSolutionsPanel = memo(function HeaderMegaSolutionsPanel({
+  groups,
+  allLabel,
+}: {
+  groups: SolutionGroupNav[];
+  allLabel: string;
+}) {
+  return (
+    <div>
+      <div className="mb-6 flex items-end justify-between gap-6 border-b border-midex-line/60 pb-4">
+        <div>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-midex-blue">
+            Midex
+          </p>
+          <h3 className="mt-1 font-display text-xl font-bold text-midex-navy">{allLabel}</h3>
+        </div>
+        <Link href="/solutions" className="mx-link-arrow shrink-0 text-sm no-underline">
+          {allLabel}
+          <span className="mx-arrow">→</span>
+        </Link>
+      </div>
+
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        {groups.map((group) => (
+          <article
+            key={group.slug}
+            className="flex h-full flex-col overflow-hidden rounded-xl border border-midex-line/70 bg-midex-surface/25"
+          >
+            <Link
+              href={group.href}
+              className="group relative block aspect-[16/10] shrink-0 overflow-hidden border-b border-midex-line/60 no-underline"
+            >
+              <Image
+                src={group.image}
+                alt={group.menuLabel ?? group.label}
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                sizes="(max-width: 1280px) 50vw, 280px"
+              />
+              <div className="absolute inset-0 bg-midex-navy/20 transition-colors group-hover:bg-midex-navy/10" />
+            </Link>
+
+            <div className="flex min-h-0 flex-1 flex-col p-4">
+              <Link
+                href={group.href}
+                className="font-display text-base font-bold leading-snug text-midex-navy no-underline transition-colors hover:text-midex-blue"
+              >
+                {group.menuLabel ?? group.label}
+              </Link>
+              <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-midex-gray/70">
+                {group.description}
+              </p>
+
+              <div className="mt-4 border-t border-midex-line/60 pt-3">
+                <ul className="space-y-0.5" aria-label={group.menuLabel ?? group.label}>
+                  {group.children.map((child) => (
+                    <li key={child.href}>
+                      <Link
+                        href={child.href}
+                        className="group/item flex items-start gap-2 rounded-lg px-2 py-1.5 text-[13px] leading-snug text-midex-gray no-underline transition-colors hover:bg-white hover:text-midex-navy"
+                      >
+                        <ChevronRight className="mt-0.5 h-3.5 w-3.5 shrink-0 text-midex-blue/45 transition-colors group-hover/item:text-midex-blue" />
+                        <span>{child.label}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  );
+});
+
+const HeaderMegaDropdown = memo(function HeaderMegaDropdown({
+  activeMega,
+  mountedMegas,
+  productCategories,
+  productAllLabel,
+  solutionGroups,
+  solutionsAllLabel,
+  featuredImage,
+  onKeepOpen,
+}: {
+  activeMega: MegaKind | null;
+  mountedMegas: ReadonlySet<MegaKind>;
+  productCategories: ProductCategoryEntry[];
+  productAllLabel: string;
+  solutionGroups: SolutionGroupNav[];
+  solutionsAllLabel: string;
+  featuredImage: string;
+  onKeepOpen?: () => void;
+}) {
+  const isOpen = activeMega !== null;
+
+  return (
+    <div
+      className={`midex-header-mega absolute inset-x-0 top-full z-50 hidden pt-3 lg:block ${
+        isOpen ? "midex-header-mega--open" : ""
+      }`}
+      aria-hidden={!isOpen}
+      onMouseEnter={onKeepOpen}
+    >
+      <div className="midex-header-mega__panel overflow-hidden rounded-2xl border border-midex-line/50 bg-white shadow-xl shadow-midex-navy/8">
+        <div className="px-5 py-6 lg:px-8 lg:py-7">
+          {mountedMegas.has("products") && (
+            <div className={activeMega === "products" ? "block" : "hidden"}>
+              <HeaderMegaProductsPanel
+                categories={productCategories}
+                allLabel={productAllLabel}
+                featuredImage={featuredImage}
+              />
+            </div>
+          )}
+          {mountedMegas.has("solutions") && (
+            <div className={activeMega === "solutions" ? "block" : "hidden"}>
+              <HeaderMegaSolutionsPanel
+                groups={solutionGroups}
+                allLabel={solutionsAllLabel}
+              />
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+});
+
 function ChevronDown({ className = "h-3.5 w-3.5" }: { className?: string }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -40,33 +263,63 @@ function ChevronRight({ className = "h-3.5 w-3.5" }: { className?: string }) {
   );
 }
 
-function DesktopNavItem({
+const DesktopNavItem = memo(function DesktopNavItem({
   item,
   overlay,
   active,
+  mega,
+  activeMega,
+  onMegaOpen,
 }: {
   item: NavItem;
   overlay: boolean;
   active: boolean;
+  mega?: MegaKind;
+  activeMega?: MegaKind | null;
+  onMegaOpen?: (mega: MegaKind | null) => void;
 }) {
+  const isMegaActive = mega != null && activeMega === mega;
+
   const topLinkClass = `group/nav relative inline-flex items-center gap-1 rounded-full px-2.5 py-1.5 text-[13px] font-medium transition-colors no-underline ${
     overlay
       ? "text-white/90 hover:bg-white/10 hover:text-white"
       : "text-midex-navy hover:bg-midex-surface hover:text-midex-blue"
-  } ${active ? (overlay ? "!text-white" : "!text-midex-blue") : ""}`;
+  } ${active || isMegaActive ? (overlay ? "!text-white" : "!text-midex-blue") : ""}`;
 
   const underline = (
     <span
       className={`pointer-events-none absolute inset-x-3 -bottom-0.5 h-0.5 origin-start rounded-full bg-gradient-to-r from-midex-mint to-midex-blue transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-        active ? "scale-x-100" : "scale-x-0 group-hover/nav:scale-x-100"
+        active || isMegaActive ? "scale-x-100" : "scale-x-0 group-hover/nav:scale-x-100"
       }`}
     />
   );
 
   if (!item.children?.length) {
     return (
-      <Link href={item.href} className={topLinkClass}>
+      <Link
+        href={item.href}
+        className={topLinkClass}
+        onMouseEnter={() => onMegaOpen?.(null)}
+        onFocus={() => onMegaOpen?.(null)}
+      >
         {item.label}
+        {underline}
+      </Link>
+    );
+  }
+
+  if (mega) {
+    return (
+      <Link
+        href={item.href}
+        className={topLinkClass}
+        onMouseEnter={() => onMegaOpen?.(mega)}
+        onFocus={() => onMegaOpen?.(mega)}
+      >
+        {item.label}
+        <ChevronDown
+          className={`opacity-60 transition-transform duration-300 ${isMegaActive ? "rotate-180" : ""}`}
+        />
         {underline}
       </Link>
     );
@@ -117,7 +370,7 @@ function DesktopNavItem({
       </ul>
     </>
   );
-}
+});
 
 function MobileNavNestedGroup({
   child,
@@ -257,21 +510,134 @@ function MobileNavItem({
 
 export function Header() {
   const t = useTranslations("nav");
+  const tp = useTranslations("products");
   const locale = useLocale() as Locale;
   const pathname = usePathname();
   const productCategories = getLocalizedProductCategories(locale);
+  const products = getLocalizedProducts(locale);
   const solutionGroups = getLocalizedSolutionGroups(locale);
   const [scrolled, setScrolled] = useState(false);
   const [headerVisible, setHeaderVisible] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeMega, setActiveMega] = useState<MegaKind | null>(null);
+  const [mountedMegas, setMountedMegas] = useState<Set<MegaKind>>(() => new Set());
   const [openMobileKeys, setOpenMobileKeys] = useState<Set<string>>(new Set());
   const [mounted, setMounted] = useState(false);
   const lastScrollY = useRef(0);
   const scrollTicking = useRef(false);
+  const megaCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const cancelMegaClose = useCallback(() => {
+    if (megaCloseTimer.current) {
+      clearTimeout(megaCloseTimer.current);
+      megaCloseTimer.current = null;
+    }
+  }, []);
+
+  const handleMegaOpen = useCallback(
+    (kind: MegaKind | null) => {
+      cancelMegaClose();
+
+      if (kind) {
+        setMountedMegas((prev) => {
+          if (prev.has(kind)) {
+            return prev;
+          }
+          const next = new Set(prev);
+          next.add(kind);
+          return next;
+        });
+        setActiveMega(kind);
+        return;
+      }
+
+      setActiveMega(null);
+    },
+    [cancelMegaClose],
+  );
+
+  const scheduleMegaClose = useCallback(() => {
+    cancelMegaClose();
+    megaCloseTimer.current = setTimeout(() => {
+      setActiveMega(null);
+      megaCloseTimer.current = null;
+    }, 180);
+  }, [cancelMegaClose]);
+
+  useEffect(() => {
+    return () => {
+      if (megaCloseTimer.current) {
+        clearTimeout(megaCloseTimer.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const productCategoryEntries = useMemo<ProductCategoryEntry[]>(
+    () =>
+      Object.entries(productCategories).map(([slug, cat]) => ({
+        slug,
+        label: cat.label,
+        description: cat.description,
+        image: products.find((product) => product.category === slug)?.image,
+      })),
+    [productCategories, products],
+  );
+
+  const solutionGroupsNav = useMemo<SolutionGroupNav[]>(
+    () =>
+      solutionGroups.map((group) => ({
+        slug: group.slug,
+        label: group.label,
+        menuLabel: group.menuLabel,
+        description: group.description,
+        image: group.image,
+        href: `/solutions/group/${group.slug}`,
+        children: group.children.map((child) => ({
+          slug: child.slug,
+          label: child.label,
+          href: `/solutions/group/${group.slug}/${child.slug}`,
+        })),
+      })),
+    [solutionGroups],
+  );
+
+  const productChildren = useMemo(
+    () =>
+      Object.entries(productCategories).map(([slug, cat]) => ({
+        label: cat.label,
+        href: `/products/category/${slug}`,
+      })),
+    [productCategories],
+  );
+
+  const solutionChildren = useMemo<NavLink[]>(
+    () => [
+      { label: t("allSolutions"), href: "/solutions" },
+      ...solutionGroups.map((group) => ({
+        label: group.menuLabel ?? group.label,
+        href: `/solutions/group/${group.slug}`,
+        children: group.children.map((child) => ({
+          label: child.label,
+          href: `/solutions/group/${group.slug}/${child.slug}`,
+        })),
+      })),
+    ],
+    [solutionGroups, t],
+  );
+
+  const navItems = useMemo<NavItem[]>(
+    () => [
+      { label: t("products"), href: "/products", children: productChildren },
+      { label: t("solutions"), href: "/solutions", children: solutionChildren },
+      { label: t("blog"), href: "/blog" },
+      { label: t("aboutUs"), href: "/about-us" },
+    ],
+    [productChildren, solutionChildren, t],
+  );
 
   const toggleMobileKey = (key: string) => {
     setOpenMobileKeys((prev) => {
@@ -306,7 +672,7 @@ export function Header() {
       const y = window.scrollY;
       setScrolled(y > topOffset);
 
-      if (menuOpen) {
+      if (menuOpen || activeMega) {
         setHeaderVisible(true);
         lastScrollY.current = y;
         scrollTicking.current = false;
@@ -337,11 +703,12 @@ export function Header() {
     updateScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, [menuOpen]);
+  }, [menuOpen, activeMega]);
 
   useEffect(() => {
     setMenuOpen(false);
     setOpenMobileKeys(new Set());
+    setActiveMega(null);
   }, [pathname]);
 
   useEffect(() => {
@@ -396,120 +763,126 @@ export function Header() {
   const overlay = !scrolled && !isHome;
   const headerScrolled = scrolled || isHome;
 
-  const productChildren = Object.entries(productCategories).map(
-    ([slug, cat]) => ({
-      label: cat.label,
-      href: `/products/category/${slug}`,
-    }),
-  );
-
-  const solutionChildren: NavLink[] = [
-    { label: t("allSolutions"), href: "/solutions" },
-    ...solutionGroups.map((group) => ({
-      label: group.menuLabel ?? group.label,
-      href: `/solutions/group/${group.slug}`,
-      children: group.children.map((child) => ({
-        label: child.label,
-        href: `/solutions/group/${group.slug}/${child.slug}`,
-      })),
-    })),
-  ];
-
-  const navItems: NavItem[] = [
-    { label: t("products"), href: "/products", children: productChildren },
-    { label: t("solutions"), href: "/solutions", children: solutionChildren },
-    { label: t("blog"), href: "/blog" },
-    { label: t("aboutUs"), href: "/about-us" },
-  ];
-
-  const barClass = overlay
+  const megaOpen = activeMega !== null;
+  const navOverlay = overlay && !megaOpen;
+  const barClass = navOverlay
     ? "border-white/15 bg-white/[0.07] shadow-lg shadow-black/5 backdrop-blur-xl backdrop-saturate-150"
-    : "border-midex-line/40 bg-white/70 shadow-md backdrop-blur-xl";
+    : megaOpen
+      ? "border-midex-line/40 bg-white shadow-lg"
+      : "border-midex-line/40 bg-white/70 shadow-md backdrop-blur-xl";
 
   return (
     <header
-      className={`midex-header midex-header--overlay pointer-events-none fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-3.5 lg:px-6 ${headerScrolled ? "is-scrolled" : ""} ${headerVisible ? "" : "is-hidden"}`}
+      className={`midex-header midex-header--overlay pointer-events-none fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-3.5 lg:px-6 ${headerScrolled ? "is-scrolled" : ""} ${megaOpen ? "is-mega-open" : ""} ${headerVisible ? "" : "is-hidden"}`}
       data-midex-header
     >
       <div
-        className={`midex-header-bar pointer-events-auto relative z-[60] mx-auto max-w-6xl overflow-visible rounded-full border transition-all duration-300 ${barClass}`}
+        className="pointer-events-auto relative z-[60] mx-auto w-[min(calc(100vw-1.5rem),80rem)]"
+        onMouseLeave={scheduleMegaClose}
+        onMouseEnter={cancelMegaClose}
       >
-        <div className="flex h-14 items-center justify-between gap-2 px-3 sm:gap-3 sm:px-5">
-          <Link href="/" className="midex-header__brand shrink-0">
-            <Image
-              src="/images/brand/logo-white.png"
-              alt="Midex"
-              width={200}
-              height={58}
-              className="midex-header__logo midex-header__logo--light h-9 w-auto max-w-[150px] sm:h-10"
-              priority
-            />
-            <Image
-              src="/images/brand/logo-dark.png"
-              alt="Midex"
-              width={200}
-              height={58}
-              className="midex-header__logo midex-header__logo--dark h-9 w-auto max-w-[150px] sm:h-10"
-              priority
-            />
-          </Link>
-
-          <nav
-            className="midex-header__nav hidden flex-1 items-center justify-center overflow-visible lg:flex"
-            aria-label="Primary"
-          >
-            <ul className="midex-menu flex flex-wrap items-center justify-center gap-0.5 xl:gap-1">
-              {navItems.map((item) => {
-                const active =
-                  pathname === item.href ||
-                  (item.href !== "/" && pathname.startsWith(`${item.href}/`));
-                return (
-                  <li key={item.href} className="group relative">
-                    <DesktopNavItem item={item} overlay={overlay} active={active} />
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
-
-          <div className="flex items-center gap-2 sm:gap-2.5">
-            <LanguageSwitcher
-              className={`hidden sm:flex [&_a]:!h-8 [&_a]:!w-8 [&_a]:!text-base ${overlay ? "[&_a:not([aria-current])]:border-white/25 [&_a[aria-current]]:border-midex-mint/80 [&_a[aria-current]]:bg-white/10" : ""}`}
-            />
-            <Link
-              href="/contact"
-              className={`group mx-btn hidden !rounded-full !px-4 !py-2 !text-xs sm:inline-flex ${
-                overlay
-                  ? "border border-white/20 bg-white/5 text-white hover:border-white/35 hover:bg-white/10"
-                  : "mx-btn-primary !py-2 !text-xs"
-              }`}
-            >
-              {t("contactUs")}
-              <span className="mx-arrow">→</span>
+        <div className="mx-auto max-w-6xl">
+          <div className={`midex-header-bar relative rounded-full border ${barClass}`}>
+            <div className="flex h-14 items-center justify-between gap-2 px-3 sm:gap-3 sm:px-5">
+            <Link href="/" className="midex-header__brand shrink-0">
+              <Image
+                src="/images/brand/logo-white.png"
+                alt="Midex"
+                width={200}
+                height={58}
+                className="midex-header__logo midex-header__logo--light h-9 w-auto max-w-[150px] sm:h-10"
+                priority
+              />
+              <Image
+                src="/images/brand/logo-dark.png"
+                alt="Midex"
+                width={200}
+                height={58}
+                className="midex-header__logo midex-header__logo--dark h-9 w-auto max-w-[150px] sm:h-10"
+                priority
+              />
             </Link>
-            <button
-              type="button"
-              className={`inline-flex h-10 w-10 min-h-[44px] min-w-[44px] items-center justify-center rounded-full border lg:hidden ${
-                overlay
-                  ? "border-white/25 bg-white/5 text-white"
-                  : "border-midex-navy/10 text-midex-navy"
-              }`}
-              aria-expanded={menuOpen}
-              aria-label={t("menu")}
-              onClick={() => setMenuOpen((v) => !v)}
+
+            <nav
+              className="midex-header__nav hidden flex-1 items-center justify-center lg:flex"
+              aria-label="Primary"
             >
-              {menuOpen ? (
-                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              ) : (
-                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              )}
-            </button>
+              <ul className="midex-menu flex flex-wrap items-center justify-center gap-0.5 xl:gap-1">
+                {navItems.map((item) => {
+                  const active =
+                    pathname === item.href ||
+                    (item.href !== "/" && pathname.startsWith(`${item.href}/`));
+                  return (
+                    <li key={item.href}>
+                      <DesktopNavItem
+                        item={item}
+                        overlay={navOverlay}
+                        active={active}
+                        mega={
+                          item.href === "/products"
+                            ? "products"
+                            : item.href === "/solutions"
+                              ? "solutions"
+                              : undefined
+                        }
+                        activeMega={activeMega}
+                        onMegaOpen={handleMegaOpen}
+                      />
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
+
+            <div className="flex items-center gap-2 sm:gap-2.5">
+              <LanguageSwitcher overlay={navOverlay} className="hidden md:inline-flex" />
+              <Link
+                href="/contact"
+                className={`group mx-btn hidden !rounded-full !px-4 !py-2 !text-xs sm:inline-flex ${
+                  navOverlay
+                    ? "border border-white/20 bg-white/5 text-white hover:border-white/35 hover:bg-white/10"
+                    : "mx-btn-primary !py-2 !text-xs"
+                }`}
+              >
+                {t("contactUs")}
+                <span className="mx-arrow">→</span>
+              </Link>
+              <button
+                type="button"
+                className={`inline-flex h-10 w-10 min-h-[44px] min-w-[44px] items-center justify-center rounded-full border lg:hidden ${
+                  navOverlay
+                    ? "border-white/25 bg-white/5 text-white"
+                    : "border-midex-navy/10 text-midex-navy"
+                }`}
+                aria-expanded={menuOpen}
+                aria-label={t("menu")}
+                onClick={() => setMenuOpen((v) => !v)}
+              >
+                {menuOpen ? (
+                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                ) : (
+                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                )}
+              </button>
+            </div>
           </div>
         </div>
+        </div>
+
+        <HeaderMegaDropdown
+          activeMega={activeMega}
+          mountedMegas={mountedMegas}
+          productCategories={productCategoryEntries}
+          productAllLabel={tp("allCategories")}
+          solutionGroups={solutionGroupsNav}
+          solutionsAllLabel={t("allSolutions")}
+          featuredImage="/images/hero/slide-1.png"
+          onKeepOpen={cancelMegaClose}
+        />
       </div>
 
       {mounted &&

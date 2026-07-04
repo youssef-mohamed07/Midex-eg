@@ -7,6 +7,8 @@ import { heroCollageImages } from "@/content/site";
 
 type CollageItem = (typeof heroCollageImages.left)[number];
 
+const MOBILE_HERO_IMAGE = "/images/hero/slide-1.png";
+
 function HeroCollageImage({ item, priority = false }: { item: CollageItem; priority?: boolean }) {
   return (
     <div
@@ -17,7 +19,7 @@ function HeroCollageImage({ item, priority = false }: { item: CollageItem; prior
         alt=""
         fill
         className="object-cover"
-        sizes="(max-width: 1024px) 160px, 180px"
+        sizes="180px"
         priority={priority}
       />
     </div>
@@ -50,30 +52,30 @@ export function HeroSlider() {
     <section className="relative overflow-hidden bg-white">
       <div className="pointer-events-none absolute inset-0 mx-hero-grid" aria-hidden />
 
-      <div className="relative mx-container flex min-h-[calc(100svh-1rem)] flex-col justify-center pb-12 pt-[5.5rem] sm:pb-16 sm:pt-28 lg:min-h-[92svh] lg:pb-20 lg:pt-32">
+      <div className="relative mx-container pb-10 pt-[5.25rem] sm:pb-14 sm:pt-28 lg:flex lg:min-h-[92svh] lg:flex-col lg:justify-center lg:pb-20 lg:pt-32">
         <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(280px,34rem)_minmax(0,1fr)] lg:gap-8 xl:gap-12">
           <HeroCollageColumn items={heroCollageImages.left} side="left" />
 
-          <div className="mx-auto w-full max-w-2xl px-2 text-center lg:max-w-none lg:px-4">
+          <div className="mx-auto w-full max-w-2xl px-1 text-center sm:px-2 lg:max-w-none lg:px-4">
             <span className="mx-badge mx-auto border-midex-line bg-white text-midex-navy">
               {th("integratedEngineering")}
             </span>
 
-            <h1 className="mt-5 font-display text-3xl font-bold leading-[1.1] tracking-tight text-midex-navy sm:mt-6 sm:text-5xl lg:text-[3.25rem] lg:leading-[1.08]">
+            <h1 className="mt-4 font-display text-[1.75rem] font-bold leading-[1.12] tracking-tight text-midex-navy sm:mt-6 sm:text-5xl lg:text-[3.25rem] lg:leading-[1.08]">
               {t("slide1Title")}
             </h1>
 
-            <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-midex-gray/80 sm:mt-6 sm:text-lg">
+            <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-midex-gray/80 sm:mt-6 sm:text-lg">
               {t("slide1Text")}
             </p>
 
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:mt-10 sm:gap-4">
-              <Link className="group mx-btn mx-btn-primary" href="/contact">
+            <div className="mt-6 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-4">
+              <Link className="group mx-btn mx-btn-primary w-full justify-center sm:w-auto" href="/contact">
                 {t("contactUs")}
                 <span className="mx-arrow">→</span>
               </Link>
               <Link
-                className="mx-btn border border-midex-mint/35 bg-midex-mint/15 text-midex-navy hover:border-midex-mint/50 hover:bg-midex-mint/25"
+                className="mx-btn w-full justify-center border border-midex-mint/35 bg-midex-mint/15 text-midex-navy hover:border-midex-mint/50 hover:bg-midex-mint/25 sm:w-auto"
                 href="/solutions"
               >
                 {t("ourServices")}
@@ -84,10 +86,15 @@ export function HeroSlider() {
           <HeroCollageColumn items={heroCollageImages.right} side="right" />
         </div>
 
-        <div className="mt-10 flex gap-3 overflow-x-auto px-1 pb-1 lg:hidden" dir="ltr">
-          {[...heroCollageImages.left, ...heroCollageImages.right].map((item) => (
-            <HeroCollageImage key={`mobile-${item.src}`} item={item} />
-          ))}
+        <div className="relative mt-8 aspect-[16/10] overflow-hidden rounded-2xl border border-midex-line/50 shadow-[0_8px_30px_rgba(9,61,94,0.08)] sm:mt-10 lg:hidden">
+          <Image
+            src={MOBILE_HERO_IMAGE}
+            alt=""
+            fill
+            className="object-cover"
+            sizes="100vw"
+            priority
+          />
         </div>
       </div>
     </section>

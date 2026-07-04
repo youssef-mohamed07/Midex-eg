@@ -539,12 +539,21 @@
     @apply grid gap-8 lg:grid-cols-[minmax(280px,360px)_1fr] lg:gap-12 lg:items-start;
   }
 
+  .midex-contact-aside {
+    @apply overflow-hidden rounded-[1.5rem] border border-midex-line bg-white shadow-md shadow-midex-navy/5;
+  }
+
+  .midex-contact-aside--sticky {
+    @apply lg:sticky lg:self-start;
+    top: calc(var(--midex-header-height) + 1rem);
+  }
+
   .midex-contact-card {
     @apply rounded-2xl border border-midex-line bg-white p-6 shadow-sm sm:p-7;
   }
 
   .midex-contact-form-card {
-    @apply rounded-2xl border border-midex-line bg-white p-7 shadow-md sm:p-8 lg:p-10;
+    @apply rounded-[1.5rem] border border-midex-line bg-white p-7 shadow-xl shadow-midex-navy/8 sm:p-8 lg:p-10;
   }
 
   .midex-form-grid {
@@ -678,34 +687,69 @@
   }
 }
 
-.midex-header--overlay:not(.is-scrolled) .midex-header__logo--dark {
+.midex-header--overlay:not(.is-scrolled):not(.is-mega-open) .midex-header__logo--dark {
   display: none;
 }
 
-.midex-header--overlay:not(.is-scrolled) .midex-header__logo--light {
+.midex-header--overlay:not(.is-scrolled):not(.is-mega-open) .midex-header__logo--light {
   display: block;
 }
 
 .midex-header--overlay.is-scrolled .midex-header__logo--light,
+.midex-header--overlay.is-mega-open .midex-header__logo--light,
 .midex-header:not(.midex-header--overlay) .midex-header__logo--light {
   display: none;
 }
 
 .midex-header--overlay.is-scrolled .midex-header__logo--dark,
+.midex-header--overlay.is-mega-open .midex-header__logo--dark,
 .midex-header:not(.midex-header--overlay) .midex-header__logo--dark {
   display: block;
 }
 
-.midex-header--overlay:not(.is-scrolled) .midex-menu > li > a,
-.midex-header--overlay:not(.is-scrolled) .midex-menu > li > button {
+.midex-header--overlay:not(.is-scrolled):not(.is-mega-open) .midex-menu > li > a,
+.midex-header--overlay:not(.is-scrolled):not(.is-mega-open) .midex-menu > li > button {
   @apply text-white hover:text-midex-mint;
 }
 
 .midex-header--overlay.is-scrolled .midex-menu > li > a,
 .midex-header--overlay.is-scrolled .midex-menu > li > button,
+.midex-header--overlay.is-mega-open .midex-menu > li > a,
+.midex-header--overlay.is-mega-open .midex-menu > li > button,
 .midex-header:not(.midex-header--overlay) .midex-menu > li > a,
 .midex-header:not(.midex-header--overlay) .midex-menu > li > button {
   @apply text-midex-navy hover:text-midex-blue;
+}
+
+/* Header mega menu — dropdown below pill bar */
+.midex-header-mega {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate3d(0, -4px, 0);
+  transition:
+    opacity 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0.2s;
+}
+
+.midex-header-mega--open {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate3d(0, 0, 0);
+}
+
+.midex-header-mega::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 0.75rem;
+}
+
+.midex-header-mega__panel {
+  contain: layout paint;
 }
 
 /* Desktop nav dropdown + flyout */

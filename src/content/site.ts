@@ -106,6 +106,15 @@ export const exclusivePartners = [
   { name: "Eternal Water", image: "/images/exclusive/eternal-water.png" },
 ];
 
+export const certificates = [
+  { slug: "cert-welding", image: "/images/services/welding-docs.png", alt: "Welding qualification certificate" },
+  { slug: "cert-passivation", image: "/images/services/passivation-test.png", alt: "Passivation test certificate" },
+  { slug: "cert-roughness", image: "/images/services/roughness-test.png", alt: "Surface roughness certificate" },
+  { slug: "cert-event-1", image: "/images/events/event-1756814991.jpg", alt: "Midex certification" },
+  { slug: "cert-event-2", image: "/images/events/event-1755506225.jpg", alt: "Midex certification" },
+  { slug: "cert-event-3", image: "/images/events/event-1756820572.png", alt: "Midex certification" },
+];
+
 export const stats = [
   { value: 465, labelKey: "statProjects" },
   { value: 255, labelKey: "statClients" },
@@ -414,4 +423,43 @@ export const siteContact = {
   phones: ["01026228403", "01006683803"],
   address:
     "29 Al Mehwar Al Markazi, First 6th of October, 6th of October City (2), Giza Governorate 3225614",
+  mapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+    "29 Al Mehwar Al Markazi, First 6th of October, 6th of October City (2), Giza Governorate 3225614",
+  )}`,
+  mapsEmbedUrl: `https://maps.google.com/maps?q=${encodeURIComponent(
+    "29 Al Mehwar Al Markazi, First 6th of October, 6th of October City (2), Giza Governorate 3225614",
+  )}&hl=en&z=16&output=embed`,
 };
+
+export const companyValues = [
+  {
+    id: "quality",
+    image: "/images/services/welding-docs.png",
+    alt: "Quality and compliance documentation",
+  },
+  {
+    id: "traceability",
+    image: "/images/services/passivation-test.png",
+    alt: "Material traceability and validation records",
+  },
+  {
+    id: "partnership",
+    image: "/images/events/event-1756814991.jpg",
+    alt: "Midex team working with clients",
+  },
+  {
+    id: "integrity",
+    image: "/images/services/orbital-welding.png",
+    alt: "Orbital welding and engineering integrity",
+  },
+  {
+    id: "hygiene",
+    image: "/images/services/mirror-finish.png",
+    alt: "Hygienic surface finish and design",
+  },
+  {
+    id: "accountability",
+    image: "/images/services/spray-ball.png",
+    alt: "Turnkey system commissioning and support",
+  },
+] as const;

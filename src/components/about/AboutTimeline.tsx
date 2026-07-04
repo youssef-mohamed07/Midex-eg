@@ -1,17 +1,23 @@
 import { getTranslations } from "next-intl/server";
 import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
-import { TimelineTrack } from "@/components/about/TimelineTrack";
+import { ServicesTimeline } from "@/components/home/ServicesTimeline";
 
 const expertiseKeys = ["expertise1", "expertise2", "expertise3", "expertise4"] as const;
+
+const expertiseImages: Record<(typeof expertiseKeys)[number], string> = {
+  expertise1: "/images/hero/slide-1.png",
+  expertise2: "/images/services/orbital-welding.png",
+  expertise3: "/images/services/spray-ball.png",
+  expertise4: "/images/services/mechanical-polishing.png",
+};
 
 export async function AboutTimeline() {
   const t = await getTranslations("about");
 
-  const items = expertiseKeys.map((key, index) => ({
-    key,
-    step: String(index + 1).padStart(2, "0"),
+  const services = expertiseKeys.map((key) => ({
     title: t(`${key}Title`),
-    text: t(`${key}Text`),
+    excerpt: t(`${key}Text`),
+    image: expertiseImages[key],
   }));
 
   return (
@@ -25,7 +31,7 @@ export async function AboutTimeline() {
           </div>
         </RevealOnScroll>
 
-        <TimelineTrack items={items} />
+        <ServicesTimeline services={services} />
       </div>
     </section>
   );

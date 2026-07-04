@@ -5,7 +5,9 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { heroCollageImages } from "@/content/site";
 
-type CollageItem = (typeof heroCollageImages.left)[number];
+type CollageItem =
+  | (typeof heroCollageImages.left)[number]
+  | (typeof heroCollageImages.right)[number];
 
 const MOBILE_HERO_IMAGE = "/images/hero/slide-1.png";
 

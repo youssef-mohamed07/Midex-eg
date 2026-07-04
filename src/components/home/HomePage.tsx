@@ -1,6 +1,7 @@
 import { getLocale, getTranslations } from "next-intl/server";
 import { CaseStudiesSection } from "@/components/home/CaseStudiesSection";
 import { ClientsSection } from "@/components/home/ClientsSection";
+import { BeforeAfterSection } from "@/components/home/BeforeAfterSection";
 import { EventsSection } from "@/components/home/EventsSection";
 import { ExclusivePartnersSection } from "@/components/home/ExclusivePartnersSection";
 import { FaqSection } from "@/components/home/FaqSection";
@@ -92,6 +93,8 @@ export async function HomePage() {
       </section>
 
       <ProductCategoriesSection />
+
+      <BeforeAfterSection />
 
       <StatsSection
         title={t("statsTitle")}

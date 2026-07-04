@@ -8,13 +8,24 @@ type Props = {
   afterLabel: string;
   beforeVideo: string;
   afterVideo: string;
+  beforePoster?: string;
+  afterPoster?: string;
 };
 
-function VideoSlot({ src, grayscale = false }: { src: string; grayscale?: boolean }) {
+function VideoSlot({
+  src,
+  poster,
+  grayscale = false,
+}: {
+  src: string;
+  poster?: string;
+  grayscale?: boolean;
+}) {
   return (
-    <div className={`relative h-full w-full bg-white ${grayscale ? "bg-neutral-100" : ""}`}>
+    <div className={`relative h-full w-full ${grayscale ? "bg-neutral-100" : "bg-white"}`}>
       <video
         src={src}
+        poster={poster}
         autoPlay
         muted
         loop
@@ -32,6 +43,8 @@ export function BeforeAfterSlider({
   afterLabel,
   beforeVideo,
   afterVideo,
+  beforePoster,
+  afterPoster,
 }: Props) {
   const locale = useLocale();
   const isArabic = locale === "ar";
@@ -40,13 +53,13 @@ export function BeforeAfterSlider({
   return (
     <div
       dir="ltr"
-      className="mx-before-after relative min-h-[360px] overflow-hidden rounded-2xl border border-midex-line bg-midex-surface shadow-lg sm:min-h-[440px] lg:min-h-[520px] xl:min-h-[580px]"
+      className="mx-before-after relative min-h-[300px] overflow-hidden rounded-2xl border border-midex-line bg-midex-surface shadow-lg sm:min-h-[440px] lg:min-h-[520px] xl:min-h-[580px]"
       role="group"
       aria-label={`${beforeLabel} / ${afterLabel}`}
     >
       <div className="absolute inset-0 grid grid-cols-2">
-        <VideoSlot src={beforeVideo} grayscale />
-        <VideoSlot src={afterVideo} />
+        <VideoSlot src={beforeVideo} poster={beforePoster} grayscale />
+        <VideoSlot src={afterVideo} poster={afterPoster} />
       </div>
 
       <span
@@ -64,7 +77,7 @@ export function BeforeAfterSlider({
 
       <div className="pointer-events-none absolute inset-y-0 left-1/2 z-20 -translate-x-1/2">
         <div className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-midex-line/80" />
-        <div className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-sm border border-midex-line/80 bg-white p-3 shadow-xl sm:h-[4.75rem] sm:w-[4.75rem] lg:h-20 lg:w-20 lg:p-3.5">
+        <div className="absolute left-1/2 top-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-sm border border-midex-line/80 bg-white p-2.5 shadow-xl sm:h-[4.75rem] sm:w-[4.75rem] sm:p-3 lg:h-20 lg:w-20 lg:p-3.5">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={siteConfig.brandIcon}

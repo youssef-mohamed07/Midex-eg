@@ -3,6 +3,7 @@ import { Link } from "@/i18n/navigation";
 import { OurValuesSection } from "@/components/about/OurValuesSection";
 import { CertificationsSection } from "@/components/about/CertificationsSection";
 import { AboutTimeline } from "@/components/about/AboutTimeline";
+import { BeforeAfterSection } from "@/components/home/BeforeAfterSection";
 import { CaseStudiesSection } from "@/components/home/CaseStudiesSection";
 import { EventsSection } from "@/components/home/EventsSection";
 import { FaqSection } from "@/components/home/FaqSection";
@@ -28,6 +29,8 @@ export async function AboutPageContent() {
       <EventsSection />
 
       <AboutTimeline />
+
+      <BeforeAfterSection />
 
       <CertificationsSection />
 

@@ -40,7 +40,7 @@ export async function SolutionsPageContent() {
         </p>
       </PageHero>
 
-      <section className="mx-section bg-midex-surface">
+      <section className="mx-section">
         <div className="mx-container">
           <div className="grid gap-10 lg:grid-cols-[minmax(220px,260px)_1fr] lg:gap-14">
             <aside className="lg:sticky lg:top-24 lg:self-start">

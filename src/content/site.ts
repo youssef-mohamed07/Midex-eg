@@ -28,6 +28,19 @@ export const heroSlides = [
   },
 ] as const;
 
+export const heroCollageImages = {
+  left: [
+    { src: "/images/events/event-1755506209.jpg", className: "ms-8 h-32 w-24 sm:h-36 sm:w-28" },
+    { src: "/images/hero/slide-2.png", className: "h-28 w-40 sm:h-32 sm:w-44" },
+    { src: "/images/events/event-1755506266.jpg", className: "me-4 h-36 w-28 sm:h-40 sm:w-32" },
+  ],
+  right: [
+    { src: "/images/events/event-1755506225.jpg", className: "me-8 h-36 w-28 sm:h-40 sm:w-32" },
+    { src: "/images/hero/slide-1.png", className: "h-28 w-40 sm:h-32 sm:w-44" },
+    { src: "/images/events/event-1756814991.jpg", className: "ms-4 h-32 w-24 sm:h-36 sm:w-28" },
+  ],
+} as const;
+
 export const services = [
   {
     title: "Mechanical polishing",
@@ -170,6 +183,69 @@ export const newsItems = [
     excerpt:
       "Stainless steel piping works for a new production line within the PW network.",
     image: "/images/news/news-1776871937.png",
+  },
+];
+
+export type CaseStudy = {
+  slug: string;
+  client: string;
+  image: string;
+  industry: string;
+  scope: string;
+  outcome: string;
+  statValue: string;
+  statLabel: string;
+  tags: string[];
+};
+
+export const caseStudies: CaseStudy[] = [
+  {
+    slug: "spimaco-pw-station",
+    client: "SPIMACO",
+    image: "/images/news/news-1756207804.png",
+    industry: "Pharmaceutical",
+    scope: "Purified water station design, build & validation",
+    outcome:
+      "Delivered a 2.5 m³/h PW station with advanced monitoring and full GMP documentation for qualified operation.",
+    statValue: "2.5",
+    statLabel: "m³/h capacity",
+    tags: ["Purified Water", "GMP", "Validation"],
+  },
+  {
+    slug: "mars-wrigley-soft-water",
+    client: "MARS WRIGLEY",
+    image: "/images/news/news-1756042052.png",
+    industry: "Food & Beverage",
+    scope: "Stainless-steel soft water distribution network",
+    outcome:
+      "Installed 1,500 meters of hygienic piping with tested loops and documented handover for production reliability.",
+    statValue: "1,500",
+    statLabel: "meters installed",
+    tags: ["Piping", "Hygienic Design", "Turnkey"],
+  },
+  {
+    slug: "vacsera-ro-edi",
+    client: "VACSERA",
+    image: "/images/news/news-1725287028.webp",
+    industry: "Pharmaceutical",
+    scope: "RO-EDI station capacity upgrade",
+    outcome:
+      "Upgraded purified water generation capacity while maintaining continuous compliance and traceable weld records.",
+    statValue: "RO-EDI",
+    statLabel: "system upgrade",
+    tags: ["RO-EDI", "Upgrade", "Documentation"],
+  },
+  {
+    slug: "otsuka-pw-network",
+    client: "Otsuka",
+    image: "/images/news/news-1776871937.png",
+    industry: "Pharmaceutical",
+    scope: "PW network piping for new production line",
+    outcome:
+      "Executed stainless orbital welding and passivation across a new PW loop integrated with existing distribution.",
+    statValue: "PW",
+    statLabel: "network expansion",
+    tags: ["Orbital Welding", "PW Loop", "Passivation"],
   },
 ];
 

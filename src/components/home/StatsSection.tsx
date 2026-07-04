@@ -79,7 +79,7 @@ export function StatsSection({
   }, []);
 
   return (
-    <section className="mx-section bg-midex-surface">
+    <section className="mx-section">
       <div ref={sectionRef} className="mx-container">
         <div className="mx-auto mb-8 max-w-2xl text-center sm:mb-10">
           <span className="mx-eyebrow mx-eyebrow--center">Midex</span>

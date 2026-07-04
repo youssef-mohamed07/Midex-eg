@@ -21,7 +21,7 @@ function LogoMarquee({
         {track.map((logo, index) => (
           <div
             key={`${logo}-${index}`}
-            className="group flex h-[60px] w-[120px] shrink-0 items-center justify-center rounded-lg border border-midex-line bg-white px-3 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-midex-mint/45 hover:shadow-md sm:h-20 sm:w-[168px] sm:rounded-xl sm:px-4"
+            className="group flex h-[60px] w-[120px] shrink-0 items-center justify-center px-2 sm:h-20 sm:w-[168px] sm:px-3"
           >
             <Image
               src={logo}
@@ -43,7 +43,7 @@ export function ClientsSection({ title, subtitle }: Props) {
   const rowB = clientLogos.slice(midpoint);
 
   return (
-    <section className="overflow-hidden border-y border-midex-navy/8 bg-midex-surface/80 py-8 sm:py-10 lg:py-12">
+    <section className="mx-section-band overflow-hidden">
       <div className="mx-container">
         <div className="mx-auto mb-6 max-w-2xl text-center sm:mb-8 lg:mb-10">
           <span className="mx-eyebrow mx-eyebrow--center">Midex</span>

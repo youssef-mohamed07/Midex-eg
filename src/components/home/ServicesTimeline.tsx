@@ -82,13 +82,31 @@ function MobileDot({ side }: { side: "left" | "right" }) {
   );
 }
 
+function TimelineStepNumber({ step, side }: { step: string; side: "left" | "right" }) {
+  const { ref, className } = useRevealOnScroll<HTMLDivElement>(side);
+
+  return (
+    <div
+      ref={ref}
+      className={`${className} flex items-center ${
+        side === "left"
+          ? "mb-3 justify-end pe-2 sm:mb-0 sm:pe-0 lg:col-start-2 lg:mb-0 lg:justify-start lg:ps-12"
+          : "mb-3 justify-start ps-2 sm:mb-0 sm:ps-0 lg:col-start-1 lg:mb-0 lg:justify-end lg:pe-12"
+      }`}
+      aria-hidden
+    >
+      <span className="font-display text-6xl font-bold tabular-nums leading-none text-midex-navy/[0.08] sm:text-7xl lg:text-8xl xl:text-9xl">
+        {step}
+      </span>
+    </div>
+  );
+}
+
 function ServiceCard({
   service,
-  step,
   side,
 }: {
   service: Service;
-  step: string;
   side: "left" | "right";
 }) {
   const { ref, className } = useRevealOnScroll<HTMLDivElement>(side);
@@ -127,23 +145,12 @@ function ServiceCard({
           aria-hidden
         />
 
-        <span
-          className="pointer-events-none absolute end-4 top-4 font-display text-4xl font-bold tabular-nums leading-none text-white/10 sm:end-5 sm:top-5 sm:text-6xl"
-          aria-hidden
-        >
-          {step}
-        </span>
-
         <figcaption
           className={`absolute inset-x-0 bottom-0 flex flex-col px-4 pb-4 pt-12 sm:px-6 sm:pb-6 sm:pt-20 ${
             side === "left" ? "lg:items-end lg:text-end" : "lg:items-start lg:text-start"
           }`}
         >
-          <span className="inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-midex-mint sm:text-[11px]">
-            <span className="h-px w-5 bg-midex-mint/70 sm:w-6" aria-hidden />
-            {step}
-          </span>
-          <h3 className="mt-1.5 font-display text-lg font-bold leading-snug text-white sm:mt-2 sm:text-2xl">
+          <h3 className="font-display text-lg font-bold leading-snug text-white sm:text-2xl">
             {service.title}
           </h3>
           <p className="mt-1.5 max-w-sm text-[13px] leading-relaxed text-white/75 sm:mt-2 sm:text-[15px]">
@@ -177,11 +184,11 @@ export function ServicesTimeline({ services }: { services: Service[] }) {
               <MobileDot side={side} />
               <TimelineDot side={side} />
 
-              {side === "right" && <div className="hidden lg:block" aria-hidden />}
+              {side === "right" && <TimelineStepNumber step={step} side={side} />}
 
-              <ServiceCard service={service} step={step} side={side} />
+              <ServiceCard service={service} side={side} />
 
-              {side === "left" && <div className="hidden lg:block" aria-hidden />}
+              {side === "left" && <TimelineStepNumber step={step} side={side} />}
             </li>
           );
         })}

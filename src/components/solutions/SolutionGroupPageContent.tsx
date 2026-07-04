@@ -68,7 +68,7 @@ export async function SolutionGroupPageContent({ slug }: Props) {
         </div>
       </PageHero>
 
-      <section className="border-b border-midex-line bg-white py-12 lg:py-16">
+      <section className="mx-section">
         <div className="mx-container">
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(280px,400px)] lg:items-center lg:gap-14">
             <div>
@@ -113,7 +113,7 @@ export async function SolutionGroupPageContent({ slug }: Props) {
         </div>
       </section>
 
-      <section className="mx-section--tight bg-midex-surface">
+      <section className="mx-section--tight">
         <div className="mx-container">
           <div className="mb-8 max-w-2xl">
             <span className="mx-eyebrow">Midex</span>
@@ -141,7 +141,7 @@ export async function SolutionGroupPageContent({ slug }: Props) {
       </section>
 
       {otherGroups.length > 0 && (
-        <section className="mx-section--tight border-t border-midex-line bg-white">
+        <section className="mx-section--tight">
           <div className="mx-container">
             <div className="mb-8">
               <span className="mx-eyebrow">Midex</span>

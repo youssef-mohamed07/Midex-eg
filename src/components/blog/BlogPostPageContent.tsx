@@ -55,7 +55,7 @@ export async function BlogPostPageContent({ slug }: Props) {
         </div>
       </div>
 
-      <section className="mx-section bg-white">
+      <section className="mx-section">
         <div className="mx-container">
           <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_280px] lg:gap-16">
             <article>

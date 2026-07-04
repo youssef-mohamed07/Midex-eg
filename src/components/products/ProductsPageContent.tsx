@@ -103,7 +103,7 @@ export async function ProductsPageContent({ category = null }: Props) {
         </p>
       </PageHero>
 
-      <section className="mx-section bg-midex-surface">
+      <section className="mx-section">
         <div className="mx-container">
           <div className="grid gap-10 lg:grid-cols-[minmax(220px,260px)_1fr] lg:gap-14">
             <aside className="lg:sticky lg:top-24 lg:self-start">
@@ -209,7 +209,7 @@ export async function ProductsPageContent({ category = null }: Props) {
         </div>
       </section>
 
-      <section className="border-t border-midex-line bg-white py-14 lg:py-16">
+      <section className="mx-section--tight">
         <div className="mx-container">
           <div className="relative overflow-hidden rounded-3xl bg-midex-navy px-8 py-10 sm:px-10 sm:py-12 lg:flex lg:items-center lg:justify-between">
             <div className="mx-grid-overlay pointer-events-none absolute inset-0 opacity-40" />

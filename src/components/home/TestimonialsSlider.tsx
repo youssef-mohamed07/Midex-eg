@@ -1,49 +1,26 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { useTranslations } from "next-intl";
-
 type Testimonial = {
   name: string;
   role: string;
   quote: string;
 };
 
-const SLIDE_DURATION = 6500;
-
-function useVisibleCount() {
-  const [count, setCount] = useState(1);
-
-  useEffect(() => {
-    const mqSm = window.matchMedia("(min-width: 640px)");
-    const mqLg = window.matchMedia("(min-width: 1024px)");
-
-    const update = () => {
-      if (mqLg.matches) setCount(3);
-      else if (mqSm.matches) setCount(2);
-      else setCount(1);
-    };
-
-    update();
-    mqSm.addEventListener("change", update);
-    mqLg.addEventListener("change", update);
-
-    return () => {
-      mqSm.removeEventListener("change", update);
-      mqLg.removeEventListener("change", update);
-    };
-  }, []);
-
-  return count;
+function QuoteIcon({ className = "h-8 w-8" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+      <path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.016 3.016 0 01-3.016 3.016c-1.734 0-3.016-1.282-3.034-2.988zM14.583 17.321c-1.03-1.094-1.583-2.321-1.583-4.31 0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.016 3.016 0 01-3.016 3.016c-1.734 0-3.016-1.282-3.034-2.988z" />
+    </svg>
+  );
 }
 
 function PersonAvatar({ name }: { name: string }) {
   return (
-    <div className="relative mx-auto shrink-0 transition-transform duration-500 group-hover:scale-105">
-      <div className="absolute -inset-0.5 rounded-full bg-gradient-to-br from-midex-mint/45 to-midex-blue/35 blur-[2px] opacity-70 transition-opacity duration-500 group-hover:opacity-100" />
-      <div className="relative flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-midex-navy to-midex-blue shadow-md ring-2 ring-white transition-shadow duration-500 group-hover:shadow-lg group-hover:ring-midex-mint/40 sm:h-16 sm:w-16 sm:ring-[3px]">
+    <div className="relative mx-auto shrink-0">
+      <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-midex-mint/50 to-midex-blue/40 blur-sm" />
+      <div className="relative flex h-[3.75rem] w-[3.75rem] items-center justify-center rounded-full bg-gradient-to-br from-midex-navy to-midex-blue shadow-md ring-[3px] ring-white sm:h-16 sm:w-16">
         <svg
-          className="h-6 w-6 text-white/95 transition-transform duration-500 group-hover:scale-110 sm:h-7 sm:w-7"
+          className="h-7 w-7 text-white/95 sm:h-8 sm:w-8"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -68,21 +45,24 @@ function PersonAvatar({ name }: { name: string }) {
   );
 }
 
-function TestimonialCard({ item, index }: { item: Testimonial; index: number }) {
+function TestimonialCard({ item }: { item: Testimonial }) {
   return (
-    <figure
-      className="group mx-testimonial-card flex h-full flex-col rounded-xl border border-midex-line/80 bg-white/95 p-4 shadow-lg shadow-midex-navy/5 backdrop-blur-sm transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1.5 hover:border-midex-mint/45 hover:shadow-xl hover:shadow-midex-navy/10 sm:rounded-2xl sm:p-7"
-      style={{ animationDelay: `${index * 120}ms` }}
-    >
+    <figure className="group relative flex h-full w-[min(88vw,320px)] shrink-0 flex-col overflow-hidden rounded-2xl border border-midex-line/50 bg-white p-5 shadow-[0_10px_40px_rgba(9,61,94,0.07)] transition-all duration-500 hover:-translate-y-1 hover:border-midex-mint/40 hover:shadow-[0_16px_48px_rgba(9,61,94,0.12)] sm:w-[340px] sm:p-7 lg:w-[360px]">
+      <div
+        className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-midex-mint via-midex-blue to-midex-mint"
+        aria-hidden
+      />
+      <QuoteIcon className="absolute end-4 top-5 h-7 w-7 text-midex-mint/20 transition-colors duration-300 group-hover:text-midex-mint/35 sm:end-6 sm:top-6 sm:h-8 sm:w-8" />
+
       <PersonAvatar name={item.name} />
-      <blockquote className="mt-4 flex-1 text-[13px] leading-relaxed text-midex-gray/85 transition-colors duration-300 group-hover:text-midex-gray sm:mt-5 sm:text-[15px] sm:leading-[1.65]">
+
+      <blockquote className="mt-5 flex min-h-[5.5rem] flex-1 items-start text-center text-[13px] leading-relaxed text-midex-gray/85 sm:mt-6 sm:min-h-[6rem] sm:text-[15px] sm:leading-[1.7]">
         &ldquo;{item.quote}&rdquo;
       </blockquote>
-      <figcaption className="mt-5 border-t border-midex-line pt-4 text-center transition-colors duration-300 group-hover:border-midex-mint/30">
-        <p className="font-display text-base font-bold text-midex-navy transition-colors duration-300 group-hover:text-midex-blue">
-          {item.name}
-        </p>
-        <p className="mt-1 text-xs text-midex-gray/65 sm:text-sm">{item.role}</p>
+
+      <figcaption className="mt-5 rounded-xl bg-midex-surface/80 px-4 py-3.5 text-center sm:mt-6 sm:px-5 sm:py-4">
+        <p className="font-display text-base font-bold text-midex-navy">{item.name}</p>
+        <p className="mt-1 text-xs text-midex-gray/70 sm:text-sm">{item.role}</p>
       </figcaption>
     </figure>
   );
@@ -95,43 +75,12 @@ export function TestimonialsSlider({
   title: string;
   testimonials: Testimonial[];
 }) {
-  const t = useTranslations("common");
-  const [active, setActive] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const visibleCount = useVisibleCount();
-  const count = testimonials.length;
+  if (testimonials.length === 0) return null;
 
-  const visibleItems = useMemo(() => {
-    if (count === 0) return [];
-    const slots = Math.min(visibleCount, count);
-    return Array.from({ length: slots }, (_, index) => ({
-      item: testimonials[(active + index) % count],
-      index,
-    }));
-  }, [active, count, testimonials, visibleCount]);
-
-  useEffect(() => {
-    if (count <= visibleCount || paused) return;
-
-    const timer = setInterval(() => {
-      setActive((index) => (index + 1) % count);
-    }, SLIDE_DURATION);
-
-    return () => clearInterval(timer);
-  }, [count, paused, visibleCount]);
-
-  if (count === 0) return null;
-
-  const goTo = (index: number) => setActive((index + count) % count);
-  const gridCols =
-    visibleCount >= 3
-      ? "md:grid-cols-3"
-      : visibleCount === 2
-        ? "sm:grid-cols-2"
-        : "grid-cols-1";
+  const track = [...testimonials, ...testimonials];
 
   return (
-    <section className="relative mx-section overflow-x-hidden bg-gradient-to-b from-midex-surface/60 via-white to-midex-surface/40">
+    <section className="relative mx-section overflow-x-hidden">
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute -start-20 top-10 h-56 w-56 rounded-full bg-midex-mint/10 blur-3xl" />
         <div className="absolute -end-16 bottom-0 h-64 w-64 rounded-full bg-midex-blue/8 blur-3xl" />
@@ -143,56 +92,12 @@ export function TestimonialsSlider({
           <h2 className="mx-section-title mt-4">{title}</h2>
         </div>
 
-        <div
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-          onFocus={() => setPaused(true)}
-          onBlur={() => setPaused(false)}
-        >
-          <div key={`${active}-${visibleCount}`} className={`grid gap-4 sm:gap-5 ${gridCols} lg:gap-6`}>
-            {visibleItems.map(({ item, index }) => (
-              <TestimonialCard key={`${item.name}-${active}-${index}`} item={item} index={index} />
+        <div className="mx-marquee-fade mx-marquee-fade--white">
+          <div className="mx-marquee-track mx-marquee-track--testimonials gap-4 sm:gap-5 lg:gap-6">
+            {track.map((item, index) => (
+              <TestimonialCard key={`${item.name}-${index}`} item={item} />
             ))}
           </div>
-
-          {count > visibleCount && (
-            <div className="mt-6 flex items-center justify-center gap-3 sm:mt-8">
-              <button
-                type="button"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-midex-line bg-white text-midex-navy shadow-sm transition-all duration-300 hover:border-midex-mint/50 hover:text-midex-blue hover:shadow-md"
-                aria-label={t("prevTestimonial")}
-                onClick={() => goTo(active - 1)}
-              >
-                ‹
-              </button>
-
-              <div className="flex max-w-[12rem] flex-wrap items-center justify-center gap-2 sm:max-w-none">
-                {testimonials.map((item, index) => (
-                  <button
-                    key={item.name}
-                    type="button"
-                    aria-label={t("showTestimonial", { name: item.name })}
-                    aria-current={index === active ? "true" : undefined}
-                    onClick={() => goTo(index)}
-                    className={`rounded-full transition-all duration-300 ${
-                      index === active
-                        ? "h-2 w-8 bg-midex-blue"
-                        : "h-2 w-2 bg-midex-line hover:scale-125 hover:bg-midex-mint/60"
-                    }`}
-                  />
-                ))}
-              </div>
-
-              <button
-                type="button"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-midex-line bg-white text-midex-navy shadow-sm transition-all duration-300 hover:border-midex-mint/50 hover:text-midex-blue hover:shadow-md"
-                aria-label={t("nextTestimonial")}
-                onClick={() => goTo(active + 1)}
-              >
-                ›
-              </button>
-            </div>
-          )}
         </div>
       </div>
     </section>

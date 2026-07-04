@@ -16,6 +16,7 @@ import {
 import {
   services as baseServices,
   newsItems as baseNewsItems,
+  caseStudies as baseCaseStudies,
   events as baseEvents,
   testimonials as baseTestimonials,
   blogPosts as baseBlogPosts,
@@ -105,6 +106,21 @@ export function getLocalizedNewsItems(locale: Locale) {
       ...item,
       title: translated?.title ?? item.title,
       excerpt: translated?.excerpt ?? item.excerpt,
+    };
+  });
+}
+
+export function getLocalizedCaseStudies(locale: Locale) {
+  const content = getContent(locale);
+  return baseCaseStudies.map((item, index) => {
+    const translated = content?.caseStudies[index];
+    return {
+      ...item,
+      industry: translated?.industry ?? item.industry,
+      scope: translated?.scope ?? item.scope,
+      outcome: translated?.outcome ?? item.outcome,
+      statLabel: translated?.statLabel ?? item.statLabel,
+      tags: translated?.tags ?? item.tags,
     };
   });
 }

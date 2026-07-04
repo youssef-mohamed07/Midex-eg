@@ -36,7 +36,7 @@ export async function ContactPageContent() {
     <>
       <PageHero title={t("title")} subtitle={t("intro")} eyebrow="Midex" compact />
 
-      <section className="mx-section bg-midex-surface">
+      <section className="mx-section">
         <div className="mx-container">
           <div className="grid gap-8 lg:grid-cols-[minmax(280px,360px)_1fr] lg:gap-12 lg:items-start">
             <aside className="lg:sticky lg:top-24">

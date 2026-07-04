@@ -392,7 +392,9 @@ export function Header() {
 
   const closeMenu = () => setMenuOpen(false);
 
-  const overlay = !scrolled;
+  const isHome = pathname === "/";
+  const overlay = !scrolled && !isHome;
+  const headerScrolled = scrolled || isHome;
 
   const productChildren = Object.entries(productCategories).map(
     ([slug, cat]) => ({
@@ -426,7 +428,7 @@ export function Header() {
 
   return (
     <header
-      className={`midex-header midex-header--overlay pointer-events-none fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-3.5 lg:px-6 ${scrolled ? "is-scrolled" : ""} ${headerVisible ? "" : "is-hidden"}`}
+      className={`midex-header midex-header--overlay pointer-events-none fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-3.5 lg:px-6 ${headerScrolled ? "is-scrolled" : ""} ${headerVisible ? "" : "is-hidden"}`}
       data-midex-header
     >
       <div

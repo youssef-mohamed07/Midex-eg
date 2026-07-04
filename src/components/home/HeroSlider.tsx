@@ -1,113 +1,95 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { heroSlides } from "@/content/site";
+import { heroCollageImages } from "@/content/site";
 
-const SLIDE_DURATION = 7000;
+type CollageItem = (typeof heroCollageImages.left)[number];
+
+function HeroCollageImage({ item, priority = false }: { item: CollageItem; priority?: boolean }) {
+  return (
+    <div
+      className={`relative shrink-0 overflow-hidden rounded-2xl border border-midex-line/50 bg-midex-surface shadow-[0_8px_30px_rgba(9,61,94,0.08)] ${item.className}`}
+    >
+      <Image
+        src={item.src}
+        alt=""
+        fill
+        className="object-cover"
+        sizes="(max-width: 1024px) 160px, 180px"
+        priority={priority}
+      />
+    </div>
+  );
+}
+
+function HeroCollageColumn({
+  items,
+  side,
+}: {
+  items: readonly CollageItem[];
+  side: "left" | "right";
+}) {
+  const align = side === "left" ? "items-end" : "items-start";
+
+  return (
+    <div className={`hidden flex-col gap-3 py-6 lg:flex ${align}`} aria-hidden>
+      {items.map((item, index) => (
+        <HeroCollageImage key={item.src} item={item} priority={index === 1} />
+      ))}
+    </div>
+  );
+}
 
 export function HeroSlider() {
   const t = useTranslations("hero");
   const th = useTranslations("home");
-  const [active, setActive] = useState(0);
-  const slide = heroSlides[active];
-
-  useEffect(() => {
-    if (heroSlides.length <= 1) return;
-
-    const timer = setInterval(
-      () => setActive((index) => (index + 1) % heroSlides.length),
-      SLIDE_DURATION,
-    );
-
-    return () => clearInterval(timer);
-  }, []);
 
   return (
-    <section className="relative isolate min-h-[100svh] overflow-x-hidden bg-midex-navy-dark">
-      <div className="absolute inset-0 overflow-hidden">
-        {heroSlides.map((item, index) => (
-          <div
-            key={item.image}
-            className={`absolute inset-0 overflow-hidden transition-opacity duration-1000 ease-in-out ${
-              index === active ? "z-10 opacity-100" : "z-0 opacity-0"
-            }`}
-          >
-            <div className="absolute inset-0 overflow-hidden">
-              <div className="absolute inset-0 animate-ken-burns">
-                <Image
-                  src={item.image}
-                  alt=""
-                  fill
-                  className="object-cover"
-                  priority={index === 0}
-                  sizes="100vw"
-                />
-              </div>
+    <section className="relative overflow-hidden bg-white">
+      <div className="pointer-events-none absolute inset-0 mx-hero-grid" aria-hidden />
+
+      <div className="relative mx-container flex min-h-[calc(100svh-1rem)] flex-col justify-center pb-12 pt-[5.5rem] sm:pb-16 sm:pt-28 lg:min-h-[92svh] lg:pb-20 lg:pt-32">
+        <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(280px,34rem)_minmax(0,1fr)] lg:gap-8 xl:gap-12">
+          <HeroCollageColumn items={heroCollageImages.left} side="left" />
+
+          <div className="mx-auto w-full max-w-2xl px-2 text-center lg:max-w-none lg:px-4">
+            <span className="mx-badge mx-auto border-midex-line bg-white text-midex-navy">
+              {th("integratedEngineering")}
+            </span>
+
+            <h1 className="mt-5 font-display text-3xl font-bold leading-[1.1] tracking-tight text-midex-navy sm:mt-6 sm:text-5xl lg:text-[3.25rem] lg:leading-[1.08]">
+              {t("slide1Title")}
+            </h1>
+
+            <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-midex-gray/80 sm:mt-6 sm:text-lg">
+              {t("slide1Text")}
+            </p>
+
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:mt-10 sm:gap-4">
+              <Link className="group mx-btn mx-btn-primary" href="/contact">
+                {t("contactUs")}
+                <span className="mx-arrow">→</span>
+              </Link>
+              <Link
+                className="mx-btn border border-midex-mint/35 bg-midex-mint/15 text-midex-navy hover:border-midex-mint/50 hover:bg-midex-mint/25"
+                href="/solutions"
+              >
+                {t("ourServices")}
+              </Link>
             </div>
-            <div className="absolute inset-0 bg-gradient-to-r from-midex-navy-dark/95 via-midex-navy/78 to-midex-navy/20 [dir=rtl]:bg-gradient-to-l" />
-            <div className="absolute inset-0 bg-gradient-to-t from-midex-navy-dark/55 via-transparent to-midex-navy/15" />
           </div>
-        ))}
-      </div>
 
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -start-20 top-24 h-72 w-72 animate-float rounded-full bg-midex-mint/15 blur-3xl" />
-        <div
-          className="absolute -end-16 bottom-24 h-96 w-96 animate-float rounded-full bg-midex-blue/10 blur-3xl"
-          style={{ animationDelay: "-3s" }}
-        />
-      </div>
-
-      <div className="relative z-20 mx-container flex min-h-[100svh] items-center pb-20 pt-[4.75rem] sm:pb-24 sm:pt-[5.5rem] lg:pb-28 lg:pt-28">
-        <div key={active} className="max-w-2xl">
-          <span className="mx-badge mb-5 animate-fade-in border-white/20 bg-white/10 text-white sm:mb-6">
-            {th("integratedEngineering")}
-          </span>
-          <h1 className="animate-fade-up font-display text-3xl font-bold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-[3.5rem]">
-            {t(slide.titleKey)}
-          </h1>
-          <p
-            className="mt-6 max-w-xl animate-fade-up text-base leading-relaxed text-white/85 sm:text-lg"
-            style={{ animationDelay: "0.12s" }}
-          >
-            {t(slide.textKey)}
-          </p>
-          <div
-            className="mt-9 flex flex-wrap gap-3 animate-fade-up sm:mt-10 sm:gap-4"
-            style={{ animationDelay: "0.24s" }}
-          >
-            <Link className="group mx-btn mx-btn-mint" href={slide.btn1Href}>
-              {t(slide.btn1Key)}
-              <span className="mx-arrow">→</span>
-            </Link>
-            <Link className="mx-btn mx-btn-outline" href={slide.btn2Href}>
-              {t(slide.btn2Key)}
-            </Link>
-          </div>
+          <HeroCollageColumn items={heroCollageImages.right} side="right" />
         </div>
-      </div>
 
-      {heroSlides.length > 1 && (
-        <div className="absolute inset-x-0 bottom-8 z-30 flex justify-center gap-2 sm:bottom-10">
-          {heroSlides.map((_, index) => (
-            <button
-              key={index}
-              type="button"
-              aria-label={`Slide ${index + 1}`}
-              aria-current={index === active ? "true" : undefined}
-              onClick={() => setActive(index)}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                index === active
-                  ? "w-8 bg-midex-mint"
-                  : "w-2 bg-white/40 hover:bg-white/70"
-              }`}
-            />
+        <div className="mt-10 flex gap-3 overflow-x-auto px-1 pb-1 lg:hidden" dir="ltr">
+          {[...heroCollageImages.left, ...heroCollageImages.right].map((item) => (
+            <HeroCollageImage key={`mobile-${item.src}`} item={item} />
           ))}
         </div>
-      )}
+      </div>
     </section>
   );
 }

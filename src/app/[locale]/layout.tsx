@@ -65,10 +65,10 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} dir={dir} className={`${poppins.variable} ${sora.variable}`}>
-      <body className="overflow-x-hidden font-body antialiased">
+      <body className="overflow-x-hidden bg-white font-body antialiased">
         <NextIntlClientProvider messages={messages}>
           <Header />
-          <main className="overflow-x-hidden">{children}</main>
+          <main className="overflow-x-hidden bg-white">{children}</main>
           <Footer />
           <FloatingSocialButton />
         </NextIntlClientProvider>

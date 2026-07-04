@@ -15,7 +15,7 @@ export async function AboutTimeline() {
   }));
 
   return (
-    <section className="mx-section bg-midex-surface">
+    <section className="mx-section">
       <div className="mx-container">
         <RevealOnScroll>
           <div className="mx-auto mb-14 max-w-2xl text-center">

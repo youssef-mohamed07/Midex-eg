@@ -162,6 +162,40 @@ export const contentDe: LocaleContent = {
       excerpt: "Edelstahlrohrarbeiten für eine neue Produktionslinie im PW-Netz.",
     },
   ],
+  caseStudies: [
+    {
+      industry: "Pharma",
+      scope: "Planung, Bau und Validierung einer Reinwasserstation",
+      outcome:
+        "Reinwasserstation mit 2,5 m³/h, erweiterter Überwachung und vollständiger GMP-Dokumentation für den qualifizierten Betrieb.",
+      statLabel: "m³/h Kapazität",
+      tags: ["Reinwasser", "GMP", "Validierung"],
+    },
+    {
+      industry: "Lebensmittel & Getränke",
+      scope: "Edelstahl-Weichwasserverteilungsnetz",
+      outcome:
+        "1.500 Meter hygienische Rohrleitungen mit geprüften Schleifen und dokumentierter Übergabe für Produktionssicherheit.",
+      statLabel: "Meter installiert",
+      tags: ["Rohrleitungen", "Hygienisches Design", "Turnkey"],
+    },
+    {
+      industry: "Pharma",
+      scope: "Kapazitätserweiterung RO-EDI-Station",
+      outcome:
+        "Erweiterte Reinwasserkapazität bei kontinuierlicher Compliance und nachvollziehbaren Schweißunterlagen.",
+      statLabel: "System-Upgrade",
+      tags: ["RO-EDI", "Upgrade", "Dokumentation"],
+    },
+    {
+      industry: "Pharma",
+      scope: "PW-Netz-Rohrleitungen für neue Produktionslinie",
+      outcome:
+        "Orbital-Schweißen und Passivierung einer neuen PW-Schleife, integriert in die bestehende Verteilung.",
+      statLabel: "Netzerweiterung",
+      tags: ["Orbital-Schweißen", "PW-Schleife", "Passivierung"],
+    },
+  ],
   events: {
     "/images/events/event-1755506196.jpg": {
       title: "Pharmaconex",

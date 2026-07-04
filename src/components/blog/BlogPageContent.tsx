@@ -53,7 +53,7 @@ export async function BlogPageContent() {
     <>
       <PageHero title={t("title")} subtitle={t("subtitle")} eyebrow="Midex" compact />
 
-      <section className="mx-section bg-white">
+      <section className="mx-section">
         <div className="mx-container">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-midex-blue">
             {t("featured")}
@@ -143,7 +143,7 @@ export async function BlogPageContent() {
         </div>
       </section>
 
-      <section className="border-t border-midex-line bg-midex-surface py-14 lg:py-16">
+      <section className="mx-section--tight">
         <div className="mx-container">
           <div className="flex flex-col items-center gap-6 rounded-2xl border border-midex-line bg-white p-8 text-center shadow-sm sm:p-10 lg:flex-row lg:justify-between lg:text-start">
             <div className="max-w-xl">

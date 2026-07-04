@@ -177,11 +177,15 @@
   }
 
   .mx-section {
-    @apply py-10 sm:py-16 lg:py-28;
+    @apply bg-white py-10 sm:py-16 lg:py-28;
   }
 
   .mx-section--tight {
-    @apply py-10 sm:py-14 lg:py-20;
+    @apply bg-white py-10 sm:py-14 lg:py-20;
+  }
+
+  .mx-section-band {
+    @apply bg-white py-8 sm:py-10 lg:py-12;
   }
 
   .mx-section-title {
@@ -338,7 +342,29 @@
   }
 
   .mx-marquee-track--partners {
-    animation: marquee 12s linear infinite;
+    animation: marquee 40s linear infinite;
+  }
+
+  .mx-partner-logo {
+    filter: grayscale(100%) brightness(0);
+    opacity: 0.45;
+    transition: opacity 0.3s ease;
+  }
+
+  .mx-marquee-fade:hover .mx-partner-logo {
+    opacity: 0.65;
+  }
+
+  .mx-marquee-track--events {
+    animation: marquee 42s linear infinite;
+  }
+
+  .mx-marquee-track--events.mx-marquee-track--reverse {
+    animation: marquee-reverse 42s linear infinite;
+  }
+
+  .mx-marquee-track--testimonials {
+    animation: marquee 48s linear infinite;
   }
 
   .mx-marquee-fade {
@@ -352,11 +378,11 @@
   }
 
   .mx-marquee-fade::before {
-    @apply left-0 bg-gradient-to-r from-midex-surface/95 to-transparent;
+    @apply left-0 bg-gradient-to-r from-white to-transparent;
   }
 
   .mx-marquee-fade::after {
-    @apply right-0 bg-gradient-to-l from-midex-surface/95 to-transparent;
+    @apply right-0 bg-gradient-to-l from-white to-transparent;
   }
 
   .mx-marquee-fade--white::before {
@@ -367,16 +393,24 @@
     @apply bg-gradient-to-l from-white to-transparent;
   }
 
+  .mx-before-after {
+    direction: ltr;
+  }
+
   .mx-marquee-fade:hover .mx-marquee-track,
   .mx-marquee-fade:hover .mx-marquee-track--reverse,
-  .mx-marquee-fade:hover .mx-marquee-track--partners {
+  .mx-marquee-fade:hover .mx-marquee-track--partners,
+  .mx-marquee-fade:hover .mx-marquee-track--events,
+  .mx-marquee-fade:hover .mx-marquee-track--testimonials {
     animation-play-state: paused;
   }
 
   @media (prefers-reduced-motion: reduce) {
     .mx-marquee-track,
     .mx-marquee-track--reverse,
-    .mx-marquee-track--partners {
+    .mx-marquee-track--partners,
+    .mx-marquee-track--events,
+    .mx-marquee-track--testimonials {
       animation: none;
     }
   }
@@ -453,6 +487,15 @@
     background-size: 64px 64px;
     -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent 75%);
     mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent 75%);
+  }
+
+  .mx-hero-grid {
+    background-image:
+      linear-gradient(to right, color-mix(in srgb, var(--color-midex-navy) 6%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in srgb, var(--color-midex-navy) 6%, transparent) 1px, transparent 1px);
+    background-size: 3rem 3rem;
+    -webkit-mask-image: radial-gradient(ellipse 90% 75% at 50% 40%, black, transparent 72%);
+    mask-image: radial-gradient(ellipse 90% 75% at 50% 40%, black, transparent 72%);
   }
 
   /* Full-bleed marquee wrapper — no 100vw margins (they cause horizontal scroll on mobile) */
@@ -545,6 +588,73 @@
   .midex-form-honeypot {
     @apply absolute -left-[9999px] h-px w-px overflow-hidden;
   }
+
+  .midex-multistep-form {
+    @apply relative;
+  }
+
+  .midex-multistep-progress {
+    @apply mb-8 flex items-start justify-center gap-0 sm:mb-10;
+  }
+
+  .midex-multistep-progress__item {
+    @apply flex items-center;
+  }
+
+  .midex-multistep-progress__dot {
+    @apply flex h-9 w-9 items-center justify-center rounded-full border-2 border-midex-line bg-white text-sm font-bold text-midex-gray/50 transition-all duration-300;
+  }
+
+  .midex-multistep-progress__dot.is-active {
+    @apply border-midex-blue bg-midex-blue text-white shadow-md shadow-midex-blue/25;
+  }
+
+  .midex-multistep-progress__dot.is-done {
+    @apply border-midex-mint bg-midex-mint text-midex-navy;
+  }
+
+  .midex-multistep-progress__line {
+    @apply mx-2 mb-6 hidden h-0.5 w-10 bg-midex-line transition-colors duration-300 sm:mx-3 sm:block sm:w-16;
+  }
+
+  .midex-multistep-progress__line.is-done {
+    @apply bg-midex-blue;
+  }
+
+  .midex-multistep-panel {
+    @apply min-h-[12rem];
+  }
+
+  .midex-multistep-form--large .midex-multistep-progress {
+    @apply mb-10 sm:mb-12;
+  }
+
+  .midex-multistep-form--large .midex-multistep-progress__dot {
+    @apply h-10 w-10 text-base sm:h-11 sm:w-11;
+  }
+
+  .midex-multistep-form--large .midex-multistep-progress__line {
+    @apply sm:w-20;
+  }
+
+  .midex-multistep-form--large .midex-multistep-panel {
+    @apply min-h-[16rem] sm:min-h-[18rem];
+  }
+
+  .midex-multistep-form--large .midex-form-field label {
+    @apply text-[15px];
+  }
+
+  .midex-multistep-form--large .midex-form-field input,
+  .midex-multistep-form--large .midex-form-field select,
+  .midex-multistep-form--large .midex-form-field textarea {
+    @apply px-4 py-3.5 text-base sm:px-5 sm:py-4;
+  }
+
+  .midex-multistep-form--large .midex-form-grid {
+    @apply gap-6;
+  }
+
 }
 
 .midex-header {

@@ -24,6 +24,14 @@ export type NewsTranslation = {
   excerpt: string;
 };
 
+export type CaseStudyTranslation = {
+  industry: string;
+  scope: string;
+  outcome: string;
+  statLabel: string;
+  tags: string[];
+};
+
 export type EventTranslation = {
   title: string;
   subtitle?: string;
@@ -66,6 +74,7 @@ export type LocaleContent = {
   productCategoryDetails?: Record<string, ProductCategoryDetailsTranslation>;
   services: ServiceTranslation[];
   newsItems: NewsTranslation[];
+  caseStudies: CaseStudyTranslation[];
   events: Record<string, EventTranslation>;
   testimonials: TestimonialTranslation[];
   blogPosts: Record<string, BlogPostTranslation>;

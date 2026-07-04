@@ -60,7 +60,7 @@ export async function SolutionChildPageContent({ slug, childSlug }: Props) {
         }
       />
 
-      <section className="mx-section bg-white">
+      <section className="mx-section">
         <div className="mx-container grid gap-8 sm:gap-10 lg:grid-cols-[1fr_320px] lg:gap-16">
           <div>
             <h2 className="font-display text-2xl font-bold text-midex-navy sm:text-3xl">

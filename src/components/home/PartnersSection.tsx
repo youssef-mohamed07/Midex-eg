@@ -11,19 +11,21 @@ function PartnerMarquee() {
 
   return (
     <div className="mx-marquee-fade mx-marquee-fade--white">
-      <div className="mx-marquee-track mx-marquee-track--partners">
+      <div className="mx-marquee-track mx-marquee-track--partners gap-8 sm:gap-10 lg:gap-14">
         {track.map((partner, index) => (
           <div
             key={`${partner.name}-${index}`}
-            className="flex h-14 w-32 shrink-0 items-center justify-center rounded-lg border border-midex-line/70 bg-white px-3 shadow-sm sm:h-[4.5rem] sm:w-40 sm:rounded-xl sm:px-4"
+            className="flex h-14 w-36 shrink-0 items-center justify-center px-3 sm:h-[4.5rem] sm:w-44 sm:px-4"
           >
-            <Image
-              src={partner.image}
-              alt={partner.name}
-              width={140}
-              height={64}
-              className="max-h-8 w-auto max-w-full object-contain sm:max-h-11"
-            />
+            <div className="mx-partner-logo">
+              <Image
+                src={partner.image}
+                alt={partner.name}
+                width={140}
+                height={64}
+                className="max-h-8 w-auto max-w-full object-contain sm:max-h-11"
+              />
+            </div>
           </div>
         ))}
       </div>
@@ -33,16 +35,14 @@ function PartnerMarquee() {
 
 export function PartnersSection({ title, subtitle }: Props) {
   return (
-    <section className="overflow-hidden border-y border-midex-line bg-white py-8 lg:py-9">
+    <section className="mx-section-band overflow-hidden">
       <div className="mx-container">
-        <div className="mb-6 flex flex-col gap-3 sm:mb-7 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <span className="mx-eyebrow">Midex</span>
-            <h2 className="mt-2 font-display text-xl font-bold tracking-tight text-midex-navy sm:text-2xl">
-              {title}
-            </h2>
-          </div>
-          <p className="max-w-md text-sm leading-relaxed text-midex-gray/70 sm:pb-0.5 sm:text-end">
+        <div className="mx-auto mb-6 max-w-2xl text-center sm:mb-7">
+          <span className="mx-eyebrow mx-eyebrow--center">Midex</span>
+          <h2 className="mt-3 font-display text-xl font-bold tracking-tight text-midex-navy sm:mt-4 sm:text-2xl">
+            {title}
+          </h2>
+          <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-midex-gray/70 sm:text-base">
             {subtitle}
           </p>
         </div>

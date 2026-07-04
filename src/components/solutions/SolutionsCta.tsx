@@ -11,7 +11,7 @@ export async function SolutionsCta({ quoteSubject }: Props) {
   const tc = await getTranslations("products");
 
   return (
-    <section className="border-t border-midex-line bg-white py-14 lg:py-16">
+    <section className="mx-section--tight">
       <div className="mx-container">
         <div className="relative overflow-hidden rounded-3xl bg-midex-navy px-8 py-10 sm:px-10 sm:py-12 lg:flex lg:items-center lg:justify-between">
           <div className="mx-grid-overlay pointer-events-none absolute inset-0 opacity-40" aria-hidden />

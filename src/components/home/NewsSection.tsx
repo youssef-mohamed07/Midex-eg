@@ -132,7 +132,7 @@ export async function NewsSection({ locale }: Props) {
   const [featured, ...rest] = posts;
 
   return (
-    <section className="mx-section bg-white">
+    <section className="mx-section">
       <div className="mx-container">
         <RevealOnScroll>
           <div className="mb-6 flex flex-col gap-4 sm:mb-10 sm:gap-5 lg:mb-12 lg:flex-row lg:items-end lg:justify-between">

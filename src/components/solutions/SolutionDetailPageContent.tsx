@@ -64,7 +64,7 @@ export async function SolutionDetailPageContent({ slug }: Props) {
         </div>
       </PageHero>
 
-      <section className="mx-section bg-white">
+      <section className="mx-section">
         <div className="mx-container">
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(280px,360px)] lg:items-start lg:gap-14">
             <aside className="order-1 space-y-6 lg:order-2 lg:col-start-2 lg:sticky lg:top-24 lg:self-start">

@@ -8,7 +8,7 @@ type Props = {
 
 export function ExclusivePartnersSection({ title }: Props) {
   return (
-    <section className="mx-section--tight bg-midex-surface">
+    <section className="mx-section--tight">
       <div className="mx-container">
         <RevealOnScroll>
           <div className="mx-auto mb-6 max-w-xl text-center sm:mb-10">
@@ -22,7 +22,7 @@ export function ExclusivePartnersSection({ title }: Props) {
         <div className="mx-auto grid max-w-2xl grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
           {exclusivePartners.map((partner, index) => (
             <RevealOnScroll key={partner.name} delay={index * 70}>
-              <div className="flex h-16 items-center justify-center rounded-lg border border-midex-line bg-white px-4 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-midex-mint/45 hover:shadow-md sm:h-20 sm:rounded-xl sm:px-5">
+              <div className="flex h-16 items-center justify-center px-3 sm:h-20 sm:px-4">
                 <Image
                   src={partner.image}
                   alt={partner.name}

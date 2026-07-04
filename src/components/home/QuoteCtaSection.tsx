@@ -8,7 +8,7 @@ export async function QuoteCtaSection() {
   const tc = await getTranslations("nav");
 
   return (
-    <section className="bg-white py-10 sm:py-16 lg:py-24">
+    <section className="mx-section">
       <div className="mx-container">
         <div className="relative overflow-hidden rounded-[1.25rem] bg-midex-navy px-4 py-8 shadow-2xl mx-mesh-bg sm:rounded-[2rem] sm:px-8 sm:py-12 lg:px-16 lg:py-16">
           <div className="mx-grid-overlay pointer-events-none absolute inset-0" />

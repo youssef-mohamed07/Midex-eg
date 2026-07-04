@@ -1,9 +1,14 @@
 import { getLocale, getTranslations } from "next-intl/server";
+import { CaseStudiesSection } from "@/components/home/CaseStudiesSection";
 import { ClientsSection } from "@/components/home/ClientsSection";
 import { EventsSection } from "@/components/home/EventsSection";
 import { ExclusivePartnersSection } from "@/components/home/ExclusivePartnersSection";
+import { FaqSection } from "@/components/home/FaqSection";
+import { FeaturedQuoteSection } from "@/components/home/FeaturedQuoteSection";
 import { HeroSlider } from "@/components/home/HeroSlider";
-import { NewsSection } from "@/components/home/NewsSection";
+import { HomeQuoteFormSection } from "@/components/home/HomeQuoteFormSection";
+import { HomeSolutionsSection } from "@/components/home/HomeSolutionsSection";
+import { StorySection } from "@/components/sections/StorySection";
 import { PartnersSection } from "@/components/home/PartnersSection";
 import { ProductCategoriesSection } from "@/components/home/ProductCategoriesSection";
 import { QuoteCtaSection } from "@/components/home/QuoteCtaSection";
@@ -61,12 +66,18 @@ export async function HomePage() {
     <>
       <HeroSlider />
 
-      <EventsSection />
-
       <PartnersSection title={t("partnersTitle")} subtitle={t("partnersSubtitle")} />
 
+      <FeaturedQuoteSection />
+
+      <StorySection />
+
+      <HomeSolutionsSection />
+
+      <EventsSection />
+
       {/* Services — alternating timeline */}
-      <section className="mx-section bg-midex-surface">
+      <section className="mx-section">
         <div className="mx-container">
           <RevealOnScroll>
             <SectionHeading
@@ -91,13 +102,17 @@ export async function HomePage() {
         }))}
       />
 
+      <CaseStudiesSection />
+
       <TestimonialsSection title={t("testimonialsTitle")} locale={locale} />
 
       <ExclusivePartnersSection title={t("exclusiveTitle")} />
 
-      <NewsSection locale={locale} />
+      <HomeQuoteFormSection />
 
       <ClientsSection title={t("clientsTitle")} subtitle={t("clientsSubtitle")} />
+
+      <FaqSection />
 
       <QuoteCtaSection />
     </>

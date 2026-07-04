@@ -75,7 +75,7 @@ export async function ProductDetailPageContent({ slug }: Props) {
         </div>
       </PageHero>
 
-      <section className="mx-section bg-white">
+      <section className="mx-section">
         <div className="mx-container">
           <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(280px,360px)] lg:items-start lg:gap-14">
             <aside className="order-1 space-y-4 sm:space-y-6 lg:order-2 lg:col-start-2 lg:sticky lg:top-24 lg:self-start">
@@ -226,7 +226,7 @@ export async function ProductDetailPageContent({ slug }: Props) {
         </div>
       </section>
 
-      <section className="border-t border-midex-line bg-midex-surface py-14 lg:py-16">
+      <section className="mx-section--tight">
         <div className="mx-container">
           <div className="flex flex-col items-center gap-6 rounded-2xl border border-midex-line bg-white p-8 text-center sm:p-10 lg:flex-row lg:justify-between lg:text-start">
             <div className="max-w-xl">

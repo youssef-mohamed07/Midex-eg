@@ -3,7 +3,7 @@ import "server-only";
 import type { SeoRouteKey } from "@/cms/collections/seo";
 import { getSeoEntry, getSeoOverride } from "@/content/seo/entries";
 import type { ResolvedSeo, SeoEntry, SeoTemplateContext } from "@/content/seo/types";
-import { getSiteUrl, parseLocale, siteConfig } from "@/lib/seo/config";
+import { parseLocale, siteConfig } from "@/lib/seo/config";
 import {
   interpolateSeoTemplate,
   resolveTemplateImage,

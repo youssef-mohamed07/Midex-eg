@@ -7,7 +7,7 @@ import {
   useMemo,
   useRef,
   useState,
-  type ReactNode,
+  useSyncExternalStore,
 } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
@@ -522,7 +522,11 @@ export function Header() {
   const [activeMega, setActiveMega] = useState<MegaKind | null>(null);
   const [mountedMegas, setMountedMegas] = useState<Set<MegaKind>>(() => new Set());
   const [openMobileKeys, setOpenMobileKeys] = useState<Set<string>>(new Set());
-  const [mounted, setMounted] = useState(false);
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
   const lastScrollY = useRef(0);
   const scrollTicking = useRef(false);
   const megaCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -570,10 +574,6 @@ export function Header() {
         clearTimeout(megaCloseTimer.current);
       }
     };
-  }, []);
-
-  useEffect(() => {
-    setMounted(true);
   }, []);
 
   const productCategoryEntries = useMemo<ProductCategoryEntry[]>(
@@ -705,11 +705,13 @@ export function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, [menuOpen, activeMega]);
 
-  useEffect(() => {
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
     setMenuOpen(false);
     setOpenMobileKeys(new Set());
     setActiveMega(null);
-  }, [pathname]);
+  }
 
   useEffect(() => {
     if (menuOpen) {

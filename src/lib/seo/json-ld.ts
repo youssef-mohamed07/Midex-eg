@@ -111,7 +111,10 @@ export function buildPageJsonLd({ seo, breadcrumbs, article, product }: JsonLdIn
 }
 
 export function buildJsonLdGraph(input: JsonLdInput) {
-  const stripContext = ({ "@context": _, ...rest }: Record<string, unknown>) => rest;
+  const stripContext = ({ "@context": context, ...rest }: Record<string, unknown>) => {
+    void context;
+    return rest;
+  };
 
   return {
     "@context": "https://schema.org",

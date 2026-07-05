@@ -1,0 +1,28 @@
+{
+  "regions": ["cdg1"],
+  "headers": [
+    {
+      "source": "/(.*\\.(?:jpg|jpeg|png|gif|webp|svg|ico|woff2?|mp4|webm))",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/_next/static/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ],
+  "functions": {
+    "src/app/api/contact/route.ts": {
+      "maxDuration": 10
+    }
+  }
+}

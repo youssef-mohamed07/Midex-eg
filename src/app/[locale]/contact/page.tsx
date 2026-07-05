@@ -4,6 +4,8 @@ import { ContactPageContent } from "@/components/contact/ContactPageContent";
 import { SeoHead } from "@/components/seo/SeoHead";
 import { buildSeoMetadata } from "@/lib/seo/metadata";
 
+export const revalidate = 86400;
+
 type Props = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

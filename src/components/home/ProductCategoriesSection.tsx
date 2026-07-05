@@ -33,7 +33,7 @@ function CategoryImageCard({
 }) {
   return (
     <Link
-      href={`/products?category=${category.slug}`}
+      href={`/products/category/${category.slug}`}
       className="group relative block min-h-[5.5rem] w-full flex-1 overflow-hidden rounded-[1.35rem] border border-midex-line/50 no-underline shadow-sm transition-all duration-500 hover:-translate-y-0.5 hover:border-midex-mint/45 hover:shadow-lg sm:min-h-[6.25rem] sm:rounded-[1.5rem] lg:min-h-[6.75rem]"
     >
       <Image

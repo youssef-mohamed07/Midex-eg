@@ -49,7 +49,7 @@ export async function ProductDetailPageContent({ slug }: Props) {
                 ? [
                     {
                       label: categoryLabel,
-                      href: `/products?category=${product.category}`,
+                      href: `/products/category/${product.category}`,
                     },
                   ]
                 : []),
@@ -104,7 +104,7 @@ export async function ProductDetailPageContent({ slug }: Props) {
                 {product.category && categoryLabel && (
                   <Link
                     className="mx-link-arrow mt-4 block text-center text-sm"
-                    href={`/products?category=${product.category}`}
+                    href={`/products/category/${product.category}`}
                   >
                     {categoryLabel}
                     <span className="mx-arrow">→</span>
@@ -190,7 +190,7 @@ export async function ProductDetailPageContent({ slug }: Props) {
                 </h2>
                 {product.category && categoryLabel && (
                   <Link
-                    href={`/products?category=${product.category}`}
+                    href={`/products/category/${product.category}`}
                     className="mx-link-arrow text-sm"
                   >
                     {categoryLabel}

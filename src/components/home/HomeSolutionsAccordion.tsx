@@ -122,9 +122,11 @@ export function HomeSolutionsAccordion({ cards, exploreLabel, servicesLabel }: P
                         {tag}
                       </span>
                     ))}
-                    <span className="rounded-full border border-midex-mint/35 bg-midex-mint/20 px-2.5 py-1 text-[10px] font-semibold text-midex-mint sm:text-[11px]">
-                      {card.serviceCount} {servicesLabel}
-                    </span>
+                    {card.serviceCount > 0 && (
+                      <span className="rounded-full border border-midex-mint/35 bg-midex-mint/20 px-2.5 py-1 text-[10px] font-semibold text-midex-mint sm:text-[11px]">
+                        {card.serviceCount} {servicesLabel}
+                      </span>
+                    )}
                   </div>
 
                   <Link

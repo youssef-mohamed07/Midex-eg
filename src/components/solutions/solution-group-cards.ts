@@ -27,6 +27,20 @@ export function buildSolutionGroupNav(groups: SolutionGroup[]): SolutionGroupNav
   }));
 }
 
+export function buildSolutionServiceCards(
+  group: SolutionGroup,
+): HomeSolutionCard[] {
+  return group.children.map((child) => ({
+    slug: child.slug,
+    label: child.label,
+    description: child.excerpt,
+    image: child.image,
+    href: `/solutions/group/${group.slug}/${child.slug}`,
+    tags: [],
+    serviceCount: 0,
+  }));
+}
+
 export function buildSolutionGroupCards(
   groups: SolutionGroup[],
   highlightsByGroup: Record<string, string[]>,

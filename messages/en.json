@@ -301,7 +301,9 @@
     "step4Title": "Testing & Validation",
     "step4Text": "Every system is tested and validated before handover, ensuring full compliance and reliability.",
     "step5Title": "Support & Maintenance",
-    "step5Text": "We stay involved post-installation, offering upgrades, modifications, and ongoing support as your needs evolve."
+    "step5Text": "We stay involved post-installation, offering upgrades, modifications, and ongoing support as your needs evolve.",
+    "step6Title": "Handover",
+    "step6Text": "Complete documentation, operator training, and formal project close-out — so your team is ready from day one."
   },
   "about": {
     "title": "About Us",

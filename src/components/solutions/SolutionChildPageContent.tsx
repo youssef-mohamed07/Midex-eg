@@ -13,7 +13,6 @@ import {
 import { type Locale } from "@/i18n/routing";
 import { getQuoteUrl } from "@/content/products";
 import { SolutionStepsSection } from "@/components/solutions/SolutionStepsSection";
-import { SolutionTimelineSection } from "@/components/solutions/SolutionTimelineSection";
 
 type Props = { slug: string; childSlug: string };
 
@@ -144,8 +143,6 @@ export async function SolutionChildPageContent({ slug, childSlug }: Props) {
       </section>
 
       <SolutionStepsSection />
-
-      <SolutionTimelineSection />
     </>
   );
 }

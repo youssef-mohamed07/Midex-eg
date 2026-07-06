@@ -9,9 +9,8 @@ import {
 export async function SolutionStepsSection() {
   const t = await getTranslations("solutions");
 
-  const steps = deliveryStepKeys.map((key, index) => ({
+  const steps = deliveryStepKeys.map((key) => ({
     key,
-    step: String(index + 1).padStart(2, "0"),
     title: t(`${key}Title`),
     text: t(`${key}Text`),
     image: deliveryStepImages[key],
@@ -48,9 +47,6 @@ export async function SolutionStepsSection() {
                   className="absolute inset-0 bg-gradient-to-t from-midex-navy via-midex-navy/60 to-midex-navy/15"
                   aria-hidden
                 />
-                <span className="absolute start-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/95 font-display text-[11px] font-bold tabular-nums text-midex-navy shadow-sm backdrop-blur-sm sm:h-9 sm:w-9 sm:text-xs">
-                  {item.step}
-                </span>
                 <div className="absolute inset-x-0 bottom-0 z-10 p-4 sm:p-5">
                   <h3 className="font-display text-base font-bold leading-snug text-white sm:text-lg">
                     {item.title}

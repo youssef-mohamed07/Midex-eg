@@ -15,6 +15,7 @@ import {
 import {
   buildSolutionGroupCards,
   buildSolutionGroupNav,
+  buildSolutionServiceCards,
 } from "@/components/solutions/solution-group-cards";
 import {
   services as baseServices,
@@ -227,6 +228,12 @@ export function getLocalizedSolutionGroupCards(locale: Locale) {
   );
 
   return buildSolutionGroupCards(groups, highlightsByGroup);
+}
+
+export function getLocalizedSolutionServiceCards(groupSlug: string, locale: Locale) {
+  const group = getLocalizedSolutionGroup(groupSlug, locale);
+  if (!group) return [];
+  return buildSolutionServiceCards(group);
 }
 
 export function getLocalizedSolutionGroupNav(locale: Locale) {

@@ -6,11 +6,12 @@ import { PageHero } from "@/components/layout/PageHero";
 import { SolutionBreadcrumbs } from "@/components/solutions/SolutionBreadcrumbs";
 import {
   SolutionGroupCard,
-  SolutionServiceCard,
 } from "@/components/solutions/SolutionCards";
+import { FaqSection } from "@/components/home/FaqSection";
+import { HomeQuoteFormSection } from "@/components/home/HomeQuoteFormSection";
 import { SolutionsCta } from "@/components/solutions/SolutionsCta";
+import { SolutionServicesAccordionSection } from "@/components/solutions/SolutionServicesAccordionSection";
 import { SolutionStepsSection } from "@/components/solutions/SolutionStepsSection";
-import { SolutionTimelineSection } from "@/components/solutions/SolutionTimelineSection";
 import { getGroupLabel } from "@/components/solutions/solution-labels";
 import {
   getLocalizedSolutionGroup,
@@ -114,32 +115,7 @@ export async function SolutionGroupPageContent({ slug }: Props) {
         </div>
       </section>
 
-      <section className="mx-section--tight">
-        <div className="mx-container">
-          <div className="mb-8 max-w-2xl">
-            <span className="mx-eyebrow">Midex</span>
-            <h2 className="mt-3 font-display text-2xl font-bold text-midex-navy sm:text-[1.85rem]">
-              {t("groupServicesTitle")}
-            </h2>
-            <p className="mt-2 text-sm leading-relaxed text-midex-gray/70">
-              {t("groupServicesSubtitle")}
-            </p>
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
-            {group.children.map((child) => (
-              <SolutionServiceCard
-                key={child.slug}
-                href={`/solutions/group/${group.slug}/${child.slug}`}
-                image={child.image}
-                label={child.label}
-                excerpt={child.excerpt}
-                viewLabel={t("viewSolution")}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+      <SolutionServicesAccordionSection groupSlug={slug} />
 
       {otherGroups.length > 0 && (
         <section className="mx-section--tight">
@@ -170,7 +146,9 @@ export async function SolutionGroupPageContent({ slug }: Props) {
 
       <SolutionStepsSection />
 
-      <SolutionTimelineSection />
+      <HomeQuoteFormSection />
+
+      <FaqSection />
 
       <SolutionsCta quoteSubject={label} />
     </>

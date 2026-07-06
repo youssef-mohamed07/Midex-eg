@@ -1,12 +1,18 @@
 import Image from "next/image";
 import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
-import { exclusivePartners } from "@/content/site";
+import { getExclusivePartners } from "@/lib/cms";
+import type { Partner } from "@/lib/cms/types";
 
 type Props = {
   title: string;
+  partners?: Partner[];
 };
 
-export function ExclusivePartnersSection({ title }: Props) {
+export async function ExclusivePartnersSection({ title, partners: partnersProp }: Props) {
+  const exclusivePartners = (partnersProp ?? (await getExclusivePartners())).filter(
+    (p) => p.image,
+  );
+
   return (
     <section className="mx-section--tight">
       <div className="mx-container">

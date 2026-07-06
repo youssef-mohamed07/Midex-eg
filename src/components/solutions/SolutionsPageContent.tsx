@@ -7,17 +7,19 @@ import { StatsSection } from "@/components/home/StatsSection";
 import { PageHero } from "@/components/layout/PageHero";
 import { SolutionsCta } from "@/components/solutions/SolutionsCta";
 import { SolutionTimelineSection } from "@/components/solutions/SolutionTimelineSection";
-import { getLocalizedSolutionGroupCards, getLocalizedSolutionGroups } from "@/content/i18n";
+import { getSolutionGroupCards, getSolutionGroups, getStats } from "@/lib/cms";
 import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
 import { type Locale } from "@/i18n/routing";
-import { stats } from "@/content/site";
 
 export async function SolutionsPageContent() {
   const locale = (await getLocale()) as Locale;
   const t = await getTranslations("solutions");
   const th = await getTranslations("home");
-  const solutionGroups = getLocalizedSolutionGroups(locale);
-  const cards = getLocalizedSolutionGroupCards(locale);
+  const [solutionGroups, cards, stats] = await Promise.all([
+    getSolutionGroups(locale),
+    getSolutionGroupCards(locale),
+    getStats(),
+  ]);
   const totalServices = solutionGroups.reduce(
     (sum, group) => sum + group.children.length,
     0,
@@ -71,7 +73,7 @@ export async function SolutionsPageContent() {
         items={stats.map((stat) => ({
           value: stat.value,
           label: th(stat.labelKey),
-          suffix: "suffix" in stat ? stat.suffix : undefined,
+          suffix: stat.suffix,
         }))}
       />
 

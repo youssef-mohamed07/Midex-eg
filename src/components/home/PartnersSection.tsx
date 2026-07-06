@@ -1,13 +1,17 @@
 import Image from "next/image";
-import { partners } from "@/content/site";
+import { getPartners } from "@/lib/cms";
+import type { Partner } from "@/lib/cms/types";
 
 type Props = {
   title: string;
   subtitle: string;
+  partners?: Partner[];
 };
 
-function PartnerMarquee() {
-  const track = [...partners, ...partners];
+function PartnerMarquee({ partners }: { partners: Partner[] }) {
+  const track = partners.filter((p) => p.image).flatMap((p) => [p, p]);
+
+  if (track.length === 0) return null;
 
   return (
     <div className="mx-marquee-fade mx-marquee-fade--white">
@@ -33,7 +37,9 @@ function PartnerMarquee() {
   );
 }
 
-export function PartnersSection({ title, subtitle }: Props) {
+export async function PartnersSection({ title, subtitle, partners: partnersProp }: Props) {
+  const partners = partnersProp ?? (await getPartners());
+
   return (
     <section className="mx-section-band overflow-hidden">
       <div className="mx-container">
@@ -49,7 +55,7 @@ export function PartnersSection({ title, subtitle }: Props) {
       </div>
 
       <div className="w-full overflow-hidden" dir="ltr">
-        <PartnerMarquee />
+        <PartnerMarquee partners={partners} />
       </div>
     </section>
   );

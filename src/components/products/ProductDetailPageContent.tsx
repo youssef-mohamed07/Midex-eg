@@ -6,28 +6,32 @@ import { ProductGallery } from "@/components/products/ProductGallery";
 import { PageHero } from "@/components/layout/PageHero";
 import { SolutionBreadcrumbs } from "@/components/solutions/SolutionBreadcrumbs";
 import {
-  getLocalizedProduct,
-  getLocalizedProductCategories,
-  getLocalizedProductCategoryDetails,
-  getLocalizedProductsByCategory,
-} from "@/content/i18n";
+  getProduct,
+  getProductCategories,
+  getProductCategoryDetails,
+  getProductImages,
+  getProductsByCategory,
+  getQuoteUrl,
+} from "@/lib/cms";
 import { type Locale } from "@/i18n/routing";
-import { getQuoteUrl, getProductImages, products } from "@/content/products";
 
 type Props = { slug: string };
 
 export async function ProductDetailPageContent({ slug }: Props) {
   const locale = (await getLocale()) as Locale;
-  const product = getLocalizedProduct(slug, locale);
+  const product = await getProduct(slug, locale);
   if (!product) notFound();
 
   const t = await getTranslations("products");
   const tn = await getTranslations("nav");
-  const productCategories = getLocalizedProductCategories(locale);
+  const [productCategories, { highlights, specs }, categoryProducts] = await Promise.all([
+    getProductCategories(locale),
+    getProductCategoryDetails(product.category, locale),
+    getProductsByCategory(product.category, locale),
+  ]);
   const category = productCategories[product.category];
   const categoryLabel = category?.label;
-  const { highlights, specs } = getLocalizedProductCategoryDetails(product.category, locale);
-  const related = getLocalizedProductsByCategory(product.category, locale)
+  const related = categoryProducts
     .filter((item) => item.slug !== product.slug)
     .slice(0, 4);
   const galleryImages = getProductImages(product);
@@ -249,8 +253,4 @@ export async function ProductDetailPageContent({ slug }: Props) {
       </section>
     </>
   );
-}
-
-export function generateProductStaticParams() {
-  return products.map((p) => ({ slug: p.slug }));
 }

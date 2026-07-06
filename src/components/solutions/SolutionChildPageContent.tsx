@@ -8,14 +8,13 @@ import { getGroupLabel } from "@/components/solutions/solution-labels";
 import { FaqSection } from "@/components/home/FaqSection";
 import { HomeQuoteFormSection } from "@/components/home/HomeQuoteFormSection";
 import {
-  getLocalizedSolutionChild,
-  getLocalizedSolutionChildPage,
-  getLocalizedSolutionGroup,
-  getLocalizedSolutionGroupFaq,
-  getLocalizedSolutionGroupHighlights,
-} from "@/content/i18n";
+  getQuoteUrl,
+  getSolutionChildPage,
+  getSolutionGroup,
+  getSolutionGroupFaq,
+  getSolutionGroupHighlights,
+} from "@/lib/cms";
 import { type Locale } from "@/i18n/routing";
-import { getQuoteUrl } from "@/content/products";
 import { SolutionChildOverviewSection } from "@/components/solutions/SolutionChildOverviewSection";
 import { SolutionChildRelatedSection } from "@/components/solutions/SolutionChildRelatedSection";
 import { SolutionGroupFaqSection } from "@/components/solutions/SolutionGroupFaqSection";
@@ -27,11 +26,11 @@ type Props = { slug: string; childSlug: string };
 
 export async function SolutionChildPageContent({ slug, childSlug }: Props) {
   const locale = (await getLocale()) as Locale;
-  const group = getLocalizedSolutionGroup(slug, locale);
-  const child = getLocalizedSolutionChild(slug, childSlug, locale);
+  const group = await getSolutionGroup(slug, locale);
+  const child = group?.children.find((item) => item.slug === childSlug);
   if (!group || !child) notFound();
 
-  const page = getLocalizedSolutionChildPage(slug, childSlug, locale);
+  const page = await getSolutionChildPage(slug, childSlug, locale);
   const t = await getTranslations("solutions");
   const tc = await getTranslations("products");
   const groupName = getGroupLabel(group);
@@ -105,8 +104,10 @@ export async function SolutionChildPageContent({ slug, childSlug }: Props) {
     );
   }
 
-  const highlights = getLocalizedSolutionGroupHighlights(group.slug, locale);
-  const faq = getLocalizedSolutionGroupFaq(group.slug, locale);
+  const [highlights, faq] = await Promise.all([
+    getSolutionGroupHighlights(group.slug, locale),
+    getSolutionGroupFaq(group.slug, locale),
+  ]);
 
   return (
     <>

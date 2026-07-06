@@ -11,15 +11,9 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
-import {
-  getLocalizedProductCategories,
-  getLocalizedProducts,
-  getLocalizedSolutionGroupNav,
-} from "@/content/i18n";
 import type { SolutionGroupNav } from "@/components/solutions/solution-group-cards";
-import { type Locale } from "@/i18n/routing";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 
 type NavLink = {
@@ -67,13 +61,17 @@ const HeaderMegaProductsPanel = memo(function HeaderMegaProductsPanel({
           href="/products"
           className="group relative col-span-2 min-h-[11rem] overflow-hidden rounded-xl no-underline sm:min-h-[12rem] lg:col-span-1 lg:row-span-2 lg:min-h-0"
         >
-          <Image
-            src={featuredImage}
-            alt={allLabel}
-            fill
-            className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-            sizes="240px"
-          />
+          {featuredImage ? (
+            <Image
+              src={featuredImage}
+              alt={allLabel}
+              fill
+              className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+              sizes="240px"
+            />
+          ) : (
+            <div className="absolute inset-0 bg-midex-surface" />
+          )}
           <div className="absolute inset-0 bg-gradient-to-t from-midex-navy/90 via-midex-navy/25 to-midex-navy/5" />
           <span className="absolute inset-x-0 bottom-0 p-4 font-display text-base font-bold text-white">
             {allLabel}
@@ -151,13 +149,17 @@ const HeaderMegaSolutionsPanel = memo(function HeaderMegaSolutionsPanel({
               href={group.href}
               className="group relative block aspect-[16/10] shrink-0 overflow-hidden border-b border-midex-line/60 no-underline"
             >
-              <Image
-                src={group.image}
-                alt={group.label}
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                sizes="(max-width: 1280px) 50vw, 280px"
-              />
+              {group.image ? (
+                <Image
+                  src={group.image}
+                  alt={group.label}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                  sizes="(max-width: 1280px) 50vw, 280px"
+                />
+              ) : (
+                <div className="absolute inset-0 bg-midex-surface" />
+              )}
               <div className="absolute inset-0 bg-midex-navy/20 transition-colors group-hover:bg-midex-navy/10" />
             </Link>
 
@@ -524,19 +526,26 @@ function MobileNavItem({
   );
 }
 
-export function Header() {
+export type HeaderNavData = {
+  productCategories: ProductCategoryEntry[];
+  solutionGroupsNav: SolutionGroupNav[];
+  featuredImage: string;
+  logoWhite: string;
+  logoDark: string;
+};
+
+export function Header({
+  productCategories: productCategoryEntries,
+  solutionGroupsNav,
+  featuredImage,
+  logoWhite,
+  logoDark,
+}: HeaderNavData) {
   const t = useTranslations("nav");
   const th = useTranslations("home");
   const ts = useTranslations("solutions");
   const tp = useTranslations("products");
-  const locale = useLocale() as Locale;
   const pathname = usePathname();
-  const productCategories = getLocalizedProductCategories(locale);
-  const products = getLocalizedProducts(locale);
-  const solutionGroupsNav = useMemo(
-    () => getLocalizedSolutionGroupNav(locale),
-    [locale],
-  );
   const [scrolled, setScrolled] = useState(false);
   const [headerVisible, setHeaderVisible] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -597,24 +606,13 @@ export function Header() {
     };
   }, []);
 
-  const productCategoryEntries = useMemo<ProductCategoryEntry[]>(
-    () =>
-      Object.entries(productCategories).map(([slug, cat]) => ({
-        slug,
-        label: cat.label,
-        description: cat.description,
-        image: products.find((product) => product.category === slug)?.image,
-      })),
-    [productCategories, products],
-  );
-
   const productChildren = useMemo(
     () =>
-      Object.entries(productCategories).map(([slug, cat]) => ({
-        label: cat.label,
-        href: `/products/category/${slug}`,
+      productCategoryEntries.map((category) => ({
+        label: category.label,
+        href: `/products/category/${category.slug}`,
       })),
-    [productCategories],
+    [productCategoryEntries],
   );
 
   const solutionChildren = useMemo<NavLink[]>(
@@ -791,7 +789,7 @@ export function Header() {
             <div className="flex h-14 items-center justify-between gap-2 px-3 sm:gap-3 sm:px-5">
             <Link href="/" className="midex-header__brand shrink-0">
               <Image
-                src="/images/brand/logo-white.png"
+                src={logoWhite}
                 alt="Midex"
                 width={200}
                 height={58}
@@ -799,7 +797,7 @@ export function Header() {
                 priority
               />
               <Image
-                src="/images/brand/logo-dark.png"
+                src={logoDark}
                 alt="Midex"
                 width={200}
                 height={58}
@@ -888,7 +886,7 @@ export function Header() {
           capabilitiesSubtitle={th("capabilitiesSubtitle")}
           allSolutionsLabel={t("allSolutions")}
           servicesLabel={ts("services")}
-          featuredImage="/images/hero/slide-1.png"
+          featuredImage={featuredImage}
           onKeepOpen={cancelMegaClose}
         />
       </div>

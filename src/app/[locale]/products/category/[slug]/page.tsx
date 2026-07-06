@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { ProductsPageContent } from "@/components/products/ProductsPageContent";
 import { SeoHead } from "@/components/seo/SeoHead";
-import { productCategories } from "@/content/products";
+import { getAllProductCategorySlugs } from "@/lib/cms";
 import { type Locale, routing } from "@/i18n/routing";
 import { buildSeoMetadata } from "@/lib/seo/metadata";
 import { getProductCategorySeoContext } from "@/lib/seo/page-context";
@@ -11,9 +11,10 @@ export const revalidate = 86400;
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const slugs = await getAllProductCategorySlugs();
   return routing.locales.flatMap((locale) =>
-    Object.keys(productCategories).map((slug) => ({ locale, slug })),
+    slugs.map((slug) => ({ locale, slug })),
   );
 }
 

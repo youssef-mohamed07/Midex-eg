@@ -2,8 +2,8 @@ import Image from "next/image";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
-import { getLocalizedCaseStudies } from "@/content/i18n";
-import { type CaseStudy } from "@/content/site";
+import { getCaseStudies } from "@/lib/cms";
+import type { CaseStudy } from "@/lib/cms/types";
 import { type Locale } from "@/i18n/routing";
 
 function FeaturedCaseStudy({
@@ -18,14 +18,17 @@ function FeaturedCaseStudy({
       href="/contact"
       className="group relative block h-full min-h-[320px] w-full overflow-hidden rounded-2xl border border-white/10 no-underline shadow-2xl sm:min-h-[420px] lg:min-h-0 lg:rounded-3xl"
     >
-      <Image
-        src={study.image}
-        alt={study.client}
-        fill
-        className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
-        sizes="(max-width: 1024px) 100vw, 60vw"
-        priority
-      />
+      {study.image ? (
+        <Image
+          src={study.image}
+          alt={study.client}
+          fill
+          className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
+          sizes="(max-width: 1024px) 100vw, 60vw"
+        />
+      ) : (
+        <div className="absolute inset-0 bg-midex-navy" aria-hidden />
+      )}
       <div className="absolute inset-0 bg-gradient-to-t from-midex-navy via-midex-navy/55 to-midex-navy/10" />
       <div
         className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
@@ -86,13 +89,17 @@ function CaseStudyCard({
       className="group flex h-full w-full flex-col overflow-hidden rounded-xl border border-midex-line/70 bg-white no-underline shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-midex-mint/40 hover:shadow-lg sm:rounded-2xl lg:flex-row lg:items-stretch"
     >
       <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden lg:aspect-auto lg:h-auto lg:min-h-full lg:w-[40%] lg:self-stretch xl:w-[42%]">
-        <Image
-          src={study.image}
-          alt={study.client}
-          fill
-          className="object-cover object-center transition-transform duration-600 group-hover:scale-[1.05]"
-          sizes="(max-width: 1024px) 100vw, 220px"
-        />
+        {study.image ? (
+          <Image
+            src={study.image}
+            alt={study.client}
+            fill
+            className="object-cover object-center transition-transform duration-600 group-hover:scale-[1.05]"
+            sizes="(max-width: 1024px) 100vw, 220px"
+          />
+        ) : (
+          <div className="absolute inset-0 bg-midex-surface" aria-hidden />
+        )}
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-midex-navy/5 transition-colors group-hover:to-midex-navy/10" />
         <span className="absolute start-3 top-3 z-10 font-display text-2xl font-bold tabular-nums text-white drop-shadow-md sm:start-4 sm:top-4">
           {String(index + 2).padStart(2, "0")}
@@ -125,10 +132,14 @@ function CaseStudyCard({
   );
 }
 
-export async function CaseStudiesSection() {
+export async function CaseStudiesSection({
+  caseStudies: studiesProp,
+}: {
+  caseStudies?: CaseStudy[];
+} = {}) {
   const locale = (await getLocale()) as Locale;
   const t = await getTranslations("home");
-  const studies = getLocalizedCaseStudies(locale);
+  const studies = studiesProp ?? (await getCaseStudies(locale));
 
   if (studies.length === 0) return null;
 

@@ -1,9 +1,10 @@
 import Image from "next/image";
-import { clientLogos } from "@/content/site";
+import { getClientLogos } from "@/lib/cms";
 
 type Props = {
   title: string;
   subtitle: string;
+  logos?: string[];
 };
 
 function LogoMarquee({
@@ -13,7 +14,9 @@ function LogoMarquee({
   logos: string[];
   reverse?: boolean;
 }) {
-  const track = [...logos, ...logos];
+  const track = logos.filter(Boolean).flatMap((logo) => [logo, logo]);
+
+  if (track.length === 0) return null;
 
   return (
     <div className="mx-marquee-fade">
@@ -37,7 +40,8 @@ function LogoMarquee({
   );
 }
 
-export function ClientsSection({ title, subtitle }: Props) {
+export async function ClientsSection({ title, subtitle, logos: logosProp }: Props) {
+  const clientLogos = (logosProp ?? (await getClientLogos())).filter(Boolean);
   const midpoint = Math.ceil(clientLogos.length / 2);
   const rowA = clientLogos.slice(0, midpoint);
   const rowB = clientLogos.slice(midpoint);

@@ -1,19 +1,20 @@
 import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
-import {
-  generateProductStaticParams,
-  ProductDetailPageContent,
-} from "@/components/products/ProductDetailPageContent";
+import { ProductDetailPageContent } from "@/components/products/ProductDetailPageContent";
 import { SeoHead } from "@/components/seo/SeoHead";
+import { getAllProductSlugs } from "@/lib/cms";
 import { type Locale } from "@/i18n/routing";
 import { buildSeoMetadata } from "@/lib/seo/metadata";
 import { getProductSeoContext } from "@/lib/seo/page-context";
 import { notFound } from "next/navigation";
 
+export const revalidate = 86400;
+
 type Props = { params: Promise<{ locale: string; slug: string }> };
 
-export function generateStaticParams() {
-  return generateProductStaticParams();
+export async function generateStaticParams() {
+  const slugs = await getAllProductSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

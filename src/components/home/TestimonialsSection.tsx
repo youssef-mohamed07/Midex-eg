@@ -1,17 +1,22 @@
-import { getLocalizedTestimonials } from "@/content/i18n";
-import { type Locale } from "@/i18n/routing";
+import { getTestimonials } from "@/lib/cms";
+import type { Testimonial } from "@/lib/cms/types";
 import { TestimonialsSlider } from "@/components/home/TestimonialsSlider";
+import { type Locale } from "@/i18n/routing";
+import { getLocale } from "next-intl/server";
 
 export async function TestimonialsSection({
   title,
   subtitle,
-  locale,
+  testimonials: testimonialsProp,
+  locale: localeProp,
 }: {
   title: string;
   subtitle: string;
-  locale: Locale;
+  testimonials?: Testimonial[];
+  locale?: Locale;
 }) {
-  const testimonials = getLocalizedTestimonials(locale);
+  const locale = localeProp ?? ((await getLocale()) as Locale);
+  const testimonials = testimonialsProp ?? (await getTestimonials(locale));
 
   if (testimonials.length === 0) return null;
 

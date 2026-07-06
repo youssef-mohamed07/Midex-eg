@@ -18,13 +18,8 @@ import { StatsSection } from "@/components/home/StatsSection";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import { ServicesTimeline } from "@/components/home/ServicesTimeline";
 import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
-import {
-  getLocalizedServices,
-} from "@/content/i18n";
+import { getHomePageData } from "@/lib/cms/home";
 import { type Locale } from "@/i18n/routing";
-import {
-  stats,
-} from "@/content/site";
 
 function SectionHeading({
   title,
@@ -62,19 +57,23 @@ function SectionHeading({
 export async function HomePage() {
   const locale = (await getLocale()) as Locale;
   const t = await getTranslations("home");
-  const services = getLocalizedServices(locale);
+  const home = await getHomePageData(locale);
 
   return (
     <>
-      <HeroSlider />
+      <HeroSlider collage={home.heroCollage} />
 
-      <PartnersSection title={t("partnersTitle")} subtitle={t("partnersSubtitle")} />
+      <PartnersSection
+        title={t("partnersTitle")}
+        subtitle={t("partnersSubtitle")}
+        partners={home.partners}
+      />
 
       <FeaturedQuoteSection />
 
-      <EngineeringCapabilitiesSection />
+      <EngineeringCapabilitiesSection cards={home.solutionCards} />
 
-      <EventsSection />
+      <EventsSection events={home.events} />
 
       {/* Services — alternating timeline */}
       <section className="mx-section">
@@ -87,11 +86,14 @@ export async function HomePage() {
             />
           </RevealOnScroll>
 
-          <ServicesTimeline services={services} />
+          <ServicesTimeline services={home.services} />
         </div>
       </section>
 
-      <ProductCategoriesSection />
+      <ProductCategoriesSection
+        productCategories={home.productCategories}
+        products={home.products}
+      />
 
       <TruviaSection />
 
@@ -102,26 +104,33 @@ export async function HomePage() {
       <StatsSection
         title={t("statsTitle")}
         subtitle={t("statsSubtitle")}
-        items={stats.map((stat) => ({
+        items={home.stats.map((stat) => ({
           value: stat.value,
           label: t(stat.labelKey),
           suffix: "suffix" in stat ? stat.suffix : undefined,
         }))}
       />
 
-      <CaseStudiesSection />
+      <CaseStudiesSection caseStudies={home.caseStudies} />
 
       <TestimonialsSection
         title={t("testimonialsTitle")}
         subtitle={t("testimonialsSubtitle")}
-        locale={locale}
+        testimonials={home.testimonials}
       />
 
-      <ExclusivePartnersSection title={t("exclusiveTitle")} />
+      <ExclusivePartnersSection
+        title={t("exclusiveTitle")}
+        partners={home.exclusivePartners}
+      />
 
       <HomeQuoteFormSection />
 
-      <ClientsSection title={t("clientsTitle")} subtitle={t("clientsSubtitle")} />
+      <ClientsSection
+        title={t("clientsTitle")}
+        subtitle={t("clientsSubtitle")}
+        logos={home.clientLogos}
+      />
 
       <FaqSection />
 

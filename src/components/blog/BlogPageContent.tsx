@@ -2,7 +2,7 @@ import Image from "next/image";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { PageHero } from "@/components/layout/PageHero";
-import { getLocalizedBlogPosts } from "@/content/i18n";
+import { getBlogPosts } from "@/lib/cms";
 import { type Locale } from "@/i18n/routing";
 
 function PostMeta({
@@ -43,7 +43,7 @@ function PostMeta({
 export async function BlogPageContent() {
   const locale = (await getLocale()) as Locale;
   const t = await getTranslations("blog");
-  const blogPosts = getLocalizedBlogPosts(locale);
+  const blogPosts = await getBlogPosts(locale);
 
   if (blogPosts.length === 0) return null;
 

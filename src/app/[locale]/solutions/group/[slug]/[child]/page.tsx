@@ -3,10 +3,12 @@ import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
 import { SolutionChildPageContent } from "@/components/solutions/SolutionChildPageContent";
 import { SeoHead } from "@/components/seo/SeoHead";
-import { getAllSolutionChildParams } from "@/content/solutions";
+import { getAllSolutionChildParams } from "@/lib/cms";
 import { type Locale } from "@/i18n/routing";
 import { buildSeoMetadata } from "@/lib/seo/metadata";
 import { getSolutionChildSeoContext } from "@/lib/seo/page-context";
+
+export const revalidate = 86400;
 
 type Props = { params: Promise<{ locale: string; slug: string; child: string }> };
 

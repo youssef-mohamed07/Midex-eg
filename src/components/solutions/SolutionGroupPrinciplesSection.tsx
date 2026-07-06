@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
-import type { SolutionGroupPrinciplesContent } from "@/content/solution-group-principles";
+import type { SolutionGroupPrinciplesContent } from "@/lib/cms/types";
 
 type Props = {
   content: SolutionGroupPrinciplesContent;

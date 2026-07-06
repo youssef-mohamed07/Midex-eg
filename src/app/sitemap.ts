@@ -1,7 +1,10 @@
 import type { MetadataRoute } from "next";
-import { blogPosts } from "@/content/site";
-import { products } from "@/content/products";
-import { orderSolutionGroups, solutionGroups } from "@/content/solutions";
+import {
+  getAllBlogSlugs,
+  getAllProductCategorySlugs,
+  getAllProductSlugs,
+  getSolutionGroups,
+} from "@/lib/cms";
 import { routing } from "@/i18n/routing";
 import { absoluteUrl } from "@/lib/seo/paths";
 
@@ -28,7 +31,14 @@ function entry(path: string, locale: (typeof routing.locales)[number], priority 
   };
 }
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [productSlugs, categorySlugs, blogSlugs, solutionGroups] = await Promise.all([
+    getAllProductSlugs(),
+    getAllProductCategorySlugs(),
+    getAllBlogSlugs(),
+    getSolutionGroups("en"),
+  ]);
+
   const urls: MetadataRoute.Sitemap = [];
 
   for (const path of staticPaths) {
@@ -38,19 +48,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }
 
   for (const locale of routing.locales) {
-    for (const product of products) {
-      urls.push(entry(`/products/${product.slug}`, locale, 0.7));
+    for (const slug of categorySlugs) {
+      urls.push(entry(`/products/category/${slug}`, locale, 0.75));
     }
 
-    for (const group of orderSolutionGroups(solutionGroups)) {
+    for (const slug of productSlugs) {
+      urls.push(entry(`/products/${slug}`, locale, 0.7));
+    }
+
+    for (const group of solutionGroups) {
       urls.push(entry(`/solutions/group/${group.slug}`, locale, 0.75));
       for (const child of group.children) {
         urls.push(entry(`/solutions/group/${group.slug}/${child.slug}`, locale, 0.65));
       }
     }
 
-    for (const post of blogPosts) {
-      urls.push(entry(`/blog/${post.slug}`, locale, 0.6));
+    for (const slug of blogSlugs) {
+      urls.push(entry(`/blog/${slug}`, locale, 0.6));
     }
   }
 

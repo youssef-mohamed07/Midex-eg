@@ -1,10 +1,7 @@
 import { getLocale, getTranslations } from "next-intl/server";
 import { ProductsExplorer } from "@/components/products/ProductsExplorer";
 import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
-import {
-  getLocalizedProductCategories,
-  getLocalizedProducts,
-} from "@/content/i18n";
+import { getProductCategories, getProducts } from "@/lib/cms";
 import { type Locale } from "@/i18n/routing";
 
 type Props = {
@@ -14,8 +11,10 @@ type Props = {
 export async function ProductsCatalogSection({ category = null }: Props) {
   const locale = (await getLocale()) as Locale;
   const t = await getTranslations("products");
-  const productCategories = getLocalizedProductCategories(locale);
-  const allProducts = getLocalizedProducts(locale);
+  const [productCategories, allProducts] = await Promise.all([
+    getProductCategories(locale),
+    getProducts(locale),
+  ]);
 
   const explorerProducts = allProducts.map((product) => ({
     slug: product.slug,

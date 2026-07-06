@@ -1,14 +1,19 @@
 import { getLocale, getTranslations } from "next-intl/server";
 import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
 import { HomeSolutionsAccordion } from "@/components/home/HomeSolutionsAccordion";
-import { getLocalizedSolutionGroupCards } from "@/content/i18n";
+import { getSolutionGroupCards } from "@/lib/cms";
+import type { HomeSolutionCard } from "@/components/home/HomeSolutionsAccordion";
 import { type Locale } from "@/i18n/routing";
 
-export async function EngineeringCapabilitiesSection() {
+export async function EngineeringCapabilitiesSection({
+  cards: cardsProp,
+}: {
+  cards?: HomeSolutionCard[];
+} = {}) {
   const locale = (await getLocale()) as Locale;
   const t = await getTranslations("home");
   const ts = await getTranslations("solutions");
-  const cards = getLocalizedSolutionGroupCards(locale);
+  const cards = cardsProp ?? (await getSolutionGroupCards(locale));
 
   return (
     <section className="mx-section">

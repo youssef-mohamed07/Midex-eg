@@ -1,14 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { useLocale, useTranslations } from "next-intl";
-import { getLocalizedEvents } from "@/content/i18n";
-import { type EventItem } from "@/content/site";
-import { type Locale } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
+import type { EventItem } from "@/lib/cms/types";
 
 function EventMarqueeCard({ event }: { event: EventItem }) {
   const t = useTranslations("home");
   const isPoster = event.variant === "poster";
+
+  if (!event.src) return null;
 
   return (
     <figure className="group relative w-[min(78vw,280px)] shrink-0 overflow-hidden rounded-xl border border-midex-line bg-midex-navy shadow-sm transition-all duration-500 hover:-translate-y-0.5 hover:border-midex-mint/40 hover:shadow-lg sm:w-[300px] sm:rounded-2xl lg:w-[320px]">
@@ -76,23 +76,26 @@ function EventsMarquee({
 }
 
 export function EventsSection({
+  events,
   title,
   subtitle,
 }: {
+  events: EventItem[];
   title?: string;
   subtitle?: string;
-} = {}) {
+}) {
   const t = useTranslations("home");
-  const locale = useLocale() as Locale;
-  const events = getLocalizedEvents(locale);
   const heading = title ?? t("ourEvents");
   const intro = subtitle ?? t("eventsSubtitle");
 
   if (events.length === 0) return null;
 
-  const midpoint = Math.ceil(events.length / 2);
-  const topRow = events.slice(0, midpoint);
-  const bottomRow = events.slice(midpoint);
+  const visibleEvents = events.filter((event) => event.src);
+  if (visibleEvents.length === 0) return null;
+
+  const midpoint = Math.ceil(visibleEvents.length / 2);
+  const topRow = visibleEvents.slice(0, midpoint);
+  const bottomRow = visibleEvents.slice(midpoint);
 
   return (
     <section className="mx-section overflow-hidden">

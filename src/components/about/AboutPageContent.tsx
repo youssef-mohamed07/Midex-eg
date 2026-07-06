@@ -8,11 +8,18 @@ import { AboutStandardsSection } from "@/components/about/AboutStandardsSection"
 import { OurValuesSection } from "@/components/about/OurValuesSection";
 import { EventsSection } from "@/components/home/EventsSection";
 import { PageHero } from "@/components/layout/PageHero";
-import { getQuoteUrl } from "@/content/products";
+import { getLocale } from "next-intl/server";
+import { getAboutMilestones, getEvents, getQuoteUrl } from "@/lib/cms";
+import type { Locale } from "@/i18n/routing";
 
 export async function AboutPageContent() {
   const t = await getTranslations("about");
   const tc = await getTranslations("products");
+  const locale = (await getLocale()) as Locale;
+  const [milestones, events] = await Promise.all([
+    getAboutMilestones(),
+    getEvents(locale),
+  ]);
 
   return (
     <>
@@ -20,13 +27,13 @@ export async function AboutPageContent() {
 
       <AboutMissionVisionSection />
 
-      <AboutMilestonesSection />
+      <AboutMilestonesSection milestones={milestones} />
 
       <AboutFoundersSection />
 
       <AboutStandardsSection />
 
-      <EventsSection title={t("eventsTitle")} subtitle={t("eventsIntro")} />
+      <EventsSection events={events} title={t("eventsTitle")} subtitle={t("eventsIntro")} />
 
       <OurValuesSection />
 

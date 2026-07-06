@@ -1,6 +1,6 @@
 import { ServicesTimeline } from "@/components/home/ServicesTimeline";
 import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
-import type { SolutionGroupWorkflowContent } from "@/content/solution-group-workflow";
+import type { SolutionGroupWorkflowContent } from "@/lib/cms/types";
 
 type Props = {
   content: SolutionGroupWorkflowContent;

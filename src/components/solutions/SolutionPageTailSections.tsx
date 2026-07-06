@@ -3,10 +3,11 @@ import { ClientsSection } from "@/components/home/ClientsSection";
 import { StatsSection } from "@/components/home/StatsSection";
 import { SolutionStepsSection } from "@/components/solutions/SolutionStepsSection";
 import { SolutionTimelineSection } from "@/components/solutions/SolutionTimelineSection";
-import { stats } from "@/content/site";
+import { getStats } from "@/lib/cms";
 
 export async function SolutionPageTailSections() {
   const th = await getTranslations("home");
+  const stats = await getStats();
 
   return (
     <>

@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { getTranslations } from "next-intl/server";
-import { siteContact } from "@/content/site";
-import { siteConfig } from "@/lib/seo/config";
+import { getSiteContact, getSiteSettings } from "@/lib/cms";
+import type { SiteContact, SiteSettings } from "@/lib/cms/types";
 
 function LinkedInIcon() {
   return (
@@ -55,21 +55,32 @@ function PinIcon() {
 type ContactInfoAsideProps = {
   showOffice?: boolean;
   sticky?: boolean;
+  siteContact?: SiteContact;
+  settings?: SiteSettings | null;
 };
 
-export async function ContactInfoAside({ showOffice = false, sticky = true }: ContactInfoAsideProps) {
+export async function ContactInfoAside({
+  showOffice = false,
+  sticky = true,
+  siteContact: siteContactProp,
+  settings: settingsProp,
+}: ContactInfoAsideProps) {
   const tc = await getTranslations("contact");
   const ts = await getTranslations("socialFab");
+  const [siteContact, settings] = siteContactProp
+    ? [siteContactProp, settingsProp ?? null]
+    : await Promise.all([getSiteContact(), getSiteSettings()]);
+  const social = settings?.social ?? {};
 
   const socialLinks = [
-    siteConfig.social.linkedIn && {
-      href: siteConfig.social.linkedIn,
+    social.linkedIn && {
+      href: social.linkedIn,
       label: ts("linkedIn"),
       icon: <LinkedInIcon />,
       external: true,
     },
-    siteConfig.social.whatsApp && {
-      href: siteConfig.social.whatsApp,
+    social.whatsApp && {
+      href: social.whatsApp,
       label: ts("whatsapp"),
       icon: <WhatsAppIcon />,
       external: true,
@@ -80,8 +91,8 @@ export async function ContactInfoAside({ showOffice = false, sticky = true }: Co
       icon: <EmailIcon />,
       external: false,
     },
-    siteConfig.social.twitter && {
-      href: siteConfig.social.twitter,
+    social.twitter && {
+      href: social.twitter,
       label: ts("twitter"),
       icon: <XIcon />,
       external: true,

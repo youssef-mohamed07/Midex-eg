@@ -1,5 +1,5 @@
 import type { HomeSolutionCard } from "@/components/home/HomeSolutionsAccordion";
-import type { SolutionGroup } from "@/content/solutions";
+import type { SolutionGroup } from "@/lib/cms/types";
 
 export type SolutionGroupNav = {
   slug: string;

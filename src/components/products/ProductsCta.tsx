@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { getQuoteUrl } from "@/content/products";
+import { getQuoteUrl } from "@/lib/cms";
 
 export async function ProductsCta() {
   const t = await getTranslations("products");

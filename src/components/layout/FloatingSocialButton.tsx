@@ -12,6 +12,11 @@ type SocialLink = {
   icon: React.ReactNode;
 };
 
+export type FloatingSocialProps = {
+  social: { linkedIn?: string; twitter?: string; whatsApp?: string };
+  email: string;
+};
+
 function LinkedInIcon() {
   return (
     <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
@@ -44,43 +49,46 @@ function XIcon() {
   );
 }
 
-function getSocialLinks(t: (key: string) => string): SocialLink[] {
+function getSocialLinks(
+  t: (key: string) => string,
+  { social, email }: FloatingSocialProps,
+): SocialLink[] {
   const links: SocialLink[] = [];
 
-  if (siteConfig.social.linkedIn) {
+  if (social.linkedIn) {
     links.push({
       id: "linkedin",
-      href: siteConfig.social.linkedIn,
+      href: social.linkedIn,
       label: t("linkedIn"),
       external: true,
       icon: <LinkedInIcon />,
     });
   }
 
-  if (siteConfig.social.whatsApp) {
+  if (social.whatsApp) {
     links.push({
       id: "whatsapp",
-      href: siteConfig.social.whatsApp,
+      href: social.whatsApp,
       label: t("whatsapp"),
       external: true,
       icon: <WhatsAppIcon />,
     });
   }
 
-  if (siteConfig.email) {
+  if (email) {
     links.push({
       id: "email",
-      href: `mailto:${siteConfig.email}`,
+      href: `mailto:${email}`,
       label: t("email"),
       external: false,
       icon: <EmailIcon />,
     });
   }
 
-  if (siteConfig.social.twitter) {
+  if (social.twitter) {
     links.push({
       id: "twitter",
-      href: siteConfig.social.twitter,
+      href: social.twitter,
       label: t("twitter"),
       external: true,
       icon: <XIcon />,
@@ -90,11 +98,11 @@ function getSocialLinks(t: (key: string) => string): SocialLink[] {
   return links;
 }
 
-export function FloatingSocialButton() {
+export function FloatingSocialButton({ social, email }: FloatingSocialProps) {
   const t = useTranslations("socialFab");
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
-  const links = getSocialLinks(t);
+  const links = getSocialLinks(t, { social, email });
 
   useEffect(() => {
     if (!open) return;

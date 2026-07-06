@@ -128,7 +128,7 @@ Midex/
 
 ## SEO content
 
-Edit SEO per page/locale in `src/content/seo/entries.ts`. The collection schema lives in `src/cms/collections/seo.ts` and can be mapped to a headless CMS later.
+Edit SEO per page/locale in Sanity Studio (`/studio` → SEO). Entries are stored as `seoEntry` documents and resolved at build time via `src/lib/cms/seo.ts`.
 
 Templates support placeholders such as `{title}` and `{description}` for dynamic routes (products, blog posts, solutions).
 

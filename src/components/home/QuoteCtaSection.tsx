@@ -1,11 +1,12 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { siteContact } from "@/content/site";
+import { getSiteContact } from "@/lib/cms";
 
 export async function QuoteCtaSection() {
   const t = await getTranslations("home");
   const th = await getTranslations("hero");
   const tc = await getTranslations("nav");
+  const siteContact = await getSiteContact();
 
   return (
     <section className="mx-section">

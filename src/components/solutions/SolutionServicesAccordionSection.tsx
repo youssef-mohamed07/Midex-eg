@@ -1,10 +1,7 @@
 import { getLocale, getTranslations } from "next-intl/server";
 import { HomeSolutionsAccordion } from "@/components/home/HomeSolutionsAccordion";
 import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
-import {
-  getLocalizedSolutionGroup,
-  getLocalizedSolutionServiceCards,
-} from "@/content/i18n";
+import { getSolutionGroup, getSolutionServiceCards } from "@/lib/cms";
 import { type Locale } from "@/i18n/routing";
 
 type Props = {
@@ -13,8 +10,10 @@ type Props = {
 
 export async function SolutionServicesAccordionSection({ groupSlug }: Props) {
   const locale = (await getLocale()) as Locale;
-  const group = getLocalizedSolutionGroup(groupSlug, locale);
-  const cards = getLocalizedSolutionServiceCards(groupSlug, locale);
+  const [group, cards] = await Promise.all([
+    getSolutionGroup(groupSlug, locale),
+    getSolutionServiceCards(groupSlug, locale),
+  ]);
 
   if (!group || cards.length === 0) return null;
 

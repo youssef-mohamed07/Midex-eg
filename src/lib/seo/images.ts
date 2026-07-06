@@ -1,4 +1,4 @@
-import type { SeoTemplateContext } from "@/content/seo/types";
+import type { SeoTemplateContext } from "@/lib/seo/types";
 import { getSiteUrl, siteConfig } from "@/lib/seo/config";
 
 export function interpolateSeoTemplate(

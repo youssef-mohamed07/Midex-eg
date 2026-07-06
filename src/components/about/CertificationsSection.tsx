@@ -1,10 +1,14 @@
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
-import { certificates } from "@/content/site";
+import { getLocale } from "next-intl/server";
+import { getCertificates } from "@/lib/cms";
+import type { Locale } from "@/i18n/routing";
 
 export async function CertificationsSection() {
   const t = await getTranslations("about");
+  const locale = (await getLocale()) as Locale;
+  const certificates = await getCertificates(locale);
 
   return (
     <section className="mx-section">

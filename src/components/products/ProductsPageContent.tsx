@@ -6,13 +6,9 @@ import { StatsSection } from "@/components/home/StatsSection";
 import { PageHero } from "@/components/layout/PageHero";
 import { ProductsCatalogSection } from "@/components/products/ProductsCatalogSection";
 import { ProductsCta } from "@/components/products/ProductsCta";
-import {
-  getLocalizedProductCategories,
-  getLocalizedProducts,
-} from "@/content/i18n";
+import { getProductCategories, getProducts, getStats } from "@/lib/cms";
 import { getLocale } from "next-intl/server";
 import { type Locale } from "@/i18n/routing";
-import { stats } from "@/content/site";
 
 type Props = {
   category?: string | null;
@@ -22,8 +18,11 @@ export async function ProductsPageContent({ category = null }: Props) {
   const locale = (await getLocale()) as Locale;
   const t = await getTranslations("products");
   const th = await getTranslations("home");
-  const productCategories = getLocalizedProductCategories(locale);
-  const allProducts = getLocalizedProducts(locale);
+  const [productCategories, allProducts, stats] = await Promise.all([
+    getProductCategories(locale),
+    getProducts(locale),
+    getStats(),
+  ]);
   const categoryEntries = Object.entries(productCategories);
 
   return (
@@ -54,7 +53,7 @@ export async function ProductsPageContent({ category = null }: Props) {
         items={stats.map((stat) => ({
           value: stat.value,
           label: th(stat.labelKey),
-          suffix: "suffix" in stat ? stat.suffix : undefined,
+          suffix: stat.suffix,
         }))}
       />
 

@@ -1,7 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { FaqAccordion } from "@/components/home/FaqAccordion";
 import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
-import type { SolutionGroupFaqContent } from "@/content/solution-group-faq";
+import type { SolutionGroupFaqContent } from "@/lib/cms/types";
 
 type Props = {
   content: SolutionGroupFaqContent;

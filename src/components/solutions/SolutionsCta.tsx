@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { getQuoteUrl } from "@/content/products";
+import { getQuoteUrl } from "@/lib/cms";
 
 type Props = {
   quoteSubject?: string;

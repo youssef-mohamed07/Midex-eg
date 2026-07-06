@@ -2,28 +2,15 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { Poppins, Sora } from "next/font/google";
-import { routing } from "@/i18n/routing";
+import { routing, type Locale } from "@/i18n/routing";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { FloatingSocialButton } from "@/components/layout/FloatingSocialButton";
 import { getSiteUrl, siteConfig } from "@/lib/seo/config";
 import { buildSiteIcons } from "@/lib/seo/metadata";
-import "../globals.css";
-
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-poppins",
-  display: "swap",
-});
-
-const sora = Sora({
-  subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
-  variable: "--font-sora",
-  display: "swap",
-});
+import {
+  getLayoutShellData,
+} from "@/lib/cms/layout";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -61,18 +48,33 @@ export default async function LocaleLayout({
 
   setRequestLocale(locale);
   const messages = await getMessages();
-  const dir = locale === "ar" ? "rtl" : "ltr";
+
+  const shell = await getLayoutShellData(locale as Locale);
+
+  const productCategoryEntries = Object.entries(shell.productCategories).map(
+    ([slug, category]) => ({
+      slug,
+      label: category.label,
+      description: category.description,
+      image: shell.products.find((product) => product.category === slug)?.image,
+    }),
+  );
 
   return (
-    <html lang={locale} dir={dir} className={`${poppins.variable} ${sora.variable}`}>
-      <body className="overflow-x-hidden bg-white font-body antialiased">
-        <NextIntlClientProvider messages={messages}>
-          <Header />
-          <main className="overflow-x-hidden bg-white">{children}</main>
-          <Footer />
-          <FloatingSocialButton />
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <NextIntlClientProvider messages={messages}>
+      <Header
+        productCategories={productCategoryEntries}
+        solutionGroupsNav={shell.solutionGroupsNav}
+        featuredImage={shell.featuredImage}
+        logoWhite={shell.logos.logoWhite}
+        logoDark={shell.logos.logoDark}
+      />
+      <main className="overflow-x-hidden bg-white">{children}</main>
+      <Footer shell={shell} />
+      <FloatingSocialButton
+        social={shell.settings?.social ?? {}}
+        email={shell.siteContact.email}
+      />
+    </NextIntlClientProvider>
   );
 }

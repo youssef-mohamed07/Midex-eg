@@ -1,7 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
 import { SolutionServiceCard } from "@/components/solutions/SolutionCards";
-import type { SolutionChild } from "@/content/solutions";
+import type { SolutionChild } from "@/lib/cms/types";
 
 type Props = {
   title: string;

@@ -1,8 +1,7 @@
 import "server-only";
 
 import type { Metadata } from "next";
-import type { SeoRouteKey } from "@/cms/collections/seo";
-import type { SeoTemplateContext } from "@/content/seo/types";
+import type { SeoRouteKey, SeoTemplateContext } from "@/lib/seo/types";
 import { siteConfig } from "@/lib/seo/config";
 import { buildOgImageMeta } from "@/lib/seo/images";
 import { resolveSeo } from "@/lib/seo/resolve";
@@ -24,8 +23,8 @@ export function buildSiteIcons(): NonNullable<Metadata["icons"]> {
   };
 }
 
-export function buildSeoMetadata(input: BuildSeoMetadataInput): Metadata {
-  const seo = resolveSeo(input);
+export async function buildSeoMetadata(input: BuildSeoMetadataInput): Promise<Metadata> {
+  const seo = await resolveSeo(input);
 
   const robotsDirectives = [
     seo.robots.index ? "index" : "noindex",

@@ -1,11 +1,9 @@
 import Image from "next/image";
-import { getLocale, getTranslations } from "next-intl/server";
+import { getTranslations, getLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
-import {
-  getLocalizedProductCategories,
-  getLocalizedProducts,
-} from "@/content/i18n";
+import { getProductCategories, getProducts } from "@/lib/cms";
+import type { CaseStudy, Product, ProductCategoryInfo } from "@/lib/cms/types";
 import { type Locale } from "@/i18n/routing";
 
 const CATEGORY_ORDER = [
@@ -48,13 +46,17 @@ function CategoryImageCard({
       href={`/products/category/${category.slug}`}
       className="group relative block min-h-[5.5rem] w-full flex-1 overflow-hidden rounded-[1.35rem] border border-midex-line/50 no-underline shadow-sm transition-all duration-500 hover:-translate-y-0.5 hover:border-midex-mint/45 hover:shadow-lg sm:min-h-[6.25rem] sm:rounded-[1.5rem] lg:min-h-[6.75rem]"
     >
-      <Image
-        src={category.image}
-        alt={category.label}
-        fill
-        className="object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06]"
-        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 18vw"
-      />
+      {category.image ? (
+        <Image
+          src={category.image}
+          alt={category.label}
+          fill
+          className="object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06]"
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 18vw"
+        />
+      ) : (
+        <div className="absolute inset-0 bg-midex-surface" aria-hidden />
+      )}
       <div className="absolute inset-0 bg-midex-navy/15" aria-hidden />
       <div
         className="absolute inset-0 bg-gradient-to-t from-midex-navy/92 via-midex-navy/45 to-midex-navy/5"
@@ -75,11 +77,18 @@ function CategoryImageCard({
   );
 }
 
-export async function ProductCategoriesSection() {
+export async function ProductCategoriesSection({
+  productCategories: categoriesProp,
+  products: productsProp,
+}: {
+  productCategories?: Record<string, ProductCategoryInfo>;
+  products?: Product[];
+} = {}) {
   const locale = (await getLocale()) as Locale;
   const t = await getTranslations("products");
-  const productCategories = getLocalizedProductCategories(locale);
-  const allProducts = getLocalizedProducts(locale);
+  const [productCategories, allProducts] = categoriesProp && productsProp
+    ? [categoriesProp, productsProp]
+    : await Promise.all([getProductCategories(locale), getProducts(locale)]);
 
   const buildCategory = (slug: string): CategoryCard | null => {
     const products = allProducts.filter((item) => item.category === slug);
@@ -138,14 +147,18 @@ export async function ProductCategoriesSection() {
               href="/products"
               className="group relative block h-full min-h-[18rem] overflow-hidden rounded-[1.75rem] border border-midex-line/50 no-underline shadow-md transition-all duration-500 hover:-translate-y-1 hover:border-midex-mint/45 hover:shadow-xl sm:min-h-[20rem] lg:min-h-[29rem]"
             >
-              <Image
-                src={heroImage}
-                alt={t("allCategories")}
-                fill
-                className="object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
-                sizes="(max-width: 1024px) 100vw, 33vw"
-                priority
-              />
+              {heroImage ? (
+                <Image
+                  src={heroImage}
+                  alt={t("allCategories")}
+                  fill
+                  className="object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
+                  sizes="(max-width: 1024px) 100vw, 33vw"
+                  priority
+                />
+              ) : (
+                <div className="absolute inset-0 bg-midex-surface" aria-hidden />
+              )}
               <div className="absolute inset-0 bg-midex-navy/20" aria-hidden />
               <div
                 className="absolute inset-0 bg-gradient-to-t from-midex-navy/95 via-midex-navy/50 to-midex-navy/15"

@@ -3,15 +3,11 @@
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { heroCollageImages } from "@/content/site";
-
-type CollageItem =
-  | (typeof heroCollageImages.left)[number]
-  | (typeof heroCollageImages.right)[number];
-
-const MOBILE_HERO_IMAGE = "/images/hero/slide-1.png";
+import type { HeroCollage, HeroCollageImage as CollageItem } from "@/lib/cms/types";
 
 function HeroCollageImage({ item, priority = false }: { item: CollageItem; priority?: boolean }) {
+  if (!item.src) return null;
+
   return (
     <div
       className={`relative shrink-0 overflow-hidden rounded-2xl border border-midex-line/50 bg-midex-surface shadow-[0_8px_30px_rgba(9,61,94,0.08)] ${item.className}`}
@@ -39,14 +35,14 @@ function HeroCollageColumn({
 
   return (
     <div className={`hidden flex-col gap-3 py-6 lg:flex ${align}`} aria-hidden>
-      {items.map((item, index) => (
+      {items.filter((item) => item.src).map((item, index) => (
         <HeroCollageImage key={item.src} item={item} priority={index === 1} />
       ))}
     </div>
   );
 }
 
-export function HeroSlider() {
+export function HeroSlider({ collage }: { collage: HeroCollage }) {
   const t = useTranslations("hero");
   const th = useTranslations("home");
 
@@ -56,7 +52,7 @@ export function HeroSlider() {
 
       <div className="relative mx-container pb-10 pt-[5.25rem] sm:pb-14 sm:pt-28 lg:flex lg:min-h-[92svh] lg:flex-col lg:justify-center lg:pb-20 lg:pt-32">
         <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(280px,34rem)_minmax(0,1fr)] lg:gap-8 xl:gap-12">
-          <HeroCollageColumn items={heroCollageImages.left} side="left" />
+          <HeroCollageColumn items={collage.left} side="left" />
 
           <div className="mx-auto w-full max-w-2xl px-1 text-center sm:px-2 lg:max-w-none lg:px-4">
             <span className="mx-badge mx-auto border-midex-line bg-white text-midex-navy">
@@ -85,19 +81,21 @@ export function HeroSlider() {
             </div>
           </div>
 
-          <HeroCollageColumn items={heroCollageImages.right} side="right" />
+          <HeroCollageColumn items={collage.right} side="right" />
         </div>
 
-        <div className="relative mt-8 aspect-[16/10] overflow-hidden rounded-2xl border border-midex-line/50 shadow-[0_8px_30px_rgba(9,61,94,0.08)] sm:mt-10 lg:hidden">
-          <Image
-            src={MOBILE_HERO_IMAGE}
-            alt=""
-            fill
-            className="object-cover"
-            sizes="100vw"
-            priority
-          />
-        </div>
+        {collage.mobileImage && (
+          <div className="relative mt-8 aspect-[16/10] overflow-hidden rounded-2xl border border-midex-line/50 shadow-[0_8px_30px_rgba(9,61,94,0.08)] sm:mt-10 lg:hidden">
+            <Image
+              src={collage.mobileImage}
+              alt=""
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 640px"
+              priority
+            />
+          </div>
+        )}
       </div>
     </section>
   );

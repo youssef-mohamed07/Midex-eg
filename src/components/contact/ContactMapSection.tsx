@@ -1,8 +1,14 @@
 import { getTranslations } from "next-intl/server";
-import { siteContact } from "@/content/site";
+import { ContactMapEmbed } from "@/components/contact/ContactMapEmbed";
+import type { SiteContact } from "@/lib/cms/types";
 
-export async function ContactMapSection() {
+type Props = {
+  siteContact: SiteContact;
+};
+
+export async function ContactMapSection({ siteContact }: Props) {
   const t = await getTranslations("contact");
+  const tc = await getTranslations("common");
 
   return (
     <section id="office-map" className="mx-section scroll-mt-28 bg-white">
@@ -15,13 +21,10 @@ export async function ContactMapSection() {
 
         <div className="overflow-hidden rounded-[1.5rem] border border-midex-line bg-white shadow-md shadow-midex-navy/5">
           <div className="relative aspect-[16/10] w-full sm:aspect-[21/9]">
-            <iframe
+            <ContactMapEmbed
+              embedUrl={siteContact.mapsEmbedUrl}
               title={t("mapTitle")}
-              src={siteContact.mapsEmbedUrl}
-              className="absolute inset-0 h-full w-full border-0"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              allowFullScreen
+              loadingLabel={tc("loading")}
             />
           </div>
 

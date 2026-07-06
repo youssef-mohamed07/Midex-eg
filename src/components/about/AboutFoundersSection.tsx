@@ -1,10 +1,11 @@
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
-import { aboutFounders } from "@/content/site";
+import { getAboutFounders } from "@/lib/cms";
 
 export async function AboutFoundersSection() {
   const t = await getTranslations("about");
+  const aboutFounders = await getAboutFounders();
 
   return (
     <section className="mx-section--tight">

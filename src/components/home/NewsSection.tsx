@@ -2,8 +2,8 @@ import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
-import { getLocalizedBlogPosts } from "@/content/i18n";
-import { type BlogPost } from "@/content/site";
+import { getBlogPosts } from "@/lib/cms";
+import type { BlogPost } from "@/lib/cms/types";
 import { type Locale } from "@/i18n/routing";
 
 function PostMeta({
@@ -125,7 +125,7 @@ type Props = {
 export async function NewsSection({ locale }: Props) {
   const t = await getTranslations("home");
   const tb = await getTranslations("blog");
-  const posts = getLocalizedBlogPosts(locale).slice(0, 4);
+  const posts = (await getBlogPosts(locale)).slice(0, 4);
 
   if (posts.length === 0) return null;
 

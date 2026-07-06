@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import { aboutMilestones } from "@/content/site";
+import type { Milestone } from "@/lib/cms/types";
 
 function easeOutQuart(progress: number) {
   return 1 - (1 - progress) ** 4;
@@ -81,15 +81,15 @@ function MilestoneCard({
   );
 }
 
-export function AboutMilestonesSection() {
+export function AboutMilestonesSection({ milestones }: { milestones: Milestone[] }) {
   const t = useTranslations("about");
   const sectionRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(false);
 
-  const items = aboutMilestones.map((item) => ({
+  const items = milestones.map((item) => ({
     value: item.value,
     label: t(item.labelKey),
-    suffix: "suffix" in item ? item.suffix : "",
+    suffix: item.suffix ?? "",
   }));
 
   const mainItems = items.slice(0, 4);

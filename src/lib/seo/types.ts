@@ -1,5 +1,17 @@
-import type { SeoRouteKey } from "@/cms/collections/seo";
 import type { Locale } from "@/i18n/routing";
+
+export type SeoRouteKey =
+  | "home"
+  | "about"
+  | "contact"
+  | "products"
+  | "product"
+  | "product-category"
+  | "solutions"
+  | "solution-group"
+  | "solution-child"
+  | "blog"
+  | "blog-post";
 
 export type SeoRobots = {
   index?: boolean;
@@ -31,7 +43,7 @@ export type SeoStructuredData = {
     | "Service";
 };
 
-/** One SEO document — maps 1:1 to a CMS collection row. */
+/** One SEO document — maps 1:1 to a CMS `seoEntry` row (per locale view). */
 export type SeoEntry = {
   routeKey: SeoRouteKey;
   locale: Locale;

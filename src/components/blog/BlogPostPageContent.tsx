@@ -4,19 +4,18 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { PageHero } from "@/components/layout/PageHero";
 import { SolutionBreadcrumbs } from "@/components/solutions/SolutionBreadcrumbs";
-import { getLocalizedBlogPost, getLocalizedBlogPosts } from "@/content/i18n";
-import { blogPosts } from "@/content/site";
+import { getBlogPost, getBlogPosts } from "@/lib/cms";
 import { type Locale } from "@/i18n/routing";
 
 type Props = { slug: string };
 
 export async function BlogPostPageContent({ slug }: Props) {
   const locale = (await getLocale()) as Locale;
-  const post = getLocalizedBlogPost(slug, locale);
+  const post = await getBlogPost(slug, locale);
   if (!post) notFound();
 
   const t = await getTranslations("blog");
-  const related = getLocalizedBlogPosts(locale)
+  const related = (await getBlogPosts(locale))
     .filter((item) => item.slug !== post.slug)
     .slice(0, 3);
 
@@ -130,8 +129,4 @@ export async function BlogPostPageContent({ slug }: Props) {
       </section>
     </>
   );
-}
-
-export function generateBlogStaticParams() {
-  return blogPosts.map((post) => ({ slug: post.slug }));
 }

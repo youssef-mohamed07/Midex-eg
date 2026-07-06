@@ -1,17 +1,16 @@
 import {
-  getLocalizedBlogPost,
-  getLocalizedProduct,
-  getLocalizedProductCategories,
-  getLocalizedProductsByCategory,
-  getLocalizedSolutionChild,
-  getLocalizedSolutionGroup,
-} from "@/content/i18n";
+  getBlogPost,
+  getProduct,
+  getProductCategories,
+  getProductsByCategory,
+  getSolutionGroup,
+} from "@/lib/cms";
 import { getGroupLabel } from "@/components/solutions/solution-labels";
 import type { Locale } from "@/i18n/routing";
-import type { SeoTemplateContext } from "@/content/seo/types";
+import type { SeoTemplateContext } from "@/lib/seo/types";
 
 export async function getProductSeoContext(slug: string, locale: Locale) {
-  const product = getLocalizedProduct(slug, locale);
+  const product = await getProduct(slug, locale);
   if (!product) return null;
 
   return {
@@ -26,11 +25,11 @@ export async function getProductSeoContext(slug: string, locale: Locale) {
 }
 
 export async function getProductCategorySeoContext(slug: string, locale: Locale) {
-  const categories = getLocalizedProductCategories(locale);
+  const categories = await getProductCategories(locale);
   const category = categories[slug];
   if (!category) return null;
 
-  const products = getLocalizedProductsByCategory(slug, locale);
+  const products = await getProductsByCategory(slug, locale);
   const image = products[0]?.image;
 
   return {
@@ -43,7 +42,7 @@ export async function getProductCategorySeoContext(slug: string, locale: Locale)
 }
 
 export async function getSolutionGroupSeoContext(slug: string, locale: Locale) {
-  const group = getLocalizedSolutionGroup(slug, locale);
+  const group = await getSolutionGroup(slug, locale);
   if (!group) return null;
 
   return {
@@ -60,8 +59,8 @@ export async function getSolutionChildSeoContext(
   childSlug: string,
   locale: Locale,
 ) {
-  const group = getLocalizedSolutionGroup(groupSlug, locale);
-  const child = getLocalizedSolutionChild(groupSlug, childSlug, locale);
+  const group = await getSolutionGroup(groupSlug, locale);
+  const child = group?.children.find((item) => item.slug === childSlug);
   if (!group || !child) return null;
 
   return {
@@ -76,7 +75,7 @@ export async function getSolutionChildSeoContext(
 }
 
 export async function getBlogPostSeoContext(slug: string, locale: Locale) {
-  const post = getLocalizedBlogPost(slug, locale);
+  const post = await getBlogPost(slug, locale);
   if (!post) return null;
 
   return {

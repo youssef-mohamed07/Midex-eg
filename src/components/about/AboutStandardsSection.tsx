@@ -1,9 +1,10 @@
 import { getTranslations } from "next-intl/server";
 import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
-import { aboutStandards } from "@/content/site";
+import { getAboutStandards } from "@/lib/cms";
 
 export async function AboutStandardsSection() {
   const t = await getTranslations("about");
+  const aboutStandards = await getAboutStandards();
 
   return (
     <section className="mx-section">

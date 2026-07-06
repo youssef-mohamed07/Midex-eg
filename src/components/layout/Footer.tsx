@@ -1,9 +1,7 @@
 import Image from "next/image";
-import { getLocale, getTranslations } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { getLocalizedSolutionGroupNav } from "@/content/i18n";
-import { siteContact } from "@/content/site";
-import { type Locale } from "@/i18n/routing";
+import type { LayoutShellData } from "@/lib/cms/layout";
 
 type FooterLink = { href: string; label: string };
 
@@ -35,11 +33,10 @@ function FooterNav({
   );
 }
 
-export async function Footer() {
-  const locale = (await getLocale()) as Locale;
+export async function Footer({ shell }: { shell: LayoutShellData }) {
   const t = await getTranslations("footer");
   const nav = await getTranslations("nav");
-  const solutionGroups = getLocalizedSolutionGroupNav(locale);
+  const { solutionGroupsNav: solutionGroups, siteContact, logos } = shell;
 
   const serviceLinks: FooterLink[] = [
     { href: "/solutions", label: nav("allSolutions") },
@@ -68,7 +65,7 @@ export async function Footer() {
           <div className="sm:col-span-2 lg:col-span-1">
             <Link href="/" className="inline-block shrink-0">
               <Image
-                src="/images/brand/logo-white.png"
+                src={logos.logoWhite}
                 alt="Midex"
                 width={200}
                 height={58}

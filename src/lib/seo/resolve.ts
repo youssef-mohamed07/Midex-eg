@@ -1,8 +1,12 @@
 import "server-only";
 
-import type { SeoRouteKey } from "@/cms/collections/seo";
-import { getSeoEntry, getSeoOverride } from "@/content/seo/entries";
-import type { ResolvedSeo, SeoEntry, SeoTemplateContext } from "@/content/seo/types";
+import { getSeoEntry, getSeoOverride } from "@/lib/cms/seo";
+import type {
+  ResolvedSeo,
+  SeoEntry,
+  SeoRouteKey,
+  SeoTemplateContext,
+} from "@/lib/seo/types";
 import { parseLocale, siteConfig } from "@/lib/seo/config";
 import {
   interpolateSeoTemplate,
@@ -60,18 +64,18 @@ type ResolveSeoInput = {
   slug?: string;
 };
 
-export function resolveSeo({
+export async function resolveSeo({
   routeKey,
   locale: localeParam,
   params = {},
   context = {},
   slug,
-}: ResolveSeoInput): ResolvedSeo {
+}: ResolveSeoInput): Promise<ResolvedSeo> {
   const locale = parseLocale(localeParam);
 
   const path = resolvePathFromRoute(routeKey, params);
-  const override = getSeoOverride(routeKey, locale, slug);
-  const base = override ?? getSeoEntry(routeKey, locale);
+  const override = await getSeoOverride(routeKey, locale, slug);
+  const base = override ?? (await getSeoEntry(routeKey, locale));
 
   if (!base) {
     const fallbackTitle = context.title ?? siteConfig.name;

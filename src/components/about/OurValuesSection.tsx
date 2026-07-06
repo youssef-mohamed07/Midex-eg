@@ -1,12 +1,16 @@
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
-import { companyValues } from "@/content/site";
+import { getLocale } from "next-intl/server";
+import { getCompanyValues } from "@/lib/cms";
+import type { Locale } from "@/i18n/routing";
 
 const valueKeys = ["value1", "value2", "value3", "value4", "value5"] as const;
 
 export async function OurValuesSection() {
   const t = await getTranslations("about");
+  const locale = (await getLocale()) as Locale;
+  const companyValues = await getCompanyValues(locale);
 
   const values = companyValues.slice(0, 5).map((item, index) => ({
     ...item,

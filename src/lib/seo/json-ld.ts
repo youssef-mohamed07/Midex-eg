@@ -1,53 +1,72 @@
-import type { ResolvedSeo } from "@/content/seo/types";
+import type { ResolvedSeo } from "@/lib/seo/types";
+import type { SiteSettings } from "@/lib/cms/types";
 import { getSiteUrl, siteConfig } from "@/lib/seo/config";
 import { toAbsoluteImageUrl } from "@/lib/seo/images";
 
 type JsonLdInput = {
   seo: ResolvedSeo;
+  settings?: SiteSettings | null;
   breadcrumbs?: { name: string; path?: string }[];
   article?: { datePublished?: string; dateModified?: string; author?: string };
   product?: { sku?: string; category?: string };
 };
 
-export function buildOrganizationJsonLd() {
+export function buildOrganizationJsonLd(settings?: SiteSettings | null) {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: siteConfig.name,
-    legalName: siteConfig.legalName,
+    name: settings?.name || siteConfig.name,
+    legalName: settings?.legalName || siteConfig.legalName,
     url: getSiteUrl(),
     logo: toAbsoluteImageUrl(siteConfig.brandIcon),
     image: toAbsoluteImageUrl(siteConfig.defaultOgImage),
-    email: siteConfig.email,
-    telephone: siteConfig.phones,
+    email: settings?.contact.email || siteConfig.email,
+    telephone: settings?.contact.phones.length ? settings.contact.phones : siteConfig.phones,
     address: {
       "@type": "PostalAddress",
-      streetAddress: siteConfig.address.street,
-      addressLocality: siteConfig.address.city,
-      addressRegion: siteConfig.address.region,
-      postalCode: siteConfig.address.postalCode,
-      addressCountry: siteConfig.address.country,
+      streetAddress: settings?.addressParts.street || siteConfig.address.street,
+      addressLocality: settings?.addressParts.city || siteConfig.address.city,
+      addressRegion: settings?.addressParts.region || siteConfig.address.region,
+      postalCode: settings?.addressParts.postalCode || siteConfig.address.postalCode,
+      addressCountry: settings?.addressParts.country || siteConfig.address.country,
     },
     sameAs: [
-      siteConfig.social.linkedIn,
-      siteConfig.social.twitter,
-      siteConfig.social.whatsApp,
+      settings?.social.linkedIn ?? siteConfig.social.linkedIn,
+      settings?.social.twitter ?? siteConfig.social.twitter,
+      settings?.social.whatsApp ?? siteConfig.social.whatsApp,
     ].filter(Boolean),
   };
 }
 
-export function buildWebSiteJsonLd() {
+export function buildWebSiteJsonLd(settings?: SiteSettings | null) {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: siteConfig.name,
+    name: settings?.name || siteConfig.name,
     url: getSiteUrl(),
     inLanguage: siteConfig.locales,
   };
 }
 
-export function buildPageJsonLd({ seo, breadcrumbs, article, product }: JsonLdInput) {
+/** BreadcrumbList JSON-LD for a page's breadcrumb trail. */
+export function buildBreadcrumbJsonLd(
+  breadcrumbs: { name: string; path?: string }[],
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: breadcrumbs.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      ...(item.path ? { item: `${getSiteUrl()}${item.path}` } : {}),
+    })),
+  };
+}
+
+export function buildPageJsonLd({ seo, settings, breadcrumbs, article, product }: JsonLdInput) {
   const type = seo.structuredDataType ?? "WebPage";
+  const siteName = settings?.name || siteConfig.name;
 
   const page: Record<string, unknown> = {
     "@context": "https://schema.org",
@@ -59,7 +78,7 @@ export function buildPageJsonLd({ seo, breadcrumbs, article, product }: JsonLdIn
     ...(seo.openGraph.image ? { image: seo.openGraph.image } : {}),
     isPartOf: {
       "@type": "WebSite",
-      name: siteConfig.name,
+      name: siteName,
       url: getSiteUrl(),
     },
   };
@@ -82,11 +101,11 @@ export function buildPageJsonLd({ seo, breadcrumbs, article, product }: JsonLdIn
     page.dateModified = article.dateModified ?? article.datePublished;
     page.author = {
       "@type": "Organization",
-      name: siteConfig.name,
+      name: siteName,
     };
     page.publisher = {
       "@type": "Organization",
-      name: siteConfig.name,
+      name: siteName,
       url: getSiteUrl(),
       logo: {
         "@type": "ImageObject",
@@ -100,7 +119,7 @@ export function buildPageJsonLd({ seo, breadcrumbs, article, product }: JsonLdIn
     page.sku = product.sku;
     page.brand = {
       "@type": "Brand",
-      name: siteConfig.name,
+      name: siteName,
     };
     if (seo.openGraph.image) {
       page.image = seo.openGraph.image;
@@ -119,8 +138,8 @@ export function buildJsonLdGraph(input: JsonLdInput) {
   return {
     "@context": "https://schema.org",
     "@graph": [
-      stripContext(buildOrganizationJsonLd()),
-      stripContext(buildWebSiteJsonLd()),
+      stripContext(buildOrganizationJsonLd(input.settings)),
+      stripContext(buildWebSiteJsonLd(input.settings)),
       stripContext(buildPageJsonLd(input)),
     ],
   };

@@ -17,33 +17,34 @@ import { SolutionPageTailSections } from "@/components/solutions/SolutionPageTai
 import { SolutionServicesAccordionSection } from "@/components/solutions/SolutionServicesAccordionSection";
 import { getGroupLabel } from "@/components/solutions/solution-labels";
 import {
-  getLocalizedSolutionGroup,
-  getLocalizedSolutionGroupFaq,
-  getLocalizedSolutionGroupHighlights,
-  getLocalizedSolutionGroupPrinciples,
-  getLocalizedSolutionGroupWorkflow,
-  getLocalizedSolutionGroups,
-} from "@/content/i18n";
+  getQuoteUrl,
+  getSolutionGroup,
+  getSolutionGroupFaq,
+  getSolutionGroupHighlights,
+  getSolutionGroupPrinciples,
+  getSolutionGroups,
+  getSolutionGroupWorkflow,
+} from "@/lib/cms";
 import { type Locale } from "@/i18n/routing";
-import { getQuoteUrl } from "@/content/products";
 
 type Props = { slug: string };
 
 export async function SolutionGroupPageContent({ slug }: Props) {
   const locale = (await getLocale()) as Locale;
-  const group = getLocalizedSolutionGroup(slug, locale);
+  const group = await getSolutionGroup(slug, locale);
   if (!group) notFound();
 
   const t = await getTranslations("solutions");
   const tc = await getTranslations("products");
   const label = getGroupLabel(group);
-  const highlights = getLocalizedSolutionGroupHighlights(group.slug, locale);
-  const principles = getLocalizedSolutionGroupPrinciples(group.slug, locale);
-  const workflow = getLocalizedSolutionGroupWorkflow(group.slug, locale);
-  const faq = getLocalizedSolutionGroupFaq(group.slug, locale);
-  const otherGroups = getLocalizedSolutionGroups(locale).filter(
-    (item) => item.slug !== group.slug,
-  );
+  const [highlights, principles, workflow, faq, allGroups] = await Promise.all([
+    getSolutionGroupHighlights(group.slug, locale),
+    getSolutionGroupPrinciples(group.slug, locale),
+    getSolutionGroupWorkflow(group.slug, locale),
+    getSolutionGroupFaq(group.slug, locale),
+    getSolutionGroups(locale),
+  ]);
+  const otherGroups = allGroups.filter((item) => item.slug !== group.slug);
 
   return (
     <>

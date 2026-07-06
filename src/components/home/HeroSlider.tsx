@@ -5,12 +5,38 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import type { HeroCollage, HeroCollageImage as CollageItem } from "@/lib/cms/types";
 
-function HeroCollageImage({ item, priority = false }: { item: CollageItem; priority?: boolean }) {
+/** Fixed collage layout — must be static strings so Tailwind emits the utilities. */
+const COLLAGE_LAYOUTS = {
+  left: [
+    "ms-8 h-32 w-24 sm:h-36 sm:w-28",
+    "h-28 w-40 sm:h-32 sm:w-44",
+    "me-4 h-36 w-28 sm:h-40 sm:w-32",
+  ],
+  right: [
+    "me-8 h-36 w-28 sm:h-40 sm:w-32",
+    "h-28 w-40 sm:h-32 sm:w-44",
+    "ms-4 h-32 w-24 sm:h-36 sm:w-28",
+  ],
+} as const;
+
+function collageLayout(side: "left" | "right", index: number, fallback?: string) {
+  return COLLAGE_LAYOUTS[side][index] ?? fallback ?? "h-32 w-24";
+}
+
+function HeroCollageImage({
+  item,
+  layoutClass,
+  priority = false,
+}: {
+  item: CollageItem;
+  layoutClass: string;
+  priority?: boolean;
+}) {
   if (!item.src) return null;
 
   return (
     <div
-      className={`relative shrink-0 overflow-hidden rounded-2xl border border-midex-line/50 bg-midex-surface shadow-[0_8px_30px_rgba(9,61,94,0.08)] ${item.className}`}
+      className={`relative shrink-0 overflow-hidden rounded-2xl border border-midex-line/50 bg-midex-surface shadow-[0_8px_30px_rgba(9,61,94,0.08)] ${layoutClass}`}
     >
       <Image
         src={item.src}
@@ -36,7 +62,12 @@ function HeroCollageColumn({
   return (
     <div className={`hidden flex-col gap-3 py-6 lg:flex ${align}`} aria-hidden>
       {items.filter((item) => item.src).map((item, index) => (
-        <HeroCollageImage key={item.src} item={item} priority={index === 1} />
+        <HeroCollageImage
+          key={`${side}-${index}-${item.src}`}
+          item={item}
+          layoutClass={collageLayout(side, index, item.className)}
+          priority={index === 1}
+        />
       ))}
     </div>
   );

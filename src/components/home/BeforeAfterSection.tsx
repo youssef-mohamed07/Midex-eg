@@ -3,8 +3,6 @@ import { BeforeAfterSlider } from "@/components/home/BeforeAfterSlider";
 import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
 
 const BEFORE_AFTER_MEDIA = {
-  beforeVideo: "/videos/before-after/before.mp4",
-  afterVideo: "/videos/before-after/after.mp4",
   beforePoster: "/images/services/pickling-passivation.png",
   afterPoster: "/images/services/mirror-finish.png",
 } as const;
@@ -47,8 +45,6 @@ export async function BeforeAfterSection() {
             <BeforeAfterSlider
               beforeLabel={t("beforeAfterBefore")}
               afterLabel={t("beforeAfterAfter")}
-              beforeVideo={BEFORE_AFTER_MEDIA.beforeVideo}
-              afterVideo={BEFORE_AFTER_MEDIA.afterVideo}
               beforePoster={BEFORE_AFTER_MEDIA.beforePoster}
               afterPoster={BEFORE_AFTER_MEDIA.afterPoster}
               duringKeywords={duringKeywords}

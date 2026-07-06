@@ -762,6 +762,17 @@ export function Header({
 
   const closeMenu = () => setMenuOpen(false);
 
+  const handleLogoClick = useCallback(
+    (event: React.MouseEvent<HTMLAnchorElement>) => {
+      closeMenu();
+      if (pathname === "/") {
+        event.preventDefault();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    },
+    [pathname],
+  );
+
   const isHome = pathname === "/";
   const overlay = !scrolled && !isHome;
   const headerScrolled = scrolled || isHome;
@@ -787,7 +798,7 @@ export function Header({
         <div className="mx-auto max-w-6xl">
           <div className={`midex-header-bar relative rounded-full border ${barClass}`}>
             <div className="flex h-14 items-center justify-between gap-2 px-3 sm:gap-3 sm:px-5">
-            <Link href="/" className="midex-header__brand shrink-0">
+            <Link href="/" className="midex-header__brand shrink-0" onClick={handleLogoClick}>
               <Image
                 src={logoWhite}
                 alt="Midex"

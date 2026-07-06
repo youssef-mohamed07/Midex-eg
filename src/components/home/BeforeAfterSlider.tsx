@@ -1,41 +1,55 @@
 "use client";
 
+import Image from "next/image";
 import { useLocale } from "next-intl";
 import { siteConfig } from "@/lib/seo/config";
 
 type Props = {
   beforeLabel: string;
   afterLabel: string;
-  beforeVideo: string;
-  afterVideo: string;
-  beforePoster?: string;
-  afterPoster?: string;
+  beforeVideo?: string;
+  afterVideo?: string;
+  beforePoster: string;
+  afterPoster: string;
   duringKeywords: string[];
   afterKeywords: string[];
 };
 
 const DIVIDER_POSITION = 50;
 
-function ComparisonVideo({
-  src,
+function ComparisonMedia({
+  videoSrc,
   poster,
   grayscale = false,
 }: {
-  src: string;
-  poster?: string;
+  videoSrc?: string;
+  poster: string;
   grayscale?: boolean;
 }) {
+  if (videoSrc) {
+    return (
+      <video
+        src={videoSrc}
+        poster={poster}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        aria-hidden
+        className={`absolute inset-0 h-full w-full object-cover ${grayscale ? "grayscale" : ""}`}
+      />
+    );
+  }
+
   return (
-    <video
-      src={src}
-      poster={poster}
-      autoPlay
-      muted
-      loop
-      playsInline
-      preload="metadata"
+    <Image
+      src={poster}
+      alt=""
+      fill
       aria-hidden
-      className={`absolute inset-0 h-full w-full object-cover ${grayscale ? "grayscale" : ""}`}
+      className={`object-cover ${grayscale ? "grayscale" : ""}`}
+      sizes="100vw"
     />
   );
 }
@@ -91,11 +105,11 @@ export function BeforeAfterSlider({
       aria-label={`${beforeLabel} / ${afterLabel}`}
     >
       <div className="absolute inset-0">
-        <ComparisonVideo src={afterVideo} poster={afterPoster} />
+        <ComparisonMedia videoSrc={afterVideo} poster={afterPoster} />
       </div>
 
       <div className="absolute inset-0" style={{ clipPath: `inset(0 ${clipAfter}% 0 0)` }}>
-        <ComparisonVideo src={beforeVideo} poster={beforePoster} grayscale />
+        <ComparisonMedia videoSrc={beforeVideo} poster={beforePoster} grayscale />
       </div>
 
       <span

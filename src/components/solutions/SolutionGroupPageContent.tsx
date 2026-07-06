@@ -10,12 +10,18 @@ import {
 import { FaqSection } from "@/components/home/FaqSection";
 import { HomeQuoteFormSection } from "@/components/home/HomeQuoteFormSection";
 import { SolutionsCta } from "@/components/solutions/SolutionsCta";
+import { SolutionGroupFaqSection } from "@/components/solutions/SolutionGroupFaqSection";
+import { SolutionGroupPrinciplesSection } from "@/components/solutions/SolutionGroupPrinciplesSection";
+import { SolutionGroupWorkflowSection } from "@/components/solutions/SolutionGroupWorkflowSection";
+import { SolutionPageTailSections } from "@/components/solutions/SolutionPageTailSections";
 import { SolutionServicesAccordionSection } from "@/components/solutions/SolutionServicesAccordionSection";
-import { SolutionStepsSection } from "@/components/solutions/SolutionStepsSection";
 import { getGroupLabel } from "@/components/solutions/solution-labels";
 import {
   getLocalizedSolutionGroup,
+  getLocalizedSolutionGroupFaq,
   getLocalizedSolutionGroupHighlights,
+  getLocalizedSolutionGroupPrinciples,
+  getLocalizedSolutionGroupWorkflow,
   getLocalizedSolutionGroups,
 } from "@/content/i18n";
 import { type Locale } from "@/i18n/routing";
@@ -32,6 +38,9 @@ export async function SolutionGroupPageContent({ slug }: Props) {
   const tc = await getTranslations("products");
   const label = getGroupLabel(group);
   const highlights = getLocalizedSolutionGroupHighlights(group.slug, locale);
+  const principles = getLocalizedSolutionGroupPrinciples(group.slug, locale);
+  const workflow = getLocalizedSolutionGroupWorkflow(group.slug, locale);
+  const faq = getLocalizedSolutionGroupFaq(group.slug, locale);
   const otherGroups = getLocalizedSolutionGroups(locale).filter(
     (item) => item.slug !== group.slug,
   );
@@ -40,7 +49,7 @@ export async function SolutionGroupPageContent({ slug }: Props) {
     <>
       <PageHero
         eyebrow={`${group.children.length} ${t("services")}`}
-        title={label}
+        title={group.heroTitle ?? label}
         subtitle={group.description}
         compact
         breadcrumbs={
@@ -70,52 +79,64 @@ export async function SolutionGroupPageContent({ slug }: Props) {
         </div>
       </PageHero>
 
-      <section className="mx-section">
-        <div className="mx-container">
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(280px,400px)] lg:items-center lg:gap-14">
-            <div>
-              <span className="mx-eyebrow">Midex</span>
-              <h2 className="mt-3 font-display text-2xl font-bold tracking-tight text-midex-navy sm:text-3xl">
-                {t("groupImportanceTitle")}
-              </h2>
-              <p className="mt-5 text-base leading-relaxed text-midex-gray/80 sm:text-lg">
-                {group.intro}
-              </p>
+      {!principles && (
+        <section className="mx-section">
+          <div className="mx-container">
+            <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(280px,400px)] lg:items-center lg:gap-14">
+              <div>
+                <span className="mx-eyebrow">Midex</span>
+                <h2 className="mt-3 font-display text-2xl font-bold tracking-tight text-midex-navy sm:text-3xl">
+                  {t("groupImportanceTitle")}
+                </h2>
+                <p className="mt-5 text-base leading-relaxed text-midex-gray/80 sm:text-lg">
+                  {group.intro}
+                </p>
 
-              {highlights.length > 0 && (
-                <ul className="mt-8 grid gap-3 sm:grid-cols-2">
-                  {highlights.map((item) => (
-                    <li
-                      key={item}
-                      className="flex items-start gap-3 rounded-xl border border-midex-navy/8 bg-midex-surface/60 px-4 py-3 text-sm leading-relaxed text-midex-gray/85"
-                    >
-                      <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-midex-mint" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
+                {highlights.length > 0 && (
+                  <ul className="mt-8 grid gap-3 sm:grid-cols-2">
+                    {highlights.map((item) => (
+                      <li
+                        key={item}
+                        className="flex items-start gap-3 rounded-xl border border-midex-navy/8 bg-midex-surface/60 px-4 py-3 text-sm leading-relaxed text-midex-gray/85"
+                      >
+                        <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-midex-mint" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
 
-            <div className="relative aspect-card-tall overflow-hidden rounded-xl border border-midex-line shadow-lg sm:rounded-2xl sm:aspect-[4/3]">
-              <Image
-                src={group.image}
-                alt={label}
-                fill
-                className="object-cover object-center"
-                sizes="(max-width: 1024px) 100vw, 400px"
-                priority
-              />
-              <div
-                className="absolute inset-0 bg-gradient-to-t from-midex-navy/35 to-transparent"
-                aria-hidden
-              />
+              <div className="relative aspect-card-tall overflow-hidden rounded-xl border border-midex-line shadow-lg sm:rounded-2xl sm:aspect-[4/3]">
+                <Image
+                  src={group.image}
+                  alt={label}
+                  fill
+                  className="object-cover object-center"
+                  sizes="(max-width: 1024px) 100vw, 400px"
+                  priority
+                />
+                <div
+                  className="absolute inset-0 bg-gradient-to-t from-midex-navy/35 to-transparent"
+                  aria-hidden
+                />
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <SolutionServicesAccordionSection groupSlug={slug} />
+
+      {principles && <SolutionGroupPrinciplesSection content={principles} />}
+
+      {workflow && <SolutionGroupWorkflowSection content={workflow} />}
+
+      <SolutionPageTailSections />
+
+      <HomeQuoteFormSection />
+
+      {faq ? <SolutionGroupFaqSection content={faq} /> : <FaqSection />}
 
       {otherGroups.length > 0 && (
         <section className="mx-section--tight">
@@ -143,12 +164,6 @@ export async function SolutionGroupPageContent({ slug }: Props) {
           </div>
         </section>
       )}
-
-      <SolutionStepsSection />
-
-      <HomeQuoteFormSection />
-
-      <FaqSection />
 
       <SolutionsCta quoteSubject={label} />
     </>

@@ -1,52 +1,36 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { AboutFaqSection } from "@/components/about/AboutFaqSection";
+import { AboutFoundersSection } from "@/components/about/AboutFoundersSection";
+import { AboutMissionVisionSection } from "@/components/about/AboutMissionVisionSection";
+import { AboutMilestonesSection } from "@/components/about/AboutMilestonesSection";
+import { AboutStandardsSection } from "@/components/about/AboutStandardsSection";
 import { OurValuesSection } from "@/components/about/OurValuesSection";
-import { CertificationsSection } from "@/components/about/CertificationsSection";
-import { AboutTimeline } from "@/components/about/AboutTimeline";
-import { BeforeAfterSection } from "@/components/home/BeforeAfterSection";
-import { CaseStudiesSection } from "@/components/home/CaseStudiesSection";
 import { EventsSection } from "@/components/home/EventsSection";
-import { FaqSection } from "@/components/home/FaqSection";
 import { PageHero } from "@/components/layout/PageHero";
-import { StatsSection } from "@/components/home/StatsSection";
-import { StorySection } from "@/components/sections/StorySection";
-import { stats } from "@/content/site";
 import { getQuoteUrl } from "@/content/products";
 
 export async function AboutPageContent() {
   const t = await getTranslations("about");
-  const th = await getTranslations("home");
   const tc = await getTranslations("products");
 
   return (
     <>
       <PageHero title={t("title")} subtitle={t("subtitle")} eyebrow="Midex" compact />
 
-      <StorySection cta={{ href: "/solutions", label: t("exploreSolutions") }} />
+      <AboutMissionVisionSection />
+
+      <AboutMilestonesSection />
+
+      <AboutFoundersSection />
+
+      <AboutStandardsSection />
+
+      <EventsSection title={t("eventsTitle")} subtitle={t("eventsIntro")} />
 
       <OurValuesSection />
 
-      <EventsSection />
-
-      <AboutTimeline />
-
-      <BeforeAfterSection />
-
-      <CertificationsSection />
-
-      <StatsSection
-        title={th("statsTitle")}
-        subtitle={th("statsSubtitle")}
-        items={stats.map((stat) => ({
-          value: stat.value,
-          label: th(stat.labelKey),
-          suffix: "suffix" in stat ? stat.suffix : undefined,
-        }))}
-      />
-
-      <CaseStudiesSection />
-
-      <FaqSection />
+      <AboutFaqSection />
 
       <section className="mx-section--tight">
         <div className="mx-container">

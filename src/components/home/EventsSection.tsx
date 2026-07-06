@@ -75,10 +75,18 @@ function EventsMarquee({
   );
 }
 
-export function EventsSection() {
+export function EventsSection({
+  title,
+  subtitle,
+}: {
+  title?: string;
+  subtitle?: string;
+} = {}) {
   const t = useTranslations("home");
   const locale = useLocale() as Locale;
   const events = getLocalizedEvents(locale);
+  const heading = title ?? t("ourEvents");
+  const intro = subtitle ?? t("eventsSubtitle");
 
   if (events.length === 0) return null;
 
@@ -91,8 +99,8 @@ export function EventsSection() {
       <div className="mx-container">
         <div className="mx-auto mb-6 max-w-3xl text-center sm:mb-8 lg:mb-10">
           <span className="mx-eyebrow mx-eyebrow--center">Midex</span>
-          <h2 className="mx-section-title mt-4">{t("ourEvents")}</h2>
-          <p className="mx-section-subtitle mx-auto mt-4">{t("eventsSubtitle")}</p>
+          <h2 className="mx-section-title mt-4">{heading}</h2>
+          <p className="mx-section-subtitle mx-auto mt-4">{intro}</p>
         </div>
       </div>
 

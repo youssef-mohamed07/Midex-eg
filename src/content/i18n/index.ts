@@ -13,6 +13,26 @@ import {
   type SolutionGroup,
 } from "@/content/solutions";
 import {
+  attachPrincipleImages,
+  solutionGroupPrinciplesBase,
+  type SolutionGroupPrinciplesContent,
+} from "@/content/solution-group-principles";
+import {
+  attachWorkflowImages,
+  solutionGroupWorkflowBase,
+  type SolutionGroupWorkflowContent,
+} from "@/content/solution-group-workflow";
+import {
+  solutionGroupFaqBase,
+  type SolutionGroupFaqContent,
+} from "@/content/solution-group-faq";
+import {
+  buildSolutionChildPageContent,
+  getSolutionChildPageKey,
+  solutionChildPagesBase,
+  type SolutionChildPageContent,
+} from "@/content/solution-child-pages";
+import {
   buildSolutionGroupCards,
   buildSolutionGroupNav,
   buildSolutionServiceCards,
@@ -192,6 +212,9 @@ export function getLocalizedSolutionGroups(locale: Locale): SolutionGroup[] {
     return {
       ...group,
       label: translated?.label ?? group.label,
+      heroTitle: translated?.heroTitle ?? group.heroTitle,
+      servicesSectionTitle: translated?.servicesSectionTitle ?? group.servicesSectionTitle,
+      servicesSectionIntro: translated?.servicesSectionIntro ?? group.servicesSectionIntro,
       description: translated?.description ?? group.description,
       intro: translated?.intro ?? group.intro,
       children: group.children.map((child) =>
@@ -219,6 +242,155 @@ export function getLocalizedSolutionChild(
 export function getLocalizedSolutionGroupHighlights(groupSlug: string, locale: Locale) {
   const content = getContent(locale);
   return content?.solutionGroupHighlights[groupSlug] ?? baseSolutionGroupHighlights[groupSlug as keyof typeof baseSolutionGroupHighlights] ?? [];
+}
+
+export function getLocalizedSolutionGroupPrinciples(
+  groupSlug: string,
+  locale: Locale,
+): SolutionGroupPrinciplesContent | null {
+  const base = solutionGroupPrinciplesBase[groupSlug as keyof typeof solutionGroupPrinciplesBase];
+  if (!base) return null;
+
+  const content = getContent(locale);
+  const translated = content?.solutionGroupPrinciples?.[groupSlug];
+
+  const items = attachPrincipleImages(
+    base.items.map((item) => {
+      const itemTranslation = translated?.items[item.id];
+      return {
+        ...item,
+        title: itemTranslation?.title ?? item.title,
+        text: itemTranslation?.text ?? item.text,
+      };
+    }),
+  );
+
+  return {
+    title: translated?.title ?? base.title,
+    intro: translated?.intro ?? base.intro,
+    items,
+  };
+}
+
+export function getLocalizedSolutionGroupWorkflow(
+  groupSlug: string,
+  locale: Locale,
+): SolutionGroupWorkflowContent | null {
+  const base = solutionGroupWorkflowBase[groupSlug as keyof typeof solutionGroupWorkflowBase];
+  if (!base) return null;
+
+  const content = getContent(locale);
+  const translated = content?.solutionGroupWorkflow?.[groupSlug];
+
+  const steps = attachWorkflowImages(
+    base.steps.map((step) => {
+      const stepTranslation = translated?.steps[step.id];
+      return {
+        ...step,
+        title: stepTranslation?.title ?? step.title,
+        text: stepTranslation?.text ?? step.text,
+      };
+    }),
+  );
+
+  return {
+    title: translated?.title ?? base.title,
+    intro: translated?.intro ?? base.intro,
+    steps,
+  };
+}
+
+export function getLocalizedSolutionGroupFaq(
+  groupSlug: string,
+  locale: Locale,
+): SolutionGroupFaqContent | null {
+  const base = solutionGroupFaqBase[groupSlug as keyof typeof solutionGroupFaqBase];
+  if (!base) return null;
+
+  const content = getContent(locale);
+  const translated = content?.solutionGroupFaq?.[groupSlug];
+
+  const items = base.items.map((item) => {
+    const itemTranslation = translated?.items[item.id];
+    return {
+      ...item,
+      question: itemTranslation?.question ?? item.question,
+      answer: itemTranslation?.answer ?? item.answer,
+    };
+  });
+
+  return {
+    title: translated?.title ?? base.title,
+    intro: translated?.intro ?? base.intro,
+    items,
+  };
+}
+
+export function getLocalizedSolutionChildPage(
+  groupSlug: string,
+  childSlug: string,
+  locale: Locale,
+): SolutionChildPageContent | null {
+  const key = getSolutionChildPageKey(groupSlug, childSlug);
+  const base = solutionChildPagesBase[key];
+  if (!base) return null;
+
+  const content = getContent(locale);
+  const translated = content?.solutionChildPages?.[key];
+
+  const built = buildSolutionChildPageContent(base);
+
+  const principlesItems = base.principles.items.map((item) => {
+    const itemTranslation = translated?.principles?.items[item.id];
+    return {
+      ...item,
+      title: itemTranslation?.title ?? item.title,
+      text: itemTranslation?.text ?? item.text,
+    };
+  });
+
+  const workflowSteps = base.workflow.steps.map((step) => {
+    const stepTranslation = translated?.workflow?.steps[step.id];
+    return {
+      ...step,
+      title: stepTranslation?.title ?? step.title,
+      text: stepTranslation?.text ?? step.text,
+    };
+  });
+
+  const faqItems = base.faq.items.map((item) => {
+    const itemTranslation = translated?.faq?.items[item.id];
+    return {
+      ...item,
+      question: itemTranslation?.question ?? item.question,
+      answer: itemTranslation?.answer ?? item.answer,
+    };
+  });
+
+  return {
+    heroTitle: translated?.heroTitle ?? base.heroTitle,
+    heroSubtitle: translated?.heroSubtitle ?? base.heroSubtitle,
+    heroCtaLabel: translated?.heroCtaLabel ?? base.heroCtaLabel,
+    overviewTitle: translated?.overviewTitle ?? base.overviewTitle,
+    overviewIntro: translated?.overviewIntro ?? base.overviewIntro,
+    overviewItems: translated?.overviewItems ?? base.overviewItems,
+    relatedSectionTitle: translated?.relatedSectionTitle ?? base.relatedSectionTitle,
+    principles: {
+      title: translated?.principles?.title ?? built.principles.title,
+      intro: translated?.principles?.intro ?? built.principles.intro,
+      items: attachPrincipleImages(principlesItems),
+    },
+    workflow: {
+      title: translated?.workflow?.title ?? built.workflow.title,
+      intro: translated?.workflow?.intro ?? built.workflow.intro,
+      steps: attachWorkflowImages(workflowSteps),
+    },
+    faq: {
+      title: translated?.faq?.title ?? base.faq.title,
+      intro: translated?.faq?.intro ?? base.faq.intro,
+      items: faqItems,
+    },
+  };
 }
 
 export function getLocalizedSolutionGroupCards(locale: Locale) {

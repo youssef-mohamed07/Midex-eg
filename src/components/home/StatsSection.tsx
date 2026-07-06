@@ -56,10 +56,12 @@ export function StatsSection({
   title,
   subtitle,
   items,
+  columns = 4,
 }: {
   title: string;
   subtitle: string;
   items: StatItem[];
+  columns?: 2 | 3 | 4;
 }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(false);
@@ -91,7 +93,15 @@ export function StatsSection({
           <p className="mx-section-subtitle mx-auto">{subtitle}</p>
         </div>
 
-        <div className="grid gap-px overflow-hidden rounded-2xl border border-midex-line bg-midex-line shadow-lg sm:rounded-3xl sm:grid-cols-2 lg:grid-cols-4">
+        <div
+          className={`grid gap-px overflow-hidden rounded-2xl border border-midex-line bg-midex-line shadow-lg sm:rounded-3xl sm:grid-cols-2 ${
+            columns === 2
+              ? "lg:grid-cols-2"
+              : columns === 3
+                ? "lg:grid-cols-3"
+                : "lg:grid-cols-4"
+          }`}
+        >
           {items.map((stat, index) => (
             <div
               key={stat.label}

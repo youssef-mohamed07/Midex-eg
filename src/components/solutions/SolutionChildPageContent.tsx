@@ -5,14 +5,23 @@ import { Link } from "@/i18n/navigation";
 import { PageHero } from "@/components/layout/PageHero";
 import { SolutionBreadcrumbs } from "@/components/solutions/SolutionBreadcrumbs";
 import { getGroupLabel } from "@/components/solutions/solution-labels";
+import { FaqSection } from "@/components/home/FaqSection";
+import { HomeQuoteFormSection } from "@/components/home/HomeQuoteFormSection";
 import {
   getLocalizedSolutionChild,
+  getLocalizedSolutionChildPage,
   getLocalizedSolutionGroup,
+  getLocalizedSolutionGroupFaq,
   getLocalizedSolutionGroupHighlights,
 } from "@/content/i18n";
 import { type Locale } from "@/i18n/routing";
 import { getQuoteUrl } from "@/content/products";
-import { SolutionStepsSection } from "@/components/solutions/SolutionStepsSection";
+import { SolutionChildOverviewSection } from "@/components/solutions/SolutionChildOverviewSection";
+import { SolutionChildRelatedSection } from "@/components/solutions/SolutionChildRelatedSection";
+import { SolutionGroupFaqSection } from "@/components/solutions/SolutionGroupFaqSection";
+import { SolutionGroupPrinciplesSection } from "@/components/solutions/SolutionGroupPrinciplesSection";
+import { SolutionGroupWorkflowSection } from "@/components/solutions/SolutionGroupWorkflowSection";
+import { SolutionPageTailSections } from "@/components/solutions/SolutionPageTailSections";
 
 type Props = { slug: string; childSlug: string };
 
@@ -22,11 +31,82 @@ export async function SolutionChildPageContent({ slug, childSlug }: Props) {
   const child = getLocalizedSolutionChild(slug, childSlug, locale);
   if (!group || !child) notFound();
 
+  const page = getLocalizedSolutionChildPage(slug, childSlug, locale);
   const t = await getTranslations("solutions");
   const tc = await getTranslations("products");
   const groupName = getGroupLabel(group);
-  const highlights = getLocalizedSolutionGroupHighlights(group.slug, locale);
   const related = group.children.filter((item) => item.slug !== child.slug);
+
+  if (page) {
+    return (
+      <>
+        <PageHero
+          badge={false}
+          eyebrow={groupName}
+          title={page.heroTitle}
+          subtitle={page.heroSubtitle}
+          compact
+          breadcrumbs={
+            <SolutionBreadcrumbs
+              light
+              items={[
+                { label: t("title"), href: "/solutions" },
+                { label: groupName, href: `/solutions/group/${group.slug}` },
+                { label: child.label },
+              ]}
+            />
+          }
+          media={
+            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 shadow-2xl shadow-black/20 sm:aspect-[16/11]">
+              <Image
+                src={child.image}
+                alt={child.label}
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                priority
+              />
+            </div>
+          }
+        >
+          <div className="mt-6">
+            <Link
+              className="group mx-btn mx-btn-primary border-white/20 bg-white text-midex-navy hover:bg-midex-mint hover:text-midex-navy"
+              href={getQuoteUrl(child.label)}
+            >
+              {page.heroCtaLabel}
+              <span className="mx-arrow">→</span>
+            </Link>
+          </div>
+        </PageHero>
+
+        <SolutionChildOverviewSection
+          title={page.overviewTitle}
+          intro={page.overviewIntro}
+          items={page.overviewItems}
+        />
+
+        <SolutionGroupPrinciplesSection content={page.principles} />
+
+        <SolutionGroupWorkflowSection content={page.workflow} />
+
+        <SolutionChildRelatedSection
+          title={page.relatedSectionTitle}
+          groupSlug={group.slug}
+          services={related}
+        />
+
+        <SolutionPageTailSections />
+
+        <HomeQuoteFormSection />
+
+        <SolutionGroupFaqSection content={page.faq} />
+      </>
+    );
+  }
+
+  const highlights = getLocalizedSolutionGroupHighlights(group.slug, locale);
+  const faq = getLocalizedSolutionGroupFaq(group.slug, locale);
 
   return (
     <>
@@ -90,10 +170,7 @@ export async function SolutionChildPageContent({ slug, childSlug }: Props) {
             )}
 
             <div className="mt-10 flex flex-wrap gap-3">
-              <Link
-                className="mx-btn mx-btn-primary"
-                href={getQuoteUrl(child.label)}
-              >
+              <Link className="mx-btn mx-btn-primary" href={getQuoteUrl(child.label)}>
                 {tc("requestQuote")} →
               </Link>
               <Link
@@ -142,7 +219,11 @@ export async function SolutionChildPageContent({ slug, childSlug }: Props) {
         </div>
       </section>
 
-      <SolutionStepsSection />
+      <SolutionPageTailSections />
+
+      <HomeQuoteFormSection />
+
+      {faq ? <SolutionGroupFaqSection content={faq} /> : <FaqSection />}
     </>
   );
 }

@@ -92,6 +92,35 @@ export const stats = [
   { value: 100, labelKey: "statCompliance", suffix: "%" },
 ] as const;
 
+export const aboutMilestones = [
+  { value: 5, labelKey: "milestone1" },
+  { value: 20, labelKey: "milestone2" },
+  { value: 30, labelKey: "milestone3" },
+  { value: 25, labelKey: "milestone4" },
+  { value: 10, labelKey: "milestone5" },
+  { value: 100, labelKey: "milestone6", suffix: "+" },
+  { value: 500, labelKey: "milestone7", suffix: "+" },
+] as const;
+
+export const aboutFounders = [
+  {
+    id: "mohamed-samir",
+    image: "/images/services/orbital-welding.png",
+    nameKey: "founder1Name",
+    roleKey: "founder1Role",
+    bioKey: "founder1Bio",
+  },
+  {
+    id: "abdelrahman-fouad",
+    image: "/images/services/bore-scoping.png",
+    nameKey: "founder2Name",
+    roleKey: "founder2Role",
+    bioKey: "founder2Bio",
+  },
+] as const;
+
+export const aboutStandards = ["standard1", "standard2", "standard3", "standard4"] as const;
+
 export const testimonials = [
   {
     name: "Sara Walid",

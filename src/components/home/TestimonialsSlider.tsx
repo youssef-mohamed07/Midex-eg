@@ -70,9 +70,11 @@ function TestimonialCard({ item }: { item: Testimonial }) {
 
 export function TestimonialsSlider({
   title,
+  subtitle,
   testimonials,
 }: {
   title: string;
+  subtitle: string;
   testimonials: Testimonial[];
 }) {
   if (testimonials.length === 0) return null;
@@ -90,6 +92,7 @@ export function TestimonialsSlider({
         <div className="mb-6 text-center sm:mb-10 lg:mb-12">
           <span className="mx-eyebrow mx-eyebrow--center">Midex</span>
           <h2 className="mx-section-title mt-4">{title}</h2>
+          <p className="mx-section-subtitle mx-auto mt-4">{subtitle}</p>
         </div>
 
         <div className="mx-marquee-fade mx-marquee-fade--white">

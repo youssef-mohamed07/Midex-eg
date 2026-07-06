@@ -35,8 +35,6 @@ export function resolvePathFromRoute(
       return `/products/category/${params.slug ?? ""}`;
     case "solutions":
       return "/solutions";
-    case "solution":
-      return `/solutions/${params.slug ?? ""}`;
     case "solution-group":
       return `/solutions/group/${params.slug ?? ""}`;
     case "solution-child":

@@ -8,6 +8,17 @@ import {
 } from "@/content/i18n";
 import { type Locale } from "@/i18n/routing";
 
+const CATEGORY_ORDER = [
+  "piping-and-fitting",
+  "valves",
+  "instruments",
+  "uv-units",
+  "stainless-steel-tanks",
+  "pumps",
+  "filters",
+  "hygienic-drains",
+] as const;
+
 const LEFT_COLUMN_SLUGS = [
   "piping-and-fitting",
   "instruments",
@@ -20,6 +31,7 @@ const RIGHT_COLUMN_SLUGS = ["valves", "pumps", "filters", "hygienic-drains"] as 
 type CategoryCard = {
   slug: string;
   label: string;
+  description: string;
   image: string;
   count: number;
 };
@@ -55,6 +67,9 @@ function CategoryImageCard({
         <h3 className="mt-0.5 font-display text-sm font-bold leading-snug text-white sm:mt-1 sm:text-base">
           {category.label}
         </h3>
+        <p className="mt-1 line-clamp-2 text-[11px] leading-relaxed text-white/75 sm:text-xs">
+          {category.description}
+        </p>
       </div>
     </Link>
   );
@@ -78,6 +93,7 @@ export async function ProductCategoriesSection() {
     return {
       slug,
       label: meta.label,
+      description: meta.description,
       image,
       count: products.length,
     };
@@ -88,7 +104,9 @@ export async function ProductCategoriesSection() {
 
   const leftColumn = resolveColumn(LEFT_COLUMN_SLUGS);
   const rightColumn = resolveColumn(RIGHT_COLUMN_SLUGS);
-  const allCategories = [...leftColumn, ...rightColumn];
+  const allCategories = CATEGORY_ORDER.map(buildCategory).filter(
+    (item): item is CategoryCard => item !== null,
+  );
 
   if (allCategories.length === 0) {
     return null;
@@ -100,24 +118,21 @@ export async function ProductCategoriesSection() {
     <section className="mx-section">
       <div className="mx-container">
         <RevealOnScroll>
-          <div className="mb-8 flex flex-col gap-4 sm:mb-10 sm:flex-row sm:items-end sm:justify-between lg:mb-12">
-            <div className="max-w-2xl">
-              <span className="mx-eyebrow">Midex</span>
-              <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-midex-navy sm:text-4xl">
-                {t("title")}
-              </h2>
-              <p className="mt-3 text-sm leading-relaxed text-midex-gray/75 sm:text-base">
-                {t("subtitle")}
-              </p>
-            </div>
-            <Link href="/products" className="mx-link-arrow shrink-0 text-sm no-underline">
+          <div className="mx-auto max-w-3xl text-center">
+            <span className="mx-eyebrow mx-eyebrow--center">Midex</span>
+            <h2 className="mx-section-title mt-4">{t("title")}</h2>
+            <p className="mx-section-subtitle mx-auto mt-4">{t("subtitle")}</p>
+            <Link
+              href="/products"
+              className="mx-link-arrow mx-auto mt-6 inline-flex text-sm no-underline"
+            >
               {t("allCategories")}
               <span className="mx-arrow">→</span>
             </Link>
           </div>
         </RevealOnScroll>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:items-stretch lg:gap-5">
+        <div className="mt-8 grid grid-cols-1 gap-4 sm:mt-10 sm:grid-cols-2 lg:grid-cols-3 lg:items-stretch lg:gap-5">
           <RevealOnScroll className="h-full sm:col-span-2 lg:col-span-1">
             <Link
               href="/products"
@@ -143,6 +158,9 @@ export async function ProductCategoriesSection() {
                 <h3 className="mt-2 font-display text-2xl font-bold text-white sm:text-3xl">
                   {t("allCategories")}
                 </h3>
+                <p className="mt-2 max-w-xs text-sm leading-relaxed text-white/80">
+                  {t("allProductsDescription")}
+                </p>
               </div>
             </Link>
           </RevealOnScroll>

@@ -26,7 +26,7 @@ export async function StorySection({ cta }: Props) {
   };
 
   return (
-    <section className="bg-midex-surface/30 py-14 sm:py-20 lg:py-24">
+    <section className="mx-section">
       <div className="mx-container">
         <div
           className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14 xl:gap-20"

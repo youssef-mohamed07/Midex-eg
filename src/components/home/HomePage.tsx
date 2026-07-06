@@ -8,7 +8,8 @@ import { FaqSection } from "@/components/home/FaqSection";
 import { FeaturedQuoteSection } from "@/components/home/FeaturedQuoteSection";
 import { HeroSlider } from "@/components/home/HeroSlider";
 import { HomeQuoteFormSection } from "@/components/home/HomeQuoteFormSection";
-import { HomeSolutionsSection } from "@/components/home/HomeSolutionsSection";
+import { EngineeringCapabilitiesSection } from "@/components/home/EngineeringCapabilitiesSection";
+import { TruviaSection } from "@/components/home/TruviaSection";
 import { StorySection } from "@/components/sections/StorySection";
 import { PartnersSection } from "@/components/home/PartnersSection";
 import { ProductCategoriesSection } from "@/components/home/ProductCategoriesSection";
@@ -71,9 +72,7 @@ export async function HomePage() {
 
       <FeaturedQuoteSection />
 
-      <StorySection />
-
-      <HomeSolutionsSection />
+      <EngineeringCapabilitiesSection />
 
       <EventsSection />
 
@@ -94,7 +93,11 @@ export async function HomePage() {
 
       <ProductCategoriesSection />
 
+      <TruviaSection />
+
       <BeforeAfterSection />
+
+      <StorySection />
 
       <StatsSection
         title={t("statsTitle")}
@@ -102,12 +105,17 @@ export async function HomePage() {
         items={stats.map((stat) => ({
           value: stat.value,
           label: t(stat.labelKey),
+          suffix: "suffix" in stat ? stat.suffix : undefined,
         }))}
       />
 
       <CaseStudiesSection />
 
-      <TestimonialsSection title={t("testimonialsTitle")} locale={locale} />
+      <TestimonialsSection
+        title={t("testimonialsTitle")}
+        subtitle={t("testimonialsSubtitle")}
+        locale={locale}
+      />
 
       <ExclusivePartnersSection title={t("exclusiveTitle")} />
 

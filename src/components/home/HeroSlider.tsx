@@ -73,14 +73,14 @@ export function HeroSlider() {
 
             <div className="mt-6 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-4">
               <Link className="group mx-btn mx-btn-primary w-full justify-center sm:w-auto" href="/contact">
-                {t("contactUs")}
+                {t("requestQuote")}
                 <span className="mx-arrow">→</span>
               </Link>
               <Link
                 className="mx-btn w-full justify-center border border-midex-mint/35 bg-midex-mint/15 text-midex-navy hover:border-midex-mint/50 hover:bg-midex-mint/25 sm:w-auto"
                 href="/solutions"
               >
-                {t("ourServices")}
+                {t("seeSolutions")}
               </Link>
             </div>
           </div>

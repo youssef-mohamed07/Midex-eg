@@ -12,7 +12,7 @@ export async function ContactPageContent() {
     <>
       <PageHero title={t("title")} subtitle={t("intro")} eyebrow="Midex" compact />
 
-      <section className="mx-section bg-midex-surface/35">
+      <section className="mx-section">
         <div className="mx-container">
           <div className="midex-contact-layout">
             <ContactInfoAside showOffice sticky />

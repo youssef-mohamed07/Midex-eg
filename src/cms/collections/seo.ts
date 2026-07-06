@@ -27,7 +27,6 @@ export const seoCollection: CmsCollection = {
         { label: "Product detail (template)", value: "product" },
         { label: "Product category (template)", value: "product-category" },
         { label: "Solutions index", value: "solutions" },
-        { label: "Solution detail (template)", value: "solution" },
         { label: "Solution group (template)", value: "solution-group" },
         { label: "Solution service (template)", value: "solution-child" },
         { label: "Blog index", value: "blog" },
@@ -168,7 +167,6 @@ export type SeoRouteKey =
   | "product"
   | "product-category"
   | "solutions"
-  | "solution"
   | "solution-group"
   | "solution-child"
   | "blog"

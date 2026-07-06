@@ -16,8 +16,9 @@ import { Link, usePathname } from "@/i18n/navigation";
 import {
   getLocalizedProductCategories,
   getLocalizedProducts,
-  getLocalizedSolutionGroups,
+  getLocalizedSolutionGroupNav,
 } from "@/content/i18n";
+import type { SolutionGroupNav } from "@/components/solutions/solution-group-cards";
 import { type Locale } from "@/i18n/routing";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 
@@ -38,16 +39,6 @@ type ProductCategoryEntry = {
   label: string;
   description: string;
   image?: string;
-};
-
-type SolutionGroupNav = {
-  slug: string;
-  label: string;
-  menuLabel?: string;
-  description: string;
-  image: string;
-  href: string;
-  children: { slug: string; label: string; href: string }[];
 };
 
 type MegaKind = "products" | "solutions";
@@ -119,22 +110,33 @@ const HeaderMegaProductsPanel = memo(function HeaderMegaProductsPanel({
 
 const HeaderMegaSolutionsPanel = memo(function HeaderMegaSolutionsPanel({
   groups,
-  allLabel,
+  capabilitiesTitle,
+  capabilitiesSubtitle,
+  allSolutionsLabel,
+  servicesLabel,
 }: {
   groups: SolutionGroupNav[];
-  allLabel: string;
+  capabilitiesTitle: string;
+  capabilitiesSubtitle: string;
+  allSolutionsLabel: string;
+  servicesLabel: string;
 }) {
   return (
     <div>
       <div className="mb-6 flex items-end justify-between gap-6 border-b border-midex-line/60 pb-4">
-        <div>
+        <div className="max-w-2xl">
           <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-midex-blue">
             Midex
           </p>
-          <h3 className="mt-1 font-display text-xl font-bold text-midex-navy">{allLabel}</h3>
+          <h3 className="mt-1 font-display text-xl font-bold text-midex-navy">
+            {capabilitiesTitle}
+          </h3>
+          <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-midex-gray/75">
+            {capabilitiesSubtitle}
+          </p>
         </div>
         <Link href="/solutions" className="mx-link-arrow shrink-0 text-sm no-underline">
-          {allLabel}
+          {allSolutionsLabel}
           <span className="mx-arrow">→</span>
         </Link>
       </div>
@@ -151,7 +153,7 @@ const HeaderMegaSolutionsPanel = memo(function HeaderMegaSolutionsPanel({
             >
               <Image
                 src={group.image}
-                alt={group.menuLabel ?? group.label}
+                alt={group.label}
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                 sizes="(max-width: 1280px) 50vw, 280px"
@@ -160,18 +162,23 @@ const HeaderMegaSolutionsPanel = memo(function HeaderMegaSolutionsPanel({
             </Link>
 
             <div className="flex min-h-0 flex-1 flex-col p-4">
-              <Link
-                href={group.href}
-                className="font-display text-base font-bold leading-snug text-midex-navy no-underline transition-colors hover:text-midex-blue"
-              >
-                {group.menuLabel ?? group.label}
-              </Link>
+              <div className="flex items-start justify-between gap-2">
+                <Link
+                  href={group.href}
+                  className="font-display text-sm font-bold leading-snug text-midex-navy no-underline transition-colors hover:text-midex-blue"
+                >
+                  {group.label}
+                </Link>
+                <span className="shrink-0 pt-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-midex-blue/75">
+                  {group.serviceCount} {servicesLabel}
+                </span>
+              </div>
               <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-midex-gray/70">
                 {group.description}
               </p>
 
               <div className="mt-4 border-t border-midex-line/60 pt-3">
-                <ul className="space-y-0.5" aria-label={group.menuLabel ?? group.label}>
+                <ul className="space-y-0.5" aria-label={group.label}>
                   {group.children.map((child) => (
                     <li key={child.href}>
                       <Link
@@ -199,7 +206,10 @@ const HeaderMegaDropdown = memo(function HeaderMegaDropdown({
   productCategories,
   productAllLabel,
   solutionGroups,
-  solutionsAllLabel,
+  capabilitiesTitle,
+  capabilitiesSubtitle,
+  allSolutionsLabel,
+  servicesLabel,
   featuredImage,
   onKeepOpen,
 }: {
@@ -208,7 +218,10 @@ const HeaderMegaDropdown = memo(function HeaderMegaDropdown({
   productCategories: ProductCategoryEntry[];
   productAllLabel: string;
   solutionGroups: SolutionGroupNav[];
-  solutionsAllLabel: string;
+  capabilitiesTitle: string;
+  capabilitiesSubtitle: string;
+  allSolutionsLabel: string;
+  servicesLabel: string;
   featuredImage: string;
   onKeepOpen?: () => void;
 }) {
@@ -237,7 +250,10 @@ const HeaderMegaDropdown = memo(function HeaderMegaDropdown({
             <div className={activeMega === "solutions" ? "block" : "hidden"}>
               <HeaderMegaSolutionsPanel
                 groups={solutionGroups}
-                allLabel={solutionsAllLabel}
+                capabilitiesTitle={capabilitiesTitle}
+                capabilitiesSubtitle={capabilitiesSubtitle}
+                allSolutionsLabel={allSolutionsLabel}
+                servicesLabel={servicesLabel}
               />
             </div>
           )}
@@ -510,12 +526,17 @@ function MobileNavItem({
 
 export function Header() {
   const t = useTranslations("nav");
+  const th = useTranslations("home");
+  const ts = useTranslations("solutions");
   const tp = useTranslations("products");
   const locale = useLocale() as Locale;
   const pathname = usePathname();
   const productCategories = getLocalizedProductCategories(locale);
   const products = getLocalizedProducts(locale);
-  const solutionGroups = getLocalizedSolutionGroups(locale);
+  const solutionGroupsNav = useMemo(
+    () => getLocalizedSolutionGroupNav(locale),
+    [locale],
+  );
   const [scrolled, setScrolled] = useState(false);
   const [headerVisible, setHeaderVisible] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -587,24 +608,6 @@ export function Header() {
     [productCategories, products],
   );
 
-  const solutionGroupsNav = useMemo<SolutionGroupNav[]>(
-    () =>
-      solutionGroups.map((group) => ({
-        slug: group.slug,
-        label: group.label,
-        menuLabel: group.menuLabel,
-        description: group.description,
-        image: group.image,
-        href: `/solutions/group/${group.slug}`,
-        children: group.children.map((child) => ({
-          slug: child.slug,
-          label: child.label,
-          href: `/solutions/group/${group.slug}/${child.slug}`,
-        })),
-      })),
-    [solutionGroups],
-  );
-
   const productChildren = useMemo(
     () =>
       Object.entries(productCategories).map(([slug, cat]) => ({
@@ -617,16 +620,16 @@ export function Header() {
   const solutionChildren = useMemo<NavLink[]>(
     () => [
       { label: t("allSolutions"), href: "/solutions" },
-      ...solutionGroups.map((group) => ({
-        label: group.menuLabel ?? group.label,
-        href: `/solutions/group/${group.slug}`,
+      ...solutionGroupsNav.map((group) => ({
+        label: group.label,
+        href: group.href,
         children: group.children.map((child) => ({
           label: child.label,
-          href: `/solutions/group/${group.slug}/${child.slug}`,
+          href: child.href,
         })),
       })),
     ],
-    [solutionGroups, t],
+    [solutionGroupsNav, t],
   );
 
   const navItems = useMemo<NavItem[]>(
@@ -881,7 +884,10 @@ export function Header() {
           productCategories={productCategoryEntries}
           productAllLabel={tp("allCategories")}
           solutionGroups={solutionGroupsNav}
-          solutionsAllLabel={t("allSolutions")}
+          capabilitiesTitle={th("capabilitiesTitle")}
+          capabilitiesSubtitle={th("capabilitiesSubtitle")}
+          allSolutionsLabel={t("allSolutions")}
+          servicesLabel={ts("services")}
           featuredImage="/images/hero/slide-1.png"
           onKeepOpen={cancelMegaClose}
         />

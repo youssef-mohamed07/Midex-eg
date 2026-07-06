@@ -16,13 +16,22 @@ export type SolutionGroup = {
   children: SolutionChild[];
 };
 
-export const solutionGroupHighlights: Record<string, string[]> = {
-  systems: [
-    "GMP-aligned system design",
-    "Factory acceptance testing (FAT)",
-    "IQ/OQ documentation packages",
-    "Commissioning and handover support",
-  ],
+export const solutionGroupOrder = [
+  "solutions",
+  "welding",
+  "systems",
+  "installations",
+] as const;
+
+export type SolutionGroupSlug = (typeof solutionGroupOrder)[number];
+
+export function orderSolutionGroups<T extends { slug: string }>(groups: T[]): T[] {
+  return solutionGroupOrder
+    .map((slug) => groups.find((group) => group.slug === slug))
+    .filter((group): group is T => Boolean(group));
+}
+
+export const solutionGroupHighlights: Record<SolutionGroupSlug, string[]> = {
   solutions: [
     "Minimal disruption to production",
     "As-built documentation updates",
@@ -35,6 +44,12 @@ export const solutionGroupHighlights: Record<string, string[]> = {
     "Orbital and manual techniques",
     "Full weld traceability",
   ],
+  systems: [
+    "GMP-aligned system design",
+    "Factory acceptance testing (FAT)",
+    "IQ/OQ documentation packages",
+    "Commissioning and handover support",
+  ],
   installations: [
     "Turnkey site installation",
     "Hygienic slope and drainage design",
@@ -45,17 +60,82 @@ export const solutionGroupHighlights: Record<string, string[]> = {
 
 export const solutionGroups: SolutionGroup[] = [
   {
-    slug: "systems",
-    label: "Systems",
+    slug: "solutions",
+    label: "System Upgrades & Modifications",
+    menuLabel: "Modifications",
     description:
-      "Purified water, WFI, CIP/SIP, soft water, and distribution skids — designed, built, and validated to GMP standards.",
+      "Extending the life and performance of your existing infrastructure.",
+    intro:
+      "Replacing a validated utility system mid-production is rarely practical — yet capacity, performance, and layout requirements change. Midex modifications extend existing PW and WFI infrastructure without invalidating your qualification: controlled change management, updated as-built documentation, and verified performance keep production running while the system evolves with your facility.",
+    image: "/images/services/pickling-passivation.png",
+    children: [
+      {
+        slug: "pw-station-modification",
+        label: "Purified Water Station Modification",
+        excerpt: "Capacity upgrades and reconfiguration of existing PW generation trains.",
+        intro:
+          "When demand outgrows an existing PW train, replacement is costly and disruptive. Midex reconfigures and upgrades generation capacity — adding RO stages, EDI modules, or pretreatment — under controlled change protocols that protect your validated state.",
+        image: "/images/news/news-1725287028.webp",
+      },
+      {
+        slug: "distribution-skids-modification",
+        label: "Distribution Skids Modification",
+        excerpt: "Loop expansion, pump upgrades, and point-of-use modifications.",
+        intro:
+          "New production lines and additional points of use require loop expansion without compromising water quality. Midex modifies distribution skids and loop headers with hygienic tie-ins, hydraulic rebalancing, and updated as-built documentation.",
+        image: "/images/services/roughness-test.png",
+      },
+      {
+        slug: "loop-design-modification",
+        label: "PW / WFI Loop Design Modification",
+        excerpt: "Hydraulic rebalancing and hygienic redesign of validated distribution loops.",
+        intro:
+          "Dead legs, insufficient velocity, and thermal losses compromise loop performance over time. Midex redesigns PW and WFI loops for optimal flow, minimum dead volume, and sanitization compatibility — validated through requalification testing and updated P&IDs.",
+        image: "/images/services/mirror-finish.png",
+      },
+    ],
+  },
+  {
+    slug: "welding",
+    label: "Hygienic Welding Services",
+    menuLabel: "Welding",
+    description:
+      "Certified weld quality for the most demanding sanitary environments.",
+    intro:
+      "Hygienic process piping lives or fails at the weld. Midex provides certified manual and orbital welding with full WPS/PQR qualification, visual and borescope inspection, and complete traceability — meeting ASME BPE standards for pharmaceutical-grade installations.",
+    image: "/images/services/orbital-welding.png",
+    children: [
+      {
+        slug: "manual-welding",
+        label: "Manual Welding",
+        excerpt: "Certified manual welders for hygienic stainless steel process piping.",
+        intro:
+          "Complex geometries and tie-in points require skilled manual welders who understand hygienic standards. Midex certified welders work to qualified WPS procedures with visual and borescope inspection on every critical joint — full traceability from heat number to weld log.",
+        image: "/images/services/welding-docs.png",
+      },
+      {
+        slug: "automatic-orbital-welding",
+        label: "Automatic Orbital Welding",
+        excerpt: "Repeatable orbital welds with full inspection and traceability records.",
+        intro:
+          "Orbital welding delivers the consistency that manual techniques cannot match on straight runs and standard fittings. Midex orbital welding systems produce repeatable autogenous welds with parameter logging, in-process inspection, and complete weld documentation for regulatory review.",
+        image: "/images/services/orbital-welding.png",
+      },
+    ],
+  },
+  {
+    slug: "systems",
+    label: "Process & Water Treatment Systems",
+    menuLabel: "Systems",
+    description:
+      "Complete water treatment and process systems engineered for compliance and reliability.",
     intro:
       "Validated utility systems are the backbone of pharmaceutical and food production. Midex delivers complete PW, WFI, CIP/SIP, and distribution packages — engineered for regulatory compliance, operational reliability, and long-term maintainability from commissioning through handover.",
     image: "/images/services/spray-ball.png",
     children: [
       {
         slug: "soft-water-station",
-        label: "Soft water station",
+        label: "Soft Water Station",
         excerpt: "Reliable softening and pretreatment for downstream purified water generation.",
         intro:
           "Feed water quality determines the life of every downstream purification stage. Midex soft water stations remove hardness and protect RO membranes, resin beds, and distribution equipment from scaling — sized to your consumption profile, integrated with monitoring and bypass logic, and documented as part of your validated water system.",
@@ -63,7 +143,7 @@ export const solutionGroups: SolutionGroup[] = [
       },
       {
         slug: "cleaning-in-place-system",
-        label: "Cleaning in Place system",
+        label: "Cleaning-in-Place System (CIP)",
         excerpt: "Automated CIP skids with validated cycles and spray coverage verification.",
         intro:
           "Manual cleaning introduces variability that GMP facilities cannot accept. Midex CIP skids automate circuit cleaning with validated recipes, flow and temperature control, and spray ball coverage verification — reducing downtime while producing the audit-ready records regulators expect.",
@@ -71,7 +151,7 @@ export const solutionGroups: SolutionGroup[] = [
       },
       {
         slug: "sanitization-in-place-system",
-        label: "Sanitization in place system",
+        label: "Sanitization-in-Place System (SIP)",
         excerpt: "SIP systems for hygienic equipment sterilization with documented cycles.",
         intro:
           "Sterile processing demands repeatable thermal or chemical sanitization without disassembly. Midex SIP systems deliver controlled sterilization cycles with full parameter logging, interlocks, and documentation packages aligned with your validation protocol.",
@@ -96,80 +176,18 @@ export const solutionGroups: SolutionGroup[] = [
     ],
   },
   {
-    slug: "solutions",
-    label: "Solutions",
-    menuLabel: "Modifications",
-    description:
-      "Upgrade and re-engineer existing PW, WFI, and distribution systems without disrupting validated production.",
-    intro:
-      "Replacing a validated utility system mid-production is rarely practical — yet capacity, performance, and layout requirements change. Midex modifications extend existing PW and WFI infrastructure without invalidating your qualification: controlled change management, updated as-built documentation, and verified performance keep production running while the system evolves with your facility.",
-    image: "/images/services/pickling-passivation.png",
-    children: [
-      {
-        slug: "pw-station-modification",
-        label: "Purified water station modification",
-        excerpt: "Capacity upgrades and reconfiguration of existing PW generation trains.",
-        intro:
-          "When demand outgrows an existing PW train, replacement is costly and disruptive. Midex reconfigures and upgrades generation capacity — adding RO stages, EDI modules, or pretreatment — under controlled change protocols that protect your validated state.",
-        image: "/images/news/news-1725287028.webp",
-      },
-      {
-        slug: "distribution-skids-modification",
-        label: "Distribution skids Modification",
-        excerpt: "Loop expansion, pump upgrades, and point-of-use modifications.",
-        intro:
-          "New production lines and additional points of use require loop expansion without compromising water quality. Midex modifies distribution skids and loop headers with hygienic tie-ins, hydraulic rebalancing, and updated as-built documentation.",
-        image: "/images/services/roughness-test.png",
-      },
-      {
-        slug: "loop-design-modification",
-        label: "Loop Design Modification in PW/ WFI Systems",
-        excerpt: "Hydraulic rebalancing and hygienic redesign of validated distribution loops.",
-        intro:
-          "Dead legs, insufficient velocity, and thermal losses compromise loop performance over time. Midex redesigns PW and WFI loops for optimal flow, minimum dead volume, and sanitization compatibility — validated through requalification testing and updated P&IDs.",
-        image: "/images/services/mirror-finish.png",
-      },
-    ],
-  },
-  {
-    slug: "welding",
-    label: "Welding",
-    description:
-      "Manual and automatic orbital welding for hygienic piping with full WPS/PQR documentation and inspection.",
-    intro:
-      "Hygienic process piping lives or fails at the weld. Midex provides certified manual and orbital welding with full WPS/PQR qualification, visual and borescope inspection, and complete traceability — meeting ASME BPE standards for pharmaceutical-grade installations.",
-    image: "/images/services/orbital-welding.png",
-    children: [
-      {
-        slug: "manual-welding",
-        label: "Manual welding",
-        excerpt: "Certified manual welders for hygienic stainless steel process piping.",
-        intro:
-          "Complex geometries and tie-in points require skilled manual welders who understand hygienic standards. Midex certified welders work to qualified WPS procedures with visual and borescope inspection on every critical joint — full traceability from heat number to weld log.",
-        image: "/images/services/welding-docs.png",
-      },
-      {
-        slug: "automatic-orbital-welding",
-        label: "Automatic Orbital welding",
-        excerpt: "Repeatable orbital welds with full inspection and traceability records.",
-        intro:
-          "Orbital welding delivers the consistency that manual techniques cannot match on straight runs and standard fittings. Midex orbital welding systems produce repeatable autogenous welds with parameter logging, in-process inspection, and complete weld documentation for regulatory review.",
-        image: "/images/services/orbital-welding.png",
-      },
-    ],
-  },
-  {
     slug: "installations",
-    label: "Installations",
+    label: "Hygienic Piping Installations",
+    menuLabel: "Installations",
     description:
-      "Turnkey installation of purified loops, preparation lines, sanitary drains, and compressed air networks.",
+      "Sanitary piping networks built to the tightest tolerances.",
     intro:
       "Engineering drawings only deliver value when installed correctly on site. Midex handles turnkey installation — hygienic slopes, support spacing, pressure testing, flushing, and as-built isometrics — so your validated systems perform as designed from day one.",
     image: "/images/services/bore-scoping.png",
     children: [
       {
         slug: "purified-loop-system",
-        label: "Purified loop system",
+        label: "Purified Water Loop System",
         excerpt: "Complete PW/WFI loop installation with supports, slopes, and testing.",
         intro:
           "A purified loop is only as reliable as its installation. Midex installs complete PW and WFI circulation systems with correct slopes, support spacing, expansion accommodation, and hygienic tie-ins — pressure tested, flushed, and handed over with as-built isometrics.",
@@ -177,7 +195,7 @@ export const solutionGroups: SolutionGroup[] = [
       },
       {
         slug: "preparation-pipe-line",
-        label: "Preparation pipe line",
+        label: "Preparation Pipeline",
         excerpt: "Process and preparation line piping for pharmaceutical production areas.",
         intro:
           "Preparation and process lines carry product-contact media that demand hygienic design. Midex installs stainless steel process piping with validated weld records, hygienic valve arrangements, and slope compliance for CIP drainage.",
@@ -185,7 +203,7 @@ export const solutionGroups: SolutionGroup[] = [
       },
       {
         slug: "sanitary-drain-pipeline",
-        label: "Sanitary drain pipeline",
+        label: "Sanitary Drain Pipeline",
         excerpt: "Hygienic floor drains and drainage networks to EHEDG principles.",
         intro:
           "Poor drainage creates contamination risk and cleaning failures. Midex designs and installs sanitary drain networks with correct falls, trap configurations, and cleanable connections — aligned with EHEDG hygienic design principles.",
@@ -193,40 +211,12 @@ export const solutionGroups: SolutionGroup[] = [
       },
       {
         slug: "compressed-air-pipe-line-installation",
-        label: "Compressed air pipe line installation",
+        label: "Compressed Air Pipeline Installation",
         excerpt: "Oil-free compressed air distribution for process and instrument air.",
         intro:
           "Process and instrument air must be delivered clean, dry, and at stable pressure. Midex installs oil-free compressed air distribution networks with hygienic materials, proper filtration points, and slope for condensate removal.",
         image: "/images/services/mechanical-polishing.png",
       },
-    ],
-  },
-];
-
-export type Solution = {
-  slug: string;
-  title: string;
-  group: string;
-  excerpt: string;
-  intro: string;
-  image?: string;
-  highlights?: string[];
-};
-
-export const solutions: Solution[] = [
-  {
-    slug: "integrated-cip-system",
-    title: "Integrated CIP System",
-    group: "systems",
-    excerpt: "Validated cleaning-in-place for hygienic production lines.",
-    intro:
-      "Turnkey CIP systems designed for pharmaceutical and food-grade facilities with full documentation and commissioning support.",
-    image: "/images/services/pickling-passivation.png",
-    highlights: [
-      "Multi-circuit CIP skids",
-      "Spray ball coverage testing",
-      "Validated cleaning recipes",
-      "Full IQ/OQ documentation",
     ],
   },
 ];
@@ -249,10 +239,19 @@ export function getAllSolutionChildParams() {
   );
 }
 
-export function getSolution(slug: string) {
-  return solutions.find((s) => s.slug === slug);
-}
+/** Maps legacy `/solutions/[slug]` URLs to the unified group/child routes. */
+export function resolveLegacySolutionPath(slug: string): string | null {
+  const group = getSolutionGroup(slug);
+  if (group) {
+    return `/solutions/group/${group.slug}`;
+  }
 
-export function getSolutionsByGroup(groupSlug: string) {
-  return solutions.filter((s) => s.group === groupSlug);
+  for (const item of solutionGroups) {
+    const child = item.children.find((entry) => entry.slug === slug);
+    if (child) {
+      return `/solutions/group/${item.slug}/${child.slug}`;
+    }
+  }
+
+  return null;
 }

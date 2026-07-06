@@ -12,6 +12,8 @@ import {
 } from "@/content/i18n";
 import { type Locale } from "@/i18n/routing";
 import { getQuoteUrl } from "@/content/products";
+import { SolutionStepsSection } from "@/components/solutions/SolutionStepsSection";
+import { SolutionTimelineSection } from "@/components/solutions/SolutionTimelineSection";
 
 type Props = { slug: string; childSlug: string };
 
@@ -22,9 +24,8 @@ export async function SolutionChildPageContent({ slug, childSlug }: Props) {
   if (!group || !child) notFound();
 
   const t = await getTranslations("solutions");
-  const tn = await getTranslations("nav");
   const tc = await getTranslations("products");
-  const groupName = getGroupLabel(group, tn);
+  const groupName = getGroupLabel(group);
   const highlights = getLocalizedSolutionGroupHighlights(group.slug, locale);
   const related = group.children.filter((item) => item.slug !== child.slug);
 
@@ -141,6 +142,10 @@ export async function SolutionChildPageContent({ slug, childSlug }: Props) {
           </aside>
         </div>
       </section>
+
+      <SolutionStepsSection />
+
+      <SolutionTimelineSection />
     </>
   );
 }

@@ -9,18 +9,36 @@ const BEFORE_AFTER_MEDIA = {
   afterPoster: "/images/services/mirror-finish.png",
 } as const;
 
+const DURING_KEYS = [
+  "processDuring1",
+  "processDuring2",
+  "processDuring3",
+  "processDuring4",
+  "processDuring5",
+] as const;
+
+const AFTER_KEYS = [
+  "processAfter1",
+  "processAfter2",
+  "processAfter3",
+  "processAfter4",
+  "processAfter5",
+] as const;
+
 export async function BeforeAfterSection() {
   const t = await getTranslations("home");
 
+  const duringKeywords = DURING_KEYS.map((key) => t(key));
+  const afterKeywords = AFTER_KEYS.map((key) => t(key));
+
   return (
-    <section className="mx-section">
+    <section className="mx-section overflow-hidden">
       <div className="mx-container">
         <RevealOnScroll>
           <div className="mx-auto max-w-3xl text-center">
-            <span className="mx-badge mx-auto mb-5 border-midex-line bg-midex-surface text-midex-navy">
-              {t("beforeAfterBadge")}
-            </span>
-            <h2 className="mx-section-title">{t("beforeAfterTitle")}</h2>
+            <span className="mx-eyebrow mx-eyebrow--center">Midex</span>
+            <h2 className="mx-section-title mt-4">{t("processPerformanceTitle")}</h2>
+            <p className="mx-section-subtitle mx-auto mt-4">{t("beforeAfterTitle")}</p>
           </div>
         </RevealOnScroll>
 
@@ -33,6 +51,8 @@ export async function BeforeAfterSection() {
               afterVideo={BEFORE_AFTER_MEDIA.afterVideo}
               beforePoster={BEFORE_AFTER_MEDIA.beforePoster}
               afterPoster={BEFORE_AFTER_MEDIA.afterPoster}
+              duringKeywords={duringKeywords}
+              afterKeywords={afterKeywords}
             />
           </div>
         </RevealOnScroll>

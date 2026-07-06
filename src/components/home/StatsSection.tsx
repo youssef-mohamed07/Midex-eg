@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 type StatItem = {
   value: number;
   label: string;
+  suffix?: string;
 };
 
 function easeOutQuart(progress: number) {
@@ -14,10 +15,12 @@ function easeOutQuart(progress: number) {
 function StatCounter({
   value,
   active,
+  suffix = "+",
   duration = 2200,
 }: {
   value: number;
   active: boolean;
+  suffix?: string;
   duration?: number;
 }) {
   const [count, setCount] = useState(0);
@@ -43,7 +46,8 @@ function StatCounter({
 
   return (
     <span className="tabular-nums">
-      {count.toLocaleString()}+
+      {count.toLocaleString()}
+      {suffix}
     </span>
   );
 }
@@ -98,7 +102,12 @@ export function StatsSection({
             >
               <p className="font-display text-3xl font-extrabold tracking-tight text-midex-navy sm:text-5xl lg:text-6xl">
                 <span className="bg-gradient-to-br from-midex-blue to-midex-navy bg-clip-text text-transparent">
-                  <StatCounter value={stat.value} active={active} duration={2000 + index * 150} />
+                  <StatCounter
+                    value={stat.value}
+                    active={active}
+                    suffix={stat.suffix}
+                    duration={2000 + index * 150}
+                  />
                 </span>
               </p>
               <p className="mt-3 text-sm font-semibold uppercase tracking-[0.14em] text-midex-gray/65">

@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { blogPosts } from "@/content/site";
 import { products } from "@/content/products";
-import { solutionGroups, solutions } from "@/content/solutions";
+import { orderSolutionGroups, solutionGroups } from "@/content/solutions";
 import { routing } from "@/i18n/routing";
 import { absoluteUrl } from "@/lib/seo/paths";
 
@@ -42,15 +42,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       urls.push(entry(`/products/${product.slug}`, locale, 0.7));
     }
 
-    for (const group of solutionGroups) {
+    for (const group of orderSolutionGroups(solutionGroups)) {
       urls.push(entry(`/solutions/group/${group.slug}`, locale, 0.75));
       for (const child of group.children) {
         urls.push(entry(`/solutions/group/${group.slug}/${child.slug}`, locale, 0.65));
       }
-    }
-
-    for (const solution of solutions) {
-      urls.push(entry(`/solutions/${solution.slug}`, locale, 0.75));
     }
 
     for (const post of blogPosts) {

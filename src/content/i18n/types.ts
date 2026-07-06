@@ -56,16 +56,10 @@ export type SolutionChildTranslation = {
 };
 
 export type SolutionGroupTranslation = {
+  label?: string;
   description: string;
   intro?: string;
   children: Record<string, SolutionChildTranslation>;
-};
-
-export type SolutionTranslation = {
-  title: string;
-  excerpt: string;
-  intro: string;
-  highlights: string[];
 };
 
 export type LocaleContent = {
@@ -80,5 +74,4 @@ export type LocaleContent = {
   blogPosts: Record<string, BlogPostTranslation>;
   solutionGroups: Record<string, SolutionGroupTranslation>;
   solutionGroupHighlights: Record<string, string[]>;
-  solutions: Record<string, SolutionTranslation>;
 };

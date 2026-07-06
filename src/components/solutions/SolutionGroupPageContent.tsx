@@ -9,6 +9,8 @@ import {
   SolutionServiceCard,
 } from "@/components/solutions/SolutionCards";
 import { SolutionsCta } from "@/components/solutions/SolutionsCta";
+import { SolutionStepsSection } from "@/components/solutions/SolutionStepsSection";
+import { SolutionTimelineSection } from "@/components/solutions/SolutionTimelineSection";
 import { getGroupLabel } from "@/components/solutions/solution-labels";
 import {
   getLocalizedSolutionGroup,
@@ -26,9 +28,8 @@ export async function SolutionGroupPageContent({ slug }: Props) {
   if (!group) notFound();
 
   const t = await getTranslations("solutions");
-  const tn = await getTranslations("nav");
   const tc = await getTranslations("products");
-  const label = getGroupLabel(group, tn);
+  const label = getGroupLabel(group);
   const highlights = getLocalizedSolutionGroupHighlights(group.slug, locale);
   const otherGroups = getLocalizedSolutionGroups(locale).filter(
     (item) => item.slug !== group.slug,
@@ -156,7 +157,7 @@ export async function SolutionGroupPageContent({ slug }: Props) {
                   key={item.slug}
                   href={`/solutions/group/${item.slug}`}
                   image={item.image}
-                  label={getGroupLabel(item, tn)}
+                  label={getGroupLabel(item)}
                   description={item.description}
                   meta={`${item.children.length} ${t("services")}`}
                   index={index}
@@ -166,6 +167,10 @@ export async function SolutionGroupPageContent({ slug }: Props) {
           </div>
         </section>
       )}
+
+      <SolutionStepsSection />
+
+      <SolutionTimelineSection />
 
       <SolutionsCta quoteSubject={label} />
     </>

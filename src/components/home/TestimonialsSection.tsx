@@ -4,14 +4,18 @@ import { TestimonialsSlider } from "@/components/home/TestimonialsSlider";
 
 export async function TestimonialsSection({
   title,
+  subtitle,
   locale,
 }: {
   title: string;
+  subtitle: string;
   locale: Locale;
 }) {
   const testimonials = getLocalizedTestimonials(locale);
 
   if (testimonials.length === 0) return null;
 
-  return <TestimonialsSlider title={title} testimonials={testimonials} />;
+  return (
+    <TestimonialsSlider title={title} subtitle={subtitle} testimonials={testimonials} />
+  );
 }

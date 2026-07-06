@@ -89,14 +89,10 @@ export function EventsSection() {
   return (
     <section className="mx-section overflow-hidden">
       <div className="mx-container">
-        <div className="mb-6 flex flex-col gap-3 sm:mb-8 sm:gap-4 lg:mb-10 lg:flex-row lg:items-end lg:justify-between">
-          <div className="max-w-2xl">
-            <span className="mx-eyebrow">Midex</span>
-            <h2 className="mx-section-title mt-4">{t("ourEvents")}</h2>
-          </div>
-          <p className="max-w-md text-base leading-relaxed text-midex-gray/75 lg:text-end">
-            {t("eventsSubtitle")}
-          </p>
+        <div className="mx-auto mb-6 max-w-3xl text-center sm:mb-8 lg:mb-10">
+          <span className="mx-eyebrow mx-eyebrow--center">Midex</span>
+          <h2 className="mx-section-title mt-4">{t("ourEvents")}</h2>
+          <p className="mx-section-subtitle mx-auto mt-4">{t("eventsSubtitle")}</p>
         </div>
       </div>
 

@@ -1,30 +1,18 @@
 import Image from "next/image";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { getLocalizedSolutionGroupNav } from "@/content/i18n";
 import { siteContact } from "@/content/site";
+import { type Locale } from "@/i18n/routing";
 
-const serviceLinks = [
-  { href: "/solutions", key: "allSolutions" as const },
-  { href: "/products", key: "products" as const },
-  { href: "/solutions/group/systems", key: "systems" as const },
-  { href: "/solutions/group/welding", key: "welding" as const },
-  { href: "/solutions/group/installations", key: "installations" as const },
-] as const;
-
-const companyLinks = [
-  { href: "/about-us", key: "aboutUs" as const },
-  { href: "/contact", key: "contactUs" as const },
-  { href: "/blog", key: "blog" as const },
-] as const;
+type FooterLink = { href: string; label: string };
 
 function FooterNav({
   title,
   links,
-  nav,
 }: {
   title: string;
-  links: readonly { href: string; key: (typeof serviceLinks)[number]["key"] | (typeof companyLinks)[number]["key"] }[];
-  nav: (key: string) => string;
+  links: readonly FooterLink[];
 }) {
   return (
     <div>
@@ -38,7 +26,7 @@ function FooterNav({
               href={item.href}
               className="text-sm text-white/65 transition-colors hover:text-white"
             >
-              {nav(item.key)}
+              {item.label}
             </Link>
           </li>
         ))}
@@ -48,8 +36,25 @@ function FooterNav({
 }
 
 export async function Footer() {
+  const locale = (await getLocale()) as Locale;
   const t = await getTranslations("footer");
   const nav = await getTranslations("nav");
+  const solutionGroups = getLocalizedSolutionGroupNav(locale);
+
+  const serviceLinks: FooterLink[] = [
+    { href: "/solutions", label: nav("allSolutions") },
+    { href: "/products", label: nav("products") },
+    ...solutionGroups.map((group) => ({
+      href: group.href,
+      label: group.label,
+    })),
+  ];
+
+  const companyLinks: FooterLink[] = [
+    { href: "/about-us", label: nav("aboutUs") },
+    { href: "/contact", label: nav("contactUs") },
+    { href: "/blog", label: nav("blog") },
+  ];
 
   return (
     <footer className="relative overflow-x-hidden bg-midex-navy-dark text-white">
@@ -75,8 +80,8 @@ export async function Footer() {
             </p>
           </div>
 
-          <FooterNav title={t("services")} links={serviceLinks} nav={nav} />
-          <FooterNav title={t("usefulLinks")} links={companyLinks} nav={nav} />
+          <FooterNav title={t("services")} links={serviceLinks} />
+          <FooterNav title={t("usefulLinks")} links={companyLinks} />
 
           <div>
             <h3 className="text-[11px] font-semibold uppercase tracking-widest text-midex-mint/90">

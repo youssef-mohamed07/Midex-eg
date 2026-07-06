@@ -54,6 +54,7 @@ export async function ProductsPageContent({ category = null }: Props) {
         items={stats.map((stat) => ({
           value: stat.value,
           label: th(stat.labelKey),
+          suffix: "suffix" in stat ? stat.suffix : undefined,
         }))}
       />
 

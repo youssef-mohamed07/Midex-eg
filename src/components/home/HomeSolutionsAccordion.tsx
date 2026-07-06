@@ -12,6 +12,7 @@ export type HomeSolutionCard = {
   href: string;
   tags: string[];
   serviceCount: number;
+  items?: string[];
 };
 
 type Props = {
@@ -163,6 +164,19 @@ export function HomeSolutionsAccordion({ cards, exploreLabel, servicesLabel }: P
               <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-white/80">
                 {card.description}
               </p>
+              {card.items && card.items.length > 0 && (
+                <ul className="mt-3 space-y-1.5 border-t border-white/10 pt-3">
+                  {card.items.map((item) => (
+                    <li
+                      key={item}
+                      className="flex items-start gap-2 text-[13px] leading-snug text-white/75 sm:text-sm"
+                    >
+                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-midex-mint" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              )}
               <Link
                 href={card.href}
                 onClick={(event) => event.stopPropagation()}

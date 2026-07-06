@@ -7,7 +7,7 @@ export async function HomeQuoteFormSection() {
   const t = await getTranslations("home");
 
   return (
-    <section className="mx-section bg-midex-surface/35">
+    <section className="mx-section">
       <div className="mx-container">
         <RevealOnScroll>
           <div className="mb-8 max-w-2xl lg:mb-10">

@@ -132,43 +132,44 @@ export const productCategories: Record<
   { label: string; description: string }
 > = {
   "piping-and-fitting": {
-    label: "Piping and Fitting",
+    label: "Piping and Fittings",
     description:
-      "Stainless steel piping, fittings, and hygienic connections for process lines.",
+      "Hygienic-grade pipes and fittings engineered for sanitary process lines.",
   },
   valves: {
     label: "Valves",
     description:
-      "Sanitary valves for flow control in pharmaceutical and food-grade systems.",
+      "Precision valves built for reliable flow control in critical systems.",
   },
   instruments: {
     label: "Instruments",
     description:
-      "Process instrumentation for monitoring pressure, flow, and quality.",
+      "Measurement and monitoring instruments for accurate process control.",
   },
   pumps: {
     label: "Pumps",
     description:
-      "Centrifugal and positive-displacement pumps for hygienic applications.",
+      "Hygienic pumps engineered for consistent, contamination-free flow.",
   },
   "uv-units": {
     label: "UV Units",
-    description: "UV sterilization units for purified water and WFI systems.",
+    description:
+      "UV disinfection units for microbial control in purified water systems.",
   },
   filters: {
     label: "Filters",
     description:
-      "Filtration housings and cartridges for process and utility streams.",
+      "Filtration solutions that protect product purity at every stage.",
   },
   "stainless-steel-tanks": {
     label: "Stainless Steel Tanks",
     description:
-      "Jacketed and storage tanks engineered for validated production.",
+      "Sanitary storage and process tanks built to hygienic standards.",
   },
   "hygienic-drains": {
-    label: "Hygienic Drain Works",
+    label: "Hygienic Drains",
     description:
-      "Floor drains and drainage systems meeting hygienic design standards.",
+      "Sanitary drainage components designed for easy cleaning and compliance.",
   },
 };
 

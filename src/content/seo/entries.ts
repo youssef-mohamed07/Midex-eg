@@ -169,24 +169,6 @@ export const seoEntries: SeoEntry[] = [
     structuredData: { type: "CollectionPage" },
   }),
 
-  entry("solution", "en", {
-    title: "{title} | Midex Solutions",
-    description: "{description} Turnkey engineering with full documentation and commissioning.",
-    openGraph: { type: "website", image: "{image}" },
-    structuredData: { type: "Service" },
-  }),
-  entry("solution", "ar", {
-    title: "{title} | حلول ميدكس",
-    description: "{description} هندسة متكاملة مع توثيق وتشغيل كامل.",
-    openGraph: { type: "website", image: "{image}" },
-    structuredData: { type: "Service" },
-  }),
-  entry("solution", "de", {
-    title: "{title} | Midex Lösungen",
-    description: "{description} Turnkey-Engineering mit vollständiger Dokumentation und Inbetriebnahme.",
-    openGraph: { type: "website", image: "{image}" },
-    structuredData: { type: "Service" },
-  }),
 
   entry("solution-group", "en", {
     title: "{title} | Midex Solution Groups",

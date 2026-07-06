@@ -72,6 +72,11 @@
   to { transform: translateX(0); }
 }
 
+@keyframes marquee-before-after {
+  from { transform: translateX(-25%); }
+  to { transform: translateX(0); }
+}
+
 @keyframes hero-progress {
   from { width: 0%; }
   to { width: 100%; }
@@ -341,6 +346,10 @@
     animation: marquee-reverse 35s linear infinite;
   }
 
+  .mx-marquee-track--before-after {
+    animation: marquee-before-after 12s linear infinite;
+  }
+
   .mx-marquee-track--partners {
     animation: marquee 40s linear infinite;
   }
@@ -401,7 +410,8 @@
   .mx-marquee-fade:hover .mx-marquee-track--reverse,
   .mx-marquee-fade:hover .mx-marquee-track--partners,
   .mx-marquee-fade:hover .mx-marquee-track--events,
-  .mx-marquee-fade:hover .mx-marquee-track--testimonials {
+  .mx-marquee-fade:hover .mx-marquee-track--testimonials,
+  .mx-marquee-fade:hover .mx-marquee-track--before-after {
     animation-play-state: paused;
   }
 
@@ -410,7 +420,8 @@
     .mx-marquee-track--reverse,
     .mx-marquee-track--partners,
     .mx-marquee-track--events,
-    .mx-marquee-track--testimonials {
+    .mx-marquee-track--testimonials,
+    .mx-marquee-track--before-after {
       animation: none;
     }
   }
@@ -664,6 +675,74 @@
     @apply gap-6;
   }
 
+  .midex-form-step-header {
+    @apply mb-6 text-center sm:mb-8;
+  }
+
+  .midex-form-step-header__title {
+    @apply font-display text-xl font-bold leading-snug text-midex-navy sm:text-2xl;
+  }
+
+  .midex-form-step-header__hint {
+    @apply mx-auto mt-2 max-w-md text-sm leading-relaxed text-midex-gray/60;
+  }
+
+  .midex-form-option-grid {
+    @apply grid gap-3 sm:grid-cols-2;
+  }
+
+  .midex-form-option {
+    @apply flex cursor-pointer items-center gap-3 rounded-xl border border-midex-line bg-white px-4 py-3.5 text-start transition-colors duration-200 hover:border-midex-blue/40 hover:bg-midex-surface/40;
+  }
+
+  .midex-form-option.is-selected {
+    @apply border-midex-blue bg-midex-surface/60;
+  }
+
+  .midex-form-option__radio {
+    @apply relative h-5 w-5 shrink-0 rounded-full border-2 border-midex-line bg-white transition-colors duration-200;
+  }
+
+  .midex-form-option.is-selected .midex-form-option__radio {
+    @apply border-midex-blue bg-white;
+  }
+
+  .midex-form-option.is-selected .midex-form-option__radio::after {
+    content: "";
+    @apply absolute inset-[3px] rounded-full bg-midex-blue;
+  }
+
+  .midex-form-option__label {
+    @apply text-sm font-medium leading-snug text-midex-navy;
+  }
+
+  .midex-form-panel-enter {
+    animation: form-panel-enter 0.35s var(--ease-premium) both;
+  }
+
+  .midex-form-success {
+    @apply flex flex-col items-center px-4 py-8 text-center sm:py-10;
+  }
+
+  .midex-form-success__icon {
+    @apply mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-midex-mint to-midex-blue text-white shadow-lg shadow-midex-blue/25;
+  }
+
+  .midex-form-success__message {
+    @apply max-w-md text-base leading-relaxed text-midex-navy sm:text-lg;
+  }
+
+}
+
+@keyframes form-panel-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .midex-header {

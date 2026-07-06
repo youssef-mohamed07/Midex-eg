@@ -5,41 +5,42 @@ export const contentDe: LocaleContent = {
     "piping-and-fitting": {
       label: "Rohrleitungen & Armaturen",
       description:
-        "Edelstahlrohrleitungen, Fittings und hygienische Verbindungen für Prozessleitungen.",
+        "Hygienische Rohre und Fittings für sanitäre Prozessleitungen.",
     },
     valves: {
       label: "Ventile",
       description:
-        "Sanitäre Ventile zur Durchflussregelung in pharmazeutischen und lebensmittelgerechten Systemen.",
+        "Präzisionsventile für zuverlässige Durchflussregelung in kritischen Systemen.",
     },
     instruments: {
       label: "Messtechnik",
       description:
-        "Prozessinstrumentierung zur Überwachung von Druck, Durchfluss und Qualität.",
+        "Mess- und Überwachungsinstrumente für präzise Prozesssteuerung.",
     },
     pumps: {
       label: "Pumpen",
       description:
-        "Kreiselpumpen und Verdrängerpumpen für hygienische Anwendungen.",
+        "Hygienische Pumpen für gleichmäßigen, kontaminationsfreien Durchfluss.",
     },
     "uv-units": {
       label: "UV-Einheiten",
-      description: "UV-Sterilisationseinheiten für Reinwasser- und WFI-Systeme.",
+      description:
+        "UV-Desinfektionseinheiten zur Mikrobenkontrolle in Reinwassersystemen.",
     },
     filters: {
       label: "Filter",
       description:
-        "Filtergehäuse und -kartuschen für Prozess- und Versorgungsströme.",
+        "Filtrationslösungen, die Produktreinheit in jeder Phase schützen.",
     },
     "stainless-steel-tanks": {
       label: "Edelstahlbehälter",
       description:
-        "Mantel- und Speicherbehälter für validierte Produktion.",
+        "Sanitäre Speicher- und Prozessbehälter nach hygienischen Standards.",
     },
     "hygienic-drains": {
-      label: "Hygienische Entwässerung",
+      label: "Hygienische Abflüsse",
       description:
-        "Hygienische Bodenabläufe und Entwässerungsnetze nach EHEDG-Prinzipien.",
+        "Sanitäre Entwässerungskomponenten für einfache Reinigung und Compliance.",
     },
   },
   products: {
@@ -298,20 +299,57 @@ export const contentDe: LocaleContent = {
     },
   },
   solutionGroups: {
-    systems: {
+    solutions: {
+      label: "System-Upgrades & Modifikationen",
       description:
-        "Reinwasser, WFI, CIP/SIP, Weichwasser und Verteilerskids — geplant, gebaut und nach GMP validiert.",
+        "Verlängerung der Lebensdauer und Steigerung der Leistung Ihrer bestehenden Infrastruktur.",
+      intro:
+        "Einen validierten Versorgungssystem mitten in der Produktion zu ersetzen, ist selten praktikabel — dennoch ändern sich Kapazitäts-, Leistungs- und Layout-Anforderungen. Midex-Modifikationen erweitern bestehende PW- und WFI-Infrastruktur, ohne Ihre Qualifizierung zu gefährden: kontrolliertes Change Management, aktualisierte As-Built-Dokumentation und verifizierte Leistung halten die Produktion am Laufen, während sich das System weiterentwickelt.",
+      children: {
+        "pw-station-modification": {
+          label: "Modifikation der Reinwasserstation",
+          excerpt: "Kapazitätserweiterung und Rekonfiguration bestehender PW-Generierungstrains.",
+        },
+        "distribution-skids-modification": {
+          label: "Modifikation von Verteilerskids",
+          excerpt: "Schleifenerweiterung, Pumpen-Upgrades und Entnahmestellen-Modifikationen.",
+        },
+        "loop-design-modification": {
+          label: "Modifikation des PW-/WFI-Schleifendesigns",
+          excerpt: "Hydraulisches Rebalancing und hygienisches Redesign validierter Verteilschleifen.",
+        },
+      },
+    },
+    welding: {
+      label: "Hygienische Schweißdienstleistungen",
+      description:
+        "Zertifizierte Schweißqualität für die anspruchsvollsten hygienischen Umgebungen.",
+      children: {
+        "manual-welding": {
+          label: "Manuelles Schweißen",
+          excerpt: "Zertifizierte Schweißer für hygienische Edelstahl-Prozessleitungen.",
+        },
+        "automatic-orbital-welding": {
+          label: "Automatisches Orbital-Schweißen",
+          excerpt: "Reproduzierbare Orbital-Schweißnähte mit vollständiger Inspektion und Rückverfolgbarkeit.",
+        },
+      },
+    },
+    systems: {
+      label: "Prozess- & Wasseraufbereitungssysteme",
+      description:
+        "Komplette Wasseraufbereitungs- und Prozesssysteme für Compliance und Zuverlässigkeit.",
       children: {
         "soft-water-station": {
           label: "Weichwasserstation",
           excerpt: "Zuverlässige Enthärtung und Vorbehandlung für Reinwassergenerierung.",
         },
         "cleaning-in-place-system": {
-          label: "Cleaning-in-Place-System",
+          label: "Cleaning-in-Place-System (CIP)",
           excerpt: "Automatisierte CIP-Skids mit validierten Zyklen und Sprühabdeckungsprüfung.",
         },
         "sanitization-in-place-system": {
-          label: "Sterilisation-in-Place-System",
+          label: "Sanitization-in-Place-System (SIP)",
           excerpt: "SIP-Systeme für hygienische Ausrüstungssterilisation mit dokumentierten Zyklen.",
         },
         "purified-water-station": {
@@ -324,43 +362,9 @@ export const contentDe: LocaleContent = {
         },
       },
     },
-    solutions: {
-      description:
-        "Upgrade und Re-Engineering bestehender PW-, WFI- und Verteilungssysteme ohne Störung validierter Produktion.",
-      intro:
-        "Einen validierten Versorgungssystem mitten in der Produktion zu ersetzen, ist selten praktikabel — dennoch ändern sich Kapazitäts-, Leistungs- und Layout-Anforderungen. Midex-Modifikationen erweitern bestehende PW- und WFI-Infrastruktur, ohne Ihre Qualifizierung zu gefährden: kontrolliertes Change Management, aktualisierte As-Built-Dokumentation und verifizierte Leistung halten die Produktion am Laufen, während sich das System weiterentwickelt.",
-      children: {
-        "pw-station-modification": {
-          label: "Reinwasserstations-Modifikation",
-          excerpt: "Kapazitätserweiterung und Rekonfiguration bestehender PW-Generierungstrains.",
-        },
-        "distribution-skids-modification": {
-          label: "Verteilerskid-Modifikation",
-          excerpt: "Schleifenerweiterung, Pumpen-Upgrades und Entnahmestellen-Modifikationen.",
-        },
-        "loop-design-modification": {
-          label: "Schleifendesign-Modifikation in PW/WFI-Systemen",
-          excerpt: "Hydraulisches Rebalancing und hygienisches Redesign validierter Verteilschleifen.",
-        },
-      },
-    },
-    welding: {
-      description:
-        "Manuelles und automatisches Orbital-Schweißen für hygienische Rohrleitungen mit vollständiger WPS/PQR-Dokumentation und Inspektion.",
-      children: {
-        "manual-welding": {
-          label: "Manuelles Schweißen",
-          excerpt: "Zertifizierte Schweißer für hygienische Edelstahl-Prozessleitungen.",
-        },
-        "automatic-orbital-welding": {
-          label: "Automatisches Orbital-Schweißen",
-          excerpt: "Reproduzierbare Orbital-Schweißnähte mit vollständiger Inspektion und Rückverfolgbarkeit.",
-        },
-      },
-    },
     installations: {
-      description:
-        "Turnkey-Installation von Reinwasserschleifen, Aufbereitungsleitungen, sanitären Abläufen und Druckluftnetzen.",
+      label: "Hygienische Rohrleitungsinstallationen",
+      description: "Sanitäre Rohrnetze mit engsten Toleranzen.",
       children: {
         "purified-loop-system": {
           label: "Reinwasserschleifensystem",
@@ -406,19 +410,5 @@ export const contentDe: LocaleContent = {
       "Druckprüfung und Spülung",
       "As-built-Isometriezeichnungen",
     ],
-  },
-  solutions: {
-    "integrated-cip-system": {
-      title: "Integriertes CIP-System",
-      excerpt: "Validiertes Cleaning-in-Place für hygienische Produktionslinien.",
-      intro:
-        "Turnkey-CIP-Systeme für pharmazeutische und lebensmittelgerechte Anlagen mit vollständiger Dokumentation und Inbetriebnahmeunterstützung.",
-      highlights: [
-        "Multi-Kreis-CIP-Skids",
-        "Sprühkugel-Abdeckungstests",
-        "Validierte Reinigungsrezepte",
-        "Vollständige IQ/OQ-Dokumentation",
-      ],
-    },
   },
 };

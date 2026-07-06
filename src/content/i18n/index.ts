@@ -8,11 +8,14 @@ import {
 import {
   solutionGroups as baseSolutionGroups,
   solutionGroupHighlights as baseSolutionGroupHighlights,
-  solutions as baseSolutions,
-  type Solution,
+  orderSolutionGroups,
   type SolutionChild,
   type SolutionGroup,
 } from "@/content/solutions";
+import {
+  buildSolutionGroupCards,
+  buildSolutionGroupNav,
+} from "@/components/solutions/solution-group-cards";
 import {
   services as baseServices,
   newsItems as baseNewsItems,
@@ -183,10 +186,11 @@ function localizeSolutionChild(
 
 export function getLocalizedSolutionGroups(locale: Locale): SolutionGroup[] {
   const content = getContent(locale);
-  return baseSolutionGroups.map((group) => {
+  const groups = baseSolutionGroups.map((group) => {
     const translated = content?.solutionGroups[group.slug];
     return {
       ...group,
+      label: translated?.label ?? group.label,
       description: translated?.description ?? group.description,
       intro: translated?.intro ?? group.intro,
       children: group.children.map((child) =>
@@ -194,6 +198,8 @@ export function getLocalizedSolutionGroups(locale: Locale): SolutionGroup[] {
       ),
     };
   });
+
+  return orderSolutionGroups(groups);
 }
 
 export function getLocalizedSolutionGroup(slug: string, locale: Locale) {
@@ -211,23 +217,18 @@ export function getLocalizedSolutionChild(
 
 export function getLocalizedSolutionGroupHighlights(groupSlug: string, locale: Locale) {
   const content = getContent(locale);
-  return content?.solutionGroupHighlights[groupSlug] ?? baseSolutionGroupHighlights[groupSlug] ?? [];
+  return content?.solutionGroupHighlights[groupSlug] ?? baseSolutionGroupHighlights[groupSlug as keyof typeof baseSolutionGroupHighlights] ?? [];
 }
 
-export function getLocalizedSolutions(locale: Locale): Solution[] {
-  const content = getContent(locale);
-  return baseSolutions.map((solution) => {
-    const translated = content?.solutions[solution.slug];
-    return {
-      ...solution,
-      title: translated?.title ?? solution.title,
-      excerpt: translated?.excerpt ?? solution.excerpt,
-      intro: translated?.intro ?? solution.intro,
-      highlights: translated?.highlights ?? solution.highlights,
-    };
-  });
+export function getLocalizedSolutionGroupCards(locale: Locale) {
+  const groups = getLocalizedSolutionGroups(locale);
+  const highlightsByGroup = Object.fromEntries(
+    groups.map((group) => [group.slug, getLocalizedSolutionGroupHighlights(group.slug, locale)]),
+  );
+
+  return buildSolutionGroupCards(groups, highlightsByGroup);
 }
 
-export function getLocalizedSolution(slug: string, locale: Locale) {
-  return getLocalizedSolutions(locale).find((solution) => solution.slug === slug);
+export function getLocalizedSolutionGroupNav(locale: Locale) {
+  return buildSolutionGroupNav(getLocalizedSolutionGroups(locale));
 }

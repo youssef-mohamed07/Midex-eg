@@ -1,33 +1,3 @@
-export const heroSlides = [
-  {
-    image: "/images/hero/slide-1.png",
-    titleKey: "slide1Title",
-    textKey: "slide1Text",
-    btn1Key: "aboutUs",
-    btn1Href: "/about-us",
-    btn2Key: "ourServices",
-    btn2Href: "/products",
-  },
-  {
-    image: "/images/hero/slide-2.png",
-    titleKey: "slide2Title",
-    textKey: "slide2Text",
-    btn1Key: "aboutUs",
-    btn1Href: "/about-us",
-    btn2Key: "ourServices",
-    btn2Href: "/solutions/group/systems",
-  },
-  {
-    image: "/images/hero/slide-3.png",
-    titleKey: "slide3Title",
-    textKey: "slide3Text",
-    btn1Key: "contactUs",
-    btn1Href: "/contact",
-    btn2Key: "viewProducts",
-    btn2Href: "/products",
-  },
-] as const;
-
 export const heroCollageImages = {
   left: [
     { src: "/images/events/event-1755506209.jpg", className: "ms-8 h-32 w-24 sm:h-36 sm:w-28" },
@@ -116,11 +86,11 @@ export const certificates = [
 ];
 
 export const stats = [
-  { value: 465, labelKey: "statProjects" },
-  { value: 255, labelKey: "statClients" },
-  { value: 363, labelKey: "statEngineers" },
-  { value: 122, labelKey: "statYears" },
-];
+  { value: 465, labelKey: "statClients" },
+  { value: 15, labelKey: "statYearsExcellence" },
+  { value: 363, labelKey: "statProjects" },
+  { value: 100, labelKey: "statCompliance", suffix: "%" },
+] as const;
 
 export const testimonials = [
   {

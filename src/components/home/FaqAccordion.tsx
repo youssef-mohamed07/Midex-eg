@@ -97,7 +97,7 @@ export function FaqAccordion({ items, contactLabel, contactHref = "/contact" }: 
           className="group inline-flex items-center gap-2 text-sm font-semibold text-midex-blue no-underline transition-colors hover:text-midex-navy"
         >
           {contactLabel}
-          <span className="mx-arrow transition-transform duration-300 group-hover:translate-x-0.5">
+          <span className="mx-arrow" aria-hidden>
             →
           </span>
         </Link>

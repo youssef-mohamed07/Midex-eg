@@ -10,7 +10,8 @@
     "lint": "eslint",
     "sync:images": "bash scripts/sync-images.sh",
     "seed:sanity": "tsx scripts/seed-sanity.ts",
-    "patch:page-sections": "tsx scripts/patch-page-sections.ts"
+    "patch:page-sections": "tsx scripts/patch-page-sections.ts",
+    "patch:testimonial-names": "tsx scripts/patch-testimonial-names.ts"
   },
   "dependencies": {
     "@sanity/image-url": "^2.1.1",

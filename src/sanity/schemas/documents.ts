@@ -562,7 +562,7 @@ export const testimonial = defineType({
   title: "Testimonial",
   type: "document",
   fields: [
-    defineField({ name: "name", title: "Name", type: "string", validation: required }),
+    defineField({ name: "name", title: "Name", type: "localeString", validation: required }),
     defineField({ name: "role", title: "Role", type: "localeString" }),
     defineField({ name: "quote", title: "Quote", type: "localeText" }),
     defineField({ name: "image", title: "Photo", type: "imageWithAlt" }),
@@ -576,7 +576,7 @@ export const testimonial = defineType({
     defineField({ name: "order", title: "Order", type: "number", validation: required }),
   ],
   orderings: [{ title: "Order", name: "order", by: [{ field: "order", direction: "asc" }] }],
-  preview: { select: { title: "name", subtitle: "role.en" } },
+  preview: { select: { title: "name.en", subtitle: "role.en" } },
 });
 
 export const newsItem = defineType({

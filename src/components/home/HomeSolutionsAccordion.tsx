@@ -175,7 +175,7 @@ export function HomeSolutionsAccordion({ cards, exploreLabel, servicesLabel }: P
                 className="group mx-btn mt-4 shrink-0 self-start border-0 bg-white px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-midex-navy shadow-md hover:-translate-y-0.5 hover:bg-midex-mint hover:shadow-lg sm:px-6 sm:py-3 sm:text-sm"
               >
                 {exploreLabel}
-                <span className="mx-arrow text-base leading-none sm:text-lg">→</span>
+                <span className="mx-arrow" aria-hidden>→</span>
               </Link>
             </div>
           </article>

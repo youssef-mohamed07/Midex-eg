@@ -19,31 +19,31 @@ export async function TruviaSection({ content }: Props) {
   const features = content.features ?? [];
 
   return (
-    <section className="mx-section">
+    <section className="mx-section--tight lg:mx-section">
       <div className="mx-container">
-        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-12 xl:gap-16">
-          <RevealOnScroll>
+        <div className="grid items-center gap-6 sm:gap-10 lg:grid-cols-2 lg:gap-12 xl:gap-16">
+          <RevealOnScroll className="order-2 lg:order-1">
             <div>
-              <h2 className="mt-4 font-display text-3xl font-bold leading-tight tracking-tight text-midex-navy sm:text-4xl lg:text-[2.35rem]">
+              <h2 className="font-display text-2xl font-bold leading-snug text-midex-navy sm:text-4xl lg:text-[2.35rem]">
                 {content.title}
               </h2>
-              <p className="mt-4 max-w-2xl text-base leading-relaxed text-midex-gray/80 sm:text-lg">
+              <p className="mt-3 text-[15px] leading-relaxed text-midex-gray/80 sm:mt-4 sm:text-lg">
                 {content.body}
               </p>
 
               {features.length > 0 && (
-                <ul className="mt-8 space-y-5 sm:mt-10">
+                <ul className="mt-6 space-y-4 sm:mt-8 sm:space-y-5 lg:mt-10">
                   {features.map((feature) => (
-                    <li key={feature.title} className="flex gap-4">
+                    <li key={feature.title} className="flex gap-3 sm:gap-4">
                       <span
-                        className="mt-2 h-2 w-2 shrink-0 rounded-full bg-midex-mint"
+                        className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-midex-mint sm:mt-2"
                         aria-hidden
                       />
-                      <div>
-                        <p className="font-display text-base font-bold text-midex-navy sm:text-[1.05rem]">
+                      <div className="min-w-0">
+                        <p className="font-display text-[15px] font-bold leading-snug text-midex-navy sm:text-base lg:text-[1.05rem]">
                           {feature.title}
                         </p>
-                        <p className="mt-1.5 text-sm leading-relaxed text-midex-gray/75 sm:text-[15px]">
+                        <p className="mt-1 text-sm leading-relaxed text-midex-gray/75 sm:mt-1.5 sm:text-[15px]">
                           {feature.text}
                         </p>
                       </div>
@@ -55,24 +55,26 @@ export async function TruviaSection({ content }: Props) {
               {content.ctaLabel && content.ctaHref && (
                 <Link
                   href={content.ctaHref}
-                  className="group mx-btn mx-btn-primary mt-8 inline-flex sm:mt-10"
+                  className="group mx-btn mx-btn-primary mt-6 w-full justify-center sm:mt-8 sm:w-auto lg:mt-10"
                 >
                   {content.ctaLabel}
-                  <span className="mx-arrow">→</span>
+                  <span className="mx-arrow" aria-hidden>
+                    →
+                  </span>
                 </Link>
               )}
             </div>
           </RevealOnScroll>
 
-          <RevealOnScroll delay={80}>
-            <div className="relative overflow-hidden rounded-[1.5rem] border border-midex-line/50 bg-midex-surface/40 shadow-[0_24px_64px_rgba(14,26,50,0.1)] sm:rounded-[1.75rem] lg:rounded-[2rem]">
-              <div className="relative aspect-[4/3] min-h-[280px] sm:aspect-[5/4] sm:min-h-[360px] lg:aspect-[4/5] lg:min-h-[480px] xl:min-h-[540px]">
+          <RevealOnScroll delay={80} className="order-1 lg:order-2">
+            <div className="relative overflow-hidden rounded-2xl border border-midex-line/50 bg-midex-surface/40 shadow-[0_16px_40px_rgba(14,26,50,0.08)] sm:rounded-[1.75rem] sm:shadow-[0_24px_64px_rgba(14,26,50,0.1)] lg:rounded-[2rem]">
+              <div className="relative aspect-[16/10] sm:aspect-[5/4] lg:aspect-[4/5] lg:min-h-[480px] xl:min-h-[540px]">
                 <Image
                   src={content.image || DEFAULT_IMAGE}
                   alt={content.title}
                   fill
                   className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 50vw"
                 />
                 <div
                   className="absolute inset-0 bg-gradient-to-t from-midex-navy/70 via-midex-navy/15 to-transparent"
@@ -80,15 +82,15 @@ export async function TruviaSection({ content }: Props) {
                 />
               </div>
 
-              <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-5 sm:p-6">
+              <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-4 sm:gap-4 sm:p-6">
                 <Image
                   src={content.secondaryImage || DEFAULT_LOGO}
                   alt="Truvia"
                   width={140}
                   height={56}
-                  className="h-10 w-auto max-w-[140px] object-contain brightness-0 invert sm:h-12"
+                  className="h-8 w-auto max-w-[120px] object-contain brightness-0 invert sm:h-12 sm:max-w-[140px]"
                 />
-                <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-white backdrop-blur-sm">
+                <span className="shrink-0 rounded-full border border-white/20 bg-white/10 px-2.5 py-0.5 text-[9px] font-semibold text-white backdrop-blur-sm sm:px-3 sm:py-1 sm:text-[10px]">
                   ASME BPE
                 </span>
               </div>

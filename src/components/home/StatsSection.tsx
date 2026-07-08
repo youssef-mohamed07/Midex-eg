@@ -121,7 +121,7 @@ export function StatsSection({
                 className="mx-auto mt-3 block h-0.5 w-8 rounded-full bg-midex-mint"
                 aria-hidden
               />
-              <p className="mt-3 text-xs font-semibold uppercase tracking-[0.16em] text-midex-teal sm:text-sm">
+              <p className="mt-3 text-xs font-semibold text-midex-teal sm:text-sm">
                 {stat.label}
               </p>
             </div>

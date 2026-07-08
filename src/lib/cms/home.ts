@@ -124,7 +124,7 @@ export async function getHomePageData(locale: Locale): Promise<HomePageData> {
         "image": ${imageUrl("image")}
       }[].image,
       "testimonials": *[_type == "testimonial"] | order(order asc) {
-        name,
+        "name": coalesce(name[$locale], name.en, name),
         "role": ${loc("role")},
         "quote": ${loc("quote")},
         "image": ${imageUrl("image")}

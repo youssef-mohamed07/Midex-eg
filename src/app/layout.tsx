@@ -1,10 +1,31 @@
-import { cookies, headers } from "next/headers";
+import { headers } from "next/headers";
 import localFont from "next/font/local";
 import { routing, type Locale } from "@/i18n/routing";
 import "./globals.css";
 
 const SANITY_CDN = "https://cdn.sanity.io";
 const GOOGLE_MAPS = "https://maps.google.com";
+
+function localeDir(locale: Locale): "rtl" | "ltr" {
+  return locale === "ar" ? "rtl" : "ltr";
+}
+
+async function resolveLocale(): Promise<Locale> {
+  const headerList = await headers();
+  const headerLocale = headerList.get("x-midex-locale");
+  if (headerLocale && routing.locales.includes(headerLocale as Locale)) {
+    return headerLocale as Locale;
+  }
+
+  // Path-based fallback for RSC requests (never use a stale NEXT_LOCALE cookie).
+  const invokePath = headerList.get("x-invoke-path") ?? headerList.get("next-url") ?? "";
+  const pathMatch = invokePath.match(/^\/(en|ar|de)(\/|$)/);
+  if (pathMatch) {
+    return pathMatch[1] as Locale;
+  }
+
+  return routing.defaultLocale;
+}
 
 const alexandria = localFont({
   src: [
@@ -38,29 +59,13 @@ const alexandria = localFont({
   display: "swap",
 });
 
-async function resolveLocale(): Promise<Locale> {
-  const headerList = await headers();
-  const headerLocale = headerList.get("x-midex-locale");
-  if (headerLocale && routing.locales.includes(headerLocale as Locale)) {
-    return headerLocale as Locale;
-  }
-
-  const cookieStore = await cookies();
-  const cookieLocale = cookieStore.get("NEXT_LOCALE")?.value;
-  if (cookieLocale && routing.locales.includes(cookieLocale as Locale)) {
-    return cookieLocale as Locale;
-  }
-
-  return routing.defaultLocale;
-}
-
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   const locale = await resolveLocale();
-  const dir = locale === "ar" ? "rtl" : "ltr";
+  const dir = localeDir(locale);
 
   return (
     <html

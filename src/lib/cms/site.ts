@@ -279,7 +279,7 @@ export async function getCompanyValues(locale: Locale): Promise<CompanyValue[]> 
 export async function getTestimonials(locale: Locale): Promise<Testimonial[]> {
   return sanityFetch<Testimonial[]>({
     query: `*[_type == "testimonial"] | order(order asc) {
-      name,
+      "name": coalesce(name[$locale], name.en, name),
       "role": ${loc("role")},
       "quote": ${loc("quote")},
       "image": ${imageUrl("image")}

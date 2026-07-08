@@ -6,6 +6,7 @@ import { routing, type Locale } from "@/i18n/routing";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { FloatingSocialButton } from "@/components/layout/FloatingSocialButton";
+import { LocaleDirectionSync } from "@/components/layout/LocaleDirectionSync";
 import { getSiteUrl, siteConfig } from "@/lib/seo/config";
 import { buildSiteIcons } from "@/lib/seo/metadata";
 import {
@@ -49,6 +50,7 @@ export default async function LocaleLayout({
 
   setRequestLocale(locale);
   const messages = await getMessages();
+  const dir = locale === "ar" ? "rtl" : "ltr";
 
   const shell = await getLayoutShellData(locale as Locale);
 
@@ -63,6 +65,8 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider messages={messages}>
+      <LocaleDirectionSync />
+      <div dir={dir} lang={locale} className="flex min-h-dvh flex-col">
       <Header
         productCategories={productCategoryEntries}
         solutionGroupsNav={shell.solutionGroupsNav}
@@ -76,6 +80,7 @@ export default async function LocaleLayout({
         social={shell.settings?.social ?? {}}
         email={shell.siteContact.email}
       />
+      </div>
     </NextIntlClientProvider>
   );
 }

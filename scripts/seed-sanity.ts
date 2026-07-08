@@ -459,7 +459,7 @@ function seedTestimonials() {
     docs.push({
       _id: `testimonial-${slugify(item.name)}`,
       _type: "testimonial",
-      name: item.name,
+      name: L(item.name, ar.testimonials?.[index]?.name, de.testimonials?.[index]?.name),
       role: L(item.role, ar.testimonials[index]?.role, de.testimonials[index]?.role),
       quote: LT(item.quote, ar.testimonials[index]?.quote, de.testimonials[index]?.quote),
       order: index,

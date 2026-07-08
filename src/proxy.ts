@@ -67,10 +67,19 @@ export default async function proxy(request: NextRequest) {
   applyGeoLocale(request);
   const response = handleI18nRouting(request);
 
+  let locale: string = routing.defaultLocale;
   const localeMatch = request.nextUrl.pathname.match(/^\/(en|ar|de)(\/|$)/);
   if (localeMatch) {
-    response.headers.set("x-midex-locale", localeMatch[1]);
+    locale = localeMatch[1];
+  } else {
+    const location = response.headers.get("Location");
+    const redirectMatch = location?.match(/\/(en|ar|de)(\/|$)/);
+    if (redirectMatch) {
+      locale = redirectMatch[1];
+    }
   }
+
+  response.headers.set("x-midex-locale", locale);
 
   return response;
 }

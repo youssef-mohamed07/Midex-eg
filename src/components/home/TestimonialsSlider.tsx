@@ -52,18 +52,23 @@ function PersonAvatar({ name, image }: { name: string; image?: string }) {
   );
 }
 
-function TestimonialCard({ item }: { item: Testimonial }) {
+function TestimonialCard({ item, locale }: { item: Testimonial; locale: string }) {
+  const isRtl = locale === "ar";
+
   return (
-    <figure className="group relative flex h-full w-[min(88vw,320px)] shrink-0 flex-col overflow-hidden rounded-2xl border border-midex-line/50 bg-white p-5 shadow-[0_10px_40px_rgba(14,26,50,0.07)] transition-all duration-500 hover:-translate-y-1 hover:border-midex-mint/40 hover:shadow-[0_16px_48px_rgba(14,26,50,0.12)] sm:w-[340px] sm:p-7 lg:w-[360px]">
+    <figure
+      dir={isRtl ? "rtl" : "auto"}
+      className="group relative flex h-full w-[min(88vw,320px)] min-w-0 shrink-0 flex-col overflow-hidden rounded-2xl border border-midex-line/50 bg-white p-5 shadow-[0_10px_40px_rgba(14,26,50,0.07)] transition-all duration-500 hover:-translate-y-1 hover:border-midex-mint/40 hover:shadow-[0_16px_48px_rgba(14,26,50,0.12)] sm:w-[340px] sm:p-7 lg:w-[360px]"
+    >
       <div
-        className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-midex-mint via-midex-blue to-midex-mint"
+        className="absolute inset-x-0 top-0 h-1 rounded-t-2xl bg-gradient-to-r from-midex-mint via-midex-blue to-midex-mint"
         aria-hidden
       />
       <QuoteIcon className="absolute end-4 top-5 h-7 w-7 text-midex-mint/20 transition-colors duration-300 group-hover:text-midex-mint/35 sm:end-6 sm:top-6 sm:h-8 sm:w-8" />
 
       <PersonAvatar name={item.name} image={item.image} />
 
-      <blockquote className="mt-5 flex min-h-[5.5rem] flex-1 items-start text-center text-[13px] leading-relaxed text-midex-gray/85 sm:mt-6 sm:min-h-[6rem] sm:text-[15px] sm:leading-[1.7]">
+      <blockquote className="mt-5 flex min-h-[5.5rem] min-w-0 flex-1 break-words items-start text-center text-[13px] leading-relaxed text-midex-gray/85 sm:mt-6 sm:min-h-[6rem] sm:text-[15px] sm:leading-[1.7]">
         &ldquo;{item.quote}&rdquo;
       </blockquote>
 
@@ -79,10 +84,12 @@ export function TestimonialsSlider({
   title,
   subtitle,
   testimonials,
+  locale = "en",
 }: {
   title: string;
   subtitle: string;
   testimonials: Testimonial[];
+  locale?: string;
 }) {
   if (testimonials.length === 0) return null;
 
@@ -96,10 +103,12 @@ export function TestimonialsSlider({
           <p className="mx-section-subtitle mx-auto mt-4">{subtitle}</p>
         </div>
 
-        <div className="mx-marquee-fade mx-marquee-fade--white">
+        <div className="mx-marquee-fade mx-marquee-fade--white" dir="ltr">
           <div className="mx-marquee-track mx-marquee-track--testimonials gap-4 sm:gap-5 lg:gap-6">
             {track.map((item, index) => (
-              <TestimonialCard key={`${item.name}-${index}`} item={item} />
+              <div key={`${item.name}-${index}`} className="min-w-0 shrink-0">
+                <TestimonialCard item={item} locale={locale} />
+              </div>
             ))}
           </div>
         </div>

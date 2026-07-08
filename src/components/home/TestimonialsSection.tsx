@@ -21,6 +21,11 @@ export async function TestimonialsSection({
   if (testimonials.length === 0) return null;
 
   return (
-    <TestimonialsSlider title={title} subtitle={subtitle} testimonials={testimonials} />
+    <TestimonialsSlider
+      title={title}
+      subtitle={subtitle}
+      testimonials={testimonials}
+      locale={locale}
+    />
   );
 }

@@ -122,10 +122,10 @@ export function HomeSolutionsAccordion({ cards, exploreLabel, servicesLabel }: P
                   <Link
                     href={card.href}
                     onClick={(event) => event.stopPropagation()}
-                    className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-midex-mint text-midex-navy shadow-lg transition hover:scale-105 hover:bg-white sm:h-11 sm:w-11"
+                    className="group inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-midex-mint text-midex-navy shadow-lg transition hover:scale-105 hover:bg-white sm:h-11 sm:w-11"
                     aria-label={exploreLabel}
                   >
-                    <ArrowIcon className="h-4 w-4 sm:h-5 sm:w-5" />
+                    <ArrowIcon className="h-5 w-5 shrink-0 sm:h-[1.35rem] sm:w-[1.35rem]" />
                   </Link>
                 </>
               ) : (
@@ -172,12 +172,10 @@ export function HomeSolutionsAccordion({ cards, exploreLabel, servicesLabel }: P
               <Link
                 href={card.href}
                 onClick={(event) => event.stopPropagation()}
-                className="group/btn mt-4 inline-flex w-fit max-w-full shrink-0 self-start items-center gap-1.5 rounded-full bg-white px-4 py-2 text-[10px] font-bold uppercase tracking-[0.14em] text-midex-navy no-underline shadow-md transition hover:-translate-y-0.5 hover:bg-midex-mint hover:shadow-lg sm:gap-2 sm:px-5 sm:py-2.5 sm:text-[11px]"
+                className="group mx-btn mt-4 shrink-0 self-start border-0 bg-white px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-midex-navy shadow-md hover:-translate-y-0.5 hover:bg-midex-mint hover:shadow-lg sm:px-6 sm:py-3 sm:text-sm"
               >
                 {exploreLabel}
-                <span className="mx-arrow text-[9px] transition-transform group-hover/btn:translate-x-0.5 sm:text-[10px]">
-                  →
-                </span>
+                <span className="mx-arrow text-base leading-none sm:text-lg">→</span>
               </Link>
             </div>
           </article>

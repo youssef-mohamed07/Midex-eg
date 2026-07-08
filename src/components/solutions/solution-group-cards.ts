@@ -14,7 +14,7 @@ export type SolutionGroupNav = {
 export function buildSolutionGroupNav(groups: SolutionGroup[]): SolutionGroupNav[] {
   return groups.map((group) => ({
     slug: group.slug,
-    label: group.label,
+    label: group.menuLabel?.trim() || group.label,
     description: group.description,
     image: group.image,
     href: `/solutions/group/${group.slug}`,

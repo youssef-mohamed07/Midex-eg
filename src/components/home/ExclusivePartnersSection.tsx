@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
 import { getExclusivePartners } from "@/lib/cms";
+import { isValidImageSrc } from "@/lib/cms/images";
 import type { Partner } from "@/lib/cms/types";
 
 type Props = {
@@ -10,7 +11,7 @@ type Props = {
 
 export async function ExclusivePartnersSection({ title, partners: partnersProp }: Props) {
   const exclusivePartners = (partnersProp ?? (await getExclusivePartners())).filter(
-    (p) => p.image,
+    (p) => isValidImageSrc(p.image),
   );
 
   return (

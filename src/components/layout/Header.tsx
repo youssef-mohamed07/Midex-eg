@@ -13,6 +13,7 @@ import { createPortal } from "react-dom";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
+import { isValidImageSrc } from "@/lib/cms/images";
 import type { SolutionGroupNav } from "@/components/solutions/solution-group-cards";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 
@@ -61,7 +62,7 @@ const HeaderMegaProductsPanel = memo(function HeaderMegaProductsPanel({
           href="/products"
           className="group relative col-span-2 min-h-[11rem] overflow-hidden rounded-xl no-underline sm:min-h-[12rem] lg:col-span-1 lg:row-span-2 lg:min-h-0"
         >
-          {featuredImage ? (
+          {isValidImageSrc(featuredImage) ? (
             <Image
               src={featuredImage}
               alt={allLabel}
@@ -84,7 +85,7 @@ const HeaderMegaProductsPanel = memo(function HeaderMegaProductsPanel({
             href={`/products/category/${category.slug}`}
             className="group relative aspect-[5/4] overflow-hidden rounded-xl no-underline lg:aspect-auto lg:min-h-[9.5rem]"
           >
-            {category.image ? (
+            {isValidImageSrc(category.image) ? (
               <Image
                 src={category.image}
                 alt={category.label}
@@ -149,7 +150,7 @@ const HeaderMegaSolutionsPanel = memo(function HeaderMegaSolutionsPanel({
               href={group.href}
               className="group relative block aspect-[16/10] shrink-0 overflow-hidden border-b border-midex-line/60 no-underline"
             >
-              {group.image ? (
+              {isValidImageSrc(group.image) ? (
                 <Image
                   src={group.image}
                   alt={group.label}
@@ -288,6 +289,7 @@ const DesktopNavItem = memo(function DesktopNavItem({
   mega,
   activeMega,
   onMegaOpen,
+  onMegaClick,
 }: {
   item: NavItem;
   overlay: boolean;
@@ -295,6 +297,11 @@ const DesktopNavItem = memo(function DesktopNavItem({
   mega?: MegaKind;
   activeMega?: MegaKind | null;
   onMegaOpen?: (mega: MegaKind | null) => void;
+  onMegaClick?: (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    mega: MegaKind,
+    isActivePage: boolean,
+  ) => void;
 }) {
   const isMegaActive = mega != null && activeMega === mega;
 
@@ -333,6 +340,7 @@ const DesktopNavItem = memo(function DesktopNavItem({
         className={topLinkClass}
         onMouseEnter={() => onMegaOpen?.(mega)}
         onFocus={() => onMegaOpen?.(mega)}
+        onClick={(event) => onMegaClick?.(event, mega, active)}
       >
         {item.label}
         <ChevronDown
@@ -590,6 +598,20 @@ export function Header({
     [cancelMegaClose],
   );
 
+  const handleMegaNavClick = useCallback(
+    (
+      event: React.MouseEvent<HTMLAnchorElement>,
+      mega: MegaKind,
+      isActivePage: boolean,
+    ) => {
+      if (isActivePage && activeMega === mega) {
+        event.preventDefault();
+        handleMegaOpen(null);
+      }
+    },
+    [activeMega, handleMegaOpen],
+  );
+
   const scheduleMegaClose = useCallback(() => {
     cancelMegaClose();
     megaCloseTimer.current = setTimeout(() => {
@@ -841,6 +863,7 @@ export function Header({
                         }
                         activeMega={activeMega}
                         onMegaOpen={handleMegaOpen}
+                        onMegaClick={handleMegaNavClick}
                       />
                     </li>
                   );

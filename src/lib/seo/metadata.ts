@@ -17,8 +17,11 @@ type BuildSeoMetadataInput = {
 
 export function buildSiteIcons(): NonNullable<Metadata["icons"]> {
   return {
-    icon: [{ url: siteConfig.brandIcon, type: "image/svg+xml" }],
-    shortcut: siteConfig.brandIcon,
+    icon: [
+      { url: "/images/brand/favicon.png", sizes: "64x64", type: "image/png" },
+      { url: siteConfig.brandIcon, type: "image/svg+xml" },
+    ],
+    shortcut: "/images/brand/favicon.png",
     apple: [{ url: "/apple-icon", sizes: "180x180", type: "image/png" }],
   };
 }

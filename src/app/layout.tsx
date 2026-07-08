@@ -1,22 +1,40 @@
 import { cookies, headers } from "next/headers";
-import { Poppins, Sora } from "next/font/google";
+import localFont from "next/font/local";
 import { routing, type Locale } from "@/i18n/routing";
 import "./globals.css";
 
 const SANITY_CDN = "https://cdn.sanity.io";
 const GOOGLE_MAPS = "https://maps.google.com";
 
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-poppins",
-  display: "swap",
-});
-
-const sora = Sora({
-  subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
-  variable: "--font-sora",
+const alexandria = localFont({
+  src: [
+    {
+      path: "../../public/branding/Font/Alexandria/Alexandria-Regular.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/branding/Font/Alexandria/Alexandria-Medium.ttf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../../public/branding/Font/Alexandria/Alexandria-SemiBold.ttf",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../../public/branding/Font/Alexandria/Alexandria-Bold.ttf",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "../../public/branding/Font/Alexandria/Alexandria-ExtraBold.ttf",
+      weight: "800",
+      style: "normal",
+    },
+  ],
+  variable: "--font-alexandria",
   display: "swap",
 });
 
@@ -49,7 +67,7 @@ export default async function RootLayout({
       lang={locale}
       dir={dir}
       suppressHydrationWarning
-      className={`${poppins.variable} ${sora.variable}`}
+      className={`${alexandria.variable}`}
     >
       <head>
         <link rel="preconnect" href={SANITY_CDN} crossOrigin="anonymous" />

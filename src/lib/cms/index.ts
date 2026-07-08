@@ -8,3 +8,5 @@ export * from "@/lib/cms/products";
 export * from "@/lib/cms/solutions";
 export * from "@/lib/cms/blog";
 export * from "@/lib/cms/seo";
+export * from "@/lib/cms/pages";
+export * from "@/lib/cms/section-resolve";

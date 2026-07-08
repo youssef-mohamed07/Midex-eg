@@ -1,4 +1,5 @@
 import type { HomeSolutionCard } from "@/components/home/HomeSolutionsAccordion";
+import type { EngineeringCapabilityCardContent } from "@/lib/cms/types";
 
 export const ENGINEERING_CAPABILITY_SLUGS = [
   "solutions",
@@ -46,22 +47,50 @@ type CmsGroup = {
   image: string;
 };
 
+function isKnownSlug(slug: string): slug is EngineeringCapabilitySlug {
+  return (ENGINEERING_CAPABILITY_SLUGS as readonly string[]).includes(slug);
+}
+
+function resolveSlugOrder(cmsCards?: EngineeringCapabilityCardContent[]): string[] {
+  const cmsSlugs = (cmsCards ?? [])
+    .map((card) => card.slug?.trim())
+    .filter((slug): slug is string => Boolean(slug));
+
+  if (cmsSlugs.length > 0) return cmsSlugs;
+  return [...ENGINEERING_CAPABILITY_SLUGS];
+}
+
 export function buildEngineeringCapabilityCards(
   t: (key: string) => string,
   cmsGroups: CmsGroup[],
+  cmsCards?: EngineeringCapabilityCardContent[],
 ): HomeSolutionCard[] {
   const cmsBySlug = new Map(cmsGroups.map((group) => [group.slug, group]));
+  const cardBySlug = new Map(
+    (cmsCards ?? [])
+      .filter((card) => card.slug?.trim())
+      .map((card) => [card.slug.trim(), card]),
+  );
 
-  return ENGINEERING_CAPABILITY_SLUGS.map((slug) => {
+  return resolveSlugOrder(cmsCards).map((slug) => {
+    const cmsCard = cardBySlug.get(slug);
     const cms = cmsBySlug.get(slug);
-    const items = ITEM_KEYS[slug].map((key) => t(key));
+    const fallbackItems = isKnownSlug(slug) ? ITEM_KEYS[slug].map((key) => t(key)) : [];
+    const items = cmsCard?.items?.length ? cmsCard.items : fallbackItems;
+
+    const label =
+      cmsCard?.title?.trim() ||
+      (isKnownSlug(slug) ? t(TITLE_KEYS[slug]) : slug);
+    const description =
+      cmsCard?.description?.trim() ||
+      (isKnownSlug(slug) ? t(DESCRIPTION_KEYS[slug]) : "");
 
     return {
       slug,
-      label: t(TITLE_KEYS[slug]),
-      description: t(DESCRIPTION_KEYS[slug]),
+      label,
+      description,
       image: cms?.image ?? "/images/hero/slide-1.png",
-      href: `/solutions/group/${slug}`,
+      href: cmsCard?.href?.trim() || `/solutions/group/${slug}`,
       tags: [],
       serviceCount: items.length,
       items,

@@ -3,26 +3,38 @@ import { getTranslations } from "next-intl/server";
 import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
 import { getLocale } from "next-intl/server";
 import { getCompanyValues } from "@/lib/cms";
+import { pick } from "@/lib/cms/section-resolve";
+import { isValidImageSrc, resolveImageSrc } from "@/lib/cms/images";
+import type { CompanyValue } from "@/lib/cms/types";
 import type { Locale } from "@/i18n/routing";
 
 const valueKeys = ["value1", "value2", "value3", "value4", "value5", "value6"] as const;
 
-export async function OurValuesSection() {
+type Props = {
+  title: string;
+  subtitle: string;
+  items?: CompanyValue[];
+};
+
+export async function OurValuesSection({ title, subtitle, items: itemsProp }: Props) {
   const t = await getTranslations("about");
   const locale = (await getLocale()) as Locale;
-  const companyValues = await getCompanyValues(locale);
+  const companyValues = itemsProp ?? (await getCompanyValues(locale));
 
-  const values = valueKeys.map((key, index) => ({
-    id: key,
-    image:
-      companyValues[index]?.image ??
-      companyValues[companyValues.length - 1]?.image ??
-      "/images/hero/slide-1.png",
-    alt: companyValues[index]?.alt ?? t(`${key}Title`),
-    step: String(index + 1).padStart(2, "0"),
-    title: t(`${key}Title`),
-    text: t(`${key}Text`),
-  }));
+  const values = valueKeys.map((key, index) => {
+    const cms = companyValues[index];
+    return {
+      id: cms?.id ?? key,
+      image:
+        resolveImageSrc(cms?.image) ??
+        resolveImageSrc(companyValues[companyValues.length - 1]?.image) ??
+        "/images/hero/slide-1.png",
+      alt: cms?.alt ?? pick(cms?.title, t(`${key}Title`)),
+      step: String(index + 1).padStart(2, "0"),
+      title: pick(cms?.title, t(`${key}Title`)),
+      text: pick(cms?.text, t(`${key}Text`)),
+    };
+  });
 
   return (
     <section className="mx-section--tight">
@@ -30,10 +42,10 @@ export async function OurValuesSection() {
         <RevealOnScroll>
           <div className="mb-6 flex flex-col gap-3 border-b border-midex-line/60 pb-6 sm:mb-8 sm:pb-7 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
             <div className="max-w-lg">
-              <h2 className="mx-section-title mt-3">{t("valuesTitle")}</h2>
+              <h2 className="mx-section-title mt-3">{title}</h2>
             </div>
             <p className="max-w-md text-sm leading-relaxed text-midex-gray/75 sm:text-base lg:text-end">
-              {t("valuesSubtitle")}
+              {subtitle}
             </p>
           </div>
         </RevealOnScroll>

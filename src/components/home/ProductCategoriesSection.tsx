@@ -6,26 +6,6 @@ import { getProductCategories, getProducts } from "@/lib/cms";
 import type { CaseStudy, Product, ProductCategoryInfo } from "@/lib/cms/types";
 import { type Locale } from "@/i18n/routing";
 
-const CATEGORY_ORDER = [
-  "piping-and-fitting",
-  "valves",
-  "instruments",
-  "uv-units",
-  "stainless-steel-tanks",
-  "pumps",
-  "filters",
-  "hygienic-drains",
-] as const;
-
-const LEFT_COLUMN_SLUGS = [
-  "piping-and-fitting",
-  "instruments",
-  "uv-units",
-  "stainless-steel-tanks",
-] as const;
-
-const RIGHT_COLUMN_SLUGS = ["valves", "pumps", "filters", "hygienic-drains"] as const;
-
 type CategoryCard = {
   slug: string;
   label: string;
@@ -78,17 +58,37 @@ function CategoryImageCard({
 }
 
 export async function ProductCategoriesSection({
+  title: titleProp,
+  subtitle: subtitleProp,
   productCategories: categoriesProp,
   products: productsProp,
+  categoryOrder: categoryOrderProp,
 }: {
+  title?: string;
+  subtitle?: string;
   productCategories?: Record<string, ProductCategoryInfo>;
   products?: Product[];
+  categoryOrder?: string[];
 } = {}) {
   const locale = (await getLocale()) as Locale;
   const t = await getTranslations("products");
-  const [productCategories, allProducts] = categoriesProp && productsProp
-    ? [categoriesProp, productsProp]
-    : await Promise.all([getProductCategories(locale), getProducts(locale)]);
+  const [productCategories, allProducts, categoryOrder] = categoriesProp && productsProp
+    ? [
+        categoriesProp,
+        productsProp,
+        categoryOrderProp ?? Object.keys(categoriesProp),
+      ]
+    : await (async () => {
+        const [categories, products] = await Promise.all([
+          getProductCategories(locale),
+          getProducts(locale),
+        ]);
+        const orderFromProducts = [...new Set(products.map((item) => item.category))];
+        const order =
+          categoryOrderProp ??
+          (orderFromProducts.length > 0 ? orderFromProducts : Object.keys(categories));
+        return [categories, products, order] as const;
+      })();
 
   const buildCategory = (slug: string): CategoryCard | null => {
     const products = allProducts.filter((item) => item.category === slug);
@@ -111,16 +111,20 @@ export async function ProductCategoriesSection({
   const resolveColumn = (slugs: readonly string[]) =>
     slugs.map(buildCategory).filter((item): item is CategoryCard => item !== null);
 
-  const leftColumn = resolveColumn(LEFT_COLUMN_SLUGS);
-  const rightColumn = resolveColumn(RIGHT_COLUMN_SLUGS);
-  const allCategories = CATEGORY_ORDER.map(buildCategory).filter(
-    (item): item is CategoryCard => item !== null,
-  );
+  const orderedSlugs = categoryOrder.filter((slug) => buildCategory(slug) !== null);
+  const splitAt = Math.ceil(orderedSlugs.length / 2);
+  const leftColumn = resolveColumn(orderedSlugs.slice(0, splitAt));
+  const rightColumn = resolveColumn(orderedSlugs.slice(splitAt));
+  const allCategories = orderedSlugs
+    .map(buildCategory)
+    .filter((item): item is CategoryCard => item !== null);
 
   if (allCategories.length === 0) {
     return null;
   }
 
+  const sectionTitle = titleProp?.trim() || t("title");
+  const sectionSubtitle = subtitleProp?.trim() || t("subtitle");
   const heroImage = allProducts[0]?.image ?? allCategories[0].image;
 
   return (
@@ -128,8 +132,8 @@ export async function ProductCategoriesSection({
       <div className="mx-container">
         <RevealOnScroll>
           <div className="mx-auto max-w-3xl text-center">
-          <h2 className="mx-section-title">{t("title")}</h2>
-            <p className="mx-section-subtitle mx-auto mt-4">{t("subtitle")}</p>
+          <h2 className="mx-section-title">{sectionTitle}</h2>
+            <p className="mx-section-subtitle mx-auto mt-4">{sectionSubtitle}</p>
             <Link
               href="/products"
               className="mx-link-arrow mx-auto mt-6 inline-flex text-sm no-underline"

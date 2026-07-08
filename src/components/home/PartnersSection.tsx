@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { getPartners } from "@/lib/cms";
+import { isValidImageSrc } from "@/lib/cms/images";
 import type { Partner } from "@/lib/cms/types";
 
 type Props = {
@@ -10,7 +11,7 @@ type Props = {
 function uniquePartners(partners: Partner[]) {
   const seen = new Set<string>();
   return partners.filter((partner) => {
-    if (!partner.image || seen.has(partner.name)) return false;
+    if (!isValidImageSrc(partner.image) || seen.has(partner.name)) return false;
     seen.add(partner.name);
     return true;
   });

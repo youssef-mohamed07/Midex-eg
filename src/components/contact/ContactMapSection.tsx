@@ -4,25 +4,29 @@ import type { SiteContact } from "@/lib/cms/types";
 
 type Props = {
   siteContact: SiteContact;
+  title?: string;
+  subtitle?: string;
 };
 
-export async function ContactMapSection({ siteContact }: Props) {
+export async function ContactMapSection({ siteContact, title, subtitle }: Props) {
   const t = await getTranslations("contact");
   const tc = await getTranslations("common");
+  const heading = title ?? t("mapTitle");
+  const intro = subtitle ?? t("mapSubtitle");
 
   return (
     <section id="office-map" className="mx-section scroll-mt-28 bg-white">
       <div className="mx-container">
         <div className="mx-auto mb-8 max-w-2xl text-center sm:mb-10">
-          <h2 className="mx-section-title">{t("mapTitle")}</h2>
-          <p className="mx-section-subtitle mx-auto">{t("mapSubtitle")}</p>
+          <h2 className="mx-section-title">{heading}</h2>
+          <p className="mx-section-subtitle mx-auto">{intro}</p>
         </div>
 
         <div className="overflow-hidden rounded-[1.5rem] border border-midex-line bg-white shadow-md shadow-midex-navy/5">
           <div className="relative aspect-[16/10] w-full sm:aspect-[21/9]">
             <ContactMapEmbed
               embedUrl={siteContact.mapsEmbedUrl}
-              title={t("mapTitle")}
+              title={heading}
               loadingLabel={tc("loading")}
             />
           </div>

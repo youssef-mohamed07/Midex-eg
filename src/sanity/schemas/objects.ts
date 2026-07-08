@@ -193,6 +193,12 @@ export const faqSection = defineType({
   title: "FAQ section",
   type: "object",
   fields: [
+    defineField({
+      name: "enabled",
+      title: "Show section",
+      type: "boolean",
+      initialValue: true,
+    }),
     defineField({ name: "title", title: "Title", type: "localeString" }),
     defineField({ name: "intro", title: "Intro", type: "localeText" }),
     defineField({

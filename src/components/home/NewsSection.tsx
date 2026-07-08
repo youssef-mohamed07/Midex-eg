@@ -120,14 +120,19 @@ function PostCard({
 
 type Props = {
   locale: Locale;
+  title?: string;
+  subtitle?: string;
 };
 
-export async function NewsSection({ locale }: Props) {
+export async function NewsSection({ locale, title: titleProp, subtitle: subtitleProp }: Props) {
   const t = await getTranslations("home");
   const tb = await getTranslations("blog");
   const posts = (await getBlogPosts(locale)).slice(0, 4);
 
   if (posts.length === 0) return null;
+
+  const title = titleProp?.trim() || t("blogTitle");
+  const subtitle = subtitleProp?.trim() || t("blogSubtitle");
 
   const [featured, ...rest] = posts;
 
@@ -137,9 +142,9 @@ export async function NewsSection({ locale }: Props) {
         <RevealOnScroll>
           <div className="mb-6 flex flex-col gap-4 sm:mb-10 sm:gap-5 lg:mb-12 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-2xl">
-              <h2 className="mx-section-title">{t("blogTitle")}</h2>
+              <h2 className="mx-section-title">{title}</h2>
               <p className="mt-3 text-base leading-relaxed text-midex-gray/75">
-                {t("blogSubtitle")}
+                {subtitle}
               </p>
             </div>
             <Link href="/blog" className="mx-link-arrow shrink-0 text-sm">

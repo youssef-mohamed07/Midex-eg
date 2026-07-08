@@ -1,9 +1,12 @@
 "use client";
 
+import Image from "next/image";
+
 type Testimonial = {
   name: string;
   role: string;
   quote: string;
+  image?: string;
 };
 
 function QuoteIcon({ className = "h-8 w-8" }: { className?: string }) {
@@ -14,31 +17,35 @@ function QuoteIcon({ className = "h-8 w-8" }: { className?: string }) {
   );
 }
 
-function PersonAvatar({ name }: { name: string }) {
+function PersonAvatar({ name, image }: { name: string; image?: string }) {
   return (
     <div className="relative mx-auto shrink-0">
       <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-midex-mint/50 to-midex-blue/40 blur-sm" />
-      <div className="relative flex h-[3.75rem] w-[3.75rem] items-center justify-center rounded-full bg-gradient-to-br from-midex-navy to-midex-blue shadow-md ring-[3px] ring-white sm:h-16 sm:w-16">
-        <svg
-          className="h-7 w-7 text-white/95 sm:h-8 sm:w-8"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          aria-hidden
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={1.6}
-            d="M12 12a4 4 0 100-8 4 4 0 000 8z"
-          />
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={1.6}
-            d="M6 20c0-3.314 2.686-6 6-6s6 2.686 6 6"
-          />
-        </svg>
+      <div className="relative flex h-[3.75rem] w-[3.75rem] items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-midex-navy to-midex-blue shadow-md ring-[3px] ring-white sm:h-16 sm:w-16">
+        {image ? (
+          <Image src={image} alt={name} fill className="object-cover" sizes="64px" />
+        ) : (
+          <svg
+            className="h-7 w-7 text-white/95 sm:h-8 sm:w-8"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={1.6}
+              d="M12 12a4 4 0 100-8 4 4 0 000 8z"
+            />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={1.6}
+              d="M6 20c0-3.314 2.686-6 6-6s6 2.686 6 6"
+            />
+          </svg>
+        )}
         <span className="sr-only">{name}</span>
       </div>
     </div>
@@ -47,20 +54,20 @@ function PersonAvatar({ name }: { name: string }) {
 
 function TestimonialCard({ item }: { item: Testimonial }) {
   return (
-    <figure className="group relative flex h-full w-[min(88vw,320px)] shrink-0 flex-col overflow-hidden rounded-2xl border border-midex-line/50 bg-white p-5 shadow-[0_10px_40px_rgba(9,61,94,0.07)] transition-all duration-500 hover:-translate-y-1 hover:border-midex-mint/40 hover:shadow-[0_16px_48px_rgba(9,61,94,0.12)] sm:w-[340px] sm:p-7 lg:w-[360px]">
+    <figure className="group relative flex h-full w-[min(88vw,320px)] shrink-0 flex-col overflow-hidden rounded-2xl border border-midex-line/50 bg-white p-5 shadow-[0_10px_40px_rgba(14,26,50,0.07)] transition-all duration-500 hover:-translate-y-1 hover:border-midex-mint/40 hover:shadow-[0_16px_48px_rgba(14,26,50,0.12)] sm:w-[340px] sm:p-7 lg:w-[360px]">
       <div
         className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-midex-mint via-midex-blue to-midex-mint"
         aria-hidden
       />
       <QuoteIcon className="absolute end-4 top-5 h-7 w-7 text-midex-mint/20 transition-colors duration-300 group-hover:text-midex-mint/35 sm:end-6 sm:top-6 sm:h-8 sm:w-8" />
 
-      <PersonAvatar name={item.name} />
+      <PersonAvatar name={item.name} image={item.image} />
 
       <blockquote className="mt-5 flex min-h-[5.5rem] flex-1 items-start text-center text-[13px] leading-relaxed text-midex-gray/85 sm:mt-6 sm:min-h-[6rem] sm:text-[15px] sm:leading-[1.7]">
         &ldquo;{item.quote}&rdquo;
       </blockquote>
 
-      <figcaption className="mt-5 rounded-xl bg-midex-surface/80 px-4 py-3.5 text-center sm:mt-6 sm:px-5 sm:py-4">
+      <figcaption className="mt-5 rounded-xl border border-midex-line/60 bg-white px-4 py-3.5 text-center sm:mt-6 sm:px-5 sm:py-4">
         <p className="font-display text-base font-bold text-midex-navy">{item.name}</p>
         <p className="mt-1 text-xs text-midex-gray/70 sm:text-sm">{item.role}</p>
       </figcaption>
@@ -82,13 +89,8 @@ export function TestimonialsSlider({
   const track = [...testimonials, ...testimonials];
 
   return (
-    <section className="relative mx-section overflow-x-hidden">
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -start-20 top-10 h-56 w-56 rounded-full bg-midex-mint/10 blur-3xl" />
-        <div className="absolute -end-16 bottom-0 h-64 w-64 rounded-full bg-midex-blue/8 blur-3xl" />
-      </div>
-
-      <div className="relative mx-container">
+    <section className="mx-section overflow-x-hidden">
+      <div className="mx-container">
         <div className="mb-6 text-center sm:mb-10 lg:mb-12">
           <h2 className="mx-section-title">{title}</h2>
           <p className="mx-section-subtitle mx-auto mt-4">{subtitle}</p>

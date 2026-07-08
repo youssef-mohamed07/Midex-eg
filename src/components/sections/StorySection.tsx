@@ -33,7 +33,7 @@ export async function StorySection({ cta }: Props) {
           dir="ltr"
         >
           <RevealOnScroll>
-            <div className="relative min-h-[16rem] overflow-hidden rounded-[1.5rem] border border-midex-line/50 shadow-[0_24px_64px_rgba(9,61,94,0.12)] sm:min-h-[20rem] sm:rounded-[1.75rem] lg:min-h-[32rem] lg:rounded-[2rem]">
+            <div className="relative min-h-[16rem] overflow-hidden rounded-[1.5rem] border border-midex-line/50 shadow-[0_24px_64px_rgba(14,26,50,0.12)] sm:min-h-[20rem] sm:rounded-[1.75rem] lg:min-h-[32rem] lg:rounded-[2rem]">
               <Image
                 src={storyImage}
                 alt={t("storyTitle")}

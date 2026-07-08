@@ -1,65 +1,193 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { AboutFaqSection } from "@/components/about/AboutFaqSection";
 import { AboutFoundersSection } from "@/components/about/AboutFoundersSection";
 import { AboutMissionVisionSection } from "@/components/about/AboutMissionVisionSection";
 import { AboutMilestonesSection } from "@/components/about/AboutMilestonesSection";
 import { AboutStandardsSection } from "@/components/about/AboutStandardsSection";
+import { CertificationsSection } from "@/components/about/CertificationsSection";
 import { OurValuesSection } from "@/components/about/OurValuesSection";
 import { EventsSection } from "@/components/home/EventsSection";
 import { PageHero } from "@/components/layout/PageHero";
-import { getLocale } from "next-intl/server";
-import { getAboutMilestones, getEvents, getQuoteUrl } from "@/lib/cms";
+import { PageHeroImage } from "@/components/cms/PageHeroImage";
+import { PageCtaCard } from "@/components/sections/PageCtaCard";
+import { isValidImageSrc } from "@/lib/cms/images";
+import {
+  getAboutMilestones,
+  getAboutPageContent,
+  getEvents,
+  getQuoteUrl,
+} from "@/lib/cms";
+import {
+  isSectionEnabled,
+  pick,
+  resolveFaq,
+  resolvePageCta,
+  resolvePageHero,
+  resolveSectionHeader,
+} from "@/lib/cms/section-resolve";
 import type { Locale } from "@/i18n/routing";
 
 export async function AboutPageContent() {
   const t = await getTranslations("about");
   const tc = await getTranslations("products");
   const locale = (await getLocale()) as Locale;
-  const [milestones, events] = await Promise.all([
-    getAboutMilestones(),
+  const [milestones, events, page] = await Promise.all([
+    getAboutMilestones(locale),
     getEvents(locale),
+    getAboutPageContent(locale),
   ]);
+
+  const hero = resolvePageHero(page.hero, {
+    eyebrow: t("heroEyebrow"),
+    title: t("title"),
+    subtitle: t("intro"),
+    primaryCta: t("exploreSolutions"),
+    primaryCtaHref: "/solutions",
+    secondaryCta: tc("requestQuote"),
+    secondaryCtaHref: "/contact",
+  });
+
+  const milestonesHeader = resolveSectionHeader(page.milestonesSection, {
+    title: t("milestonesTitle"),
+    subtitle: t("milestonesSubtitle"),
+  });
+
+  const foundersHeader = resolveSectionHeader(page.foundersSection, {
+    title: t("foundersTitle"),
+  });
+
+  const standards = {
+    title: pick(page.standardsSection?.title, t("standardsTitle")),
+    subtitle: pick(page.standardsSection?.subtitle, t("standardsSubtitle")),
+    items: page.standardsSection?.items,
+  };
+
+  const certificationsHeader = resolveSectionHeader(page.certificationsSection, {
+    title: t("certificationsTitle"),
+    subtitle: t("certificationsSubtitle"),
+  });
+
+  const eventsHeader = resolveSectionHeader(page.eventsSection, {
+    title: t("eventsTitle"),
+    subtitle: t("eventsIntro"),
+  });
+
+  const values = {
+    title: pick(page.valuesSection?.title, t("valuesTitle")),
+    subtitle: pick(page.valuesSection?.subtitle, t("valuesSubtitle")),
+    items: page.valuesSection?.items,
+  };
+
+  const faq = resolveFaq(page.faq, {
+    title: t("faqTitle"),
+    intro: t("faqSubtitle"),
+    items: [1, 2, 3, 4, 5].map((index) => ({
+      question: t(`faqQ${index}`),
+      answer: t(`faqA${index}`),
+    })),
+  });
+
+  const cta = resolvePageCta(page.cta, {
+    title: t("ctaTitle"),
+    text: t("ctaText"),
+    primaryCta: t("contactUs"),
+    primaryCtaHref: "/contact",
+    secondaryCta: tc("requestQuote"),
+    secondaryCtaHref: getQuoteUrl(),
+  });
 
   return (
     <>
-      <PageHero title={t("title")} subtitle={t("subtitle")}compact />
+      <PageHero
+        eyebrow={hero.eyebrow}
+        title={hero.title}
+        subtitle={hero.subtitle}
+        compact
+        media={
+          isValidImageSrc(hero.image) ? (
+            <PageHeroImage src={hero.image} alt={hero.title} priority />
+          ) : undefined
+        }
+      >
+        <p className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-white/70 sm:mt-8">
+          <span>
+            <strong className="font-display text-2xl font-bold text-midex-mint">
+              {t("heroYears")}
+            </strong>{" "}
+            {t("heroYearsLabel")}
+          </span>
+          <span className="hidden text-white/25 sm:inline" aria-hidden>
+            ·
+          </span>
+          <span className="rounded-full border border-white/15 bg-white/8 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-white/85">
+            {t("heroFocusLabel")}
+          </span>
+        </p>
+      </PageHero>
 
-      <AboutMissionVisionSection />
+      <AboutMissionVisionSection content={page.missionVision} />
 
-      <AboutMilestonesSection milestones={milestones} />
+      {isSectionEnabled(milestonesHeader.enabled) && (
+        <AboutMilestonesSection
+          milestones={milestones}
+          title={milestonesHeader.title}
+          subtitle={milestonesHeader.subtitle}
+        />
+      )}
 
-      <AboutFoundersSection />
+      {isSectionEnabled(foundersHeader.enabled) && (
+        <AboutFoundersSection title={foundersHeader.title} />
+      )}
 
-      <AboutStandardsSection />
+      <AboutStandardsSection title={standards.title} subtitle={standards.subtitle} items={standards.items} />
 
-      <EventsSection events={events} title={t("eventsTitle")} subtitle={t("eventsIntro")} />
+      {isSectionEnabled(certificationsHeader.enabled) && (
+        <CertificationsSection
+          title={certificationsHeader.title}
+          subtitle={certificationsHeader.subtitle}
+        />
+      )}
 
-      <OurValuesSection />
+      {isSectionEnabled(eventsHeader.enabled) && (
+        <EventsSection
+          events={events}
+          title={eventsHeader.title}
+          subtitle={eventsHeader.subtitle}
+        />
+      )}
 
-      <AboutFaqSection />
+      <OurValuesSection title={values.title} subtitle={values.subtitle} items={values.items} />
 
+      {isSectionEnabled(faq.enabled) && (
+        <AboutFaqSection content={faq} contactLabel={t("faqContact")} />
+      )}
+
+      {isSectionEnabled(cta.enabled) && (
       <section className="mx-section--tight">
         <div className="mx-container">
-          <div className="flex flex-col items-center gap-6 rounded-2xl border border-midex-line bg-white p-8 shadow-sm sm:p-10 lg:flex-row lg:justify-between lg:text-start">
-            <div className="max-w-2xl text-center lg:text-start">
-              <h2 className="font-display text-2xl font-bold text-midex-navy sm:text-3xl">
-                {t("ctaTitle")}
-              </h2>
-              <p className="mt-3 leading-relaxed text-midex-gray/75">{t("ctaText")}</p>
+          <PageCtaCard>
+            <div className="flex flex-col items-center gap-8 text-center lg:flex-row lg:justify-between lg:text-start">
+              <div className="max-w-2xl">
+                <h2 className="font-display text-2xl font-bold text-white sm:text-3xl">
+                  {cta.title}
+                </h2>
+                <p className="mt-3 leading-relaxed text-white/70">{cta.text}</p>
+              </div>
+              <div className="flex shrink-0 flex-wrap justify-center gap-3">
+                <Link className="group mx-btn mx-btn-mint" href={cta.primaryCtaHref || "/contact"}>
+                  {cta.primaryCta}
+                  <span className="mx-arrow">→</span>
+                </Link>
+                <Link className="mx-btn mx-btn-outline" href={cta.secondaryCtaHref || getQuoteUrl()}>
+                  {cta.secondaryCta}
+                </Link>
+              </div>
             </div>
-            <div className="flex shrink-0 flex-wrap justify-center gap-3">
-              <Link className="group mx-btn mx-btn-primary" href="/contact">
-                {t("contactUs")}
-                <span className="mx-arrow">→</span>
-              </Link>
-              <Link className="mx-btn mx-btn-ghost" href={getQuoteUrl()}>
-                {tc("requestQuote")}
-              </Link>
-            </div>
-          </div>
+          </PageCtaCard>
         </div>
       </section>
+      )}
     </>
   );
 }

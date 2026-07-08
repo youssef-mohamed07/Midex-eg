@@ -220,12 +220,11 @@ export function ProductsExplorer({ products, categories, labels, initialCategory
             const isActive = product.slug === active.slug;
             return (
               <li key={product.slug}>
-                <button
-                  type="button"
+                <Link
+                  href={`/products/${product.slug}`}
                   onMouseEnter={() => setActiveSlug(product.slug)}
                   onFocus={() => setActiveSlug(product.slug)}
-                  onClick={() => setActiveSlug(product.slug)}
-                  className={`group flex w-full items-center gap-4 rounded-2xl border px-5 py-4 text-start transition-all duration-300 ${
+                  className={`group flex w-full items-center gap-4 rounded-2xl border px-5 py-4 text-start no-underline transition-all duration-300 ${
                     isActive
                       ? "border-midex-navy/15 bg-midex-navy text-white shadow-lg shadow-midex-navy/15"
                       : "border-midex-line/60 bg-white text-midex-navy hover:border-midex-mint/40 hover:bg-midex-surface/40"
@@ -260,7 +259,7 @@ export function ProductsExplorer({ products, categories, labels, initialCategory
                   >
                     →
                   </span>
-                </button>
+                </Link>
               </li>
             );
           })}

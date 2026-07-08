@@ -22,6 +22,7 @@ export async function BlogPostPageContent({ slug }: Props) {
   return (
     <>
       <PageHero
+        eyebrow={post.category}
         title={post.title}
         subtitle={post.excerpt}
         compact
@@ -34,7 +35,15 @@ export async function BlogPostPageContent({ slug }: Props) {
             ]}
           />
         }
-      />
+      >
+        <p className="mt-7 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-semibold uppercase tracking-wider text-white/70 sm:mt-8">
+          <time className="text-midex-mint">{post.date}</time>
+          <span aria-hidden>·</span>
+          <span>
+            {post.readTime} {t("minRead")}
+          </span>
+        </p>
+      </PageHero>
 
       <div className="relative -mt-6 lg:-mt-8">
         <div className="mx-container">
@@ -86,6 +95,40 @@ export async function BlogPostPageContent({ slug }: Props) {
             </article>
 
             <aside className="space-y-6 lg:sticky lg:top-24 lg:self-start">
+              {post.author?.name && (
+                <div className="overflow-hidden rounded-2xl border border-midex-line bg-white shadow-sm">
+                  <div className="flex items-center gap-4 p-5">
+                    {post.author.image ? (
+                      <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-full">
+                        <Image
+                          src={post.author.image}
+                          alt={post.author.name}
+                          fill
+                          className="object-cover"
+                          sizes="56px"
+                        />
+                      </div>
+                    ) : null}
+                    <div className="min-w-0">
+                      <p className="text-xs font-semibold uppercase tracking-wider text-midex-blue">
+                        {t("authorLabel")}
+                      </p>
+                      <p className="mt-1 font-display text-base font-bold text-midex-navy">
+                        {post.author.name}
+                      </p>
+                      {post.author.role ? (
+                        <p className="mt-0.5 text-sm text-midex-gray/70">{post.author.role}</p>
+                      ) : null}
+                    </div>
+                  </div>
+                  {post.author.bio ? (
+                    <p className="border-t border-midex-line px-5 py-4 text-sm leading-relaxed text-midex-gray/75">
+                      {post.author.bio}
+                    </p>
+                  ) : null}
+                </div>
+              )}
+
               {related.length > 0 && (
                 <div className="overflow-hidden rounded-2xl border border-midex-line bg-midex-surface/50">
                   <div className="border-b border-midex-line px-5 py-4">

@@ -31,11 +31,7 @@ function FeaturedCaseStudy({
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-midex-navy via-midex-navy/55 to-midex-navy/10" />
       <div
-        className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-        style={{
-          background:
-            "radial-gradient(ellipse 70% 55% at 18% 100%, rgba(132, 206, 205, 0.28), transparent 70%)",
-        }}
+        className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 mx-case-study-glow"
         aria-hidden
       />
 
@@ -134,12 +130,18 @@ function CaseStudyCard({
 
 export async function CaseStudiesSection({
   caseStudies: studiesProp,
+  title: titleProp,
+  subtitle: subtitleProp,
 }: {
   caseStudies?: CaseStudy[];
+  title?: string;
+  subtitle?: string;
 } = {}) {
   const locale = (await getLocale()) as Locale;
   const t = await getTranslations("home");
   const studies = studiesProp ?? (await getCaseStudies(locale));
+  const title = titleProp ?? t("caseStudiesTitle");
+  const subtitle = subtitleProp ?? t("caseStudiesSubtitle");
 
   if (studies.length === 0) return null;
 
@@ -151,8 +153,8 @@ export async function CaseStudiesSection({
         <RevealOnScroll>
           <div className="mb-8 flex flex-col gap-4 sm:mb-10 lg:mb-12 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-2xl">
-              <h2 className="mx-section-title mt-5">{t("caseStudiesTitle")}</h2>
-              <p className="mx-section-subtitle mt-4">{t("caseStudiesSubtitle")}</p>
+              <h2 className="mx-section-title mt-5">{title}</h2>
+              <p className="mx-section-subtitle mt-4">{subtitle}</p>
             </div>
             <Link href="/contact" className="mx-link-arrow shrink-0 text-sm no-underline">
               {t("caseStudiesCta")}

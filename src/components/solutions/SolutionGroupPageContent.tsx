@@ -3,11 +3,12 @@ import { notFound } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { PageHero } from "@/components/layout/PageHero";
+import { PageHeroImage } from "@/components/cms/PageHeroImage";
 import { SolutionBreadcrumbs } from "@/components/solutions/SolutionBreadcrumbs";
 import {
   SolutionGroupCard,
 } from "@/components/solutions/SolutionCards";
-import { FaqSection } from "@/components/home/FaqSection";
+import { HomeFaqSection } from "@/components/home/HomeFaqSection";
 import { HomeQuoteFormSection } from "@/components/home/HomeQuoteFormSection";
 import { SolutionsCta } from "@/components/solutions/SolutionsCta";
 import { SolutionGroupFaqSection } from "@/components/solutions/SolutionGroupFaqSection";
@@ -25,7 +26,9 @@ import {
   getSolutionGroupPrinciples,
   getSolutionGroups,
   getSolutionGroupWorkflow,
+  getSolutionsPageContent,
 } from "@/lib/cms";
+import { resolvePageCta, pick } from "@/lib/cms/section-resolve";
 import { type Locale } from "@/i18n/routing";
 
 type Props = { slug: string };
@@ -38,14 +41,25 @@ export async function SolutionGroupPageContent({ slug }: Props) {
   const t = await getTranslations("solutions");
   const tc = await getTranslations("products");
   const label = getGroupLabel(group);
-  const [highlights, principles, workflow, faq, allGroups] = await Promise.all([
+  const [highlights, principles, workflow, faq, allGroups, solutionsPage] = await Promise.all([
     getSolutionGroupHighlights(group.slug, locale),
     getSolutionGroupPrinciples(group.slug, locale),
     getSolutionGroupWorkflow(group.slug, locale),
     getSolutionGroupFaq(group.slug, locale),
     getSolutionGroups(locale),
+    getSolutionsPageContent(locale),
   ]);
   const otherGroups = allGroups.filter((item) => item.slug !== group.slug);
+  const cta = resolvePageCta(group.cta ?? solutionsPage.cta, {
+    title: t("ctaTitle"),
+    text: t("ctaText"),
+    primaryCta: tc("requestQuote"),
+    primaryCtaHref: getQuoteUrl(label),
+  });
+
+  const importanceTitle = pick(group.importanceTitle, t("groupImportanceTitle"));
+  const otherGroupsTitle = pick(group.otherGroupsTitle, t("otherGroups"));
+  const heroCtaLabel = pick(group.heroCtaLabel, tc("requestQuote"));
 
   return (
     <>
@@ -53,6 +67,7 @@ export async function SolutionGroupPageContent({ slug }: Props) {
         title={group.heroTitle ?? label}
         subtitle={group.description}
         compact
+        media={<PageHeroImage src={group.image} alt={label} priority />}
         breadcrumbs={
           <SolutionBreadcrumbs
             light
@@ -63,19 +78,13 @@ export async function SolutionGroupPageContent({ slug }: Props) {
           />
         }
       >
-        <div className="mt-6 flex flex-wrap gap-3">
+        <div className="mt-6">
           <Link
             className="group mx-btn mx-btn-primary border-white/20 bg-white text-midex-navy hover:bg-midex-mint hover:text-midex-navy"
             href={getQuoteUrl(label)}
           >
-            {tc("requestQuote")}
+            {heroCtaLabel}
             <span className="mx-arrow">→</span>
-          </Link>
-          <Link
-            className="mx-btn border border-white/25 bg-transparent text-white hover:border-white/40 hover:bg-white/10"
-            href="/solutions"
-          >
-            {t("allGroups")}
           </Link>
         </div>
       </PageHero>
@@ -86,7 +95,7 @@ export async function SolutionGroupPageContent({ slug }: Props) {
             <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(280px,400px)] lg:items-center lg:gap-14">
               <div>
                 <h2 className="mt-3 font-display text-2xl font-bold tracking-tight text-midex-navy sm:text-3xl">
-                  {t("groupImportanceTitle")}
+                  {importanceTitle}
                 </h2>
                 <p className="mt-5 text-base leading-relaxed text-midex-gray/80 sm:text-lg">
                   {group.intro}
@@ -133,7 +142,11 @@ export async function SolutionGroupPageContent({ slug }: Props) {
       {workflow ? (
         <SolutionGroupWorkflowSection content={workflow} />
       ) : (
-        <SolutionTimelineSection />
+        <SolutionTimelineSection
+          title={t("stepsGridTitle")}
+          subtitle={t("stepsGridSubtitle")}
+          steps={solutionsPage.timelineSection?.steps}
+        />
       )}
 
       <SolutionPageTailSections />
@@ -142,7 +155,7 @@ export async function SolutionGroupPageContent({ slug }: Props) {
         <section className="mx-section--tight">
           <div className="mx-container">
             <div className="mb-8 max-w-2xl">
-              <h2 className="mx-section-title">{t("otherGroups")}</h2>
+              <h2 className="mx-section-title">{otherGroupsTitle}</h2>
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -164,9 +177,9 @@ export async function SolutionGroupPageContent({ slug }: Props) {
 
       <HomeQuoteFormSection />
 
-      {faq ? <SolutionGroupFaqSection content={faq} /> : <FaqSection />}
+      {faq ? <SolutionGroupFaqSection content={faq} /> : <HomeFaqSection />}
 
-      <SolutionsCta quoteSubject={label} />
+      <SolutionsCta content={cta} quoteSubject={label} />
     </>
   );
 }

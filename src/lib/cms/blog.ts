@@ -2,7 +2,7 @@ import "server-only";
 
 import type { Locale } from "@/i18n/routing";
 import { sanityFetch } from "@/lib/cms/fetch";
-import { imageUrl, loc, locList } from "@/lib/cms/fragments";
+import { imageUrl, loc, locList, locOptional } from "@/lib/cms/fragments";
 import type { BlogPost } from "@/lib/cms/types";
 
 const postProjection = `{
@@ -13,7 +13,13 @@ const postProjection = `{
   "image": ${imageUrl()},
   "category": ${loc("category")},
   "readTime": coalesce(readTime, 0),
-  "body": ${locList("body")}
+  "body": ${locList("body")},
+  "author": authorRef->{
+    "name": coalesce(name, ""),
+    "role": ${locOptional("role")},
+    "image": ${imageUrl("image")},
+    "bio": ${locOptional("bio")}
+  }
 }`;
 
 export async function getBlogPosts(locale: Locale): Promise<BlogPost[]> {

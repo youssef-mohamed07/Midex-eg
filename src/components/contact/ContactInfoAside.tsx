@@ -57,6 +57,7 @@ type ContactInfoAsideProps = {
   sticky?: boolean;
   siteContact?: SiteContact;
   settings?: SiteSettings | null;
+  intro?: string;
 };
 
 export async function ContactInfoAside({
@@ -64,6 +65,7 @@ export async function ContactInfoAside({
   sticky = true,
   siteContact: siteContactProp,
   settings: settingsProp,
+  intro,
 }: ContactInfoAsideProps) {
   const tc = await getTranslations("contact");
   const ts = await getTranslations("socialFab");
@@ -111,7 +113,7 @@ export async function ContactInfoAside({
       <div className="border-b border-midex-line/80 p-6 sm:p-7">
         <p className="text-xs font-semibold uppercase tracking-wider text-midex-blue">Midex</p>
         <h2 className="mt-1 font-display text-xl font-bold text-midex-navy">{tc("salesQuotes")}</h2>
-        <p className="mt-2 text-sm leading-relaxed text-midex-gray/70">{tc("asideIntro")}</p>
+        <p className="mt-2 text-sm leading-relaxed text-midex-gray/70">{intro ?? tc("asideIntro")}</p>
 
         <ul className="mt-5 space-y-2.5">
           {socialLinks.map((link) => (

@@ -2,7 +2,10 @@ import Image from "next/image";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { PageHero } from "@/components/layout/PageHero";
-import { getBlogPosts } from "@/lib/cms";
+import { PageHeroImage } from "@/components/cms/PageHeroImage";
+import { PageCtaCard } from "@/components/sections/PageCtaCard";
+import { getBlogPageContent, getBlogPosts } from "@/lib/cms";
+import { pick, resolvePageCta, resolvePageHero, isSectionEnabled } from "@/lib/cms/section-resolve";
 import { type Locale } from "@/i18n/routing";
 
 function PostMeta({
@@ -43,20 +46,69 @@ function PostMeta({
 export async function BlogPageContent() {
   const locale = (await getLocale()) as Locale;
   const t = await getTranslations("blog");
-  const blogPosts = await getBlogPosts(locale);
+  const [blogPosts, page] = await Promise.all([
+    getBlogPosts(locale),
+    getBlogPageContent(locale),
+  ]);
 
   if (blogPosts.length === 0) return null;
 
   const [featured, ...rest] = blogPosts;
 
+  const hero = resolvePageHero(page.hero, {
+    eyebrow: t("heroEyebrow"),
+    title: t("title"),
+    subtitle: t("subtitle"),
+    secondaryCta: t("readPost"),
+    secondaryCtaHref: `/blog/${featured.slug}`,
+  });
+
+  const featuredLabel = pick(page.listing?.featuredLabel, t("featured"));
+  const latestLabel = pick(page.listing?.latestLabel, t("latestPosts"));
+  const readPost = pick(page.listing?.readPost, t("readPost"));
+  const postsLabel = pick(page.listing?.postsLabel, t("postsLabel"));
+
+  const cta = resolvePageCta(page.cta, {
+    title: t("ctaTitle"),
+    text: t("ctaText"),
+    primaryCta: t("ctaButton"),
+    primaryCtaHref: "/contact",
+  });
+
   return (
     <>
-      <PageHero title={t("title")} subtitle={t("subtitle")}compact />
+      <PageHero
+        eyebrow={hero.eyebrow}
+        title={hero.title}
+        subtitle={hero.subtitle}
+        compact
+        media={<PageHeroImage src={hero.image} alt={hero.title} />}
+      >
+        <p className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-white/70 sm:mt-8">
+          <span>
+            <strong className="font-semibold text-white">{blogPosts.length}</strong>{" "}
+            {postsLabel}
+          </span>
+          <span className="hidden text-white/25 sm:inline" aria-hidden>
+            ·
+          </span>
+          <span className="text-white/65">{featured.category}</span>
+        </p>
+        <div className="mt-6">
+          <Link
+            href={hero.secondaryCtaHref || `/blog/${featured.slug}`}
+            className="group mx-btn border border-white/25 bg-transparent text-white hover:border-white/40 hover:bg-white/10"
+          >
+            {hero.secondaryCta || readPost}
+            <span className="mx-arrow">→</span>
+          </Link>
+        </div>
+      </PageHero>
 
       <section className="mx-section">
         <div className="mx-container">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-midex-blue">
-            {t("featured")}
+            {featuredLabel}
           </p>
 
           <Link
@@ -89,7 +141,7 @@ export async function BlogPageContent() {
                   {featured.excerpt}
                 </p>
                 <span className="mx-link-arrow mt-4 text-sm sm:mt-6">
-                  {t("readPost")}
+                  {readPost}
                   <span className="mx-arrow">→</span>
                 </span>
               </div>
@@ -101,7 +153,7 @@ export async function BlogPageContent() {
               <div className="mx-hairline my-14 lg:my-16" />
 
               <h2 className="font-display text-2xl font-bold text-midex-navy sm:text-3xl">
-                {t("latestPosts")}
+                {latestLabel}
               </h2>
 
               <div className="mt-6 grid gap-3 sm:mt-8 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
@@ -143,20 +195,27 @@ export async function BlogPageContent() {
         </div>
       </section>
 
+      {isSectionEnabled(cta.enabled) && (
       <section className="mx-section--tight">
         <div className="mx-container">
-          <div className="flex flex-col items-center gap-6 rounded-2xl border border-midex-line bg-white p-8 text-center shadow-sm sm:p-10 lg:flex-row lg:justify-between lg:text-start">
-            <div className="max-w-xl">
-              <h2 className="font-display text-2xl font-bold text-midex-navy">{t("ctaTitle")}</h2>
-              <p className="mt-3 text-base leading-relaxed text-midex-gray/75">{t("ctaText")}</p>
+          <PageCtaCard>
+            <div className="flex flex-col items-center gap-8 text-center lg:flex-row lg:justify-between lg:text-start">
+              <div className="max-w-xl">
+                <h2 className="font-display text-2xl font-bold text-white">{cta.title}</h2>
+                <p className="mt-3 text-base leading-relaxed text-white/70">{cta.text}</p>
+              </div>
+              <Link
+                className="group mx-btn mx-btn-mint shrink-0"
+                href={cta.primaryCtaHref || "/contact"}
+              >
+                {cta.primaryCta}
+                <span className="mx-arrow">→</span>
+              </Link>
             </div>
-            <Link className="group mx-btn mx-btn-primary shrink-0" href="/contact">
-              {t("ctaButton")}
-              <span className="mx-arrow">→</span>
-            </Link>
-          </div>
+          </PageCtaCard>
         </div>
       </section>
+      )}
     </>
   );
 }

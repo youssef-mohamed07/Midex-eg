@@ -5,7 +5,7 @@ import { Link } from "@/i18n/navigation";
 import { PageHero } from "@/components/layout/PageHero";
 import { SolutionBreadcrumbs } from "@/components/solutions/SolutionBreadcrumbs";
 import { getGroupLabel } from "@/components/solutions/solution-labels";
-import { FaqSection } from "@/components/home/FaqSection";
+import { HomeFaqSection } from "@/components/home/HomeFaqSection";
 import { HomeQuoteFormSection } from "@/components/home/HomeQuoteFormSection";
 import {
   getQuoteUrl,
@@ -13,7 +13,9 @@ import {
   getSolutionGroup,
   getSolutionGroupFaq,
   getSolutionGroupHighlights,
+  getSolutionsPageContent,
 } from "@/lib/cms";
+import { pick, resolveSolutionChildLabels } from "@/lib/cms/section-resolve";
 import { type Locale } from "@/i18n/routing";
 import { SolutionChildOverviewSection } from "@/components/solutions/SolutionChildOverviewSection";
 import { SolutionChildRelatedSection } from "@/components/solutions/SolutionChildRelatedSection";
@@ -105,10 +107,25 @@ export async function SolutionChildPageContent({ slug, childSlug }: Props) {
     );
   }
 
-  const [highlights, faq] = await Promise.all([
+  const [highlights, faq, solutionsPage] = await Promise.all([
     getSolutionGroupHighlights(group.slug, locale),
     getSolutionGroupFaq(group.slug, locale),
+    getSolutionsPageContent(locale),
   ]);
+
+  const childHighlights =
+    child.highlights?.length ? child.highlights : highlights;
+
+  const labels = resolveSolutionChildLabels(child.labels, {
+    introductionTitle: t("introduction"),
+    capabilitiesTitle: t("capabilities"),
+    relatedServicesTitle: t("relatedServices"),
+    heroCtaLabel: tc("requestQuote"),
+    browseGroupLabel: t("browseGroup"),
+  });
+
+  const introBody =
+    child.intro?.trim() || t("childIntro", { service: child.label });
 
   return (
     <>
@@ -144,19 +161,19 @@ export async function SolutionChildPageContent({ slug, childSlug }: Props) {
         <div className="mx-container grid gap-8 sm:gap-10 lg:grid-cols-[1fr_320px] lg:gap-16">
           <div>
             <h2 className="font-display text-2xl font-bold text-midex-navy sm:text-3xl">
-              {t("introduction")}
+              {labels.introductionTitle}
             </h2>
             <p className="mt-5 max-w-3xl text-base leading-relaxed text-midex-gray/85 sm:text-lg">
-              {t("childIntro", { service: child.label })}
+              {introBody}
             </p>
 
-            {highlights.length > 0 && (
+            {childHighlights.length > 0 && (
               <div className="mt-10">
                 <h3 className="font-display text-xl font-bold text-midex-navy">
-                  {t("capabilities")}
+                  {labels.capabilitiesTitle}
                 </h3>
                 <ul className="mt-4 grid gap-3 sm:grid-cols-2">
-                  {highlights.map((item) => (
+                  {childHighlights.map((item) => (
                     <li
                       key={item}
                       className="flex items-start gap-3 rounded-xl border border-midex-navy/8 bg-midex-surface px-4 py-3 text-sm text-midex-gray/85"
@@ -171,7 +188,7 @@ export async function SolutionChildPageContent({ slug, childSlug }: Props) {
 
             <div className="mt-10 flex flex-wrap gap-3">
               <Link className="mx-btn mx-btn-primary" href={getQuoteUrl(child.label)}>
-                {tc("requestQuote")} →
+                {labels.heroCtaLabel} →
               </Link>
               <Link
                 className="mx-btn border border-midex-navy/15 bg-white text-midex-navy hover:bg-midex-surface"
@@ -185,7 +202,7 @@ export async function SolutionChildPageContent({ slug, childSlug }: Props) {
           <aside className="space-y-6">
             <div className="rounded-2xl border border-midex-navy/8 bg-midex-surface p-6">
               <h3 className="font-display text-lg font-bold text-midex-navy">
-                {t("relatedServices")}
+                {labels.relatedServicesTitle}
               </h3>
               <ul className="mt-4 space-y-2">
                 {related.map((item) => (
@@ -212,20 +229,24 @@ export async function SolutionChildPageContent({ slug, childSlug }: Props) {
                 href={`/solutions/group/${group.slug}`}
                 className="mt-4 inline-flex text-sm font-semibold text-midex-blue hover:underline"
               >
-                {t("browseGroup")} →
+                {labels.browseGroupLabel} →
               </Link>
             </div>
           </aside>
         </div>
       </section>
 
-      <SolutionTimelineSection />
+      <SolutionTimelineSection
+        title={t("stepsGridTitle")}
+        subtitle={t("stepsGridSubtitle")}
+        steps={solutionsPage.timelineSection?.steps}
+      />
 
       <SolutionPageTailSections />
 
       <HomeQuoteFormSection />
 
-      {faq ? <SolutionGroupFaqSection content={faq} /> : <FaqSection />}
+      {faq ? <SolutionGroupFaqSection content={faq} /> : <HomeFaqSection />}
     </>
   );
 }

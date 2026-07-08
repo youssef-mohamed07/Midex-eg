@@ -231,6 +231,7 @@ export function MultiStepQuoteForm({ size = "default" }: { size?: "default" | "l
           phone: formData.phone,
           company: formData.company,
           subject: "quote",
+          source: "quote",
           item: projectTypeLabel,
           message: composedMessage,
           website: formData.website,

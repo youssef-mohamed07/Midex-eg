@@ -85,7 +85,7 @@ export async function Footer({ shell }: { shell: LayoutShellData }) {
               {t("contactUs")}
             </h3>
             <div className="mt-2.5 space-y-2 text-sm text-white/65">
-              <p className="leading-snug">{t("address")}</p>
+              <p className="leading-snug">{siteContact.address?.trim() || t("address")}</p>
               <a
                 href={`mailto:${siteContact.email}`}
                 className="block text-midex-mint transition-colors hover:text-white"

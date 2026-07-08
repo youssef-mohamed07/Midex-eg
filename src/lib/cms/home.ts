@@ -31,6 +31,7 @@ export type HomePageData = {
   testimonials: Testimonial[];
   solutionCards: HomeSolutionCard[];
   productCategories: Record<string, ProductCategoryInfo>;
+  productCategoryOrder: string[];
   products: Product[];
 };
 
@@ -71,7 +72,12 @@ export async function getHomePageData(locale: Locale): Promise<HomePageData> {
         "excerpt": ${loc("excerpt")},
         "image": ${imageUrl("image")}
       },
-      "stats": *[_type == "stat"] | order(order asc) { value, labelKey, suffix },
+      "stats": *[_type == "stat"] | order(order asc) {
+        value,
+        labelKey,
+        "label": ${locOptional("label")},
+        suffix
+      },
       "heroCollage": *[_type == "homePage"][0]{
         "left": coalesce(heroCollageLeft[]{
           "src": ${imageUrl("image")},
@@ -120,7 +126,8 @@ export async function getHomePageData(locale: Locale): Promise<HomePageData> {
       "testimonials": *[_type == "testimonial"] | order(order asc) {
         name,
         "role": ${loc("role")},
-        "quote": ${loc("quote")}
+        "quote": ${loc("quote")},
+        "image": ${imageUrl("image")}
       },
       "solutionGroups": *[_type == "solutionGroup"] | order(order asc) {
         "slug": slug.current,
@@ -191,12 +198,14 @@ export async function getHomePageData(locale: Locale): Promise<HomePageData> {
     highlightsByGroup,
   );
 
+  const productCategoryRows = data.productCategories ?? [];
   const productCategories = Object.fromEntries(
-    (data.productCategories ?? []).map(({ slug, label, description }) => [
+    productCategoryRows.map(({ slug, label, description }) => [
       slug,
       { label, description },
     ]),
   ) as Record<string, ProductCategoryInfo>;
+  const productCategoryOrder = productCategoryRows.map((row) => row.slug);
 
   return {
     services: data.services ?? [],
@@ -210,6 +219,7 @@ export async function getHomePageData(locale: Locale): Promise<HomePageData> {
     testimonials: data.testimonials ?? [],
     solutionCards,
     productCategories,
+    productCategoryOrder,
     products: data.products ?? [],
   };
 }

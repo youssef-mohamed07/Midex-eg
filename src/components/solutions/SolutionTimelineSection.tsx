@@ -5,23 +5,36 @@ import {
   deliveryStepImages,
   deliveryStepKeys,
 } from "@/components/solutions/solution-delivery-steps";
+import type { TimelineStepContent } from "@/lib/cms/types";
+import { pick } from "@/lib/cms/section-resolve";
 
-export async function SolutionTimelineSection() {
+export async function SolutionTimelineSection({
+  title,
+  subtitle,
+  steps: cmsSteps,
+}: {
+  title: string;
+  subtitle: string;
+  steps?: TimelineStepContent[];
+}) {
   const t = await getTranslations("solutions");
 
-  const services = deliveryStepKeys.map((key) => ({
-    title: t(`${key}Title`),
-    excerpt: t(`${key}Text`),
-    image: deliveryStepImages[key],
-  }));
+  const services = deliveryStepKeys.map((key) => {
+    const cmsStep = cmsSteps?.find((step) => step.key === key);
+    return {
+      title: pick(cmsStep?.title, t(`${key}Title`)),
+      excerpt: pick(cmsStep?.text, t(`${key}Text`)),
+      image: cmsStep?.image || deliveryStepImages[key],
+    };
+  });
 
   return (
     <section className="mx-section">
       <div className="mx-container">
         <RevealOnScroll>
           <div className="mx-auto mb-14 max-w-2xl text-center">
-          <h2 className="mx-section-title">{t("stepsGridTitle")}</h2>
-            <p className="mx-section-subtitle mx-auto">{t("stepsGridSubtitle")}</p>
+          <h2 className="mx-section-title">{title}</h2>
+            <p className="mx-section-subtitle mx-auto">{subtitle}</p>
           </div>
         </RevealOnScroll>
 

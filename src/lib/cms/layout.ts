@@ -2,6 +2,7 @@ import "server-only";
 
 import { buildSolutionGroupNav } from "@/components/solutions/solution-group-cards";
 import type { Locale } from "@/i18n/routing";
+import { brandManifest } from "@/lib/branding/tokens";
 import { sanityFetch } from "@/lib/cms/fetch";
 import { imageUrl, loc, locOptional } from "@/lib/cms/fragments";
 import type {
@@ -70,8 +71,8 @@ const siteSettingsProjection = `{
   "twitterHandle": twitterHandle,
   "manifest": {
     "description": coalesce(manifestDescription, ""),
-    "backgroundColor": coalesce(manifestBackgroundColor, "#062a42"),
-    "themeColor": coalesce(manifestThemeColor, "#093d5e")
+    "backgroundColor": coalesce(manifestBackgroundColor, "${brandManifest.backgroundColor}"),
+    "themeColor": coalesce(manifestThemeColor, "${brandManifest.themeColor}")
   },
   "robotsDisallow": coalesce(robotsDisallow, ["/api/"])
 }`;

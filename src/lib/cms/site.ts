@@ -1,8 +1,10 @@
 import "server-only";
 
 import type { Locale } from "@/i18n/routing";
+import { brandManifest } from "@/lib/branding/tokens";
 import { sanityFetch } from "@/lib/cms/fetch";
 import { imageUrl, loc, locList, locOptional } from "@/lib/cms/fragments";
+import { isValidImageSrc } from "@/lib/cms/images";
 import type {
   CaseStudy,
   Certificate,
@@ -45,8 +47,8 @@ const siteSettingsQuery = `*[_type == "siteSettings"][0]{
   "twitterHandle": twitterHandle,
   "manifest": {
     "description": coalesce(manifestDescription, ""),
-    "backgroundColor": coalesce(manifestBackgroundColor, "#062a42"),
-    "themeColor": coalesce(manifestThemeColor, "#093d5e")
+    "backgroundColor": coalesce(manifestBackgroundColor, "${brandManifest.backgroundColor}"),
+    "themeColor": coalesce(manifestThemeColor, "${brandManifest.themeColor}")
   },
   "robotsDisallow": coalesce(robotsDisallow, ["/api/"])
 }`;
@@ -158,55 +160,106 @@ export async function getExclusivePartners(): Promise<Partner[]> {
 }
 
 export async function getCertificates(locale: Locale): Promise<Certificate[]> {
-  return sanityFetch<Certificate[]>({
-    query: `*[_type == "certificate"] | order(order asc) {
+  const items = await sanityFetch<Certificate[]>({
+    query: `*[_type == "certificate" && (defined(image.asset) || defined(image.sourcePath))] | order(order asc) {
       "slug": slug.current,
-      "image": ${imageUrl()},
-      "alt": ${loc("image.alt")}
+      "image": ${imageUrl("image")},
+      "alt": ${loc("image.alt")},
+      "title": ${locOptional("title")},
+      "description": ${locOptional("description")}
     }`,
     params: { locale },
     tags: ["certificate"],
   });
+
+  return items.filter((cert) => isValidImageSrc(cert.image) && cert.slug);
 }
 
-export async function getStats(): Promise<Stat[]> {
+export async function getStats(locale: Locale): Promise<Stat[]> {
   return sanityFetch<Stat[]>({
-    query: `*[_type == "stat"] | order(order asc) { value, labelKey, suffix }`,
+    query: `*[_type == "stat"] | order(order asc) {
+      value,
+      labelKey,
+      "label": ${locOptional("label")},
+      suffix
+    }`,
+    params: { locale },
     tags: ["stat"],
   });
 }
 
-export async function getAboutMilestones(): Promise<Milestone[]> {
+export async function getAboutMilestones(locale: Locale): Promise<Milestone[]> {
   return sanityFetch<Milestone[]>({
-    query: `*[_type == "milestone"] | order(order asc) { value, labelKey, suffix }`,
+    query: `*[_type == "milestone"] | order(order asc) {
+      value,
+      labelKey,
+      "label": ${locOptional("label")},
+      suffix
+    }`,
+    params: { locale },
     tags: ["milestone"],
   });
 }
 
-export async function getAboutFounders(): Promise<Founder[]> {
+export async function getAboutFounders(locale: Locale): Promise<Founder[]> {
   return sanityFetch<Founder[]>({
     query: `*[_type == "founder"] | order(order asc) {
       "id": key,
       "image": ${imageUrl()},
       nameKey,
       roleKey,
-      bioKey
+      bioKey,
+      "name": ${locOptional("name")},
+      "role": ${locOptional("role")},
+      "bio": ${locOptional("bio")}
     }`,
+    params: { locale },
     tags: ["founder"],
   });
 }
 
-export async function getAboutStandards(): Promise<string[]> {
-  const result = await sanityFetch<{ standards: string[] } | null>({
-    query: `*[_type == "aboutPage"][0]{ "standards": coalesce(standards, []) }`,
+export async function getAboutStandards(
+  locale: Locale,
+): Promise<{ key: string; text: string; description?: string }[]> {
+  const result = await sanityFetch<{
+    standardsSection?: { items?: { key: string; text: string; description?: string }[] };
+    standards?: string[];
+  } | null>({
+    query: `*[_type == "aboutPage"][0]{
+      standardsSection{
+        items[]{
+          key,
+          "text": ${loc("text")},
+          "description": ${locOptional("description")}
+        }
+      },
+      standards
+    }`,
+    params: { locale },
     tags: ["aboutPage"],
   });
-  return result?.standards ?? [];
+
+  const cmsItems = (result?.standardsSection?.items ?? []).filter((item) => item.text?.trim());
+  if (cmsItems.length > 0) return cmsItems;
+
+  return (result?.standards ?? []).map((key) => ({ key, text: "" }));
 }
 
 export async function getCompanyValues(locale: Locale): Promise<CompanyValue[]> {
-  const result = await sanityFetch<{ values: CompanyValue[] } | null>({
+  const result = await sanityFetch<{
+    valuesSection?: { items?: CompanyValue[] };
+    values?: CompanyValue[];
+  } | null>({
     query: `*[_type == "aboutPage"][0]{
+      valuesSection{
+        items[]{
+          "id": key,
+          "title": ${loc("title")},
+          "text": ${loc("text")},
+          "image": ${imageUrl("image")},
+          "alt": ${loc("image.alt")}
+        }
+      },
       "values": coalesce(values[]{
         "id": key,
         "image": ${imageUrl("image")},
@@ -216,6 +269,10 @@ export async function getCompanyValues(locale: Locale): Promise<CompanyValue[]> 
     params: { locale },
     tags: ["aboutPage"],
   });
+
+  const cmsItems = result?.valuesSection?.items?.filter((item) => item.title || item.image);
+  if (cmsItems?.length) return cmsItems;
+
   return result?.values ?? [];
 }
 
@@ -224,7 +281,8 @@ export async function getTestimonials(locale: Locale): Promise<Testimonial[]> {
     query: `*[_type == "testimonial"] | order(order asc) {
       name,
       "role": ${loc("role")},
-      "quote": ${loc("quote")}
+      "quote": ${loc("quote")},
+      "image": ${imageUrl("image")}
     }`,
     params: { locale },
     tags: ["testimonial"],

@@ -1,6 +1,9 @@
-import { getLocale, getTranslations } from "next-intl/server";
+import Image from "next/image";
+import { getLocale } from "next-intl/server";
 import { WordRevealText } from "@/components/ui/WordRevealText";
+import type { QuoteBlockContent } from "@/lib/cms/types";
 import { type Locale } from "@/i18n/routing";
+import { isValidImageSrc } from "@/lib/cms/images";
 
 function QuoteMark({ className = "" }: { className?: string }) {
   return (
@@ -15,9 +18,12 @@ function QuoteMark({ className = "" }: { className?: string }) {
   );
 }
 
-export async function FeaturedQuoteSection() {
+type Props = {
+  content: QuoteBlockContent & { quote: string; name: string; role: string };
+};
+
+export async function FeaturedQuoteSection({ content }: Props) {
   const locale = (await getLocale()) as Locale;
-  const t = await getTranslations("home");
   const isLatin = locale !== "ar";
 
   return (
@@ -28,11 +34,22 @@ export async function FeaturedQuoteSection() {
 
           <blockquote className="mt-8 sm:mt-10">
             <p className="text-balance font-display text-xl font-bold leading-[1.65] text-midex-navy sm:text-2xl sm:leading-[1.6] lg:text-[1.65rem]">
-              <WordRevealText text={t("featuredQuoteText")} />
+              <WordRevealText text={content.quote} />
             </p>
           </blockquote>
 
           <figcaption className="mt-8 flex flex-col items-center gap-4 sm:mt-10">
+            {isValidImageSrc(content.image) && (
+              <div className="relative h-16 w-16 overflow-hidden rounded-full ring-2 ring-midex-mint/40 sm:h-20 sm:w-20">
+                <Image
+                  src={content.image}
+                  alt={content.name}
+                  fill
+                  className="object-cover"
+                  sizes="80px"
+                />
+              </div>
+            )}
             <span className="h-px w-10 bg-midex-blue/30" aria-hidden />
 
             <cite
@@ -40,8 +57,8 @@ export async function FeaturedQuoteSection() {
                 isLatin ? "uppercase tracking-[0.2em]" : "tracking-wide"
               }`}
             >
-              <span className="text-midex-blue">{t("featuredQuoteName")}</span>
-              <span className="text-midex-gray/45">, {t("featuredQuoteRole")}</span>
+              <span className="text-midex-blue">{content.name}</span>
+              <span className="text-midex-gray/45">, {content.role}</span>
             </cite>
           </figcaption>
         </figure>

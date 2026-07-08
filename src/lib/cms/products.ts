@@ -2,11 +2,18 @@ import "server-only";
 
 import type { Locale } from "@/i18n/routing";
 import { sanityFetch } from "@/lib/cms/fetch";
-import { imageUrl, loc, locList } from "@/lib/cms/fragments";
+import {
+  imageUrl,
+  loc,
+  locList,
+  locOptional,
+  pageHeroProjection,
+} from "@/lib/cms/fragments";
 import type {
   Product,
   ProductCategoryDetails,
   ProductCategoryInfo,
+  ProductCategoryPage,
 } from "@/lib/cms/types";
 
 const productProjection = `{
@@ -16,7 +23,17 @@ const productProjection = `{
   "excerpt": ${loc("excerpt")},
   "description": ${loc("description")},
   "image": ${imageUrl("image")},
-  "gallery": gallery[].asset->url
+  "gallery": gallery[].asset->url,
+  "highlights": ${locList("highlights")},
+  "specs": coalesce(specs[]{
+    "label": ${loc("label")},
+    "value": ${loc("value")}
+  }, []),
+  "relatedSolution": solutionChild->{
+    "slug": slug.current,
+    "label": ${loc("label")},
+    "groupSlug": group->slug.current
+  }
 }`;
 
 export async function getProducts(locale: Locale): Promise<Product[]> {
@@ -52,20 +69,41 @@ export async function getProductCategories(
   locale: Locale,
 ): Promise<Record<string, ProductCategoryInfo>> {
   const categories = await sanityFetch<
-    { slug: string; label: string; description: string }[]
+    { slug: string; label: string; description: string; image: string }[]
   >({
     query: `*[_type == "productCategory"] | order(order asc) {
       "slug": slug.current,
       "label": ${loc("label")},
-      "description": ${loc("description")}
+      "description": ${loc("description")},
+      "image": ${imageUrl("image")}
     }`,
     params: { locale },
     tags: ["productCategory"],
   });
 
   return Object.fromEntries(
-    categories.map(({ slug, label, description }) => [slug, { label, description }]),
+    categories.map(({ slug, label, description, image }) => [
+      slug,
+      { label, description, image: image || undefined },
+    ]),
   );
+}
+
+export async function getProductCategory(
+  category: string,
+  locale: Locale,
+): Promise<ProductCategoryPage | undefined> {
+  const row = await sanityFetch<ProductCategoryPage | null>({
+    query: `*[_type == "productCategory" && slug.current == $category][0]{
+      "label": ${loc("label")},
+      "description": ${loc("description")},
+      "image": ${imageUrl("image")},
+      "hero": ${pageHeroProjection("hero")}
+    }`,
+    params: { locale, category },
+    tags: ["productCategory"],
+  });
+  return row ?? undefined;
 }
 
 export async function getProductCategoryDetails(

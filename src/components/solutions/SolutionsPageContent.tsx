@@ -6,71 +6,177 @@ import { FaqSection } from "@/components/home/FaqSection";
 import { PartnersSection } from "@/components/home/PartnersSection";
 import { StatsSection } from "@/components/home/StatsSection";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
-import { PageHero } from "@/components/layout/PageHero";
+import { SolutionsPageHero } from "@/components/solutions/SolutionsPageHero";
 import { SolutionsCta } from "@/components/solutions/SolutionsCta";
 import { SolutionTimelineSection } from "@/components/solutions/SolutionTimelineSection";
-import { getSolutionGroups, getStats } from "@/lib/cms";
+import {
+  getSolutionGroups,
+  getSolutionsPageContent,
+  getStats,
+} from "@/lib/cms";
+import {
+  isSectionEnabled,
+  pick,
+  resolveBeforeAfter,
+  resolveFaq,
+  resolvePageCta,
+  resolvePageHero,
+  resolveSectionHeader,
+  resolveTimelineSection,
+} from "@/lib/cms/section-resolve";
 import { type Locale } from "@/i18n/routing";
 
 export async function SolutionsPageContent() {
   const locale = (await getLocale()) as Locale;
   const t = await getTranslations("solutions");
   const th = await getTranslations("home");
-  const [solutionGroups, stats] = await Promise.all([
+  const [solutionGroups, stats, page] = await Promise.all([
     getSolutionGroups(locale),
-    getStats(),
+    getStats(locale),
+    getSolutionsPageContent(locale),
   ]);
   const totalServices = solutionGroups.reduce(
     (sum, group) => sum + group.children.length,
     0,
   );
 
+  const hero = resolvePageHero(page.hero, {
+    eyebrow: t("title"),
+    title: t("heroTitle"),
+    subtitle: t("heroSubtitle"),
+    primaryCta: th("quoteButton"),
+    primaryCtaHref: "/contact",
+    secondaryCta: t("allGroups"),
+    secondaryCtaHref: "#capabilities",
+  });
+
+  const capabilities = resolveSectionHeader(page.capabilitiesSection, {
+    title: th("capabilitiesTitle"),
+    subtitle: th("capabilitiesSubtitle"),
+  });
+
+  const beforeAfter = resolveBeforeAfter(page.beforeAfterSection, {
+    title: th("processPerformanceTitle"),
+    subtitle: th("beforeAfterTitle"),
+    beforeItems: [
+      th("processDuring1"),
+      th("processDuring2"),
+      th("processDuring3"),
+      th("processDuring4"),
+      th("processDuring5"),
+    ],
+    afterItems: [
+      th("processAfter1"),
+      th("processAfter2"),
+      th("processAfter3"),
+      th("processAfter4"),
+      th("processAfter5"),
+    ],
+  });
+
+  const timeline = resolveTimelineSection(page.timelineSection, {
+    title: t("stepsGridTitle"),
+    subtitle: t("stepsGridSubtitle"),
+  });
+
+  const statsHeader = resolveSectionHeader(page.statsSection, {
+    title: th("statsTitle"),
+    subtitle: th("statsSubtitle"),
+  });
+
+  const caseStudiesHeader = resolveSectionHeader(page.caseStudiesSection, {
+    title: th("caseStudiesTitle"),
+    subtitle: th("caseStudiesSubtitle"),
+  });
+
+  const testimonialsHeader = resolveSectionHeader(page.testimonialsSection, {
+    title: th("testimonialsTitle"),
+    subtitle: th("testimonialsSubtitle"),
+  });
+
+  const faq = resolveFaq(page.faq, {
+    title: th("faqTitle"),
+    intro: th("faqSubtitle"),
+    items: [1, 2, 3, 4, 5, 6].map((index) => ({
+      question: th(`faqQ${index}`),
+      answer: th(`faqA${index}`),
+    })),
+  });
+
+  const cta = resolvePageCta(page.cta, {
+    title: t("ctaTitle"),
+    text: t("ctaText"),
+    primaryCta: th("quoteButton"),
+    primaryCtaHref: "/contact",
+  });
+
   return (
     <>
-      <PageHero title={t("heroTitle")} subtitle={t("heroSubtitle")} compact>
-        <p className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-white/70">
-          <span>
-            <strong className="font-semibold text-white">{solutionGroups.length}</strong>{" "}
-            {t("groups")}
-          </span>
-          <span className="hidden text-white/30 sm:inline" aria-hidden>
-            ·
-          </span>
-          <span>
-            <strong className="font-semibold text-midex-mint">{totalServices}</strong>{" "}
-            {t("services")}
-          </span>
-        </p>
-      </PageHero>
+      <SolutionsPageHero
+        hero={hero}
+        groups={solutionGroups}
+        groupsCount={solutionGroups.length}
+        servicesCount={totalServices}
+        groupsLabel={t("groups")}
+        servicesLabel={t("services")}
+        eyebrowFallback={t("title")}
+        primaryCtaFallback={th("quoteButton")}
+        secondaryCtaFallback={t("allGroups")}
+      />
 
       <PartnersSection title={th("partnersTitle")} />
 
-      <EngineeringCapabilitiesSection />
+      {isSectionEnabled(capabilities.enabled) && (
+        <EngineeringCapabilitiesSection
+          title={capabilities.title}
+          subtitle={capabilities.subtitle}
+          id="capabilities"
+        />
+      )}
 
-      <BeforeAfterSection />
+      {isSectionEnabled(beforeAfter.enabled) && (
+        <BeforeAfterSection content={beforeAfter} />
+      )}
 
-      <SolutionTimelineSection />
+      {isSectionEnabled(statsHeader.enabled) && (
+        <StatsSection
+          title={statsHeader.title}
+          subtitle={statsHeader.subtitle}
+          items={stats.map((stat) => ({
+            value: stat.value,
+            label: pick(stat.label, th(stat.labelKey)),
+            suffix: stat.suffix,
+          }))}
+        />
+      )}
 
-      <StatsSection
-        title={th("statsTitle")}
-        subtitle={th("statsSubtitle")}
-        items={stats.map((stat) => ({
-          value: stat.value,
-          label: th(stat.labelKey),
-          suffix: stat.suffix,
-        }))}
-      />
+      {isSectionEnabled(timeline.enabled) && (
+        <SolutionTimelineSection
+          title={timeline.title}
+          subtitle={timeline.subtitle}
+          steps={timeline.steps}
+        />
+      )}
 
-      <CaseStudiesSection />
+      {isSectionEnabled(caseStudiesHeader.enabled) && (
+        <CaseStudiesSection
+          title={caseStudiesHeader.title}
+          subtitle={caseStudiesHeader.subtitle}
+        />
+      )}
 
-      <TestimonialsSection
-        title={th("testimonialsTitle")}
-        subtitle={th("testimonialsSubtitle")}
-      />
+      {isSectionEnabled(testimonialsHeader.enabled) && (
+        <TestimonialsSection
+          title={testimonialsHeader.title}
+          subtitle={testimonialsHeader.subtitle}
+        />
+      )}
 
-      <FaqSection />
+      {isSectionEnabled(faq.enabled) && (
+        <FaqSection content={faq} contactLabel={th("faqContact")} />
+      )}
 
-      <SolutionsCta />
+      {isSectionEnabled(cta.enabled) && <SolutionsCta content={cta} />}
     </>
   );
 }

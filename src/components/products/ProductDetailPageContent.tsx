@@ -3,7 +3,9 @@ import { notFound } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { ProductGallery } from "@/components/products/ProductGallery";
+import { ProductsCta } from "@/components/products/ProductsCta";
 import { PageHero } from "@/components/layout/PageHero";
+import { PageHeroImage } from "@/components/cms/PageHeroImage";
 import { SolutionBreadcrumbs } from "@/components/solutions/SolutionBreadcrumbs";
 import {
   getProduct,
@@ -11,8 +13,13 @@ import {
   getProductCategoryDetails,
   getProductImages,
   getProductsByCategory,
+  getProductsPageContent,
   getQuoteUrl,
 } from "@/lib/cms";
+import {
+  resolvePageCta,
+  resolveProductDetailLabels,
+} from "@/lib/cms/section-resolve";
 import { type Locale } from "@/i18n/routing";
 
 type Props = { slug: string };
@@ -24,17 +31,39 @@ export async function ProductDetailPageContent({ slug }: Props) {
 
   const t = await getTranslations("products");
   const tn = await getTranslations("nav");
-  const [productCategories, { highlights, specs }, categoryProducts] = await Promise.all([
+  const [productCategories, categoryDetails, categoryProducts, page] = await Promise.all([
     getProductCategories(locale),
     getProductCategoryDetails(product.category, locale),
     getProductsByCategory(product.category, locale),
+    getProductsPageContent(locale),
   ]);
   const category = productCategories[product.category];
   const categoryLabel = category?.label;
+  const highlights =
+    product.highlights?.length ? product.highlights : categoryDetails.highlights;
+  const specs = product.specs?.length ? product.specs : categoryDetails.specs;
   const related = categoryProducts
     .filter((item) => item.slug !== product.slug)
     .slice(0, 4);
   const galleryImages = getProductImages(product);
+
+  const labels = resolveProductDetailLabels(page.detailLabels, {
+    overviewTitle: t("overview"),
+    featuresTitle: t("featuresTitle"),
+    specificationsTitle: t("specificationsTitle"),
+    applicationsTitle: t("applicationsTitle"),
+    relatedProductsTitle: t("relatedProductsTitle"),
+    backToCatalog: t("backToCatalog"),
+    requestQuote: t("requestQuote"),
+    relatedSolutionTitle: "Related solution",
+  });
+
+  const detailCta = resolvePageCta(page.detailCta, {
+    title: t("requestQuote"),
+    text: t("subtitle"),
+    primaryCta: t("requestQuote"),
+    primaryCtaHref: getQuoteUrl(product.title),
+  });
 
   return (
     <>
@@ -42,6 +71,7 @@ export async function ProductDetailPageContent({ slug }: Props) {
         title={product.title}
         subtitle={product.excerpt}
         compact
+        media={<PageHeroImage src={product.image} alt={product.title} priority />}
         breadcrumbs={
           <SolutionBreadcrumbs
             light
@@ -65,14 +95,14 @@ export async function ProductDetailPageContent({ slug }: Props) {
             className="group mx-btn mx-btn-primary border-white/20 bg-white text-midex-navy hover:bg-midex-mint hover:text-midex-navy"
             href={getQuoteUrl(product.title)}
           >
-            {t("requestQuote")}
+            {labels.requestQuote}
             <span className="mx-arrow">→</span>
           </Link>
           <Link
             className="mx-btn border border-white/25 bg-transparent text-white hover:border-white/40 hover:bg-white/10"
             href="/products"
           >
-            {t("backToCatalog")}
+            {labels.backToCatalog}
           </Link>
         </div>
       </PageHero>
@@ -94,7 +124,7 @@ export async function ProductDetailPageContent({ slug }: Props) {
                   className="group mx-btn mx-btn-primary mt-5 w-full justify-center"
                   href={getQuoteUrl(product.title)}
                 >
-                  {t("requestQuote")}
+                  {labels.requestQuote}
                   <span className="mx-arrow">→</span>
                 </Link>
                 <Link
@@ -112,12 +142,21 @@ export async function ProductDetailPageContent({ slug }: Props) {
                     <span className="mx-arrow">→</span>
                   </Link>
                 )}
+                {product.relatedSolution && (
+                  <Link
+                    className="mx-link-arrow mt-4 block text-center text-sm"
+                    href={`/solutions/group/${product.relatedSolution.groupSlug}/${product.relatedSolution.slug}`}
+                  >
+                    {labels.relatedSolutionTitle}: {product.relatedSolution.label}
+                    <span className="mx-arrow">→</span>
+                  </Link>
+                )}
               </div>
             </aside>
 
             <div className="order-2 space-y-6 sm:space-y-10 lg:order-1 lg:col-start-1 lg:row-start-1">
               <div>
-              <h2 className="mx-section-title">{t("overview")}</h2>
+                <h2 className="mx-section-title">{labels.overviewTitle}</h2>
                 <p className="mt-5 max-w-3xl text-base leading-relaxed text-midex-gray/80 sm:text-lg">
                   {product.description}
                 </p>
@@ -126,7 +165,7 @@ export async function ProductDetailPageContent({ slug }: Props) {
               {highlights.length > 0 && (
                 <div>
                   <h3 className="font-display text-lg font-bold text-midex-navy sm:text-xl">
-                    {t("featuresTitle")}
+                    {labels.featuresTitle}
                   </h3>
                   <ul className="mt-4 space-y-3 border-t border-midex-line pt-4">
                     {highlights.map((item) => (
@@ -145,7 +184,7 @@ export async function ProductDetailPageContent({ slug }: Props) {
               {specs.length > 0 && (
                 <div>
                   <h3 className="font-display text-lg font-bold text-midex-navy sm:text-xl">
-                    {t("specificationsTitle")}
+                    {labels.specificationsTitle}
                   </h3>
                   <div className="mt-4 overflow-x-auto rounded-xl border border-midex-line">
                     <table className="w-full min-w-[280px] text-sm">
@@ -172,7 +211,7 @@ export async function ProductDetailPageContent({ slug }: Props) {
               {category?.description && (
                 <div>
                   <h3 className="font-display text-lg font-bold text-midex-navy sm:text-xl">
-                    {t("applicationsTitle")}
+                    {labels.applicationsTitle}
                   </h3>
                   <p className="mt-4 max-w-3xl text-base leading-relaxed text-midex-gray/80">
                     {category.description}
@@ -180,14 +219,13 @@ export async function ProductDetailPageContent({ slug }: Props) {
                 </div>
               )}
             </div>
-
           </div>
 
           {related.length > 0 && (
             <div className="mt-10 border-t border-midex-line pt-8 sm:mt-16 sm:pt-14">
               <div className="flex flex-wrap items-end justify-between gap-4">
                 <h2 className="font-display text-xl font-bold text-midex-navy sm:text-2xl">
-                  {t("relatedProductsTitle")}
+                  {labels.relatedProductsTitle}
                 </h2>
                 {product.category && categoryLabel && (
                   <Link
@@ -227,27 +265,7 @@ export async function ProductDetailPageContent({ slug }: Props) {
         </div>
       </section>
 
-      <section className="mx-section--tight">
-        <div className="mx-container">
-          <div className="flex flex-col items-center gap-6 rounded-2xl border border-midex-line bg-white p-8 text-center sm:p-10 lg:flex-row lg:justify-between lg:text-start">
-            <div className="max-w-xl">
-              <h2 className="font-display text-2xl font-bold text-midex-navy sm:text-3xl">
-                {t("requestQuote")}
-              </h2>
-              <p className="mt-3 text-base leading-relaxed text-midex-gray/75">
-                {t("subtitle")}
-              </p>
-            </div>
-            <Link
-              className="group mx-btn mx-btn-primary shrink-0"
-              href={getQuoteUrl(product.title)}
-            >
-              {t("requestQuote")}
-              <span className="mx-arrow">→</span>
-            </Link>
-          </div>
-        </div>
-      </section>
+      <ProductsCta content={detailCta} />
     </>
   );
 }

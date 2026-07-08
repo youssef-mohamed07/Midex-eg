@@ -16,7 +16,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
     ? requested
     : routing.defaultLocale;
 
-  // CMS fills in studio-managed copy; bundled JSON wins when both define the same key.
+  // Bundled JSON is the baseline; Studio UI Messages override matching keys.
   const bundled = await loadBundledMessages(locale);
 
   let messages = bundled;
@@ -24,7 +24,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
     try {
       const cmsMessages = await getCmsMessages(locale);
       if (cmsMessages) {
-        messages = deepMerge(cmsMessages, bundled);
+        messages = deepMerge(bundled, cmsMessages);
       }
     } catch {
       // CMS unreachable — serve bundled messages rather than failing the request.

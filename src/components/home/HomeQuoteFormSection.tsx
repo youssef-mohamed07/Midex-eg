@@ -1,18 +1,26 @@
 import { getTranslations } from "next-intl/server";
-import { MultiStepQuoteForm } from "@/components/home/MultiStepQuoteForm";
 import { QuoteFormAside } from "@/components/home/QuoteFormAside";
 import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
+import { MultiStepQuoteForm } from "@/components/home/MultiStepQuoteForm";
 
-export async function HomeQuoteFormSection() {
+export async function HomeQuoteFormSection({
+  title: titleProp,
+  subtitle: subtitleProp,
+}: {
+  title?: string;
+  subtitle?: string;
+} = {}) {
   const t = await getTranslations("home");
+  const title = titleProp ?? t("quoteFormTitle");
+  const subtitle = subtitleProp ?? t("quoteFormSubtitle");
 
   return (
     <section className="mx-section">
       <div className="mx-container">
         <RevealOnScroll>
           <div className="mb-8 max-w-2xl lg:mb-10">
-          <h2 className="mx-section-title mt-5">{t("quoteFormTitle")}</h2>
-            <p className="mx-section-subtitle mt-4">{t("quoteFormSubtitle")}</p>
+            <h2 className="mx-section-title mt-5">{title}</h2>
+            <p className="mx-section-subtitle mt-4">{subtitle}</p>
           </div>
         </RevealOnScroll>
 

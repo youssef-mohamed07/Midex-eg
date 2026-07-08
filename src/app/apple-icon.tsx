@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
+import { brandManifest } from "@/lib/branding/tokens";
 
 export const size = { width: 180, height: 180 };
 export const contentType = "image/png";
@@ -21,7 +22,7 @@ export default function AppleIcon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#062a42",
+          background: brandManifest.backgroundColor,
         }}
       >
         <img src={logoDataUrl} alt="" width={168} height={168} />

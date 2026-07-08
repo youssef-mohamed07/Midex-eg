@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#093d5e",
+  themeColor: "#0E1A32",
 };
 
 export default function StudioPage() {

@@ -1,31 +1,39 @@
 @import "tailwindcss";
 
 @theme {
-  --color-midex-navy: #093d5e;
-  --color-midex-navy-dark: #062a42;
-  --color-midex-mint: #84cecd;
-  --color-midex-mint-light: #a8e0df;
-  --color-midex-blue: #0086f0;
-  --color-midex-gray: #2d3239;
-  --color-midex-surface: #f0f7fb;
-  --color-midex-ink: #0a2a40;
-  --color-midex-line: #e4eef4;
+  --color-midex-navy: #0e1a32;
+  --color-midex-navy-dark: #080f1f;
+  --color-midex-teal: #074367;
+  --color-midex-mint: #00ff90;
+  --color-midex-mint-light: #80ffc8;
+  --color-midex-blue: #0551c8;
+  --color-midex-gray: #5c5d5d;
+  --color-midex-gray-muted: #9d9e9e;
+  --color-midex-surface: #f3f5f8;
+  --color-midex-ink: #0e1a32;
+  --color-midex-line: #dde1e6;
 
-  --font-display: var(--font-sora), "Poppins", ui-sans-serif, system-ui, sans-serif;
-  --font-body: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+  /* Brand glow / shadow helpers (official palette) */
+  --midex-glow-mint: rgb(0 255 144 / 0.28);
+  --midex-glow-mint-ring: rgb(0 255 144 / 0.25);
+  --midex-shadow-navy: rgb(14 26 50 / 0.35);
+  --midex-hero-grid-dot: color-mix(in srgb, var(--color-midex-line) 82%, var(--color-midex-teal));
+
+  --font-display: var(--font-alexandria), "Alexandria", ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-alexandria), "Alexandria", ui-sans-serif, system-ui, sans-serif;
 
   /* Premium motion curves */
   --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 
-  /* Layered navy-tinted shadow scale (overrides defaults so every shadow-* improves) */
-  --shadow-2xs: 0 1px 2px rgba(9, 61, 94, 0.05);
-  --shadow-xs: 0 1px 2px rgba(9, 61, 94, 0.06);
-  --shadow-sm: 0 1px 3px rgba(9, 61, 94, 0.07), 0 1px 2px rgba(9, 61, 94, 0.04);
-  --shadow-md: 0 6px 16px -4px rgba(9, 61, 94, 0.1), 0 2px 6px -2px rgba(9, 61, 94, 0.06);
-  --shadow-lg: 0 18px 40px -14px rgba(9, 61, 94, 0.18), 0 6px 14px -8px rgba(9, 61, 94, 0.1);
-  --shadow-xl: 0 30px 60px -18px rgba(9, 61, 94, 0.22), 0 10px 22px -12px rgba(9, 61, 94, 0.12);
-  --shadow-2xl: 0 44px 90px -28px rgba(9, 61, 94, 0.34);
+  /* Layered navy-tinted shadow scale */
+  --shadow-2xs: 0 1px 2px rgba(14, 26, 50, 0.05);
+  --shadow-xs: 0 1px 2px rgba(14, 26, 50, 0.06);
+  --shadow-sm: 0 1px 3px rgba(14, 26, 50, 0.07), 0 1px 2px rgba(14, 26, 50, 0.04);
+  --shadow-md: 0 6px 16px -4px rgba(14, 26, 50, 0.1), 0 2px 6px -2px rgba(14, 26, 50, 0.06);
+  --shadow-lg: 0 18px 40px -14px rgba(14, 26, 50, 0.18), 0 6px 14px -8px rgba(14, 26, 50, 0.1);
+  --shadow-xl: 0 30px 60px -18px rgba(14, 26, 50, 0.22), 0 10px 22px -12px rgba(14, 26, 50, 0.12);
+  --shadow-2xl: 0 44px 90px -28px rgba(14, 26, 50, 0.34);
 
   --animate-fade-up: fade-up 0.9s var(--ease-premium) forwards;
   --animate-fade-in: fade-in 0.7s ease forwards;
@@ -181,16 +189,22 @@
     @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
   }
 
+  .mx-section,
+  .mx-section--tight,
+  .mx-section-band {
+    @apply bg-white;
+  }
+
   .mx-section {
-    @apply bg-white py-8 sm:py-12 lg:py-16;
+    @apply py-8 sm:py-12 lg:py-16;
   }
 
   .mx-section--tight {
-    @apply bg-white py-8 sm:py-10 lg:py-14;
+    @apply py-8 sm:py-10 lg:py-14;
   }
 
   .mx-section-band {
-    @apply bg-white py-6 sm:py-8 lg:py-10;
+    @apply py-6 sm:py-8 lg:py-10;
   }
 
   .mx-section-title {
@@ -319,8 +333,8 @@
   .mx-service-card .mx-card:hover {
     @apply border-midex-mint/50 shadow-2xl;
     box-shadow:
-      0 1.5rem 3rem -0.75rem rgba(0, 40, 80, 0.35),
-      0 0 0 1px rgba(132, 206, 205, 0.25);
+      0 1.5rem 3rem -0.75rem var(--midex-shadow-navy),
+      0 0 0 1px var(--midex-glow-mint-ring);
   }
 
   .prose-midex {
@@ -507,8 +521,16 @@
 
   .mx-mesh-bg {
     background:
-      radial-gradient(ellipse 80% 50% at 15% 0%, rgba(132, 206, 205, 0.18), transparent 60%),
-      radial-gradient(ellipse 70% 60% at 85% 100%, rgba(0, 134, 240, 0.14), transparent 55%);
+      radial-gradient(ellipse 80% 50% at 15% 0%, rgb(0 255 144 / 0.1), transparent 60%),
+      radial-gradient(ellipse 70% 60% at 85% 100%, rgb(5 81 200 / 0.14), transparent 55%);
+  }
+
+  .mx-case-study-glow {
+    background: radial-gradient(
+      ellipse 70% 55% at 18% 100%,
+      var(--midex-glow-mint),
+      transparent 70%
+    );
   }
 
   /* Subtle technical grid overlay for dark sections */
@@ -522,7 +544,7 @@
   }
 
   .mx-hero-grid {
-    background-image: radial-gradient(circle, #d8e3ec 1.25px, transparent 1.25px);
+    background-image: radial-gradient(circle, var(--midex-hero-grid-dot) 1.25px, transparent 1.25px);
     background-size: 22px 22px;
     opacity: 0.55;
     -webkit-mask-image: radial-gradient(ellipse 100% 85% at 50% 45%, black, transparent 88%);
@@ -585,8 +607,8 @@
   }
 
   .midex-page-hero--compact {
-    padding-top: calc(var(--midex-header-height) * 2 + 1.25rem);
-    padding-bottom: 1.5rem;
+    padding-top: calc(var(--midex-header-height) * 2 + 1.5rem);
+    padding-bottom: 2rem;
   }
 
   @media (min-width: 1024px) {
@@ -596,8 +618,8 @@
     }
 
     .midex-page-hero--compact {
-      padding-top: calc(var(--midex-header-height) * 2 + 2rem);
-      padding-bottom: 2rem;
+      padding-top: calc(var(--midex-header-height) * 2 + 2.25rem);
+      padding-bottom: 2.5rem;
     }
   }
 

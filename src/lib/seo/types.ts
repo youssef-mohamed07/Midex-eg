@@ -11,7 +11,8 @@ export type SeoRouteKey =
   | "solution-group"
   | "solution-child"
   | "blog"
-  | "blog-post";
+  | "blog-post"
+  | "case-study";
 
 export type SeoRobots = {
   index?: boolean;

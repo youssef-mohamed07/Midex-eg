@@ -304,8 +304,8 @@ async function seedSiteSettings() {
     twitterHandle: siteConfig.twitterHandle,
     manifestDescription:
       "Validated purified water, WFI, and hygienic process engineering for pharmaceutical, food, and cosmetics industries.",
-    manifestBackgroundColor: "#062a42",
-    manifestThemeColor: "#093d5e",
+    manifestBackgroundColor: "#080f1f",
+    manifestThemeColor: "#0E1A32",
     robotsDisallow: ["/api/", "/studio"],
     logoDark: await img("/images/brand/logo-dark.png", { en: "Midex" }),
     logoWhite: await img("/images/brand/logo-white.png", { en: "Midex" }),
@@ -399,11 +399,18 @@ async function seedPartners() {
 
 async function seedCertificates() {
   for (const [index, certificate] of certificates.entries()) {
+    const alt = certificate.alt;
+    const description =
+      "description" in certificate && typeof certificate.description === "string"
+        ? certificate.description
+        : undefined;
     docs.push({
       _id: `certificate-${certificate.slug}`,
       _type: "certificate",
       slug: slugField(certificate.slug),
-      image: await img(certificate.image, { en: certificate.alt }),
+      title: L(alt, alt, alt),
+      description: description ? LT(description, description, description) : undefined,
+      image: await img(certificate.image, { en: alt }),
       order: index,
     });
   }

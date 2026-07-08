@@ -1,43 +1,43 @@
-import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
 import { getLocale } from "next-intl/server";
+import { CertificateGallery } from "@/components/about/CertificateGallery";
 import { getCertificates } from "@/lib/cms";
+import { isValidImageSrc } from "@/lib/cms/images";
 import type { Locale } from "@/i18n/routing";
 
-export async function CertificationsSection() {
+type Props = {
+  title: string;
+  subtitle?: string;
+};
+
+export async function CertificationsSection({ title, subtitle }: Props) {
   const t = await getTranslations("about");
   const locale = (await getLocale()) as Locale;
-  const certificates = await getCertificates(locale);
+  const certificates = (await getCertificates(locale)).filter((cert) =>
+    isValidImageSrc(cert.image),
+  );
+
+  if (certificates.length === 0) return null;
 
   return (
-    <section className="mx-section">
+    <section className="mx-section overflow-hidden">
       <div className="mx-container">
         <RevealOnScroll>
-          <div className="mx-auto mb-8 max-w-2xl text-center sm:mb-10">
-          <h2 className="mx-section-title">{t("certificationsTitle")}</h2>
+          <div className="mx-auto mb-8 max-w-2xl text-center sm:mb-10 lg:mb-12">
+            <p className="mx-eyebrow mx-eyebrow--center">{t("certificationsEyebrow")}</p>
+            <h2 className="mx-section-title mt-4">{title}</h2>
+            {subtitle && <p className="mx-section-subtitle mx-auto mt-4">{subtitle}</p>}
           </div>
         </RevealOnScroll>
 
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4 xl:grid-cols-6">
-          {certificates.map((cert, index) => (
-            <figure
-              key={cert.slug}
-              className="group overflow-hidden rounded-xl border border-midex-line/50 bg-white p-2 shadow-sm sm:rounded-2xl sm:p-2.5"
-            >
-              <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-midex-surface/40">
-                <Image
-                  src={cert.image}
-                  alt={cert.alt}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                  sizes="(max-width: 640px) 50vw, 16vw"
-                  priority={index < 3}
-                />
-              </div>
-            </figure>
-          ))}
-        </div>
+        <RevealOnScroll delay={80}>
+          <CertificateGallery certificates={certificates} />
+        </RevealOnScroll>
+
+        <p className="mx-auto mt-8 max-w-2xl text-center text-xs leading-relaxed text-midex-gray/60 sm:mt-10 sm:text-sm">
+          {t("certificationsFootnote")}
+        </p>
       </div>
     </section>
   );

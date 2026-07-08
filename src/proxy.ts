@@ -1,13 +1,29 @@
 import createMiddleware from "next-intl/middleware";
 import { NextResponse, type NextRequest } from "next/server";
 import { resolveLegacySolutionPath } from "./lib/legacy-solution-redirects";
+import { getSanityRedirects, resolveSanityRedirect } from "./lib/redirects/sanity-redirects";
 import { applyGeoLocale } from "./i18n/locale-detection";
 import { routing } from "./i18n/routing";
 
 const handleI18nRouting = createMiddleware(routing);
 
-export default function proxy(request: NextRequest) {
+export default async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  const sanityRedirect = resolveSanityRedirect(pathname, await getSanityRedirects());
+  if (sanityRedirect) {
+    if (sanityRedirect.destination.startsWith("http")) {
+      return NextResponse.redirect(
+        sanityRedirect.destination,
+        sanityRedirect.permanent ? 308 : 307,
+      );
+    }
+
+    const url = request.nextUrl.clone();
+    url.pathname = sanityRedirect.destination;
+    url.search = "";
+    return NextResponse.redirect(url, sanityRedirect.permanent ? 308 : 307);
+  }
 
   // Studio lives at /studio (no locale prefix). Redirect /en/studio → /studio.
   const localizedStudioMatch = pathname.match(/^\/(en|ar|de)\/studio(\/.*)?$/);

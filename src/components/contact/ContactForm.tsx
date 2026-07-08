@@ -6,7 +6,13 @@ import { useSearchParams } from "next/navigation";
 
 type FormState = "idle" | "loading" | "success" | "error";
 
-export function ContactForm() {
+export function ContactForm({
+  title,
+  intro,
+}: {
+  title?: string;
+  intro?: string;
+} = {}) {
   const t = useTranslations("contact");
   const searchParams = useSearchParams();
   const defaultItem = searchParams.get("item") ?? "";
@@ -48,9 +54,9 @@ export function ContactForm() {
   return (
     <div className="midex-contact-form-card">
           <h2 className="mt-3 font-display text-2xl font-bold text-midex-navy sm:text-3xl">
-        {t("sendMessage")}
+        {title ?? t("sendMessage")}
       </h2>
-      <p className="mt-2 text-sm leading-relaxed text-midex-gray/75">{t("formIntro")}</p>
+      <p className="mt-2 text-sm leading-relaxed text-midex-gray/75">{intro ?? t("formIntro")}</p>
 
       {state === "success" && (
         <div className="midex-form-notice midex-form-notice--success" role="status">
@@ -134,6 +140,8 @@ export function ContactForm() {
             />
           </div>
         </div>
+
+        <input type="hidden" name="source" value="contact" />
 
         <div className="midex-form-honeypot" aria-hidden="true">
           <label htmlFor="website">Website</label>

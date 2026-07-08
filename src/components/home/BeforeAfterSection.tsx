@@ -1,51 +1,42 @@
-import { getTranslations } from "next-intl/server";
 import { BeforeAfterSlider } from "@/components/home/BeforeAfterSlider";
 import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
+import type { BeforeAfterContent } from "@/lib/cms/types";
 
 const BEFORE_AFTER_MEDIA = {
   beforePoster: "/images/services/pickling-passivation.png",
   afterPoster: "/images/services/mirror-finish.png",
 } as const;
 
-const DURING_KEYS = [
-  "processDuring1",
-  "processDuring2",
-  "processDuring3",
-  "processDuring4",
-  "processDuring5",
-] as const;
+type Props = {
+  content: BeforeAfterContent & {
+    title: string;
+    subtitle: string;
+    beforeItems: string[];
+    afterItems: string[];
+  };
+};
 
-const AFTER_KEYS = [
-  "processAfter1",
-  "processAfter2",
-  "processAfter3",
-  "processAfter4",
-  "processAfter5",
-] as const;
-
-export async function BeforeAfterSection() {
-  const t = await getTranslations("home");
-
-  const duringKeywords = DURING_KEYS.map((key) => t(key));
-  const afterKeywords = AFTER_KEYS.map((key) => t(key));
+export async function BeforeAfterSection({ content }: Props) {
+  const beforePoster = content.beforeImage || BEFORE_AFTER_MEDIA.beforePoster;
+  const afterPoster = content.afterImage || BEFORE_AFTER_MEDIA.afterPoster;
 
   return (
     <section className="mx-section overflow-hidden">
       <div className="mx-container">
         <RevealOnScroll>
           <div className="mx-auto max-w-3xl text-center">
-          <h2 className="mx-section-title">{t("processPerformanceTitle")}</h2>
-            <p className="mx-section-subtitle mx-auto mt-4">{t("beforeAfterTitle")}</p>
+            <h2 className="mx-section-title">{content.title}</h2>
+            <p className="mx-section-subtitle mx-auto mt-4">{content.subtitle}</p>
           </div>
         </RevealOnScroll>
 
         <RevealOnScroll delay={100}>
           <div className="mt-8 sm:mt-10">
             <BeforeAfterSlider
-              beforePoster={BEFORE_AFTER_MEDIA.beforePoster}
-              afterPoster={BEFORE_AFTER_MEDIA.afterPoster}
-              duringKeywords={duringKeywords}
-              afterKeywords={afterKeywords}
+              beforePoster={beforePoster}
+              afterPoster={afterPoster}
+              duringKeywords={content.beforeItems}
+              afterKeywords={content.afterItems}
             />
           </div>
         </RevealOnScroll>

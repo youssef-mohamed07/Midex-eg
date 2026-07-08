@@ -1,5 +1,6 @@
 import {
   getBlogPost,
+  getCaseStudy,
   getProduct,
   getProductCategories,
   getProductsByCategory,
@@ -86,5 +87,19 @@ export async function getBlogPostSeoContext(slug: string, locale: Locale) {
       image: post.image,
     } satisfies SeoTemplateContext,
     article: { datePublished: post.date },
+  };
+}
+
+export async function getCaseStudySeoContext(slug: string, locale: Locale) {
+  const study = await getCaseStudy(slug, locale);
+  if (!study) return null;
+
+  return {
+    context: {
+      title: study.client,
+      description: study.outcome,
+      excerpt: study.scope,
+      image: study.image,
+    } satisfies SeoTemplateContext,
   };
 }

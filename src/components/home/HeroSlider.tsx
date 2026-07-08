@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import type { HeroCollage, HeroCollageImage as CollageItem } from "@/lib/cms/types";
 
@@ -92,9 +91,11 @@ function HeroCollageTile({
   offsetClass: string;
   priority?: boolean;
 }) {
+  const layoutClass = item.className?.trim() ? item.className : sizeClass;
+
   return (
     <div
-      className={`relative shrink-0 overflow-hidden rounded-2xl border border-white/80 bg-midex-surface shadow-[0_16px_40px_rgba(9,61,94,0.14)] ${sizeClass} ${offsetClass}`}
+      className={`relative shrink-0 overflow-hidden rounded-2xl border border-white/80 bg-midex-surface shadow-[0_16px_40px_rgba(14,26,50,0.14)] ${layoutClass} ${offsetClass}`}
       aria-hidden
     >
       <Image
@@ -140,34 +141,58 @@ function HeroCollageColumn({
   );
 }
 
-function HeroCopy({ className = "" }: { className?: string }) {
-  const t = useTranslations("hero");
-
+function HeroCopy({
+  className = "",
+  copy,
+}: {
+  className?: string;
+  copy: {
+    slide1Title: string;
+    slide1Text: string;
+    requestQuote: string;
+    viewProducts: string;
+    viewProductsHref: string;
+    seeSolutions: string;
+  };
+}) {
   return (
     <div className={`mx-hero-content mx-hero-content--mosaic ${className}`}>
-      <h1 className="mx-hero-title">{t("slide1Title")}</h1>
+      <h1 className="mx-hero-title">{copy.slide1Title}</h1>
 
       <p className="mx-auto mt-5 max-w-xl text-[15px] leading-relaxed text-midex-gray/80 sm:mt-6 sm:text-lg">
-        {t("slide1Text")}
+        {copy.slide1Text}
       </p>
 
       <div className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-4">
         <Link className="group mx-btn mx-btn-primary w-full justify-center sm:w-auto" href="/contact">
-          {t("requestQuote")}
+          {copy.requestQuote}
           <span className="mx-arrow">→</span>
         </Link>
         <Link
           className="mx-btn w-full justify-center border border-midex-mint/35 bg-midex-mint/15 text-midex-navy hover:border-midex-mint/50 hover:bg-midex-mint/25 sm:w-auto"
-          href="/solutions"
+          href={copy.viewProductsHref || "/products"}
         >
-          {t("seeSolutions")}
+          {copy.viewProducts}
         </Link>
       </div>
     </div>
   );
 }
 
-export function HeroSlider({ collage }: { collage: HeroCollage }) {
+export function HeroSlider({
+  collage,
+  heroCopy,
+}: {
+  collage: HeroCollage;
+  heroCopy: {
+    slide1Title: string;
+    slide1Text: string;
+    requestQuote: string;
+    viewProducts: string;
+    viewProductsHref: string;
+    seeSolutions: string;
+  };
+}) {
   const pool = buildCollagePool(collage);
   const leftItems = buildSideItems(pool, "left");
   const rightItems = buildSideItems(pool, "right");
@@ -179,12 +204,12 @@ export function HeroSlider({ collage }: { collage: HeroCollage }) {
       <div className="relative mx-container pb-10 pt-[5.25rem] sm:pb-12 sm:pt-28 lg:pb-16 lg:pt-[7.5rem]">
         <div className="mx-auto hidden w-full max-w-[1280px] lg:grid lg:grid-cols-[minmax(0,280px)_minmax(360px,1fr)_minmax(0,280px)] lg:items-center lg:gap-8 xl:grid-cols-[minmax(0,300px)_minmax(400px,720px)_minmax(0,300px)] xl:gap-12">
           <HeroCollageColumn items={leftItems} side="left" />
-          <HeroCopy />
+          <HeroCopy copy={heroCopy} />
           <HeroCollageColumn items={rightItems} side="right" />
         </div>
 
         <div className="lg:hidden">
-          <HeroCopy />
+          <HeroCopy copy={heroCopy} />
 
           {collage.mobileImage && (
             <div className="relative mx-auto mt-8 aspect-[4/3] max-w-md overflow-hidden rounded-xl border border-midex-line/40 bg-midex-surface sm:mt-10">

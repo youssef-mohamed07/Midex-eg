@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSiteContact } from "@/lib/cms";
 import { deepMerge, getCmsMessages } from "@/lib/cms/messages";
+import { saveFormSubmission } from "@/lib/forms/save-submission";
 import { routing, type Locale } from "@/i18n/routing";
 
 const FALLBACK_RECIPIENT = "sales@midex-eg.com";
@@ -103,6 +104,26 @@ export async function POST(request: NextRequest) {
     }
 
     const subjectLabel = strings.subjects[body.subject] ?? strings.subjects.general;
+    const source: "contact" | "quote" =
+      body.source === "quote" || body.source === "contact" ? body.source : "contact";
+
+    try {
+      await saveFormSubmission({
+        name,
+        email,
+        phone: body.phone?.trim(),
+        company: body.company?.trim(),
+        subject: body.subject ?? "general",
+        subjectLabel,
+        item: body.item?.trim(),
+        message,
+        source,
+        locale,
+      });
+    } catch (error) {
+      console.error("[form] Failed to save submission to Sanity:", error);
+    }
+
     const lines = [
       `Name: ${name}`,
       `Email: ${email}`,

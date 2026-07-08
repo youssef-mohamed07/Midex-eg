@@ -7,6 +7,7 @@ import {
   CogIcon,
   DocumentTextIcon,
   EarthGlobeIcon,
+  EnvelopeIcon,
   HomeIcon,
   PackageIcon,
   SearchIcon,
@@ -29,6 +30,15 @@ function structure(S: StructureBuilder) {
     .title("Content")
     .items([
       S.listItem()
+        .title("Inbox")
+        .icon(EnvelopeIcon)
+        .child(
+          S.documentTypeList("formSubmission")
+            .title("Form Submissions")
+            .defaultOrdering([{ field: "submittedAt", direction: "desc" }]),
+        ),
+      S.divider(),
+      S.listItem()
         .title("Site")
         .icon(CogIcon)
         .child(
@@ -50,6 +60,10 @@ function structure(S: StructureBuilder) {
             .items([
               singleton(S, "homePage", "Homepage"),
               singleton(S, "aboutPage", "About Page"),
+              singleton(S, "contactPage", "Contact Page"),
+              singleton(S, "productsPage", "Products Page"),
+              singleton(S, "solutionsPage", "Solutions Page"),
+              singleton(S, "blogPage", "Blog Page"),
             ]),
         ),
       S.listItem()

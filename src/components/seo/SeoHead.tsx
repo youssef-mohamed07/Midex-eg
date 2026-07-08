@@ -71,6 +71,8 @@ async function defaultBreadcrumbs(
         { name: nav("blog"), path: path("/blog") },
         ...(context.title ? [{ name: context.title }] : []),
       ];
+    case "case-study":
+      return context.title ? [{ name: context.title }] : [];
     default:
       return [];
   }

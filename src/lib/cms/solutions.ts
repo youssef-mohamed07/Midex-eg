@@ -14,7 +14,9 @@ import {
   loc,
   locList,
   locOptional,
+  pageCtaProjection,
   principlesProjection,
+  solutionChildLabelsProjection,
   workflowProjection,
 } from "@/lib/cms/fragments";
 import type {
@@ -37,12 +39,18 @@ const groupProjection = `{
   "description": ${loc("description")},
   "intro": ${loc("intro")},
   "image": ${imageUrl()},
+  "importanceTitle": ${locOptional("importanceTitle")},
+  "otherGroupsTitle": ${locOptional("otherGroupsTitle")},
+  "heroCtaLabel": ${locOptional("heroCtaLabel")},
+  "cta": ${pageCtaProjection("cta")},
   "children": *[_type == "solutionChild" && group._ref == ^._id] | order(order asc) {
     "slug": slug.current,
     "label": ${loc("label")},
     "excerpt": ${loc("excerpt")},
     "intro": ${loc("intro")},
-    "image": ${imageUrl()}
+    "image": ${imageUrl()},
+    "highlights": ${locList("highlights")},
+    "labels": ${solutionChildLabelsProjection("labels")}
   }
 }`;
 

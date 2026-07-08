@@ -59,6 +59,10 @@ export type CaseStudy = {
   image: string;
   industry: string;
   scope: string;
+  intro?: string;
+  challenge?: string;
+  approach?: string;
+  highlights?: string[];
   outcome: string;
   statValue: string;
   statLabel: string;

@@ -262,6 +262,40 @@ export async function getCaseStudies(locale: Locale): Promise<CaseStudy[]> {
   });
 }
 
+export async function getCaseStudy(
+  slug: string,
+  locale: Locale,
+): Promise<CaseStudy | undefined> {
+  const study = await sanityFetch<CaseStudy | null>({
+    query: `*[_type == "caseStudy" && slug.current == $slug][0] {
+      "slug": slug.current,
+      client,
+      "image": ${imageUrl()},
+      "industry": ${loc("industry")},
+      "scope": ${loc("scope")},
+      "intro": ${locOptional("intro")},
+      "challenge": ${locOptional("challenge")},
+      "approach": ${locOptional("approach")},
+      "highlights": ${locList("highlights")},
+      "outcome": ${loc("outcome")},
+      "statValue": coalesce(statValue, ""),
+      "statLabel": ${loc("statLabel")},
+      "tags": ${locList("tags")}
+    }`,
+    params: { locale, slug },
+    tags: ["caseStudy"],
+  });
+  return study ?? undefined;
+}
+
+export async function getAllCaseStudySlugs(): Promise<string[]> {
+  const rows = await sanityFetch<{ slug: string }[]>({
+    query: `*[_type == "caseStudy"] | order(order asc) { "slug": slug.current }`,
+    tags: ["caseStudy"],
+  });
+  return rows.map((row) => row.slug);
+}
+
 export async function getEvents(locale: Locale): Promise<EventItem[]> {
   return sanityFetch<EventItem[]>({
     query: `*[_type == "eventItem"] | order(order asc) {

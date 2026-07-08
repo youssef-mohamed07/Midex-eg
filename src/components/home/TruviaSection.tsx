@@ -16,10 +16,9 @@ export async function TruviaSection() {
   return (
     <section className="mx-section">
       <div className="mx-container">
-        <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(280px,420px)] lg:gap-14 xl:gap-20">
+        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-12 xl:gap-16">
           <RevealOnScroll>
             <div>
-              <span className="mx-eyebrow">Midex</span>
               <h2 className="mt-4 font-display text-3xl font-bold leading-tight tracking-tight text-midex-navy sm:text-4xl lg:text-[2.35rem]">
                 {t("truviaTitle")}
               </h2>
@@ -58,13 +57,13 @@ export async function TruviaSection() {
 
           <RevealOnScroll delay={80}>
             <div className="relative overflow-hidden rounded-[1.5rem] border border-midex-line/50 bg-midex-surface/40 shadow-[0_24px_64px_rgba(9,61,94,0.1)] sm:rounded-[1.75rem] lg:rounded-[2rem]">
-              <div className="relative aspect-[4/3] sm:aspect-[5/4]">
+              <div className="relative aspect-[4/3] min-h-[280px] sm:aspect-[5/4] sm:min-h-[360px] lg:aspect-[4/5] lg:min-h-[480px] xl:min-h-[540px]">
                 <Image
                   src="/images/products/product-1724113383.jpg"
                   alt={t("truviaTitle")}
                   fill
                   className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 420px"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                 />
                 <div
                   className="absolute inset-0 bg-gradient-to-t from-midex-navy/70 via-midex-navy/15 to-transparent"

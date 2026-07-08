@@ -11,6 +11,7 @@ import { buildSiteIcons } from "@/lib/seo/metadata";
 import {
   getLayoutShellData,
 } from "@/lib/cms/layout";
+import { getProductCategoryImage } from "@/lib/cms/helpers";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -56,7 +57,7 @@ export default async function LocaleLayout({
       slug,
       label: category.label,
       description: category.description,
-      image: shell.products.find((product) => product.category === slug)?.image,
+      image: getProductCategoryImage(slug, shell.products),
     }),
   );
 

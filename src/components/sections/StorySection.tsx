@@ -51,7 +51,6 @@ export async function StorySection({ cta }: Props) {
 
           <RevealOnScroll delay={80}>
             <div className="text-start lg:py-4 lg:ps-2 xl:ps-6" dir={textDir}>
-              <span className="mx-eyebrow">{t("storyLabel")}</span>
               <h2 className="mt-4 font-display text-3xl font-bold leading-tight tracking-tight text-midex-navy sm:mt-5 sm:text-4xl lg:text-[2.5rem]">
                 {t("storyTitle")}
               </h2>

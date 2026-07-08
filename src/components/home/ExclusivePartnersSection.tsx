@@ -18,8 +18,7 @@ export async function ExclusivePartnersSection({ title, partners: partnersProp }
       <div className="mx-container">
         <RevealOnScroll>
           <div className="mx-auto mb-6 max-w-xl text-center sm:mb-10">
-            <span className="mx-eyebrow mx-eyebrow--center">Midex</span>
-            <h2 className="mt-4 font-display text-2xl font-bold tracking-tight text-midex-navy sm:text-[1.75rem]">
+          <h2 className="mt-4 font-display text-2xl font-bold tracking-tight text-midex-navy sm:text-[1.75rem]">
               {title}
             </h2>
           </div>

@@ -15,7 +15,7 @@ function FeaturedCaseStudy({
 }) {
   return (
     <Link
-      href="/contact"
+      href={`/case-studies/${study.slug}`}
       className="group relative block h-full min-h-[320px] w-full overflow-hidden rounded-2xl border border-white/10 no-underline shadow-2xl sm:min-h-[420px] lg:min-h-0 lg:rounded-3xl"
     >
       {study.image ? (
@@ -85,7 +85,7 @@ function CaseStudyCard({
 }) {
   return (
     <Link
-      href="/contact"
+      href={`/case-studies/${study.slug}`}
       className="group flex h-full w-full flex-col overflow-hidden rounded-xl border border-midex-line/70 bg-white no-underline shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-midex-mint/40 hover:shadow-lg sm:rounded-2xl lg:flex-row lg:items-stretch"
     >
       <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden lg:aspect-auto lg:h-auto lg:min-h-full lg:w-[40%] lg:self-stretch xl:w-[42%]">
@@ -151,9 +151,6 @@ export async function CaseStudiesSection({
         <RevealOnScroll>
           <div className="mb-8 flex flex-col gap-4 sm:mb-10 lg:mb-12 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-2xl">
-              <span className="mx-badge border-midex-line bg-midex-surface text-midex-navy">
-                {t("caseStudiesBadge")}
-              </span>
               <h2 className="mx-section-title mt-5">{t("caseStudiesTitle")}</h2>
               <p className="mx-section-subtitle mt-4">{t("caseStudiesSubtitle")}</p>
             </div>

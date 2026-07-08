@@ -51,7 +51,7 @@ export async function BlogPageContent() {
 
   return (
     <>
-      <PageHero title={t("title")} subtitle={t("subtitle")} eyebrow="Midex" compact />
+      <PageHero title={t("title")} subtitle={t("subtitle")}compact />
 
       <section className="mx-section">
         <div className="mx-container">

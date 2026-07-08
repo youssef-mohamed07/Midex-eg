@@ -1,12 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useRef } from "react";
 
 type Service = {
   title: string;
   excerpt: string;
-  image: string;
+  image?: string;
 };
 
 function useRevealOnScroll<T extends HTMLElement>(side?: "left" | "right") {
@@ -117,52 +116,22 @@ function ServiceCard({
     <article
       className={`mx-service-card w-full lg:max-w-lg ${
         side === "left"
-          ? "lg:col-start-1 lg:justify-self-end lg:pe-12"
-          : "lg:col-start-2 lg:justify-self-start lg:ps-12"
+          ? "lg:col-start-1 lg:justify-self-end lg:pe-12 lg:text-end"
+          : "lg:col-start-2 lg:justify-self-start lg:ps-12 lg:text-start"
       }`}
     >
       <div ref={ref} className={`${className} w-full`}>
-        <figure className="mx-card group relative aspect-card w-full overflow-hidden sm:aspect-[16/10]">
-          <span className="absolute start-4 top-4 z-10 font-display text-sm font-bold tabular-nums text-white/90 sm:start-5 sm:top-5 sm:text-base lg:hidden">
+        <div className="rounded-xl border border-midex-line bg-white px-5 py-5 shadow-sm sm:px-6 sm:py-6">
+          <span className="font-display text-xs font-bold tabular-nums text-midex-mint sm:text-sm lg:hidden">
             {step}
           </span>
-          <div className="absolute inset-0">
-            <Image
-              src={service.image}
-              alt={service.title}
-              fill
-              className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]"
-              sizes="(max-width: 1024px) 100vw, 480px"
-            />
-          </div>
-
-          <div
-            className="absolute inset-0 bg-gradient-to-t from-midex-navy via-midex-navy/55 to-midex-navy/15 transition-opacity duration-500 group-hover:via-midex-navy/65"
-            aria-hidden
-          />
-
-          <div
-            className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-            style={{
-              background:
-                "radial-gradient(ellipse 80% 60% at 50% 100%, rgba(132, 206, 205, 0.22), transparent 70%)",
-            }}
-            aria-hidden
-          />
-
-          <figcaption
-            className={`absolute inset-x-0 bottom-0 flex flex-col px-4 pb-4 pt-12 sm:px-6 sm:pb-6 sm:pt-20 ${
-              side === "left" ? "lg:items-end lg:text-end" : "lg:items-start lg:text-start"
-            }`}
-          >
-            <h3 className="font-display text-lg font-bold leading-snug text-white sm:text-2xl">
-              {service.title}
-            </h3>
-            <p className="mt-1.5 max-w-sm text-[13px] leading-relaxed text-white/75 sm:mt-2 sm:text-[15px]">
-              {service.excerpt}
-            </p>
-          </figcaption>
-        </figure>
+          <h3 className="font-display text-lg font-bold leading-snug text-midex-navy sm:text-xl">
+            {service.title}
+          </h3>
+          <p className="mt-2 text-[13px] leading-relaxed text-midex-gray/80 sm:mt-2.5 sm:text-[15px]">
+            {service.excerpt}
+          </p>
+        </div>
       </div>
     </article>
   );

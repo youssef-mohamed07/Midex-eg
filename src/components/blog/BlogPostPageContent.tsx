@@ -22,8 +22,6 @@ export async function BlogPostPageContent({ slug }: Props) {
   return (
     <>
       <PageHero
-        badge={false}
-        eyebrow={post.category}
         title={post.title}
         subtitle={post.excerpt}
         compact

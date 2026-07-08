@@ -15,8 +15,7 @@ export async function CertificationsSection() {
       <div className="mx-container">
         <RevealOnScroll>
           <div className="mx-auto mb-8 max-w-2xl text-center sm:mb-10">
-            <span className="mx-eyebrow mx-eyebrow--center">Midex</span>
-            <h2 className="mx-section-title mt-4">{t("certificationsTitle")}</h2>
+          <h2 className="mx-section-title">{t("certificationsTitle")}</h2>
           </div>
         </RevealOnScroll>
 

@@ -110,24 +110,14 @@ export function HomeSolutionsAccordion({ cards, exploreLabel, servicesLabel }: P
               aria-hidden
             />
 
-            <div className="absolute inset-x-0 top-0 z-20 flex items-start justify-end p-3 sm:p-4">
+            <div className="absolute inset-x-0 top-0 z-20 flex items-start justify-between p-3 sm:p-4">
               {isActive ? (
                 <>
-                  <div className="me-auto flex min-w-0 flex-wrap gap-1.5 pe-2">
-                    {card.tags.slice(0, 2).map((tag) => (
-                      <span
-                        key={tag}
-                        className="rounded-full border border-white/20 bg-white/10 px-2.5 py-1 text-[10px] font-semibold text-white backdrop-blur-sm sm:text-[11px]"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                    {card.serviceCount > 0 && (
-                      <span className="rounded-full border border-midex-mint/35 bg-midex-mint/20 px-2.5 py-1 text-[10px] font-semibold text-midex-mint sm:text-[11px]">
-                        {card.serviceCount} {servicesLabel}
-                      </span>
-                    )}
-                  </div>
+                  {card.serviceCount > 0 && (
+                    <span className="rounded-full border border-midex-mint/35 bg-midex-mint/20 px-2.5 py-1 text-[10px] font-semibold text-midex-mint sm:text-[11px]">
+                      {card.serviceCount} {servicesLabel}
+                    </span>
+                  )}
 
                   <Link
                     href={card.href}

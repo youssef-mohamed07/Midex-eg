@@ -21,6 +21,7 @@ import { SolutionGroupFaqSection } from "@/components/solutions/SolutionGroupFaq
 import { SolutionGroupPrinciplesSection } from "@/components/solutions/SolutionGroupPrinciplesSection";
 import { SolutionGroupWorkflowSection } from "@/components/solutions/SolutionGroupWorkflowSection";
 import { SolutionPageTailSections } from "@/components/solutions/SolutionPageTailSections";
+import { SolutionTimelineSection } from "@/components/solutions/SolutionTimelineSection";
 
 type Props = { slug: string; childSlug: string };
 
@@ -40,8 +41,6 @@ export async function SolutionChildPageContent({ slug, childSlug }: Props) {
     return (
       <>
         <PageHero
-          badge={false}
-          eyebrow={groupName}
           title={page.heroTitle}
           subtitle={page.heroSubtitle}
           compact
@@ -83,6 +82,8 @@ export async function SolutionChildPageContent({ slug, childSlug }: Props) {
           title={page.overviewTitle}
           intro={page.overviewIntro}
           items={page.overviewItems}
+          image={child.image}
+          imageAlt={child.label}
         />
 
         <SolutionGroupPrinciplesSection content={page.principles} />
@@ -112,8 +113,6 @@ export async function SolutionChildPageContent({ slug, childSlug }: Props) {
   return (
     <>
       <PageHero
-        badge={false}
-        eyebrow={groupName}
         title={child.label}
         subtitle={child.excerpt}
         compact
@@ -219,6 +218,8 @@ export async function SolutionChildPageContent({ slug, childSlug }: Props) {
           </aside>
         </div>
       </section>
+
+      <SolutionTimelineSection />
 
       <SolutionPageTailSections />
 

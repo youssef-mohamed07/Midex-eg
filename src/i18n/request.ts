@@ -16,7 +16,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
     ? requested
     : routing.defaultLocale;
 
-  // Bundled JSON acts as the resilience fallback; CMS messages take priority.
+  // CMS fills in studio-managed copy; bundled JSON wins when both define the same key.
   const bundled = await loadBundledMessages(locale);
 
   let messages = bundled;
@@ -24,7 +24,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
     try {
       const cmsMessages = await getCmsMessages(locale);
       if (cmsMessages) {
-        messages = deepMerge(bundled, cmsMessages);
+        messages = deepMerge(cmsMessages, bundled);
       }
     } catch {
       // CMS unreachable — serve bundled messages rather than failing the request.

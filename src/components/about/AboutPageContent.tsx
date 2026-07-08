@@ -23,7 +23,7 @@ export async function AboutPageContent() {
 
   return (
     <>
-      <PageHero title={t("title")} subtitle={t("subtitle")} eyebrow="Midex" compact />
+      <PageHero title={t("title")} subtitle={t("subtitle")}compact />
 
       <AboutMissionVisionSection />
 

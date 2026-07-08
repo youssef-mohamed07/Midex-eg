@@ -1,5 +1,27 @@
 import type { Product } from "@/lib/cms/types";
 
+/** Category image when the category has no products of its own yet. */
+const CATEGORY_IMAGE_FALLBACK_PRODUCTS: Record<string, string> = {
+  valves: "sanitary-centrifugal-self-priming-pump",
+  instruments: "sanitary-non-self-priming-pump",
+};
+
+type ProductImageRef = Pick<Product, "slug" | "category" | "image">;
+
+/** Resolves a category tile image from its products or a known fallback product. */
+export function getProductCategoryImage(
+  categorySlug: string,
+  products: readonly ProductImageRef[],
+): string | undefined {
+  const categoryProduct = products.find((product) => product.category === categorySlug);
+  if (categoryProduct?.image) return categoryProduct.image;
+
+  const fallbackSlug = CATEGORY_IMAGE_FALLBACK_PRODUCTS[categorySlug];
+  if (!fallbackSlug) return undefined;
+
+  return products.find((product) => product.slug === fallbackSlug)?.image;
+}
+
 /** Builds the contact-page URL used by every "request a quote" CTA. */
 export function getQuoteUrl(item?: string) {
   const base = "/contact";

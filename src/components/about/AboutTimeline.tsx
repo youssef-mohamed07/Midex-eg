@@ -25,8 +25,7 @@ export async function AboutTimeline() {
       <div className="mx-container">
         <RevealOnScroll>
           <div className="mx-auto mb-14 max-w-2xl text-center">
-            <span className="mx-eyebrow mx-eyebrow--center">Midex</span>
-            <h2 className="mx-section-title mt-4">{t("timelineTitle")}</h2>
+          <h2 className="mx-section-title">{t("timelineTitle")}</h2>
             <p className="mx-section-subtitle mx-auto">{t("expertiseSubtitle")}</p>
           </div>
         </RevealOnScroll>

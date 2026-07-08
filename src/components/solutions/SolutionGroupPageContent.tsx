@@ -15,6 +15,7 @@ import { SolutionGroupPrinciplesSection } from "@/components/solutions/SolutionG
 import { SolutionGroupWorkflowSection } from "@/components/solutions/SolutionGroupWorkflowSection";
 import { SolutionPageTailSections } from "@/components/solutions/SolutionPageTailSections";
 import { SolutionServicesAccordionSection } from "@/components/solutions/SolutionServicesAccordionSection";
+import { SolutionTimelineSection } from "@/components/solutions/SolutionTimelineSection";
 import { getGroupLabel } from "@/components/solutions/solution-labels";
 import {
   getQuoteUrl,
@@ -49,7 +50,6 @@ export async function SolutionGroupPageContent({ slug }: Props) {
   return (
     <>
       <PageHero
-        eyebrow={`${group.children.length} ${t("services")}`}
         title={group.heroTitle ?? label}
         subtitle={group.description}
         compact
@@ -85,7 +85,6 @@ export async function SolutionGroupPageContent({ slug }: Props) {
           <div className="mx-container">
             <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(280px,400px)] lg:items-center lg:gap-14">
               <div>
-                <span className="mx-eyebrow">Midex</span>
                 <h2 className="mt-3 font-display text-2xl font-bold tracking-tight text-midex-navy sm:text-3xl">
                   {t("groupImportanceTitle")}
                 </h2>
@@ -131,22 +130,19 @@ export async function SolutionGroupPageContent({ slug }: Props) {
 
       {principles && <SolutionGroupPrinciplesSection content={principles} />}
 
-      {workflow && <SolutionGroupWorkflowSection content={workflow} />}
+      {workflow ? (
+        <SolutionGroupWorkflowSection content={workflow} />
+      ) : (
+        <SolutionTimelineSection />
+      )}
 
       <SolutionPageTailSections />
-
-      <HomeQuoteFormSection />
-
-      {faq ? <SolutionGroupFaqSection content={faq} /> : <FaqSection />}
 
       {otherGroups.length > 0 && (
         <section className="mx-section--tight">
           <div className="mx-container">
-            <div className="mb-8">
-              <span className="mx-eyebrow">Midex</span>
-              <h2 className="mt-3 font-display text-2xl font-bold text-midex-navy">
-                {t("otherGroups")}
-              </h2>
+            <div className="mb-8 max-w-2xl">
+              <h2 className="mx-section-title">{t("otherGroups")}</h2>
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -165,6 +161,10 @@ export async function SolutionGroupPageContent({ slug }: Props) {
           </div>
         </section>
       )}
+
+      <HomeQuoteFormSection />
+
+      {faq ? <SolutionGroupFaqSection content={faq} /> : <FaqSection />}
 
       <SolutionsCta quoteSubject={label} />
     </>

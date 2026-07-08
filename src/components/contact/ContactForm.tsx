@@ -47,8 +47,7 @@ export function ContactForm() {
 
   return (
     <div className="midex-contact-form-card">
-      <span className="mx-eyebrow">Midex</span>
-      <h2 className="mt-3 font-display text-2xl font-bold text-midex-navy sm:text-3xl">
+          <h2 className="mt-3 font-display text-2xl font-bold text-midex-navy sm:text-3xl">
         {t("sendMessage")}
       </h2>
       <p className="mt-2 text-sm leading-relaxed text-midex-gray/75">{t("formIntro")}</p>

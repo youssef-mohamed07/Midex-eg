@@ -90,8 +90,7 @@ export function TestimonialsSlider({
 
       <div className="relative mx-container">
         <div className="mb-6 text-center sm:mb-10 lg:mb-12">
-          <span className="mx-eyebrow mx-eyebrow--center">Midex</span>
-          <h2 className="mx-section-title mt-4">{title}</h2>
+          <h2 className="mx-section-title">{title}</h2>
           <p className="mx-section-subtitle mx-auto mt-4">{subtitle}</p>
         </div>
 

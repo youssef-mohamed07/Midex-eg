@@ -34,8 +34,7 @@ export async function BeforeAfterSection() {
       <div className="mx-container">
         <RevealOnScroll>
           <div className="mx-auto max-w-3xl text-center">
-            <span className="mx-eyebrow mx-eyebrow--center">Midex</span>
-            <h2 className="mx-section-title mt-4">{t("processPerformanceTitle")}</h2>
+          <h2 className="mx-section-title">{t("processPerformanceTitle")}</h2>
             <p className="mx-section-subtitle mx-auto mt-4">{t("beforeAfterTitle")}</p>
           </div>
         </RevealOnScroll>
@@ -43,8 +42,6 @@ export async function BeforeAfterSection() {
         <RevealOnScroll delay={100}>
           <div className="mt-8 sm:mt-10">
             <BeforeAfterSlider
-              beforeLabel={t("beforeAfterBefore")}
-              afterLabel={t("beforeAfterAfter")}
               beforePoster={BEFORE_AFTER_MEDIA.beforePoster}
               afterPoster={BEFORE_AFTER_MEDIA.afterPoster}
               duringKeywords={duringKeywords}

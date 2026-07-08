@@ -16,9 +16,6 @@ export async function AboutFaqSection() {
         <div className="grid gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start lg:gap-14 xl:gap-20">
           <RevealOnScroll>
             <div className="lg:sticky lg:top-28">
-              <span className="mx-badge mb-5 border-midex-line bg-white text-midex-navy">
-                {t("faqBadge")}
-              </span>
               <h2 className="mx-section-title">{t("faqTitle")}</h2>
               <p className="mx-section-subtitle mt-4 max-w-md">{t("faqSubtitle")}</p>
               <div className="mt-6 hidden h-px w-16 bg-gradient-to-r from-midex-mint to-midex-blue lg:block" />

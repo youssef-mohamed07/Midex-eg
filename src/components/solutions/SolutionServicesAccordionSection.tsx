@@ -26,8 +26,7 @@ export async function SolutionServicesAccordionSection({ groupSlug }: Props) {
       <div className="mx-container">
         <RevealOnScroll>
           <div className="mx-auto max-w-3xl text-center">
-            <span className="mx-eyebrow mx-eyebrow--center">Midex</span>
-            <h2 className="mx-section-title mt-4">{sectionTitle}</h2>
+          <h2 className="mx-section-title">{sectionTitle}</h2>
             <p className="mx-section-subtitle mx-auto mt-4">{sectionIntro}</p>
           </div>
         </RevealOnScroll>

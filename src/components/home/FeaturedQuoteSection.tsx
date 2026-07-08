@@ -1,5 +1,5 @@
 import { getLocale, getTranslations } from "next-intl/server";
-import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
+import { WordRevealText } from "@/components/ui/WordRevealText";
 import { type Locale } from "@/i18n/routing";
 
 function QuoteMark({ className = "" }: { className?: string }) {
@@ -23,30 +23,28 @@ export async function FeaturedQuoteSection() {
   return (
     <section className="relative overflow-hidden mx-section">
       <div className="relative mx-container">
-        <RevealOnScroll>
-          <figure className="mx-auto max-w-3xl text-center">
-            <QuoteMark className="mx-auto h-10 w-auto text-midex-blue/35 sm:h-12 lg:h-14" />
+        <figure className="mx-auto max-w-3xl text-center">
+          <QuoteMark className="mx-auto h-10 w-auto text-midex-blue/35 sm:h-12 lg:h-14" />
 
-            <blockquote className="mt-8 sm:mt-10">
-              <p className="text-balance font-display text-xl font-bold leading-[1.65] text-midex-navy sm:text-2xl sm:leading-[1.6] lg:text-[1.65rem]">
-                {t("featuredQuoteText")}
-              </p>
-            </blockquote>
+          <blockquote className="mt-8 sm:mt-10">
+            <p className="text-balance font-display text-xl font-bold leading-[1.65] text-midex-navy sm:text-2xl sm:leading-[1.6] lg:text-[1.65rem]">
+              <WordRevealText text={t("featuredQuoteText")} />
+            </p>
+          </blockquote>
 
-            <figcaption className="mt-8 flex flex-col items-center gap-4 sm:mt-10">
-              <span className="h-px w-10 bg-midex-blue/30" aria-hidden />
+          <figcaption className="mt-8 flex flex-col items-center gap-4 sm:mt-10">
+            <span className="h-px w-10 bg-midex-blue/30" aria-hidden />
 
-              <cite
-                className={`text-[11px] font-semibold not-italic sm:text-xs ${
-                  isLatin ? "uppercase tracking-[0.2em]" : "tracking-wide"
-                }`}
-              >
-                <span className="text-midex-blue">{t("featuredQuoteName")}</span>
-                <span className="text-midex-gray/45">, {t("featuredQuoteRole")}</span>
-              </cite>
-            </figcaption>
-          </figure>
-        </RevealOnScroll>
+            <cite
+              className={`text-[11px] font-semibold not-italic sm:text-xs ${
+                isLatin ? "uppercase tracking-[0.2em]" : "tracking-wide"
+              }`}
+            >
+              <span className="text-midex-blue">{t("featuredQuoteName")}</span>
+              <span className="text-midex-gray/45">, {t("featuredQuoteRole")}</span>
+            </cite>
+          </figcaption>
+        </figure>
       </div>
     </section>
   );

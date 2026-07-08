@@ -4,7 +4,6 @@ export const deliveryStepKeys = [
   "step3",
   "step4",
   "step5",
-  "step6",
 ] as const;
 
 export const deliveryStepImages: Record<(typeof deliveryStepKeys)[number], string> = {
@@ -13,5 +12,4 @@ export const deliveryStepImages: Record<(typeof deliveryStepKeys)[number], strin
   step3: "/images/services/mechanical-polishing.png",
   step4: "/images/services/spray-ball.png",
   step5: "/images/services/welding-docs.png",
-  step6: "/images/services/passivation-test.png",
 };

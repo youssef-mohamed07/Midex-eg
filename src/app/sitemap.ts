@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import {
   getAllBlogSlugs,
+  getAllCaseStudySlugs,
   getAllProductCategorySlugs,
   getAllProductSlugs,
   getSolutionGroups,
@@ -32,10 +33,11 @@ function entry(path: string, locale: (typeof routing.locales)[number], priority 
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [productSlugs, categorySlugs, blogSlugs, solutionGroups] = await Promise.all([
+  const [productSlugs, categorySlugs, blogSlugs, caseStudySlugs, solutionGroups] = await Promise.all([
     getAllProductSlugs(),
     getAllProductCategorySlugs(),
     getAllBlogSlugs(),
+    getAllCaseStudySlugs(),
     getSolutionGroups("en"),
   ]);
 
@@ -65,6 +67,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     for (const slug of blogSlugs) {
       urls.push(entry(`/blog/${slug}`, locale, 0.6));
+    }
+
+    for (const slug of caseStudySlugs) {
+      urls.push(entry(`/case-studies/${slug}`, locale, 0.6));
     }
   }
 

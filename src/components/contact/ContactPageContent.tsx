@@ -21,7 +21,7 @@ export async function ContactPageContent() {
   return (
     <>
       <ContactMapPrefetch embedUrl={siteContact.mapsEmbedUrl} />
-      <PageHero title={t("title")} subtitle={t("intro")} eyebrow="Midex" compact />
+      <PageHero title={t("title")} subtitle={t("intro")}compact />
 
       <section className="mx-section">
         <div className="mx-container">

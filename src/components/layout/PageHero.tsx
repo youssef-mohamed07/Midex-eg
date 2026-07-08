@@ -3,8 +3,6 @@ import type { ReactNode } from "react";
 type PageHeroProps = {
   title: ReactNode;
   subtitle?: ReactNode;
-  badge?: string | false;
-  eyebrow?: ReactNode;
   breadcrumbs?: ReactNode;
   children?: ReactNode;
   media?: ReactNode;
@@ -12,26 +10,16 @@ type PageHeroProps = {
 };
 
 function HeroBody({
-  badge,
-  eyebrow,
   title,
   subtitle,
   children,
 }: {
-  badge: string | false;
-  eyebrow?: ReactNode;
   title: ReactNode;
   subtitle?: ReactNode;
   children?: ReactNode;
 }) {
   return (
     <div>
-      {badge !== false && (
-        <span className="mx-badge mb-4 border-white/20 bg-white/10 text-white">{badge}</span>
-      )}
-      {eyebrow && (
-        <span className="mx-eyebrow mx-eyebrow--light mb-4">{eyebrow}</span>
-      )}
       <h1 className="font-display text-3xl font-bold leading-[1.07] tracking-tight text-white break-words sm:text-4xl sm:text-5xl lg:text-[3.25rem]">
         {title}
       </h1>
@@ -46,15 +34,13 @@ function HeroBody({
 export function PageHero({
   title,
   subtitle,
-  badge = false,
-  eyebrow,
   breadcrumbs,
   children,
   media,
   compact = false,
 }: PageHeroProps) {
   const body = (
-    <HeroBody badge={badge} eyebrow={eyebrow} title={title} subtitle={subtitle}>
+    <HeroBody title={title} subtitle={subtitle}>
       {children}
     </HeroBody>
   );

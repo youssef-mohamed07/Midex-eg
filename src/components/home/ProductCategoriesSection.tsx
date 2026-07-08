@@ -128,8 +128,7 @@ export async function ProductCategoriesSection({
       <div className="mx-container">
         <RevealOnScroll>
           <div className="mx-auto max-w-3xl text-center">
-            <span className="mx-eyebrow mx-eyebrow--center">Midex</span>
-            <h2 className="mx-section-title mt-4">{t("title")}</h2>
+          <h2 className="mx-section-title">{t("title")}</h2>
             <p className="mx-section-subtitle mx-auto mt-4">{t("subtitle")}</p>
             <Link
               href="/products"

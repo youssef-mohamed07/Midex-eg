@@ -101,8 +101,7 @@ export function EventsSection({
     <section className="mx-section overflow-hidden">
       <div className="mx-container">
         <div className="mx-auto mb-6 max-w-3xl text-center sm:mb-8 lg:mb-10">
-          <span className="mx-eyebrow mx-eyebrow--center">Midex</span>
-          <h2 className="mx-section-title mt-4">{heading}</h2>
+          <h2 className="mx-section-title">{heading}</h2>
           <p className="mx-section-subtitle mx-auto mt-4">{intro}</p>
         </div>
       </div>

@@ -1,23 +1,23 @@
 import { getLocale, getTranslations } from "next-intl/server";
 import { BeforeAfterSection } from "@/components/home/BeforeAfterSection";
+import { CaseStudiesSection } from "@/components/home/CaseStudiesSection";
+import { EngineeringCapabilitiesSection } from "@/components/home/EngineeringCapabilitiesSection";
 import { FaqSection } from "@/components/home/FaqSection";
-import { HomeSolutionsAccordion } from "@/components/home/HomeSolutionsAccordion";
 import { PartnersSection } from "@/components/home/PartnersSection";
 import { StatsSection } from "@/components/home/StatsSection";
+import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import { PageHero } from "@/components/layout/PageHero";
 import { SolutionsCta } from "@/components/solutions/SolutionsCta";
 import { SolutionTimelineSection } from "@/components/solutions/SolutionTimelineSection";
-import { getSolutionGroupCards, getSolutionGroups, getStats } from "@/lib/cms";
-import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
+import { getSolutionGroups, getStats } from "@/lib/cms";
 import { type Locale } from "@/i18n/routing";
 
 export async function SolutionsPageContent() {
   const locale = (await getLocale()) as Locale;
   const t = await getTranslations("solutions");
   const th = await getTranslations("home");
-  const [solutionGroups, cards, stats] = await Promise.all([
+  const [solutionGroups, stats] = await Promise.all([
     getSolutionGroups(locale),
-    getSolutionGroupCards(locale),
     getStats(),
   ]);
   const totalServices = solutionGroups.reduce(
@@ -27,7 +27,7 @@ export async function SolutionsPageContent() {
 
   return (
     <>
-      <PageHero title={t("title")} subtitle={t("subtitle")} eyebrow="Midex" compact>
+      <PageHero title={t("heroTitle")} subtitle={t("heroSubtitle")} compact>
         <p className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-white/70">
           <span>
             <strong className="font-semibold text-white">{solutionGroups.length}</strong>{" "}
@@ -43,25 +43,9 @@ export async function SolutionsPageContent() {
         </p>
       </PageHero>
 
-      <PartnersSection title={th("partnersTitle")} subtitle={th("partnersSubtitle")} />
+      <PartnersSection title={th("partnersTitle")} />
 
-      <section className="mx-section">
-        <div className="mx-container">
-          <RevealOnScroll>
-            <div className="max-w-2xl">
-              <span className="mx-eyebrow">Midex</span>
-              <h2 className="mx-section-title mt-4">{t("allGroups")}</h2>
-              <p className="mx-section-subtitle">{t("subtitle")}</p>
-            </div>
-          </RevealOnScroll>
-
-          <HomeSolutionsAccordion
-            cards={cards}
-            exploreLabel={th("exploreSolution")}
-            servicesLabel={t("services")}
-          />
-        </div>
-      </section>
+      <EngineeringCapabilitiesSection />
 
       <BeforeAfterSection />
 
@@ -75,6 +59,13 @@ export async function SolutionsPageContent() {
           label: th(stat.labelKey),
           suffix: stat.suffix,
         }))}
+      />
+
+      <CaseStudiesSection />
+
+      <TestimonialsSection
+        title={th("testimonialsTitle")}
+        subtitle={th("testimonialsSubtitle")}
       />
 
       <FaqSection />

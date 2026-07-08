@@ -20,7 +20,6 @@ export async function QuoteCtaSection() {
 
           <div className="relative grid gap-6 sm:gap-10 lg:grid-cols-[1fr_auto] lg:items-center lg:gap-16">
             <div>
-              <span className="mx-eyebrow mx-eyebrow--light">Midex</span>
               <h2 className="mt-3 font-display text-2xl font-bold leading-tight text-white sm:mt-4 sm:text-4xl">
                 {t("quoteTitle")}
               </h2>

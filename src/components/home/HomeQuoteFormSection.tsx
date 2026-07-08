@@ -11,10 +11,7 @@ export async function HomeQuoteFormSection() {
       <div className="mx-container">
         <RevealOnScroll>
           <div className="mb-8 max-w-2xl lg:mb-10">
-            <span className="mx-badge border-midex-line bg-white text-midex-navy">
-              {t("quoteFormBadge")}
-            </span>
-            <h2 className="mx-section-title mt-5">{t("quoteFormTitle")}</h2>
+          <h2 className="mx-section-title mt-5">{t("quoteFormTitle")}</h2>
             <p className="mx-section-subtitle mt-4">{t("quoteFormSubtitle")}</p>
           </div>
         </RevealOnScroll>

@@ -14,8 +14,7 @@ export async function ContactMapSection({ siteContact }: Props) {
     <section id="office-map" className="mx-section scroll-mt-28 bg-white">
       <div className="mx-container">
         <div className="mx-auto mb-8 max-w-2xl text-center sm:mb-10">
-          <span className="mx-eyebrow mx-eyebrow--center">Midex</span>
-          <h2 className="mx-section-title mt-4">{t("mapTitle")}</h2>
+          <h2 className="mx-section-title">{t("mapTitle")}</h2>
           <p className="mx-section-subtitle mx-auto">{t("mapSubtitle")}</p>
         </div>
 

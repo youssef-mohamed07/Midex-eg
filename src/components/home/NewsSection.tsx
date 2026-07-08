@@ -137,8 +137,7 @@ export async function NewsSection({ locale }: Props) {
         <RevealOnScroll>
           <div className="mb-6 flex flex-col gap-4 sm:mb-10 sm:gap-5 lg:mb-12 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-2xl">
-              <span className="mx-eyebrow">Midex</span>
-              <h2 className="mx-section-title mt-4">{t("blogTitle")}</h2>
+              <h2 className="mx-section-title">{t("blogTitle")}</h2>
               <p className="mt-3 text-base leading-relaxed text-midex-gray/75">
                 {t("blogSubtitle")}
               </p>

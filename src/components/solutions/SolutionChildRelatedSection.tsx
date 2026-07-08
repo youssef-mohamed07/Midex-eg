@@ -19,8 +19,7 @@ export async function SolutionChildRelatedSection({ title, groupSlug, services }
       <div className="mx-container">
         <RevealOnScroll>
           <div className="mb-8">
-            <span className="mx-eyebrow">Midex</span>
-            <h2 className="mt-3 font-display text-2xl font-bold text-midex-navy sm:text-3xl">
+          <h2 className="mt-3 font-display text-2xl font-bold text-midex-navy sm:text-3xl">
               {title}
             </h2>
           </div>

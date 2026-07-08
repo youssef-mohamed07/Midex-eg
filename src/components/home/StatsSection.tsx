@@ -88,8 +88,7 @@ export function StatsSection({
     <section className="mx-section">
       <div ref={sectionRef} className="mx-container">
         <div className="mx-auto mb-8 max-w-2xl text-center sm:mb-10">
-          <span className="mx-eyebrow mx-eyebrow--center">Midex</span>
-          <h2 className="mx-section-title mt-4">{title}</h2>
+          <h2 className="mx-section-title">{title}</h2>
           <p className="mx-section-subtitle mx-auto">{subtitle}</p>
         </div>
 

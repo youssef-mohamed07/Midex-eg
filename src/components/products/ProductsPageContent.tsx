@@ -27,7 +27,7 @@ export async function ProductsPageContent({ category = null }: Props) {
 
   return (
     <>
-      <PageHero title={t("title")} subtitle={t("subtitle")} eyebrow="Midex" compact>
+      <PageHero title={t("title")} subtitle={t("subtitle")}compact>
         <p className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-white/70">
           <span>
             <strong className="font-semibold text-white">{categoryEntries.length}</strong>{" "}
@@ -43,7 +43,7 @@ export async function ProductsPageContent({ category = null }: Props) {
         </p>
       </PageHero>
 
-      <PartnersSection title={th("partnersTitle")} subtitle={th("partnersSubtitle")} />
+      <PartnersSection title={th("partnersTitle")} />
 
       <ProductsCatalogSection category={category} />
 

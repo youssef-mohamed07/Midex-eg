@@ -1,12 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useLocale } from "next-intl";
 import { siteConfig } from "@/lib/seo/config";
 
 type Props = {
-  beforeLabel: string;
-  afterLabel: string;
   beforeVideo?: string;
   afterVideo?: string;
   beforePoster: string;
@@ -83,8 +80,6 @@ function KeywordMarqueeRow({
 }
 
 export function BeforeAfterSlider({
-  beforeLabel,
-  afterLabel,
   beforeVideo,
   afterVideo,
   beforePoster,
@@ -92,17 +87,14 @@ export function BeforeAfterSlider({
   duringKeywords,
   afterKeywords,
 }: Props) {
-  const locale = useLocale();
-  const isArabic = locale === "ar";
-  const badgeTone = isArabic ? "normal-case tracking-normal" : "uppercase tracking-wider";
   const clipAfter = 100 - DIVIDER_POSITION;
 
   return (
     <div
       dir="ltr"
       className="mx-before-after relative min-h-[320px] overflow-hidden rounded-2xl border border-midex-line bg-midex-surface shadow-lg sm:min-h-[440px] lg:min-h-[520px] xl:min-h-[580px]"
-      role="group"
-      aria-label={`${beforeLabel} / ${afterLabel}`}
+      role="img"
+      aria-label="Before and after comparison"
     >
       <div className="absolute inset-0">
         <ComparisonMedia videoSrc={afterVideo} poster={afterPoster} />
@@ -111,19 +103,6 @@ export function BeforeAfterSlider({
       <div className="absolute inset-0" style={{ clipPath: `inset(0 ${clipAfter}% 0 0)` }}>
         <ComparisonMedia videoSrc={beforeVideo} poster={beforePoster} grayscale />
       </div>
-
-      <span
-        dir="auto"
-        className={`absolute left-4 top-4 z-30 rounded bg-midex-navy/90 px-3 py-1.5 text-[11px] font-bold text-white sm:left-5 sm:top-5 sm:text-xs ${badgeTone}`}
-      >
-        {beforeLabel}
-      </span>
-      <span
-        dir="auto"
-        className={`absolute right-4 top-4 z-30 rounded border border-midex-line/80 bg-white/95 px-3 py-1.5 text-[11px] font-bold text-midex-navy sm:right-5 sm:top-5 sm:text-xs ${badgeTone}`}
-      >
-        {afterLabel}
-      </span>
 
       <div className="pointer-events-none absolute inset-x-0 top-1/2 z-10 h-11 -translate-y-1/2 overflow-hidden sm:h-12">
         <div

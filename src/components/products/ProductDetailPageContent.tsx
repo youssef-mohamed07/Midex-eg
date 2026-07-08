@@ -39,8 +39,6 @@ export async function ProductDetailPageContent({ slug }: Props) {
   return (
     <>
       <PageHero
-        badge={false}
-        eyebrow={categoryLabel}
         title={product.title}
         subtitle={product.excerpt}
         compact
@@ -119,8 +117,7 @@ export async function ProductDetailPageContent({ slug }: Props) {
 
             <div className="order-2 space-y-6 sm:space-y-10 lg:order-1 lg:col-start-1 lg:row-start-1">
               <div>
-                <span className="mx-eyebrow">Midex</span>
-                <h2 className="mx-section-title mt-4">{t("overview")}</h2>
+              <h2 className="mx-section-title">{t("overview")}</h2>
                 <p className="mt-5 max-w-3xl text-base leading-relaxed text-midex-gray/80 sm:text-lg">
                   {product.description}
                 </p>

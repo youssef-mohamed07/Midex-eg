@@ -18,8 +18,7 @@ export function SolutionGroupWorkflowSection({ content }: Props) {
       <div className="mx-container">
         <RevealOnScroll>
           <div className="mx-auto mb-14 max-w-2xl text-center">
-            <span className="mx-eyebrow mx-eyebrow--center">Midex</span>
-            <h2 className="mx-section-title mt-4">{content.title}</h2>
+            <h2 className="mx-section-title">{content.title}</h2>
             <p className="mx-section-subtitle mx-auto">{content.intro}</p>
           </div>
         </RevealOnScroll>

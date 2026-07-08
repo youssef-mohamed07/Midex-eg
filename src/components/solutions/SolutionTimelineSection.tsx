@@ -20,8 +20,7 @@ export async function SolutionTimelineSection() {
       <div className="mx-container">
         <RevealOnScroll>
           <div className="mx-auto mb-14 max-w-2xl text-center">
-            <span className="mx-eyebrow mx-eyebrow--center">Midex</span>
-            <h2 className="mx-section-title mt-4">{t("stepsGridTitle")}</h2>
+          <h2 className="mx-section-title">{t("stepsGridTitle")}</h2>
             <p className="mx-section-subtitle mx-auto">{t("stepsGridSubtitle")}</p>
           </div>
         </RevealOnScroll>

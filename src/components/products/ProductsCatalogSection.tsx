@@ -40,7 +40,6 @@ export async function ProductsCatalogSection({ category = null }: Props) {
         <RevealOnScroll>
           <div className="mb-5 flex flex-col gap-2 sm:mb-8 sm:gap-3 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-2xl">
-              <span className="mx-eyebrow">Midex</span>
               <h2 className="mx-section-title mt-2 sm:mt-3">{t("catalogHeading")}</h2>
             </div>
             <p className="max-w-md text-sm leading-relaxed text-midex-gray/75 sm:text-base lg:text-end">

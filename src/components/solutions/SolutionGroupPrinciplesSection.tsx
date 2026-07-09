@@ -26,7 +26,11 @@ export async function SolutionGroupPrinciplesSection({ content }: Props) {
           </div>
         </RevealOnScroll>
 
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 lg:gap-4">
+        <div
+          className={`grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 ${
+            content.items.length >= 6 ? "lg:grid-cols-3" : ""
+          }`}
+        >
           {content.items.map((item, index) => {
             const href = getSolutionPrincipleHref(item.id, productSlugs);
             const card = (
@@ -36,7 +40,11 @@ export async function SolutionGroupPrinciplesSection({ content }: Props) {
                   alt={item.title}
                   fill
                   className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  sizes={
+                    content.items.length >= 6
+                      ? "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      : "(max-width: 640px) 100vw, 50vw"
+                  }
                 />
                 <div className="absolute inset-0 bg-midex-navy/15" aria-hidden />
                 <div

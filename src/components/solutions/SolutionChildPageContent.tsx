@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
@@ -55,18 +54,6 @@ export async function SolutionChildPageContent({ slug, childSlug }: Props) {
                 { label: child.label },
               ]}
             />
-          }
-          media={
-            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 shadow-2xl shadow-black/20 sm:aspect-[16/11]">
-              <Image
-                src={child.image}
-                alt={child.label}
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                priority
-              />
-            </div>
           }
         >
           <div className="mt-6">
@@ -142,18 +129,6 @@ export async function SolutionChildPageContent({ slug, childSlug }: Props) {
               { label: child.label },
             ]}
           />
-        }
-        media={
-          <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 shadow-2xl shadow-black/20 sm:aspect-[16/11]">
-            <Image
-              src={child.image}
-              alt={child.label}
-              fill
-              className="object-cover"
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              priority
-            />
-          </div>
         }
       />
 

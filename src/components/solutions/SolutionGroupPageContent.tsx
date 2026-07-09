@@ -3,14 +3,12 @@ import { notFound } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { PageHero } from "@/components/layout/PageHero";
-import { PageHeroImage } from "@/components/cms/PageHeroImage";
 import { SolutionBreadcrumbs } from "@/components/solutions/SolutionBreadcrumbs";
 import {
   SolutionGroupCard,
 } from "@/components/solutions/SolutionCards";
 import { HomeFaqSection } from "@/components/home/HomeFaqSection";
 import { HomeQuoteFormSection } from "@/components/home/HomeQuoteFormSection";
-import { SolutionsCta } from "@/components/solutions/SolutionsCta";
 import { SolutionGroupFaqSection } from "@/components/solutions/SolutionGroupFaqSection";
 import { SolutionGroupPrinciplesSection } from "@/components/solutions/SolutionGroupPrinciplesSection";
 import { SolutionGroupWorkflowSection } from "@/components/solutions/SolutionGroupWorkflowSection";
@@ -28,7 +26,7 @@ import {
   getSolutionGroupWorkflow,
   getSolutionsPageContent,
 } from "@/lib/cms";
-import { resolvePageCta, pick } from "@/lib/cms/section-resolve";
+import { pick } from "@/lib/cms/section-resolve";
 import { type Locale } from "@/i18n/routing";
 
 type Props = { slug: string };
@@ -50,15 +48,8 @@ export async function SolutionGroupPageContent({ slug }: Props) {
     getSolutionsPageContent(locale),
   ]);
   const otherGroups = allGroups.filter((item) => item.slug !== group.slug);
-  const cta = resolvePageCta(group.cta ?? solutionsPage.cta, {
-    title: t("ctaTitle"),
-    text: t("ctaText"),
-    primaryCta: tc("requestQuote"),
-    primaryCtaHref: getQuoteUrl(label),
-  });
 
   const importanceTitle = pick(group.importanceTitle, t("groupImportanceTitle"));
-  const otherGroupsTitle = pick(group.otherGroupsTitle, t("otherGroups"));
   const heroCtaLabel = pick(group.heroCtaLabel, tc("requestQuote"));
 
   return (
@@ -67,7 +58,6 @@ export async function SolutionGroupPageContent({ slug }: Props) {
         title={group.heroTitle ?? label}
         subtitle={group.description}
         compact
-        media={<PageHeroImage src={group.image} alt={label} priority />}
         breadcrumbs={
           <SolutionBreadcrumbs
             light
@@ -155,7 +145,13 @@ export async function SolutionGroupPageContent({ slug }: Props) {
         <section className="mx-section--tight">
           <div className="mx-container">
             <div className="mb-8 max-w-2xl">
-              <h2 className="mx-section-title">{otherGroupsTitle}</h2>
+              <h2 className="mx-section-title">
+                {locale === "ar"
+                  ? "حلول أخرى"
+                  : locale === "de"
+                    ? "Weitere Lösungen"
+                    : "Other Solutions"}
+              </h2>
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -178,8 +174,6 @@ export async function SolutionGroupPageContent({ slug }: Props) {
       <HomeQuoteFormSection />
 
       {faq ? <SolutionGroupFaqSection content={faq} /> : <HomeFaqSection />}
-
-      <SolutionsCta content={cta} quoteSubject={label} />
     </>
   );
 }

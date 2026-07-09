@@ -92,9 +92,12 @@ export async function AboutStandardsSection({ title, subtitle, items: itemsProp 
           </div>
         </RevealOnScroll>
 
-        <ul className="grid gap-4 sm:grid-cols-2 lg:gap-5">
+        <ul className="flex flex-wrap justify-center gap-4 lg:gap-5">
           {standards.map((standard, index) => (
-            <li key={standard.key}>
+            <li
+              key={standard.key}
+              className="w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc(50%-0.625rem)]"
+            >
               <StandardCard
                 label={standard.label}
                 description={standard.description}

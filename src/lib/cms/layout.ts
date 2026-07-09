@@ -3,6 +3,7 @@ import "server-only";
 import { buildSolutionGroupNav } from "@/components/solutions/solution-group-cards";
 import type { Locale } from "@/i18n/routing";
 import { brandManifest } from "@/lib/branding/tokens";
+import { resolveSiteContact, resolveSocialLinks } from "@/lib/cms/contact";
 import { sanityFetch } from "@/lib/cms/fetch";
 import { imageUrl, loc, locOptional } from "@/lib/cms/fragments";
 import type {
@@ -122,7 +123,13 @@ export async function getLayoutShellData(locale: Locale): Promise<LayoutShellDat
     ],
   });
 
-  const settings = raw.settings;
+  const settings = raw.settings
+    ? {
+        ...raw.settings,
+        contact: resolveSiteContact(raw.settings.contact),
+        social: resolveSocialLinks(raw.settings.social),
+      }
+    : null;
   const logos = {
     logoWhite: raw.logos?.logoWhite || "/images/brand/logo-white.png",
     logoDark: raw.logos?.logoDark || "/images/brand/logo-dark.png",
@@ -160,13 +167,6 @@ export async function getLayoutShellData(locale: Locale): Promise<LayoutShellDat
     productCategories,
     products: raw.products,
     solutionGroupsNav,
-    siteContact:
-      settings?.contact ?? {
-        email: "",
-        phones: [],
-        address: "",
-        mapsUrl: "",
-        mapsEmbedUrl: "",
-      },
+    siteContact: resolveSiteContact(settings?.contact),
   };
 }

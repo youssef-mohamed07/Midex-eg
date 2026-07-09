@@ -72,7 +72,7 @@ export function SolutionServiceCard({
         alt={label}
         fill
         className="object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
-        sizes="(max-width: 640px) 100vw, 33vw"
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
       />
       <div className="absolute inset-0 bg-midex-navy/15" aria-hidden />
       <div

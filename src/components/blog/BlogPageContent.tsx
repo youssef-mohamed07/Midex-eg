@@ -3,9 +3,8 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { PageHero } from "@/components/layout/PageHero";
 import { PageHeroImage } from "@/components/cms/PageHeroImage";
-import { PageCtaCard } from "@/components/sections/PageCtaCard";
 import { getBlogPageContent, getBlogPosts } from "@/lib/cms";
-import { pick, resolvePageCta, resolvePageHero, isSectionEnabled } from "@/lib/cms/section-resolve";
+import { pick, resolvePageHero } from "@/lib/cms/section-resolve";
 import { type Locale } from "@/i18n/routing";
 
 function PostMeta({
@@ -67,13 +66,6 @@ export async function BlogPageContent() {
   const latestLabel = pick(page.listing?.latestLabel, t("latestPosts"));
   const readPost = pick(page.listing?.readPost, t("readPost"));
   const postsLabel = pick(page.listing?.postsLabel, t("postsLabel"));
-
-  const cta = resolvePageCta(page.cta, {
-    title: t("ctaTitle"),
-    text: t("ctaText"),
-    primaryCta: t("ctaButton"),
-    primaryCtaHref: "/contact",
-  });
 
   return (
     <>
@@ -194,28 +186,6 @@ export async function BlogPageContent() {
           )}
         </div>
       </section>
-
-      {isSectionEnabled(cta.enabled) && (
-      <section className="mx-section--tight">
-        <div className="mx-container">
-          <PageCtaCard>
-            <div className="flex flex-col items-center gap-8 text-center lg:flex-row lg:justify-between lg:text-start">
-              <div className="max-w-xl">
-                <h2 className="font-display text-2xl font-bold text-white">{cta.title}</h2>
-                <p className="mt-3 text-base leading-relaxed text-white/70">{cta.text}</p>
-              </div>
-              <Link
-                className="group mx-btn mx-btn-mint shrink-0"
-                href={cta.primaryCtaHref || "/contact"}
-              >
-                {cta.primaryCta}
-                <span className="mx-arrow">→</span>
-              </Link>
-            </div>
-          </PageCtaCard>
-        </div>
-      </section>
-      )}
     </>
   );
 }

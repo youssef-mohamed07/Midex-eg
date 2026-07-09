@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { ProductGallery } from "@/components/products/ProductGallery";
-import { ProductsCta } from "@/components/products/ProductsCta";
 import { PageHero } from "@/components/layout/PageHero";
 import { PageHeroImage } from "@/components/cms/PageHeroImage";
 import { SolutionBreadcrumbs } from "@/components/solutions/SolutionBreadcrumbs";
@@ -16,10 +15,7 @@ import {
   getProductsPageContent,
   getQuoteUrl,
 } from "@/lib/cms";
-import {
-  resolvePageCta,
-  resolveProductDetailLabels,
-} from "@/lib/cms/section-resolve";
+import { resolveProductDetailLabels } from "@/lib/cms/section-resolve";
 import { type Locale } from "@/i18n/routing";
 
 type Props = { slug: string };
@@ -56,13 +52,6 @@ export async function ProductDetailPageContent({ slug }: Props) {
     backToCatalog: t("backToCatalog"),
     requestQuote: t("requestQuote"),
     relatedSolutionTitle: "Related solution",
-  });
-
-  const detailCta = resolvePageCta(page.detailCta, {
-    title: t("requestQuote"),
-    text: t("subtitle"),
-    primaryCta: t("requestQuote"),
-    primaryCtaHref: getQuoteUrl(product.title),
   });
 
   return (
@@ -264,8 +253,6 @@ export async function ProductDetailPageContent({ slug }: Props) {
           )}
         </div>
       </section>
-
-      <ProductsCta content={detailCta} />
     </>
   );
 }

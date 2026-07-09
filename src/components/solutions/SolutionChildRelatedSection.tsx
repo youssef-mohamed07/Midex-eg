@@ -25,7 +25,17 @@ export async function SolutionChildRelatedSection({ title, groupSlug, services }
           </div>
         </RevealOnScroll>
 
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div
+          className={`grid gap-4 ${
+            services.length <= 1
+              ? ""
+              : services.length === 2
+                ? "sm:grid-cols-2"
+                : services.length === 3
+                  ? "sm:grid-cols-3"
+                  : "sm:grid-cols-2 lg:grid-cols-4"
+          }`}
+        >
           {services.map((service) => (
             <SolutionServiceCard
               key={service.slug}

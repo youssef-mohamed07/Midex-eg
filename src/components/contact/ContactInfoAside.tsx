@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { getTranslations } from "next-intl/server";
+import { phoneTelHref } from "@/lib/cms/contact";
 import { getSiteContact, getSiteSettings } from "@/lib/cms";
 import type { SiteContact, SiteSettings } from "@/lib/cms/types";
 
@@ -164,7 +165,7 @@ export async function ContactInfoAside({
               {siteContact.phones.map((phone, index) => (
                 <span key={phone}>
                   {index > 0 && " / "}
-                  <a href={`tel:+20${phone.replace(/^0/, "")}`} className="no-underline hover:text-midex-blue">
+                  <a href={phoneTelHref(phone)} className="no-underline hover:text-midex-blue">
                     {phone}
                   </a>
                 </span>

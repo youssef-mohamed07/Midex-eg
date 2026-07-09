@@ -109,11 +109,11 @@ export function StatsSection({
               }`}
               style={{ transitionDelay: active ? `${index * 120}ms` : "0ms" }}
             >
-              <p className="font-display text-3xl font-extrabold tracking-tight text-midex-navy sm:text-5xl lg:text-6xl">
+              <p className="font-display text-3xl font-semibold tracking-tight text-midex-navy sm:text-5xl lg:text-6xl">
                 <StatCounter
                   value={stat.value}
                   active={active}
-                  suffix={stat.suffix}
+                  suffix={stat.suffix || "+"}
                   duration={2000 + index * 150}
                 />
               </p>

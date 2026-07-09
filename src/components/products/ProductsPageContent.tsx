@@ -6,7 +6,6 @@ import { StatsSection } from "@/components/home/StatsSection";
 import { PageHero } from "@/components/layout/PageHero";
 import { PageHeroImage } from "@/components/cms/PageHeroImage";
 import { ProductsCatalogSection } from "@/components/products/ProductsCatalogSection";
-import { ProductsCta } from "@/components/products/ProductsCta";
 import {
   getProductCategories,
   getProductCategory,
@@ -18,7 +17,6 @@ import {
   isSectionEnabled,
   pick,
   resolveFaq,
-  resolvePageCta,
   resolvePageHero,
   resolveProductExplorerLabels,
   resolveSectionHeader,
@@ -86,13 +84,6 @@ export async function ProductsPageContent({ category = null }: Props) {
     })),
   });
 
-  const cta = resolvePageCta(page.cta, {
-    title: t("ctaTitle"),
-    text: t("ctaText"),
-    primaryCta: t("requestQuote"),
-    primaryCtaHref: "/contact",
-  });
-
   const catalogHeader = resolveSectionHeader(page.catalogSection, {
     title: categoryPage?.label ?? t("catalogHeading"),
     subtitle: categoryPage?.description ?? t("catalogSubtitle"),
@@ -158,8 +149,6 @@ export async function ProductsPageContent({ category = null }: Props) {
       {isSectionEnabled(faq.enabled) && (
         <FaqSection content={faq} contactLabel={th("faqContact")} />
       )}
-
-      {isSectionEnabled(cta.enabled) && <ProductsCta content={cta} />}
     </>
   );
 }

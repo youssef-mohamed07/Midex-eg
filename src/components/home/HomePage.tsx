@@ -13,7 +13,6 @@ import { TruviaSection } from "@/components/home/TruviaSection";
 import { NewsSection } from "@/components/home/NewsSection";
 import { PartnersSection } from "@/components/home/PartnersSection";
 import { ProductCategoriesSection } from "@/components/home/ProductCategoriesSection";
-import { QuoteCtaSection } from "@/components/home/QuoteCtaSection";
 import { ServicesSection } from "@/components/home/ServicesSection";
 import { StatsSection } from "@/components/home/StatsSection";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
@@ -23,7 +22,6 @@ import {
   pick,
   resolveBeforeAfter,
   resolveFaq,
-  resolvePageCta,
   resolvePromo,
   resolveQuoteBlock,
   resolveSectionHeader,
@@ -144,15 +142,6 @@ export async function HomePage() {
     })),
   });
 
-  const quoteCta = resolvePageCta(sections.quoteCta, {
-    title: t("quoteTitle"),
-    text: t("quoteText"),
-    primaryCta: t("quoteButton"),
-    primaryCtaHref: "/contact",
-    secondaryCta: th("viewProducts"),
-    secondaryCtaHref: "/products",
-  });
-
   return (
     <>
       <HeroSlider collage={home.heroCollage} heroCopy={heroCopy} />
@@ -262,8 +251,6 @@ export async function HomePage() {
       )}
 
       <FaqSection content={faq} contactLabel={t("faqContact")} />
-
-      <QuoteCtaSection content={quoteCta} />
     </>
   );
 }

@@ -1,5 +1,4 @@
 import { getLocale, getTranslations } from "next-intl/server";
-import { Link } from "@/i18n/navigation";
 import { AboutFaqSection } from "@/components/about/AboutFaqSection";
 import { AboutFoundersSection } from "@/components/about/AboutFoundersSection";
 import { AboutMissionVisionSection } from "@/components/about/AboutMissionVisionSection";
@@ -10,19 +9,16 @@ import { OurValuesSection } from "@/components/about/OurValuesSection";
 import { EventsSection } from "@/components/home/EventsSection";
 import { PageHero } from "@/components/layout/PageHero";
 import { PageHeroImage } from "@/components/cms/PageHeroImage";
-import { PageCtaCard } from "@/components/sections/PageCtaCard";
 import { isValidImageSrc } from "@/lib/cms/images";
 import {
   getAboutMilestones,
   getAboutPageContent,
   getEvents,
-  getQuoteUrl,
 } from "@/lib/cms";
 import {
   isSectionEnabled,
   pick,
   resolveFaq,
-  resolvePageCta,
   resolvePageHero,
   resolveSectionHeader,
 } from "@/lib/cms/section-resolve";
@@ -86,15 +82,6 @@ export async function AboutPageContent() {
       question: t(`faqQ${index}`),
       answer: t(`faqA${index}`),
     })),
-  });
-
-  const cta = resolvePageCta(page.cta, {
-    title: t("ctaTitle"),
-    text: t("ctaText"),
-    primaryCta: t("contactUs"),
-    primaryCtaHref: "/contact",
-    secondaryCta: tc("requestQuote"),
-    secondaryCtaHref: getQuoteUrl(),
   });
 
   return (
@@ -161,32 +148,6 @@ export async function AboutPageContent() {
 
       {isSectionEnabled(faq.enabled) && (
         <AboutFaqSection content={faq} contactLabel={t("faqContact")} />
-      )}
-
-      {isSectionEnabled(cta.enabled) && (
-      <section className="mx-section--tight">
-        <div className="mx-container">
-          <PageCtaCard>
-            <div className="flex flex-col items-center gap-8 text-center lg:flex-row lg:justify-between lg:text-start">
-              <div className="max-w-2xl">
-                <h2 className="font-display text-2xl font-bold text-white sm:text-3xl">
-                  {cta.title}
-                </h2>
-                <p className="mt-3 leading-relaxed text-white/70">{cta.text}</p>
-              </div>
-              <div className="flex shrink-0 flex-wrap justify-center gap-3">
-                <Link className="group mx-btn mx-btn-mint" href={cta.primaryCtaHref || "/contact"}>
-                  {cta.primaryCta}
-                  <span className="mx-arrow">→</span>
-                </Link>
-                <Link className="mx-btn mx-btn-outline" href={cta.secondaryCtaHref || getQuoteUrl()}>
-                  {cta.secondaryCta}
-                </Link>
-              </div>
-            </div>
-          </PageCtaCard>
-        </div>
-      </section>
       )}
     </>
   );

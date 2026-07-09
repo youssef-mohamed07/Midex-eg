@@ -2,6 +2,7 @@ import "server-only";
 
 import type { Locale } from "@/i18n/routing";
 import { brandManifest } from "@/lib/branding/tokens";
+import { resolveSiteContact, resolveSocialLinks } from "@/lib/cms/contact";
 import { sanityFetch } from "@/lib/cms/fetch";
 import { imageUrl, loc, locList, locOptional } from "@/lib/cms/fragments";
 import { isValidImageSrc } from "@/lib/cms/images";
@@ -54,10 +55,16 @@ const siteSettingsQuery = `*[_type == "siteSettings"][0]{
 }`;
 
 export async function getSiteSettings(): Promise<SiteSettings | null> {
-  return sanityFetch<SiteSettings | null>({
+  const settings = await sanityFetch<SiteSettings | null>({
     query: siteSettingsQuery,
     tags: ["siteSettings"],
   });
+  if (!settings) return null;
+  return {
+    ...settings,
+    contact: resolveSiteContact(settings.contact),
+    social: resolveSocialLinks(settings.social),
+  };
 }
 
 export async function getBrandLogos(): Promise<{ logoWhite: string; logoDark: string }> {
@@ -76,15 +83,7 @@ export async function getBrandLogos(): Promise<{ logoWhite: string; logoDark: st
 
 export async function getSiteContact(): Promise<SiteContact> {
   const settings = await getSiteSettings();
-  return (
-    settings?.contact ?? {
-      email: "",
-      phones: [],
-      address: "",
-      mapsUrl: "",
-      mapsEmbedUrl: "",
-    }
-  );
+  return resolveSiteContact(settings?.contact);
 }
 
 export async function getHeroCollage(): Promise<HeroCollage> {

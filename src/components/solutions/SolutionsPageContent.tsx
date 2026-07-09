@@ -3,11 +3,11 @@ import { BeforeAfterSection } from "@/components/home/BeforeAfterSection";
 import { CaseStudiesSection } from "@/components/home/CaseStudiesSection";
 import { EngineeringCapabilitiesSection } from "@/components/home/EngineeringCapabilitiesSection";
 import { FaqSection } from "@/components/home/FaqSection";
+import { HomeQuoteFormSection } from "@/components/home/HomeQuoteFormSection";
 import { PartnersSection } from "@/components/home/PartnersSection";
 import { StatsSection } from "@/components/home/StatsSection";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import { SolutionsPageHero } from "@/components/solutions/SolutionsPageHero";
-import { SolutionsCta } from "@/components/solutions/SolutionsCta";
 import { SolutionTimelineSection } from "@/components/solutions/SolutionTimelineSection";
 import {
   getSolutionGroups,
@@ -19,7 +19,6 @@ import {
   pick,
   resolveBeforeAfter,
   resolveFaq,
-  resolvePageCta,
   resolvePageHero,
   resolveSectionHeader,
   resolveTimelineSection,
@@ -103,18 +102,10 @@ export async function SolutionsPageContent() {
     })),
   });
 
-  const cta = resolvePageCta(page.cta, {
-    title: t("ctaTitle"),
-    text: t("ctaText"),
-    primaryCta: th("quoteButton"),
-    primaryCtaHref: "/contact",
-  });
-
   return (
     <>
       <SolutionsPageHero
         hero={hero}
-        groups={solutionGroups}
         groupsCount={solutionGroups.length}
         servicesCount={totalServices}
         groupsLabel={t("groups")}
@@ -172,11 +163,11 @@ export async function SolutionsPageContent() {
         />
       )}
 
+      <HomeQuoteFormSection />
+
       {isSectionEnabled(faq.enabled) && (
         <FaqSection content={faq} contactLabel={th("faqContact")} />
       )}
-
-      {isSectionEnabled(cta.enabled) && <SolutionsCta content={cta} />}
     </>
   );
 }

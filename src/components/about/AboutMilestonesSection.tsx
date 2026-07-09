@@ -108,7 +108,7 @@ export function AboutMilestonesSection({
               }`}
               style={{ transitionDelay: active ? `${index * 90}ms` : "0ms" }}
             >
-              <p className="font-display text-3xl font-extrabold tracking-tight text-midex-navy sm:text-4xl lg:text-5xl">
+              <p className="font-display text-3xl font-semibold tracking-tight text-midex-navy sm:text-4xl lg:text-5xl">
                 <MilestoneCounter
                   value={stat.value}
                   active={active}

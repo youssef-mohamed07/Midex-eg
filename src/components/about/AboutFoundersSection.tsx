@@ -28,7 +28,7 @@ export async function AboutFoundersSection({ title }: Props) {
           <div className="grid auto-rows-fr gap-4 lg:grid-cols-2 lg:gap-5">
             {aboutFounders.map((founder, index) => {
               const name = pick(founder.name, t(founder.nameKey));
-              const role = t(founder.roleKey);
+              const role = t("founder1Role");
 
               return (
                 <RevealOnScroll key={founder.id} delay={index * 70} className="h-full">

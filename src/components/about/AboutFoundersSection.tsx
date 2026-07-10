@@ -28,12 +28,12 @@ export async function AboutFoundersSection({ title }: Props) {
           <div className="grid auto-rows-fr gap-4 lg:grid-cols-2 lg:gap-5">
             {aboutFounders.map((founder, index) => {
               const name = pick(founder.name, t(founder.nameKey));
-              const role = t("founder1Role");
+              const role = t(founder.roleKey);
 
               return (
                 <RevealOnScroll key={founder.id} delay={index * 70} className="h-full">
                   <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-midex-line/60 bg-white shadow-[0_18px_48px_rgba(14,26,50,0.08)] sm:rounded-[1.75rem]">
-                    <div className="relative aspect-[16/10] w-full shrink-0 bg-midex-surface/50 sm:aspect-[3/2]">
+                    <div className="relative aspect-[4/5] w-full shrink-0 bg-midex-surface/50">
                       {isValidImageSrc(founder.image) ? (
                         <Image
                           src={founder.image}
@@ -48,10 +48,7 @@ export async function AboutFoundersSection({ title }: Props) {
                     </div>
 
                     <div className="flex flex-1 flex-col p-5 sm:p-6">
-                      <p className="font-display text-3xl font-bold tabular-nums leading-none text-midex-navy/[0.08] sm:text-4xl">
-                        {String(index + 1).padStart(2, "0")}
-                      </p>
-                      <h3 className="-mt-5 font-display text-lg font-bold text-midex-navy sm:text-xl">
+                      <h3 className="font-display text-lg font-bold text-midex-navy sm:text-xl">
                         {name}
                       </h3>
                       <p className="mt-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-midex-blue sm:text-xs">

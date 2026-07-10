@@ -1,3 +1,8 @@
+/**
+ * Builds engineering capability cards for home/solutions.
+ * User-facing copy comes from Sanity `capabilitiesSection.cards` when present;
+ * otherwise falls back to next-intl / uiMessages keys (not hardcoded prose).
+ */
 import type { HomeSolutionCard } from "@/components/home/HomeSolutionsAccordion";
 import type { EngineeringCapabilityCardContent } from "@/lib/cms/types";
 

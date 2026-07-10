@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { mapsHref, phoneTelHref } from "@/lib/cms/contact";
 import type { LayoutShellData } from "@/lib/cms/layout";
+import { pick } from "@/lib/cms/section-resolve";
 
 type FooterLink = { href: string; label: string };
 
@@ -62,12 +63,19 @@ export async function Footer({ shell }: { shell: LayoutShellData }) {
   const t = await getTranslations("footer");
   const nav = await getTranslations("nav");
   const ts = await getTranslations("socialFab");
-  const { solutionGroupsNav: solutionGroups, siteContact, settings } = shell;
+  const { solutionGroupsNav: solutionGroups, siteContact, settings, chrome } = shell;
   const social = settings?.social ?? {};
+  const siteName = settings?.name?.trim() || "Midex";
+
+  const productsLabel = pick(chrome.products, nav("products"));
+  const aboutLabel = pick(chrome.aboutUs, nav("aboutUs"));
+  const contactLabel = pick(chrome.contactUs, nav("contactUs"));
+  const blogLabel = pick(chrome.blog, nav("blog"));
+  const allSolutionsLabel = pick(chrome.allSolutions, nav("allSolutions"));
 
   const serviceLinks: FooterLink[] = [
-    { href: "/solutions", label: nav("allSolutions") },
-    { href: "/products", label: nav("products") },
+    { href: "/solutions", label: allSolutionsLabel },
+    { href: "/products", label: productsLabel },
     ...solutionGroups.map((group) => ({
       href: group.href,
       label: group.label,
@@ -75,31 +83,34 @@ export async function Footer({ shell }: { shell: LayoutShellData }) {
   ];
 
   const companyLinks: FooterLink[] = [
-    { href: "/about-us", label: nav("aboutUs") },
-    { href: "/contact", label: nav("contactUs") },
-    { href: "/blog", label: nav("blog") },
+    { href: "/about-us", label: aboutLabel },
+    { href: "/contact", label: contactLabel },
+    { href: "/blog", label: blogLabel },
   ];
 
   const socialLinks = [
     social.linkedIn && {
       href: social.linkedIn,
-      label: ts("linkedIn"),
+      label: pick(chrome.socialLinkedIn, ts("linkedIn")),
       icon: <LinkedInIcon />,
     },
     social.whatsApp && {
       href: social.whatsApp,
-      label: ts("whatsapp"),
+      label: pick(chrome.socialWhatsapp, ts("whatsapp")),
       icon: <WhatsAppIcon />,
     },
     social.twitter && {
       href: social.twitter,
-      label: ts("twitter"),
+      label: pick(chrome.socialTwitter, ts("twitter")),
       icon: <XIcon />,
     },
   ].filter(Boolean) as Array<{ href: string; label: string; icon: React.ReactNode }>;
 
-  const address = siteContact.address?.trim() || t("address");
+  const address =
+    siteContact.address?.trim() ||
+    pick(chrome.footerAddressFallback, t("address"));
   const mapUrl = mapsHref(siteContact, address);
+  const logoSrc = shell.logos.logoWhite;
 
   return (
     <footer className="relative overflow-x-hidden bg-midex-navy-dark text-white">
@@ -113,15 +124,15 @@ export async function Footer({ shell }: { shell: LayoutShellData }) {
           <div className="sm:col-span-2 lg:col-span-1">
             <Link href="/" className="inline-block shrink-0">
               <Image
-                src="/images/brand/logo-white.png"
-                alt="Midex"
+                src={logoSrc}
+                alt={siteName}
                 width={200}
                 height={58}
                 className="h-9 w-auto max-w-[160px] sm:h-10"
               />
             </Link>
             <p className="mt-3 max-w-xs text-sm leading-snug text-white/50">
-              {t("tagline")}
+              {pick(chrome.footerTagline, t("tagline"))}
             </p>
             {socialLinks.length > 0 && (
               <ul className="mt-4 flex flex-wrap items-center gap-2">
@@ -142,12 +153,15 @@ export async function Footer({ shell }: { shell: LayoutShellData }) {
             )}
           </div>
 
-          <FooterNav title={t("services")} links={serviceLinks} />
-          <FooterNav title={t("usefulLinks")} links={companyLinks} />
+          <FooterNav title={pick(chrome.footerServices, t("services"))} links={serviceLinks} />
+          <FooterNav
+            title={pick(chrome.footerUsefulLinks, t("usefulLinks"))}
+            links={companyLinks}
+          />
 
           <div>
             <h3 className="text-[11px] font-semibold uppercase tracking-widest text-midex-mint/90">
-              {t("contactUs")}
+              {pick(chrome.footerContactUs, t("contactUs"))}
             </h3>
             <div className="mt-2.5 space-y-2 text-sm text-white/65">
               {mapUrl ? (
@@ -186,7 +200,7 @@ export async function Footer({ shell }: { shell: LayoutShellData }) {
         </div>
 
         <p className="mt-8 border-t border-white/[0.08] pt-5 text-center text-xs text-white/40">
-          © {new Date().getFullYear()} Midex. {t("rights")}
+          © {new Date().getFullYear()} {siteName}. {pick(chrome.footerRights, t("rights"))}
         </p>
       </div>
     </footer>

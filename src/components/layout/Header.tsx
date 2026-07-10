@@ -16,6 +16,12 @@ import { Link, usePathname } from "@/i18n/navigation";
 import { isValidImageSrc } from "@/lib/cms/images";
 import type { SolutionGroupNav } from "@/components/solutions/solution-group-cards";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import type { LayoutChrome } from "@/lib/cms/types";
+
+function pickLabel(cms: string | undefined, fallback: string): string {
+  const value = cms?.trim();
+  return value || fallback;
+}
 
 type NavLink = {
   label: string;
@@ -540,6 +546,8 @@ export type HeaderNavData = {
   featuredImage: string;
   logoWhite: string;
   logoDark: string;
+  siteName?: string;
+  chrome?: LayoutChrome;
 };
 
 export function Header({
@@ -548,11 +556,30 @@ export function Header({
   featuredImage,
   logoWhite,
   logoDark,
+  siteName = "Midex",
+  chrome = {},
 }: HeaderNavData) {
   const t = useTranslations("nav");
   const th = useTranslations("home");
   const ts = useTranslations("solutions");
   const tp = useTranslations("products");
+  const labels = {
+    products: pickLabel(chrome.products, t("products")),
+    solutions: pickLabel(chrome.solutions, t("solutions")),
+    blog: pickLabel(chrome.blog, t("blog")),
+    aboutUs: pickLabel(chrome.aboutUs, t("aboutUs")),
+    contactUs: pickLabel(chrome.contactUs, t("contactUs")),
+    allSolutions: pickLabel(chrome.allSolutions, t("allSolutions")),
+    allCategories: pickLabel(chrome.allCategories, tp("allCategories")),
+    menu: pickLabel(chrome.menu, t("menu")),
+    close: pickLabel(chrome.close, t("close")),
+    capabilitiesTitle: pickLabel(chrome.capabilitiesTitle, th("capabilitiesTitle")),
+    capabilitiesSubtitle: pickLabel(
+      chrome.capabilitiesSubtitle,
+      th("capabilitiesSubtitle"),
+    ),
+    servicesLabel: pickLabel(chrome.servicesLabel, ts("services")),
+  };
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [headerVisible, setHeaderVisible] = useState(true);
@@ -639,7 +666,7 @@ export function Header({
 
   const solutionChildren = useMemo<NavLink[]>(
     () => [
-      { label: t("allSolutions"), href: "/solutions" },
+      { label: labels.allSolutions, href: "/solutions" },
       ...solutionGroupsNav.map((group) => ({
         label: group.label,
         href: group.href,
@@ -649,17 +676,17 @@ export function Header({
         })),
       })),
     ],
-    [solutionGroupsNav, t],
+    [solutionGroupsNav, labels.allSolutions],
   );
 
   const navItems = useMemo<NavItem[]>(
     () => [
-      { label: t("products"), href: "/products", children: productChildren },
-      { label: t("solutions"), href: "/solutions", children: solutionChildren },
-      { label: t("blog"), href: "/blog" },
-      { label: t("aboutUs"), href: "/about-us" },
+      { label: labels.products, href: "/products", children: productChildren },
+      { label: labels.solutions, href: "/solutions", children: solutionChildren },
+      { label: labels.blog, href: "/blog" },
+      { label: labels.aboutUs, href: "/about-us" },
     ],
-    [productChildren, solutionChildren, t],
+    [productChildren, solutionChildren, labels],
   );
 
   const toggleMobileKey = (key: string) => {
@@ -823,7 +850,7 @@ export function Header({
             <Link href="/" className="midex-header__brand shrink-0" onClick={handleLogoClick}>
               <Image
                 src={logoWhite}
-                alt="Midex"
+                alt={siteName}
                 width={200}
                 height={58}
                 className="midex-header__logo midex-header__logo--light h-9 w-auto max-w-[150px] sm:h-10"
@@ -831,7 +858,7 @@ export function Header({
               />
               <Image
                 src={logoDark}
-                alt="Midex"
+                alt={siteName}
                 width={200}
                 height={58}
                 className="midex-header__logo midex-header__logo--dark h-9 w-auto max-w-[150px] sm:h-10"
@@ -872,7 +899,16 @@ export function Header({
             </nav>
 
             <div className="flex items-center gap-2 sm:gap-2.5">
-              <LanguageSwitcher overlay={navOverlay} className="hidden md:inline-flex" />
+              <LanguageSwitcher
+                overlay={navOverlay}
+                className="hidden md:inline-flex"
+                labels={{
+                  langEn: chrome.langEn,
+                  langAr: chrome.langAr,
+                  langDe: chrome.langDe,
+                  language: chrome.language,
+                }}
+              />
               <Link
                 href="/contact"
                 className={`group mx-btn hidden !rounded-full !px-4 !py-2 !text-xs sm:inline-flex ${
@@ -881,7 +917,7 @@ export function Header({
                     : "mx-btn-primary !py-2 !text-xs"
                 }`}
               >
-                {t("contactUs")}
+                {labels.contactUs}
                 <span className="mx-arrow">→</span>
               </Link>
               <button
@@ -892,7 +928,7 @@ export function Header({
                     : "border-midex-navy/10 text-midex-navy"
                 }`}
                 aria-expanded={menuOpen}
-                aria-label={t("menu")}
+                aria-label={labels.menu}
                 onClick={() => setMenuOpen((v) => !v)}
               >
                 {menuOpen ? (
@@ -914,12 +950,12 @@ export function Header({
           activeMega={activeMega}
           mountedMegas={mountedMegas}
           productCategories={productCategoryEntries}
-          productAllLabel={tp("allCategories")}
+          productAllLabel={labels.allCategories}
           solutionGroups={solutionGroupsNav}
-          capabilitiesTitle={th("capabilitiesTitle")}
-          capabilitiesSubtitle={th("capabilitiesSubtitle")}
-          allSolutionsLabel={t("allSolutions")}
-          servicesLabel={ts("services")}
+          capabilitiesTitle={labels.capabilitiesTitle}
+          capabilitiesSubtitle={labels.capabilitiesSubtitle}
+          allSolutionsLabel={labels.allSolutions}
+          servicesLabel={labels.servicesLabel}
           featuredImage={featuredImage}
           onKeepOpen={cancelMegaClose}
         />
@@ -932,7 +968,7 @@ export function Header({
             <button
               type="button"
               className="midex-mobile-backdrop pointer-events-auto fixed inset-0 z-[45] bg-midex-navy-dark/55 backdrop-blur-[2px] lg:hidden"
-              aria-label={t("close")}
+              aria-label={labels.close}
               onClick={closeMenu}
             />
 
@@ -959,10 +995,18 @@ export function Header({
                     onClick={closeMenu}
                     className="group mx-btn mx-btn-primary w-full justify-center"
                   >
-                    {t("contactUs")}
+                    {labels.contactUs}
                     <span className="mx-arrow">→</span>
                   </Link>
-                  <LanguageSwitcher className="justify-center" />
+                  <LanguageSwitcher
+                    className="justify-center"
+                    labels={{
+                      langEn: chrome.langEn,
+                      langAr: chrome.langAr,
+                      langDe: chrome.langDe,
+                      language: chrome.language,
+                    }}
+                  />
                 </div>
               </nav>
             </div>

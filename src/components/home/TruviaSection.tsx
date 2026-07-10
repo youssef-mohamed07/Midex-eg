@@ -88,7 +88,8 @@ export async function TruviaSection({ content }: Props) {
                   alt="Truvia"
                   width={140}
                   height={56}
-                  className="h-8 w-auto max-w-[120px] object-contain brightness-0 invert sm:h-12 sm:max-w-[140px]"
+                  className="h-8 max-w-[120px] object-contain brightness-0 invert sm:h-12 sm:max-w-[140px]"
+                  style={{ width: "auto" }}
                 />
                 <span className="shrink-0 rounded-full border border-white/20 bg-white/10 px-2.5 py-0.5 text-[9px] font-semibold text-white backdrop-blur-sm sm:px-3 sm:py-1 sm:text-[10px]">
                   ASME BPE

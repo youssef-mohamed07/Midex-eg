@@ -89,7 +89,11 @@ export async function ContactPageContent() {
 
             <Suspense fallback={null}>
               <div className="min-w-0">
-                <ContactForm title={formTitle} intro={formIntro} />
+                <ContactForm
+                  title={formTitle}
+                  intro={formIntro}
+                  copy={page.form?.copy}
+                />
               </div>
             </Suspense>
           </div>

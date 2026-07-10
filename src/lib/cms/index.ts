@@ -10,3 +10,4 @@ export * from "@/lib/cms/blog";
 export * from "@/lib/cms/seo";
 export * from "@/lib/cms/pages";
 export * from "@/lib/cms/section-resolve";
+export * from "@/lib/cms/section-driven";

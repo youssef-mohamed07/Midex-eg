@@ -73,12 +73,22 @@ export default async function LocaleLayout({
         featuredImage={shell.featuredImage}
         logoWhite={shell.logos.logoWhite}
         logoDark={shell.logos.logoDark}
+        siteName={shell.settings?.name}
+        chrome={shell.chrome}
       />
       <main className="overflow-x-hidden bg-white">{children}</main>
       <Footer shell={shell} />
       <FloatingSocialButton
         social={shell.settings?.social ?? {}}
         email={shell.siteContact.email}
+        labels={{
+          open: shell.chrome.socialOpen,
+          close: shell.chrome.socialClose,
+          linkedIn: shell.chrome.socialLinkedIn,
+          whatsapp: shell.chrome.socialWhatsapp,
+          email: shell.chrome.socialEmail,
+          twitter: shell.chrome.socialTwitter,
+        }}
       />
       </div>
     </NextIntlClientProvider>

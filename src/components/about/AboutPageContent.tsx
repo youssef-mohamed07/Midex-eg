@@ -7,6 +7,7 @@ import { AboutStandardsSection } from "@/components/about/AboutStandardsSection"
 import { CertificationsSection } from "@/components/about/CertificationsSection";
 import { OurValuesSection } from "@/components/about/OurValuesSection";
 import { EventsSection } from "@/components/home/EventsSection";
+import { PageCtaSection } from "@/components/cms/PageCtaSection";
 import { PageHero } from "@/components/layout/PageHero";
 import { PageHeroImage } from "@/components/cms/PageHeroImage";
 import { isValidImageSrc } from "@/lib/cms/images";
@@ -19,6 +20,7 @@ import {
   isSectionEnabled,
   pick,
   resolveFaq,
+  resolvePageCta,
   resolvePageHero,
   resolveSectionHeader,
 } from "@/lib/cms/section-resolve";
@@ -82,6 +84,13 @@ export async function AboutPageContent() {
       question: t(`faqQ${index}`),
       answer: t(`faqA${index}`),
     })),
+  });
+
+  const cta = resolvePageCta(page.cta, {
+    title: t("ctaTitle"),
+    text: t("ctaText"),
+    primaryCta: t("contactUs"),
+    primaryCtaHref: "/contact",
   });
 
   return (
@@ -149,6 +158,8 @@ export async function AboutPageContent() {
       {isSectionEnabled(faq.enabled) && (
         <AboutFaqSection content={faq} contactLabel={t("faqContact")} />
       )}
+
+      <PageCtaSection content={cta} />
     </>
   );
 }

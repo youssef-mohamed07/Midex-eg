@@ -1,6 +1,7 @@
 /**
  * Seeds page section copy into Sanity singletons from messages/*.json.
- * Run: npx tsx scripts/patch-page-sections.ts
+ * Merges fields (does not wipe media / unrelated data).
+ * Run: npm run patch:page-sections
  */
 
 import { readFileSync } from "node:fs";
@@ -49,6 +50,10 @@ function LT(ns: string, key: string): LocalizedValue {
   return { ...L(ns, key), _type: "localeText" };
 }
 
+function LS(values: { en: string; ar: string; de: string }): LocalizedValue {
+  return { _type: "localeString", ...values };
+}
+
 function LL(ns: string, keys: string[]): LocalizedList {
   return {
     _type: "localeStringList",
@@ -58,12 +63,18 @@ function LL(ns: string, keys: string[]): LocalizedList {
   };
 }
 
-function sectionHeader(ns: string, titleKey: string, subtitleKey?: string) {
+function sectionHeader(
+  ns: string,
+  titleKey: string,
+  subtitleKey?: string,
+  extras?: Record<string, unknown>,
+) {
   return {
     _type: "sectionHeader",
     enabled: true,
     title: L(ns, titleKey),
     ...(subtitleKey ? { subtitle: LT(ns, subtitleKey) } : {}),
+    ...extras,
   };
 }
 
@@ -97,17 +108,133 @@ function pageCta(ns: string, titleKey: string, textKey: string, ctaKey: string, 
   };
 }
 
-async function upsertSingleton(id: string, type: string, doc: Record<string, unknown>) {
-  await client.createOrReplace({
-    _id: id,
-    _type: type,
-    ...doc,
-  });
+/** Merge fields into a singleton — never replaces the whole document (keeps media). */
+async function mergeSingleton(id: string, type: string, doc: Record<string, unknown>) {
+  await client
+    .transaction()
+    .createIfNotExists({ _id: id, _type: type })
+    .patch(id, (p) => p.set(doc))
+    .commit();
   console.log(`✓ ${type}`);
 }
 
+function buildQuoteFormCopy() {
+  return {
+    _type: "quoteFormCopy",
+    badge: L("home", "quoteFormBadge"),
+    step1: L("home", "quoteFormStep1"),
+    step2: L("home", "quoteFormStep2"),
+    step3: L("home", "quoteFormStep3"),
+    step4: L("home", "quoteFormStep4"),
+    step1Question: L("home", "quoteFormStep1Question"),
+    step2Question: L("home", "quoteFormStep2Question"),
+    step3Question: L("home", "quoteFormStep3Question"),
+    step4Question: L("home", "quoteFormStep4Question"),
+    step1Hint: LT("home", "quoteFormStep1Hint"),
+    step2Hint: LT("home", "quoteFormStep2Hint"),
+    step3Hint: LT("home", "quoteFormStep3Hint"),
+    step4Hint: LT("home", "quoteFormStep4Hint"),
+    projectTypes: LL("home", [
+      "quoteFormProjectTypeModification",
+      "quoteFormProjectTypeWelding",
+      "quoteFormProjectTypeSystem",
+      "quoteFormProjectTypePiping",
+      "quoteFormProjectTypeSourcing",
+      "quoteFormProjectTypeOther",
+    ]),
+    industries: LL("home", [
+      "quoteFormIndustryPharma",
+      "quoteFormIndustryFood",
+      "quoteFormIndustryBiotech",
+      "quoteFormIndustryCosmetics",
+      "quoteFormIndustryOther",
+    ]),
+    location: L("home", "quoteFormLocation"),
+    timeline: L("home", "quoteFormTimeline"),
+    description: L("home", "quoteFormDescription"),
+    locationPlaceholder: L("home", "quoteFormLocationPlaceholder"),
+    timelinePlaceholder: L("home", "quoteFormTimelinePlaceholder"),
+    descriptionPlaceholder: LT("home", "quoteFormDescriptionPlaceholder"),
+    next: L("home", "quoteFormNext"),
+    back: L("home", "quoteFormBack"),
+    submit: L("home", "quoteFormSubmit"),
+    success: LT("home", "quoteFormSuccess"),
+    again: L("home", "quoteFormAgain"),
+    progress: L("home", "quoteFormProgress"),
+    validationProjectType: L("home", "quoteFormValidationProjectType"),
+    validationIndustry: L("home", "quoteFormValidationIndustry"),
+    validationDescription: L("home", "quoteFormValidationDescription"),
+  };
+}
+
+function buildContactFormCopy() {
+  return {
+    _type: "contactFormCopy",
+    title: L("contact", "sendMessage"),
+    intro: LT("contact", "formIntro"),
+    quoteFor: L("contact", "quoteFor"),
+    fullName: L("contact", "fullName"),
+    emailLabel: L("contact", "emailLabel"),
+    phoneLabel: L("contact", "phoneLabel"),
+    company: L("contact", "company"),
+    subject: L("contact", "subject"),
+    productProject: L("contact", "productProject"),
+    productPlaceholder: L("contact", "productPlaceholder"),
+    message: L("contact", "message"),
+    messagePlaceholder: LT("contact", "messagePlaceholder"),
+    submit: L("contact", "submit"),
+    subjectQuote: L("contact", "subjectQuote"),
+    subjectProduct: L("contact", "subjectProduct"),
+    subjectGeneral: L("contact", "subjectGeneral"),
+    success: LT("contact", "success"),
+    error: LT("contact", "error"),
+    validationName: L("contact", "validationName"),
+    validationEmail: L("contact", "validationEmail"),
+    validationMessage: L("contact", "validationMessage"),
+  };
+}
+
+function buildLayoutChrome() {
+  return {
+    _type: "layoutChrome",
+    home: LS({ en: "Home", ar: "الرئيسية", de: "Startseite" }),
+    products: L("nav", "products"),
+    solutions: L("nav", "solutions"),
+    blog: L("nav", "blog"),
+    aboutUs: L("nav", "aboutUs"),
+    contactUs: L("nav", "contactUs"),
+    allSolutions: L("nav", "allSolutions"),
+    allCategories: L("products", "allCategories"),
+    menu: L("nav", "menu"),
+    close: L("nav", "close"),
+    capabilitiesTitle: L("home", "capabilitiesTitle"),
+    capabilitiesSubtitle: LT("home", "capabilitiesSubtitle"),
+    servicesLabel: L("footer", "services"),
+    footerTagline: LT("footer", "tagline"),
+    footerServices: L("footer", "services"),
+    footerUsefulLinks: L("footer", "usefulLinks"),
+    footerContactUs: L("footer", "contactUs"),
+    footerRights: L("footer", "rights"),
+    footerAddressFallback: LT("footer", "address"),
+    socialOpen: L("socialFab", "open"),
+    socialClose: L("socialFab", "close"),
+    socialLinkedIn: L("socialFab", "linkedIn"),
+    socialWhatsapp: L("socialFab", "whatsapp"),
+    socialEmail: L("socialFab", "email"),
+    socialTwitter: L("socialFab", "twitter"),
+    langEn: L("common", "langEn"),
+    langAr: L("common", "langAr"),
+    langDe: L("common", "langDe"),
+    language: L("common", "language"),
+  };
+}
+
 async function main() {
-  await upsertSingleton("homePage", "homePage", {
+  await mergeSingleton("siteSettings", "siteSettings", {
+    chrome: buildLayoutChrome(),
+  });
+
+  await mergeSingleton("homePage", "homePage", {
     heroCopy: {
       _type: "homeHeroCopy",
       slide1Title: L("hero", "slide1Title"),
@@ -164,9 +291,26 @@ async function main() {
     },
     statsSection: sectionHeader("home", "statsTitle", "statsSubtitle"),
     caseStudiesSection: sectionHeader("home", "caseStudiesTitle", "caseStudiesSubtitle"),
+    caseStudyLabels: {
+      _type: "caseStudyLabels",
+      scopeLabel: L("home", "caseStudyScopeLabel"),
+      challengeLabel: L("home", "caseStudyChallengeLabel"),
+      approachLabel: L("home", "caseStudyApproachLabel"),
+      highlightsLabel: L("home", "caseStudyHighlightsLabel"),
+      outcomeLabel: L("home", "caseStudyOutcomeLabel"),
+      discuss: L("home", "caseStudyDiscuss"),
+      related: L("home", "caseStudyRelated"),
+      back: L("home", "caseStudyBack"),
+    },
     testimonialsSection: sectionHeader("home", "testimonialsTitle", "testimonialsSubtitle"),
     exclusiveSection: sectionHeader("home", "exclusiveTitle"),
+    servicesSection: sectionHeader("home", "servicesTitle", "servicesSubtitle"),
+    newsSection: sectionHeader("home", "newProducts", "newProductsSubtitle", {
+      viewAllLabel: L("home", "viewAllArticles"),
+    }),
+    clientLogosSection: sectionHeader("home", "clientsTitle"),
     quoteFormSection: sectionHeader("home", "quoteFormTitle", "quoteFormSubtitle"),
+    quoteFormCopy: buildQuoteFormCopy(),
     faq: buildFaq("home", 6),
     quoteCta: {
       ...pageCta("home", "quoteTitle", "quoteText", "quoteButton", "/contact"),
@@ -175,7 +319,7 @@ async function main() {
     },
   });
 
-  await upsertSingleton("aboutPage", "aboutPage", {
+  await mergeSingleton("aboutPage", "aboutPage", {
     hero: {
       _type: "pageHero",
       eyebrow: L("about", "heroEyebrow"),
@@ -226,7 +370,7 @@ async function main() {
     },
   });
 
-  await upsertSingleton("contactPage", "contactPage", {
+  await mergeSingleton("contactPage", "contactPage", {
     hero: {
       _type: "pageHero",
       eyebrow: L("contact", "heroEyebrow"),
@@ -242,6 +386,7 @@ async function main() {
     form: {
       title: L("contact", "sendMessage"),
       intro: LT("contact", "formIntro"),
+      copy: buildContactFormCopy(),
     },
     map: {
       title: L("contact", "mapTitle"),
@@ -249,20 +394,48 @@ async function main() {
     },
   });
 
-  await upsertSingleton("productsPage", "productsPage", {
+  await mergeSingleton("productsPage", "productsPage", {
     hero: {
       _type: "pageHero",
       title: L("products", "title"),
       subtitle: LT("products", "subtitle"),
     },
     catalogSection: sectionHeader("products", "catalogHeading", "catalogSubtitle"),
+    explorerLabels: {
+      _type: "productExplorerLabels",
+      allCategories: L("products", "allCategories"),
+      viewDetails: L("products", "viewDetails"),
+      requestQuote: L("products", "requestQuote"),
+      quoteShort: L("products", "quoteShort"),
+      noResults: L("products", "noProducts"),
+      searchPlaceholder: LS({
+        en: "Search products…",
+        ar: "ابحث في المنتجات…",
+        de: "Produkte suchen…",
+      }),
+      productsLabel: L("products", "productsLabel"),
+      categoriesLabel: L("products", "categoriesLabel"),
+      viewCategory: L("products", "viewCategory"),
+    },
+    detailLabels: {
+      _type: "productDetailLabels",
+      overviewTitle: L("products", "overview"),
+      featuresTitle: L("products", "featuresTitle"),
+      specificationsTitle: L("products", "specificationsTitle"),
+      applicationsTitle: L("products", "applicationsTitle"),
+      relatedProductsTitle: L("products", "relatedProductsTitle"),
+      backToCatalog: L("products", "backToCatalog"),
+      requestQuote: L("products", "requestQuote"),
+      relatedSolutionTitle: L("products", "relatedSolutionTitle"),
+    },
+    detailCta: pageCta("products", "ctaTitle", "ctaText", "requestQuote", "/contact"),
     statsSection: sectionHeader("home", "statsTitle", "statsSubtitle"),
     caseStudiesSection: sectionHeader("home", "caseStudiesTitle", "caseStudiesSubtitle"),
     faq: buildFaq("home", 6),
     cta: pageCta("products", "ctaTitle", "ctaText", "requestQuote", "/contact"),
   });
 
-  await upsertSingleton("solutionsPage", "solutionsPage", {
+  await mergeSingleton("solutionsPage", "solutionsPage", {
     hero: {
       _type: "pageHero",
       title: L("solutions", "heroTitle"),
@@ -297,7 +470,7 @@ async function main() {
     cta: pageCta("solutions", "ctaTitle", "ctaText", "contactUs", "/contact"),
   });
 
-  await upsertSingleton("blogPage", "blogPage", {
+  await mergeSingleton("blogPage", "blogPage", {
     hero: {
       _type: "pageHero",
       eyebrow: L("blog", "heroEyebrow"),
@@ -309,11 +482,12 @@ async function main() {
       latestLabel: L("blog", "latestPosts"),
       readPost: L("blog", "readPost"),
       postsLabel: L("blog", "postsLabel"),
+      minRead: L("blog", "minRead"),
+      viewAllArticles: L("home", "viewAllArticles"),
     },
     cta: pageCta("blog", "ctaTitle", "ctaText", "ctaButton", "/contact"),
   });
 
-  const statKeys = ["statProjects", "statClients", "statYearsExcellence", "statCompliance"];
   const stats = await client.fetch<Array<{ _id: string; labelKey: string }>>(
     `*[_type == "stat"] | order(order asc) { _id, labelKey }`,
   );
@@ -324,15 +498,6 @@ async function main() {
     console.log(`✓ stat label: ${key}`);
   }
 
-  const milestoneKeys = [
-    "milestone1",
-    "milestone2",
-    "milestone3",
-    "milestone4",
-    "milestone5",
-    "milestone6",
-    "milestone7",
-  ];
   const milestones = await client.fetch<Array<{ _id: string; labelKey: string }>>(
     `*[_type == "milestone"] | order(order asc) { _id, labelKey }`,
   );
@@ -364,7 +529,22 @@ async function main() {
     console.log(`✓ founder: ${founder.key}`);
   }
 
-  console.log("\nDone — page sections seeded in Sanity Studio.");
+  // Service page fallback labels on each solutionChild
+  const children = await client.fetch<Array<{ _id: string }>>(`*[_type == "solutionChild"]{ _id }`);
+  const serviceLabels = {
+    _type: "solutionChildLabels",
+    introductionTitle: L("solutions", "introduction"),
+    capabilitiesTitle: L("solutions", "capabilities"),
+    relatedServicesTitle: L("solutions", "relatedServices"),
+    heroCtaLabel: L("solutions", "contactUs"),
+    browseGroupLabel: L("solutions", "browseGroup"),
+  };
+  for (const child of children) {
+    await client.patch(child._id).set({ labels: serviceLabels }).commit();
+    console.log(`✓ solutionChild labels: ${child._id}`);
+  }
+
+  console.log("\nDone — page sections, chrome, and form copy seeded in Sanity Studio.");
 }
 
 main().catch((error) => {

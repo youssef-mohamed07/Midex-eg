@@ -6,6 +6,7 @@ import { ProductGallery } from "@/components/products/ProductGallery";
 import { PageHero } from "@/components/layout/PageHero";
 import { PageHeroImage } from "@/components/cms/PageHeroImage";
 import { SolutionBreadcrumbs } from "@/components/solutions/SolutionBreadcrumbs";
+import { PageCtaSection } from "@/components/cms/PageCtaSection";
 import {
   getProduct,
   getProductCategories,
@@ -15,7 +16,10 @@ import {
   getProductsPageContent,
   getQuoteUrl,
 } from "@/lib/cms";
-import { resolveProductDetailLabels } from "@/lib/cms/section-resolve";
+import {
+  resolvePageCta,
+  resolveProductDetailLabels,
+} from "@/lib/cms/section-resolve";
 import { type Locale } from "@/i18n/routing";
 
 type Props = { slug: string };
@@ -51,7 +55,14 @@ export async function ProductDetailPageContent({ slug }: Props) {
     relatedProductsTitle: t("relatedProductsTitle"),
     backToCatalog: t("backToCatalog"),
     requestQuote: t("requestQuote"),
-    relatedSolutionTitle: "Related solution",
+    relatedSolutionTitle: t("relatedSolutionTitle"),
+  });
+
+  const detailCta = resolvePageCta(page.detailCta, {
+    title: t("ctaTitle"),
+    text: t("ctaText"),
+    primaryCta: t("requestQuote"),
+    primaryCtaHref: getQuoteUrl(product.title),
   });
 
   return (
@@ -253,6 +264,8 @@ export async function ProductDetailPageContent({ slug }: Props) {
           )}
         </div>
       </section>
+
+      <PageCtaSection content={detailCta} />
     </>
   );
 }

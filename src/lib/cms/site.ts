@@ -108,16 +108,6 @@ export async function getHeroCollage(): Promise<HeroCollage> {
   return collage ?? { left: [], right: [], mobileImage: "" };
 }
 
-export async function getHeroSlideImages(): Promise<string[]> {
-  const result = await sanityFetch<{ slides: string[] } | null>({
-    query: `*[_type == "homePage"][0]{
-      "slides": coalesce(heroSlides[].image.asset->url, [])
-    }`,
-    tags: ["homePage"],
-  });
-  return result?.slides ?? [];
-}
-
 export async function getFeaturedNavImage(): Promise<string> {
   const result = await sanityFetch<{ image: string } | null>({
     query: `*[_type == "homePage"][0]{ "image": ${imageUrl("featuredNavImage")} }`,
@@ -281,7 +271,11 @@ export async function getTestimonials(locale: Locale): Promise<Testimonial[]> {
       "name": coalesce(name[$locale], name.en, name),
       "role": ${loc("role")},
       "quote": ${loc("quote")},
-      "image": ${imageUrl("image")}
+      "image": ${imageUrl("image")},
+      "product": product->{
+        "slug": slug.current,
+        "title": ${loc("title")}
+      }
     }`,
     params: { locale },
     tags: ["testimonial"],
@@ -312,7 +306,11 @@ export async function getCaseStudies(locale: Locale): Promise<CaseStudy[]> {
       "outcome": ${loc("outcome")},
       "statValue": coalesce(statValue, ""),
       "statLabel": ${loc("statLabel")},
-      "tags": ${locList("tags")}
+      "tags": ${locList("tags")},
+      "solutionGroup": solutionGroup->{
+        "slug": slug.current,
+        "label": ${loc("label")}
+      }
     }`,
     params: { locale },
     tags: ["caseStudy"],
@@ -337,7 +335,11 @@ export async function getCaseStudy(
       "outcome": ${loc("outcome")},
       "statValue": coalesce(statValue, ""),
       "statLabel": ${loc("statLabel")},
-      "tags": ${locList("tags")}
+      "tags": ${locList("tags")},
+      "solutionGroup": solutionGroup->{
+        "slug": slug.current,
+        "label": ${loc("label")}
+      }
     }`,
     params: { locale, slug },
     tags: ["caseStudy"],

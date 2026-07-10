@@ -73,7 +73,8 @@ export const sectionHeaderProjection = (field: string) => `${field}{
   "eyebrow": ${locOptional("eyebrow")},
   "title": ${locOptional("title")},
   "subtitle": ${locOptional("subtitle")},
-  "image": ${imageUrl("image")}
+  "image": ${imageUrl("image")},
+  "viewAllLabel": ${locOptional("viewAllLabel")}
 }`;
 
 /** Page hero copy block. */
@@ -179,7 +180,10 @@ export const productExplorerLabelsProjection = (field: string) => `${field}{
   "requestQuote": ${locOptional("requestQuote")},
   "quoteShort": ${locOptional("quoteShort")},
   "noResults": ${locOptional("noResults")},
-  "searchPlaceholder": ${locOptional("searchPlaceholder")}
+  "searchPlaceholder": ${locOptional("searchPlaceholder")},
+  "productsLabel": ${locOptional("productsLabel")},
+  "categoriesLabel": ${locOptional("categoriesLabel")},
+  "viewCategory": ${locOptional("viewCategory")}
 }`;
 
 export const productDetailLabelsProjection = (field: string) => `${field}{
@@ -199,4 +203,104 @@ export const solutionChildLabelsProjection = (field: string) => `${field}{
   "relatedServicesTitle": ${locOptional("relatedServicesTitle")},
   "heroCtaLabel": ${locOptional("heroCtaLabel")},
   "browseGroupLabel": ${locOptional("browseGroupLabel")}
+}`;
+
+export const layoutChromeProjection = (field = "chrome") => `${field}{
+  "home": ${locOptional("home")},
+  "products": ${locOptional("products")},
+  "solutions": ${locOptional("solutions")},
+  "blog": ${locOptional("blog")},
+  "aboutUs": ${locOptional("aboutUs")},
+  "contactUs": ${locOptional("contactUs")},
+  "allSolutions": ${locOptional("allSolutions")},
+  "allCategories": ${locOptional("allCategories")},
+  "menu": ${locOptional("menu")},
+  "close": ${locOptional("close")},
+  "capabilitiesTitle": ${locOptional("capabilitiesTitle")},
+  "capabilitiesSubtitle": ${locOptional("capabilitiesSubtitle")},
+  "servicesLabel": ${locOptional("servicesLabel")},
+  "footerTagline": ${locOptional("footerTagline")},
+  "footerServices": ${locOptional("footerServices")},
+  "footerUsefulLinks": ${locOptional("footerUsefulLinks")},
+  "footerContactUs": ${locOptional("footerContactUs")},
+  "footerRights": ${locOptional("footerRights")},
+  "footerAddressFallback": ${locOptional("footerAddressFallback")},
+  "socialOpen": ${locOptional("socialOpen")},
+  "socialClose": ${locOptional("socialClose")},
+  "socialLinkedIn": ${locOptional("socialLinkedIn")},
+  "socialWhatsapp": ${locOptional("socialWhatsapp")},
+  "socialEmail": ${locOptional("socialEmail")},
+  "socialTwitter": ${locOptional("socialTwitter")},
+  "langEn": ${locOptional("langEn")},
+  "langAr": ${locOptional("langAr")},
+  "langDe": ${locOptional("langDe")},
+  "language": ${locOptional("language")}
+}`;
+
+export const contactFormCopyProjection = (field: string) => `${field}{
+  "title": ${locOptional("title")},
+  "intro": ${locOptional("intro")},
+  "quoteFor": ${locOptional("quoteFor")},
+  "fullName": ${locOptional("fullName")},
+  "emailLabel": ${locOptional("emailLabel")},
+  "phoneLabel": ${locOptional("phoneLabel")},
+  "company": ${locOptional("company")},
+  "subject": ${locOptional("subject")},
+  "productProject": ${locOptional("productProject")},
+  "productPlaceholder": ${locOptional("productPlaceholder")},
+  "message": ${locOptional("message")},
+  "messagePlaceholder": ${locOptional("messagePlaceholder")},
+  "submit": ${locOptional("submit")},
+  "subjectQuote": ${locOptional("subjectQuote")},
+  "subjectProduct": ${locOptional("subjectProduct")},
+  "subjectGeneral": ${locOptional("subjectGeneral")},
+  "success": ${locOptional("success")},
+  "error": ${locOptional("error")},
+  "validationName": ${locOptional("validationName")},
+  "validationEmail": ${locOptional("validationEmail")},
+  "validationMessage": ${locOptional("validationMessage")}
+}`;
+
+export const quoteFormCopyProjection = (field: string) => `${field}{
+  "badge": ${locOptional("badge")},
+  "step1": ${locOptional("step1")},
+  "step2": ${locOptional("step2")},
+  "step3": ${locOptional("step3")},
+  "step4": ${locOptional("step4")},
+  "step1Question": ${locOptional("step1Question")},
+  "step2Question": ${locOptional("step2Question")},
+  "step3Question": ${locOptional("step3Question")},
+  "step4Question": ${locOptional("step4Question")},
+  "step1Hint": ${locOptional("step1Hint")},
+  "step2Hint": ${locOptional("step2Hint")},
+  "step3Hint": ${locOptional("step3Hint")},
+  "step4Hint": ${locOptional("step4Hint")},
+  "projectTypes": ${locList("projectTypes")},
+  "industries": ${locList("industries")},
+  "location": ${locOptional("location")},
+  "timeline": ${locOptional("timeline")},
+  "description": ${locOptional("description")},
+  "locationPlaceholder": ${locOptional("locationPlaceholder")},
+  "timelinePlaceholder": ${locOptional("timelinePlaceholder")},
+  "descriptionPlaceholder": ${locOptional("descriptionPlaceholder")},
+  "next": ${locOptional("next")},
+  "back": ${locOptional("back")},
+  "submit": ${locOptional("submit")},
+  "success": ${locOptional("success")},
+  "again": ${locOptional("again")},
+  "progress": ${locOptional("progress")},
+  "validationProjectType": ${locOptional("validationProjectType")},
+  "validationIndustry": ${locOptional("validationIndustry")},
+  "validationDescription": ${locOptional("validationDescription")}
+}`;
+
+export const caseStudyLabelsProjection = (field: string) => `${field}{
+  "scopeLabel": ${locOptional("scopeLabel")},
+  "challengeLabel": ${locOptional("challengeLabel")},
+  "approachLabel": ${locOptional("approachLabel")},
+  "highlightsLabel": ${locOptional("highlightsLabel")},
+  "outcomeLabel": ${locOptional("outcomeLabel")},
+  "discuss": ${locOptional("discuss")},
+  "related": ${locOptional("related")},
+  "back": ${locOptional("back")}
 }`;

@@ -1,6 +1,5 @@
 import type { SchemaTypeDefinition } from "sanity";
 import {
-  ctaBlock,
   faqEntry,
   faqSection,
   imageWithAlt,
@@ -31,6 +30,10 @@ import {
   productDetailLabels,
   solutionChildLabels,
   timelineSectionBlock,
+  layoutChrome,
+  contactFormCopy,
+  quoteFormCopy,
+  caseStudyLabels,
 } from "./page-sections";
 import {
   aboutPage,
@@ -76,7 +79,6 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   principlesSection,
   workflowSection,
   faqSection,
-  ctaBlock,
   seoFields,
   sectionHeader,
   pageHero,
@@ -94,6 +96,10 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   productDetailLabels,
   solutionChildLabels,
   timelineSectionBlock,
+  layoutChrome,
+  contactFormCopy,
+  quoteFormCopy,
+  caseStudyLabels,
   // Singletons
   siteSettings,
   homePage,

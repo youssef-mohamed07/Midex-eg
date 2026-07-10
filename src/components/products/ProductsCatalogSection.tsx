@@ -31,8 +31,8 @@ export async function ProductsCatalogSection({
     viewDetails: explorerLabelsProp?.viewDetails ?? t("viewDetails"),
     requestQuote: explorerLabelsProp?.requestQuote ?? t("requestQuote"),
     quoteShort: explorerLabelsProp?.quoteShort ?? t("quoteShort"),
-    productsLabel: t("productsLabel"),
-    explore: t("viewCategory"),
+    productsLabel: explorerLabelsProp?.productsLabel ?? t("productsLabel"),
+    explore: explorerLabelsProp?.viewCategory ?? t("viewCategory"),
   };
   const [productCategories, allProducts] = await Promise.all([
     getProductCategories(locale),

@@ -4,6 +4,8 @@ import type { Locale } from "@/i18n/routing";
 import { sanityFetch } from "@/lib/cms/fetch";
 import {
   beforeAfterProjection,
+  caseStudyLabelsProjection,
+  contactFormCopyProjection,
   engineeringCapabilitiesProjection,
   faqProjection,
   homeHeroCopyProjection,
@@ -17,6 +19,7 @@ import {
   pageHeroProjection,
   promoSectionProjection,
   quoteBlockProjection,
+  quoteFormCopyProjection,
   sectionHeaderProjection,
   solutionChildLabelsProjection,
   timelineSectionProjection,
@@ -31,6 +34,7 @@ import type {
 } from "@/lib/cms/types";
 
 const homePageSectionsQuery = `*[_type == "homePage"][0]{
+  "sectionOrder": coalesce(sectionOrder, []),
   ${homeHeroCopyProjection()},
   "partnersSection": ${sectionHeaderProjection("partnersSection")},
   "featuredQuote": ${quoteBlockProjection("featuredQuote")},
@@ -47,6 +51,8 @@ const homePageSectionsQuery = `*[_type == "homePage"][0]{
   "newsSection": ${sectionHeaderProjection("newsSection")},
   "clientLogosSection": ${sectionHeaderProjection("clientLogosSection")},
   "quoteFormSection": ${sectionHeaderProjection("quoteFormSection")},
+  "quoteFormCopy": ${quoteFormCopyProjection("quoteFormCopy")},
+  "caseStudyLabels": ${caseStudyLabelsProjection("caseStudyLabels")},
   "faq": ${faqProjection()},
   "quoteCta": ${pageCtaProjection("quoteCta")}
 }`;
@@ -90,7 +96,8 @@ const contactPageQuery = `*[_type == "contactPage"][0]{
   },
   "form": form{
     "title": ${locOptional("title")},
-    "intro": ${locOptional("intro")}
+    "intro": ${locOptional("intro")},
+    "copy": ${contactFormCopyProjection("copy")}
   },
   "map": map{
     "title": ${locOptional("title")},
@@ -128,7 +135,9 @@ const blogPageQuery = `*[_type == "blogPage"][0]{
     "featuredLabel": ${locOptional("featuredLabel")},
     "latestLabel": ${locOptional("latestLabel")},
     "readPost": ${locOptional("readPost")},
-    "postsLabel": ${locOptional("postsLabel")}
+    "postsLabel": ${locOptional("postsLabel")},
+    "minRead": ${locOptional("minRead")},
+    "viewAllArticles": ${locOptional("viewAllArticles")}
   },
   "cta": ${pageCtaProjection("cta")}
 }`;

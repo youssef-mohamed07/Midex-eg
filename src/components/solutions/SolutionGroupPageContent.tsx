@@ -15,6 +15,7 @@ import { SolutionGroupWorkflowSection } from "@/components/solutions/SolutionGro
 import { SolutionPageTailSections } from "@/components/solutions/SolutionPageTailSections";
 import { SolutionServicesAccordionSection } from "@/components/solutions/SolutionServicesAccordionSection";
 import { SolutionTimelineSection } from "@/components/solutions/SolutionTimelineSection";
+import { PageCtaSection } from "@/components/cms/PageCtaSection";
 import { getGroupLabel } from "@/components/solutions/solution-labels";
 import {
   getQuoteUrl,
@@ -26,7 +27,7 @@ import {
   getSolutionGroupWorkflow,
   getSolutionsPageContent,
 } from "@/lib/cms";
-import { pick } from "@/lib/cms/section-resolve";
+import { pick, resolvePageCta } from "@/lib/cms/section-resolve";
 import { type Locale } from "@/i18n/routing";
 
 type Props = { slug: string };
@@ -51,6 +52,13 @@ export async function SolutionGroupPageContent({ slug }: Props) {
 
   const importanceTitle = pick(group.importanceTitle, t("groupImportanceTitle"));
   const heroCtaLabel = pick(group.heroCtaLabel, tc("requestQuote"));
+  const otherGroupsTitle = pick(group.otherGroupsTitle, t("otherGroups"));
+  const cta = resolvePageCta(group.cta, {
+    title: t("ctaTitle"),
+    text: t("ctaText"),
+    primaryCta: t("contactUs"),
+    primaryCtaHref: "/contact",
+  });
 
   return (
     <>
@@ -145,13 +153,7 @@ export async function SolutionGroupPageContent({ slug }: Props) {
         <section className="mx-section--tight">
           <div className="mx-container">
             <div className="mb-8 max-w-2xl">
-              <h2 className="mx-section-title">
-                {locale === "ar"
-                  ? "حلول أخرى"
-                  : locale === "de"
-                    ? "Weitere Lösungen"
-                    : "Other Solutions"}
-              </h2>
+              <h2 className="mx-section-title">{otherGroupsTitle}</h2>
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -174,6 +176,8 @@ export async function SolutionGroupPageContent({ slug }: Props) {
       <HomeQuoteFormSection />
 
       {faq ? <SolutionGroupFaqSection content={faq} /> : <HomeFaqSection />}
+
+      <PageCtaSection content={cta} />
     </>
   );
 }

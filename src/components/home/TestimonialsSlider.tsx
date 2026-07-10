@@ -1,12 +1,17 @@
 "use client";
 
 import Image from "next/image";
+import { Link } from "@/i18n/navigation";
 
 type Testimonial = {
   name: string;
   role: string;
   quote: string;
   image?: string;
+  product?: {
+    slug: string;
+    title: string;
+  };
 };
 
 function QuoteIcon({ className = "h-8 w-8" }: { className?: string }) {
@@ -75,6 +80,15 @@ function TestimonialCard({ item, locale }: { item: Testimonial; locale: string }
       <figcaption className="mt-5 rounded-xl border border-midex-line/60 bg-white px-4 py-3.5 text-center sm:mt-6 sm:px-5 sm:py-4">
         <p className="font-display text-base font-bold text-midex-navy">{item.name}</p>
         <p className="mt-1 text-xs text-midex-gray/70 sm:text-sm">{item.role}</p>
+        {item.product?.slug && item.product.title ? (
+          <Link
+            href={`/products/${item.product.slug}`}
+            className="mt-2 inline-block text-xs font-semibold text-midex-blue no-underline hover:underline"
+            onClick={(event) => event.stopPropagation()}
+          >
+            {item.product.title}
+          </Link>
+        ) : null}
       </figcaption>
     </figure>
   );

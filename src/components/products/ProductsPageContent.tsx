@@ -3,6 +3,7 @@ import { CaseStudiesSection } from "@/components/home/CaseStudiesSection";
 import { FaqSection } from "@/components/home/FaqSection";
 import { PartnersSection } from "@/components/home/PartnersSection";
 import { StatsSection } from "@/components/home/StatsSection";
+import { PageCtaSection } from "@/components/cms/PageCtaSection";
 import { PageHero } from "@/components/layout/PageHero";
 import { PageHeroImage } from "@/components/cms/PageHeroImage";
 import { ProductsCatalogSection } from "@/components/products/ProductsCatalogSection";
@@ -17,6 +18,7 @@ import {
   isSectionEnabled,
   pick,
   resolveFaq,
+  resolvePageCta,
   resolvePageHero,
   resolveProductExplorerLabels,
   resolveSectionHeader,
@@ -63,6 +65,9 @@ export async function ProductsPageContent({ category = null }: Props) {
     quoteShort: t("quoteShort"),
     noResults: t("noProducts"),
     searchPlaceholder: t("catalogNav"),
+    productsLabel: t("productsLabel"),
+    categoriesLabel: t("categoriesLabel"),
+    viewCategory: t("viewCategory"),
   });
 
   const statsHeader = resolveSectionHeader(page.statsSection, {
@@ -90,6 +95,13 @@ export async function ProductsPageContent({ category = null }: Props) {
     image: categoryPage?.image,
   });
 
+  const cta = resolvePageCta(page.cta, {
+    title: t("ctaTitle"),
+    text: t("ctaText"),
+    primaryCta: t("requestQuote"),
+    primaryCtaHref: "/contact",
+  });
+
   return (
     <>
       <PageHero
@@ -103,7 +115,7 @@ export async function ProductsPageContent({ category = null }: Props) {
             <>
               <span>
                 <strong className="font-semibold text-white">{categoryEntries.length}</strong>{" "}
-                {t("categoriesLabel")}
+                {explorerLabels.categoriesLabel}
               </span>
               <span className="hidden text-white/30 sm:inline" aria-hidden>
                 ·
@@ -112,20 +124,22 @@ export async function ProductsPageContent({ category = null }: Props) {
           )}
           <span>
             <strong className="font-semibold text-midex-mint">{filteredProducts.length}</strong>{" "}
-            {t("productsLabel")}
+            {explorerLabels.productsLabel}
           </span>
         </p>
       </PageHero>
 
       <PartnersSection title={th("partnersTitle")} />
 
-      <ProductsCatalogSection
-        category={category}
-        title={catalogHeader.title}
-        subtitle={catalogHeader.subtitle}
-        image={catalogHeader.image}
-        explorerLabels={explorerLabels}
-      />
+      {isSectionEnabled(catalogHeader.enabled) && (
+        <ProductsCatalogSection
+          category={category}
+          title={catalogHeader.title}
+          subtitle={catalogHeader.subtitle}
+          image={catalogHeader.image}
+          explorerLabels={explorerLabels}
+        />
+      )}
 
       {isSectionEnabled(statsHeader.enabled) && (
         <StatsSection
@@ -149,6 +163,8 @@ export async function ProductsPageContent({ category = null }: Props) {
       {isSectionEnabled(faq.enabled) && (
         <FaqSection content={faq} contactLabel={th("faqContact")} />
       )}
+
+      <PageCtaSection content={cta} />
     </>
   );
 }

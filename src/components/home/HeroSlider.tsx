@@ -174,6 +174,14 @@ function HeroCopy({
         >
           {copy.viewProducts}
         </Link>
+        {copy.seeSolutions ? (
+          <Link
+            className="mx-btn w-full justify-center border border-midex-line bg-white text-midex-navy hover:border-midex-mint/45 hover:bg-midex-surface/60 sm:w-auto"
+            href="/solutions"
+          >
+            {copy.seeSolutions}
+          </Link>
+        ) : null}
       </div>
     </div>
   );

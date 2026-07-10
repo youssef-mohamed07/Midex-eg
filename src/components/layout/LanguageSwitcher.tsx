@@ -13,17 +13,32 @@ const localeCodes: Record<Locale, string> = {
 type LanguageSwitcherProps = {
   className?: string;
   overlay?: boolean;
+  labels?: {
+    langEn?: string;
+    langAr?: string;
+    langDe?: string;
+    language?: string;
+  };
 };
 
-export function LanguageSwitcher({ className = "", overlay = false }: LanguageSwitcherProps) {
+function pickLabel(cms: string | undefined, fallback: string): string {
+  const value = cms?.trim();
+  return value || fallback;
+}
+
+export function LanguageSwitcher({
+  className = "",
+  overlay = false,
+  labels = {},
+}: LanguageSwitcherProps) {
   const locale = useLocale() as Locale;
   const pathname = usePathname();
   const t = useTranslations("common");
 
   const langLabel = (lang: Locale) => {
-    if (lang === "en") return t("langEn");
-    if (lang === "ar") return t("langAr");
-    return t("langDe");
+    if (lang === "en") return pickLabel(labels.langEn, t("langEn"));
+    if (lang === "ar") return pickLabel(labels.langAr, t("langAr"));
+    return pickLabel(labels.langDe, t("langDe"));
   };
 
   const shellClass = overlay
@@ -42,7 +57,7 @@ export function LanguageSwitcher({ className = "", overlay = false }: LanguageSw
     <div
       className={`inline-flex items-center gap-0.5 rounded-full border p-0.5 ${shellClass} ${className}`}
       role="group"
-      aria-label={t("language")}
+      aria-label={pickLabel(labels.language, t("language"))}
     >
       {routing.locales.map((lang) => {
         const isActive = locale === lang;

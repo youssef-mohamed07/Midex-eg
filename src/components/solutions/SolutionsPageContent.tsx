@@ -7,6 +7,7 @@ import { HomeQuoteFormSection } from "@/components/home/HomeQuoteFormSection";
 import { PartnersSection } from "@/components/home/PartnersSection";
 import { StatsSection } from "@/components/home/StatsSection";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
+import { PageCtaSection } from "@/components/cms/PageCtaSection";
 import { SolutionsPageHero } from "@/components/solutions/SolutionsPageHero";
 import { SolutionTimelineSection } from "@/components/solutions/SolutionTimelineSection";
 import {
@@ -19,6 +20,7 @@ import {
   pick,
   resolveBeforeAfter,
   resolveFaq,
+  resolvePageCta,
   resolvePageHero,
   resolveSectionHeader,
   resolveTimelineSection,
@@ -102,6 +104,13 @@ export async function SolutionsPageContent() {
     })),
   });
 
+  const cta = resolvePageCta(page.cta, {
+    title: t("ctaTitle"),
+    text: t("ctaText"),
+    primaryCta: t("contactUs"),
+    primaryCtaHref: "/contact",
+  });
+
   return (
     <>
       <SolutionsPageHero
@@ -168,6 +177,8 @@ export async function SolutionsPageContent() {
       {isSectionEnabled(faq.enabled) && (
         <FaqSection content={faq} contactLabel={th("faqContact")} />
       )}
+
+      <PageCtaSection content={cta} />
     </>
   );
 }

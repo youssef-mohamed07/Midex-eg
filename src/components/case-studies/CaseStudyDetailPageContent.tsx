@@ -4,7 +4,8 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { PageHero } from "@/components/layout/PageHero";
 import { SolutionBreadcrumbs } from "@/components/solutions/SolutionBreadcrumbs";
-import { getCaseStudies, getCaseStudy, getQuoteUrl } from "@/lib/cms";
+import { getCaseStudies, getCaseStudy, getHomePageSections, getQuoteUrl } from "@/lib/cms";
+import { pick } from "@/lib/cms/section-resolve";
 import { type Locale } from "@/i18n/routing";
 
 type Props = { slug: string };
@@ -24,9 +25,21 @@ export async function CaseStudyDetailPageContent({ slug }: Props) {
   if (!study) notFound();
 
   const t = await getTranslations("home");
-  const related = (await getCaseStudies(locale))
-    .filter((item) => item.slug !== study.slug)
-    .slice(0, 3);
+  const [relatedAll, sections] = await Promise.all([
+    getCaseStudies(locale),
+    getHomePageSections(locale),
+  ]);
+  const related = relatedAll.filter((item) => item.slug !== study.slug).slice(0, 3);
+  const labels = {
+    challenge: pick(sections.caseStudyLabels?.challengeLabel, t("caseStudyChallengeLabel")),
+    approach: pick(sections.caseStudyLabels?.approachLabel, t("caseStudyApproachLabel")),
+    scope: pick(sections.caseStudyLabels?.scopeLabel, t("caseStudyScopeLabel")),
+    highlights: pick(sections.caseStudyLabels?.highlightsLabel, t("caseStudyHighlightsLabel")),
+    outcome: pick(sections.caseStudyLabels?.outcomeLabel, t("caseStudyOutcomeLabel")),
+    discuss: pick(sections.caseStudyLabels?.discuss, t("caseStudyDiscuss")),
+    related: pick(sections.caseStudyLabels?.related, t("caseStudyRelated")),
+    back: pick(sections.caseStudyLabels?.back, t("caseStudyBack")),
+  };
 
   return (
     <>
@@ -96,19 +109,19 @@ export async function CaseStudyDetailPageContent({ slug }: Props) {
 
               <div className="mt-8 space-y-8 sm:mt-10">
                 {study.challenge && (
-                  <ContentBlock title={t("caseStudyChallengeLabel")}>
+                  <ContentBlock title={labels.challenge}>
                     {study.challenge}
                   </ContentBlock>
                 )}
                 {study.approach && (
-                  <ContentBlock title={t("caseStudyApproachLabel")}>{study.approach}</ContentBlock>
+                  <ContentBlock title={labels.approach}>{study.approach}</ContentBlock>
                 )}
-                <ContentBlock title={t("caseStudyScopeLabel")}>{study.scope}</ContentBlock>
+                <ContentBlock title={labels.scope}>{study.scope}</ContentBlock>
 
                 {study.highlights && study.highlights.length > 0 && (
                   <div className="border-t border-midex-line pt-8">
                     <h2 className="font-display text-lg font-bold text-midex-navy sm:text-xl">
-                      {t("caseStudyHighlightsLabel")}
+                      {labels.highlights}
                     </h2>
                     <ul className="mt-4 space-y-3">
                       {study.highlights.map((item) => (
@@ -129,7 +142,7 @@ export async function CaseStudyDetailPageContent({ slug }: Props) {
 
                 <div className="rounded-2xl border border-midex-mint/30 bg-midex-mint/8 px-5 py-6 sm:px-7 sm:py-7">
                   <h2 className="font-display text-lg font-bold text-midex-navy sm:text-xl">
-                    {t("caseStudyOutcomeLabel")}
+                    {labels.outcome}
                   </h2>
                   <p className="mt-4 text-base leading-[1.8] text-midex-gray/85">{study.outcome}</p>
                 </div>
@@ -140,11 +153,11 @@ export async function CaseStudyDetailPageContent({ slug }: Props) {
                   className="group mx-btn mx-btn-primary"
                   href={getQuoteUrl(study.client)}
                 >
-                  {t("caseStudyDiscuss")}
+                  {labels.discuss}
                   <span className="mx-arrow">→</span>
                 </Link>
                 <Link className="mx-btn mx-btn-ghost" href="/">
-                  {t("caseStudyBack")}
+                  {labels.back}
                 </Link>
               </div>
             </article>
@@ -155,6 +168,14 @@ export async function CaseStudyDetailPageContent({ slug }: Props) {
                   {study.industry}
                 </p>
                 <p className="mt-2 font-display text-lg font-bold text-midex-navy">{study.client}</p>
+                {study.solutionGroup?.slug ? (
+                  <Link
+                    href={`/solutions/group/${study.solutionGroup.slug}`}
+                    className="mt-2 inline-block text-sm font-semibold text-midex-blue no-underline hover:underline"
+                  >
+                    {study.solutionGroup.label}
+                  </Link>
+                ) : null}
                 {study.statValue && (
                   <div className="mt-4 border-t border-midex-line pt-4">
                     <p className="font-display text-2xl font-bold text-midex-navy">{study.statValue}</p>
@@ -167,7 +188,7 @@ export async function CaseStudyDetailPageContent({ slug }: Props) {
                   className="group mx-btn mx-btn-primary mt-5 w-full justify-center"
                   href={getQuoteUrl(study.client)}
                 >
-                  {t("caseStudyDiscuss")}
+                  {labels.discuss}
                   <span className="mx-arrow">→</span>
                 </Link>
               </div>
@@ -176,7 +197,7 @@ export async function CaseStudyDetailPageContent({ slug }: Props) {
                 <div className="overflow-hidden rounded-2xl border border-midex-line bg-midex-surface/50">
                   <div className="border-b border-midex-line px-5 py-4">
                     <h2 className="font-display text-sm font-bold uppercase tracking-wider text-midex-navy">
-                      {t("caseStudyRelated")}
+                      {labels.related}
                     </h2>
                   </div>
                   <ul className="divide-y divide-midex-line">

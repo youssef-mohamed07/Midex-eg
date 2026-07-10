@@ -52,6 +52,10 @@ export type Testimonial = {
   role: string;
   quote: string;
   image?: string;
+  product?: {
+    slug: string;
+    title: string;
+  };
 };
 
 export type NewsItem = {
@@ -75,6 +79,10 @@ export type CaseStudy = {
   statValue: string;
   statLabel: string;
   tags: string[];
+  solutionGroup?: {
+    slug: string;
+    label: string;
+  };
 };
 
 export type EventItem = {
@@ -119,6 +127,7 @@ export type SectionHeaderContent = {
   title?: string;
   subtitle?: string;
   image?: string;
+  viewAllLabel?: string;
 };
 
 export type PageHeroContent = {
@@ -238,6 +247,8 @@ export type EngineeringCapabilitiesSectionContent = {
 };
 
 export type HomePageSections = {
+  /** Optional Sanity-driven section order (section-driven architecture). */
+  sectionOrder?: string[];
   heroCopy?: HomeHeroCopy;
   partnersSection?: SectionHeaderContent;
   featuredQuote?: QuoteBlockContent;
@@ -254,6 +265,8 @@ export type HomePageSections = {
   newsSection?: SectionHeaderContent;
   clientLogosSection?: SectionHeaderContent;
   quoteFormSection?: SectionHeaderContent;
+  quoteFormCopy?: QuoteFormCopy;
+  caseStudyLabels?: CaseStudyLabels;
   faq?: FaqSectionContent;
   quoteCta?: PageCtaContent;
 };
@@ -282,7 +295,7 @@ export type AboutPageContent = {
 export type ContactPageContent = {
   hero?: PageHeroContent;
   aside?: { title?: string; intro?: string };
-  form?: { title?: string; intro?: string };
+  form?: { title?: string; intro?: string; copy?: ContactFormCopy };
   map?: { title?: string; subtitle?: string };
 };
 
@@ -305,6 +318,9 @@ export type ProductExplorerLabels = {
   quoteShort?: string;
   noResults?: string;
   searchPlaceholder?: string;
+  productsLabel?: string;
+  categoriesLabel?: string;
+  viewCategory?: string;
 };
 
 export type ProductDetailLabels = {
@@ -337,8 +353,110 @@ export type BlogPageContent = {
     latestLabel?: string;
     readPost?: string;
     postsLabel?: string;
+    minRead?: string;
+    viewAllArticles?: string;
   };
   cta?: PageCtaContent;
+};
+
+export type LayoutChrome = {
+  home?: string;
+  products?: string;
+  solutions?: string;
+  blog?: string;
+  aboutUs?: string;
+  contactUs?: string;
+  allSolutions?: string;
+  allCategories?: string;
+  menu?: string;
+  close?: string;
+  capabilitiesTitle?: string;
+  capabilitiesSubtitle?: string;
+  servicesLabel?: string;
+  footerTagline?: string;
+  footerServices?: string;
+  footerUsefulLinks?: string;
+  footerContactUs?: string;
+  footerRights?: string;
+  footerAddressFallback?: string;
+  socialOpen?: string;
+  socialClose?: string;
+  socialLinkedIn?: string;
+  socialWhatsapp?: string;
+  socialEmail?: string;
+  socialTwitter?: string;
+  langEn?: string;
+  langAr?: string;
+  langDe?: string;
+  language?: string;
+};
+
+export type ContactFormCopy = {
+  title?: string;
+  intro?: string;
+  quoteFor?: string;
+  fullName?: string;
+  emailLabel?: string;
+  phoneLabel?: string;
+  company?: string;
+  subject?: string;
+  productProject?: string;
+  productPlaceholder?: string;
+  message?: string;
+  messagePlaceholder?: string;
+  submit?: string;
+  subjectQuote?: string;
+  subjectProduct?: string;
+  subjectGeneral?: string;
+  success?: string;
+  error?: string;
+  validationName?: string;
+  validationEmail?: string;
+  validationMessage?: string;
+};
+
+export type QuoteFormCopy = {
+  badge?: string;
+  step1?: string;
+  step2?: string;
+  step3?: string;
+  step4?: string;
+  step1Question?: string;
+  step2Question?: string;
+  step3Question?: string;
+  step4Question?: string;
+  step1Hint?: string;
+  step2Hint?: string;
+  step3Hint?: string;
+  step4Hint?: string;
+  projectTypes?: string[];
+  industries?: string[];
+  location?: string;
+  timeline?: string;
+  description?: string;
+  locationPlaceholder?: string;
+  timelinePlaceholder?: string;
+  descriptionPlaceholder?: string;
+  next?: string;
+  back?: string;
+  submit?: string;
+  success?: string;
+  again?: string;
+  progress?: string;
+  validationProjectType?: string;
+  validationIndustry?: string;
+  validationDescription?: string;
+};
+
+export type CaseStudyLabels = {
+  scopeLabel?: string;
+  challengeLabel?: string;
+  approachLabel?: string;
+  highlightsLabel?: string;
+  outcomeLabel?: string;
+  discuss?: string;
+  related?: string;
+  back?: string;
 };
 
 export type SiteContact = {
@@ -507,6 +625,7 @@ export type SiteSettings = {
     whatsApp?: string;
   };
   twitterHandle?: string;
+  chrome?: LayoutChrome;
   manifest: {
     description: string;
     backgroundColor: string;

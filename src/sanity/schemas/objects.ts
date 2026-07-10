@@ -210,20 +210,6 @@ export const faqSection = defineType({
   ],
 });
 
-/** Call-to-action block (label + target). */
-export const ctaBlock = defineType({
-  name: "ctaBlock",
-  title: "Call to action",
-  type: "object",
-  fields: [
-    defineField({ name: "label", title: "Label", type: "localeString" }),
-    defineField({ name: "href", title: "Link", type: "string" }),
-  ],
-  preview: {
-    select: { title: "label.en", subtitle: "href" },
-  },
-});
-
 /** Full SEO field group used by seoEntry documents. */
 export const seoFields = defineType({
   name: "seoFields",

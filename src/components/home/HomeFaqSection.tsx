@@ -1,7 +1,7 @@
 import { getLocale, getTranslations } from "next-intl/server";
 import { FaqSection } from "@/components/home/FaqSection";
 import { getHomePageSections } from "@/lib/cms";
-import { resolveFaq } from "@/lib/cms/section-resolve";
+import { isSectionEnabled, resolveFaq } from "@/lib/cms/section-resolve";
 import type { Locale } from "@/i18n/routing";
 
 /** Default homepage FAQ — used as fallback on solution/product pages. */
@@ -18,6 +18,8 @@ export async function HomeFaqSection() {
       answer: t(`faqA${index}`),
     })),
   });
+
+  if (!isSectionEnabled(faq.enabled)) return null;
 
   return <FaqSection content={faq} contactLabel={t("faqContact")} />;
 }

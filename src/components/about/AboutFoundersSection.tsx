@@ -28,7 +28,8 @@ export async function AboutFoundersSection({ title }: Props) {
           <div className="grid auto-rows-fr gap-4 lg:grid-cols-2 lg:gap-5">
             {aboutFounders.map((founder, index) => {
               const name = pick(founder.name, t(founder.nameKey));
-              const role = t(founder.roleKey);
+              const role = pick(founder.role, t(founder.roleKey));
+              const bio = pick(founder.bio, founder.bioKey ? t(founder.bioKey) : "");
 
               return (
                 <RevealOnScroll key={founder.id} delay={index * 70} className="h-full">
@@ -54,6 +55,9 @@ export async function AboutFoundersSection({ title }: Props) {
                       <p className="mt-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-midex-blue sm:text-xs">
                         {role}
                       </p>
+                      {bio ? (
+                        <p className="mt-3 text-sm leading-relaxed text-midex-gray/75">{bio}</p>
+                      ) : null}
                     </div>
                   </article>
                 </RevealOnScroll>

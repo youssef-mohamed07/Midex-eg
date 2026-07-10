@@ -15,7 +15,20 @@ type SocialLink = {
 export type FloatingSocialProps = {
   social: { linkedIn?: string; twitter?: string; whatsApp?: string };
   email: string;
+  labels?: {
+    open?: string;
+    close?: string;
+    linkedIn?: string;
+    whatsapp?: string;
+    email?: string;
+    twitter?: string;
+  };
 };
+
+function pickLabel(cms: string | undefined, fallback: string): string {
+  const value = cms?.trim();
+  return value || fallback;
+}
 
 function LinkedInIcon() {
   return (
@@ -51,7 +64,7 @@ function XIcon() {
 
 function getSocialLinks(
   t: (key: string) => string,
-  { social, email }: FloatingSocialProps,
+  { social, email, labels = {} }: FloatingSocialProps,
 ): SocialLink[] {
   const links: SocialLink[] = [];
 
@@ -59,7 +72,7 @@ function getSocialLinks(
     links.push({
       id: "linkedin",
       href: social.linkedIn,
-      label: t("linkedIn"),
+      label: pickLabel(labels.linkedIn, t("linkedIn")),
       external: true,
       icon: <LinkedInIcon />,
     });
@@ -69,7 +82,7 @@ function getSocialLinks(
     links.push({
       id: "whatsapp",
       href: social.whatsApp,
-      label: t("whatsapp"),
+      label: pickLabel(labels.whatsapp, t("whatsapp")),
       external: true,
       icon: <WhatsAppIcon />,
     });
@@ -79,7 +92,7 @@ function getSocialLinks(
     links.push({
       id: "email",
       href: `mailto:${email}`,
-      label: t("email"),
+      label: pickLabel(labels.email, t("email")),
       external: false,
       icon: <EmailIcon />,
     });
@@ -89,7 +102,7 @@ function getSocialLinks(
     links.push({
       id: "twitter",
       href: social.twitter,
-      label: t("twitter"),
+      label: pickLabel(labels.twitter, t("twitter")),
       external: true,
       icon: <XIcon />,
     });
@@ -98,11 +111,15 @@ function getSocialLinks(
   return links;
 }
 
-export function FloatingSocialButton({ social, email }: FloatingSocialProps) {
+export function FloatingSocialButton({
+  social,
+  email,
+  labels = {},
+}: FloatingSocialProps) {
   const t = useTranslations("socialFab");
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
-  const links = getSocialLinks(t, { social, email });
+  const links = getSocialLinks(t, { social, email, labels });
 
   useEffect(() => {
     if (!open) return;
@@ -161,7 +178,9 @@ export function FloatingSocialButton({ social, email }: FloatingSocialProps) {
       <button
         type="button"
         aria-expanded={open}
-        aria-label={open ? t("close") : t("open")}
+        aria-label={
+          open ? pickLabel(labels.close, t("close")) : pickLabel(labels.open, t("open"))
+        }
         onClick={() => setOpen((value) => !value)}
         className={`pointer-events-auto relative flex h-14 w-14 items-center justify-center rounded-full border bg-midex-navy shadow-xl shadow-midex-navy/35 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-midex-mint motion-reduce:transition-none motion-reduce:hover:translate-y-0 ${
           open

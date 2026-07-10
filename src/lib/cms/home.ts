@@ -118,7 +118,11 @@ export async function getHomePageData(locale: Locale): Promise<HomePageData> {
         "outcome": ${loc("outcome")},
         "statValue": coalesce(statValue, ""),
         "statLabel": ${loc("statLabel")},
-        "tags": ${locList("tags")}
+        "tags": ${locList("tags")},
+        "solutionGroup": solutionGroup->{
+          "slug": slug.current,
+          "label": ${loc("label")}
+        }
       },
       "clientLogos": *[_type == "clientLogo"] | order(order asc) {
         "image": ${imageUrl("image")}
@@ -127,7 +131,11 @@ export async function getHomePageData(locale: Locale): Promise<HomePageData> {
         "name": coalesce(name[$locale], name.en, name),
         "role": ${loc("role")},
         "quote": ${loc("quote")},
-        "image": ${imageUrl("image")}
+        "image": ${imageUrl("image")},
+        "product": product->{
+          "slug": slug.current,
+          "title": ${loc("title")}
+        }
       },
       "solutionGroups": *[_type == "solutionGroup"] | order(order asc) {
         "slug": slug.current,

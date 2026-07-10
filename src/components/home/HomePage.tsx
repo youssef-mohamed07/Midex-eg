@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+import { Fragment } from "react";
 import { getLocale, getTranslations } from "next-intl/server";
 import { CaseStudiesSection } from "@/components/home/CaseStudiesSection";
 import { BeforeAfterSection } from "@/components/home/BeforeAfterSection";
@@ -16,12 +18,15 @@ import { ProductCategoriesSection } from "@/components/home/ProductCategoriesSec
 import { ServicesSection } from "@/components/home/ServicesSection";
 import { StatsSection } from "@/components/home/StatsSection";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
+import { PageCtaSection } from "@/components/cms/PageCtaSection";
 import { getHomePageData, getHomePageSections } from "@/lib/cms";
+import { resolveHomeSectionOrder, type HomeSectionKey } from "@/lib/cms/section-driven";
 import {
   isSectionEnabled,
   pick,
   resolveBeforeAfter,
   resolveFaq,
+  resolvePageCta,
   resolvePromo,
   resolveQuoteBlock,
   resolveSectionHeader,
@@ -77,6 +82,7 @@ export async function HomePage() {
   const newsHeader = resolveSectionHeader(sections.newsSection, {
     title: t("blogTitle"),
     subtitle: t("blogSubtitle"),
+    viewAllLabel: t("viewAllArticles"),
   });
   const clientLogosHeader = resolveSectionHeader(sections.clientLogosSection, {
     title: t("clientsTitle"),
@@ -142,52 +148,46 @@ export async function HomePage() {
     })),
   });
 
-  return (
-    <>
-      <HeroSlider collage={home.heroCollage} heroCopy={heroCopy} />
+  const quoteCta = resolvePageCta(sections.quoteCta, {
+    title: t("quoteTitle"),
+    text: t("quoteText"),
+    primaryCta: t("quoteButton"),
+    primaryCtaHref: "/contact",
+  });
 
-      {isSectionEnabled(partners.enabled) && (
-        <PartnersSection title={partners.title} partners={home.partners} />
-      )}
-
-      {isSectionEnabled(featuredQuote.enabled) && (
-        <FeaturedQuoteSection content={featuredQuote} />
-      )}
-
-      {isSectionEnabled(capabilities.enabled) && (
-        <EngineeringCapabilitiesSection
-          title={capabilities.title}
-          subtitle={capabilities.subtitle}
-          cards={capabilities.cards}
-        />
-      )}
-
-      {isSectionEnabled(statsHeader.enabled) && (
-        <StatsSection
-          title={statsHeader.title}
-          subtitle={statsHeader.subtitle}
-          items={home.stats.map((stat) => ({
-            value: stat.value,
-            label: pick(stat.label, t(stat.labelKey)),
-            suffix: stat.suffix,
-          }))}
-        />
-      )}
-
-      {isSectionEnabled(truvia.enabled) && <TruviaSection content={truvia} />}
-
-      {isSectionEnabled(events.enabled) && (
-        <EventsSection
-          events={home.events}
-          title={events.title}
-          subtitle={events.subtitle}
-        />
-      )}
-
-      {isSectionEnabled(beforeAfter.enabled) && (
-        <BeforeAfterSection content={beforeAfter} />
-      )}
-
+  const sectionNodes: Record<HomeSectionKey, ReactNode> = {
+    partners: isSectionEnabled(partners.enabled) ? (
+      <PartnersSection title={partners.title} partners={home.partners} />
+    ) : null,
+    featuredQuote: isSectionEnabled(featuredQuote.enabled) ? (
+      <FeaturedQuoteSection content={featuredQuote} />
+    ) : null,
+    capabilities: isSectionEnabled(capabilities.enabled) ? (
+      <EngineeringCapabilitiesSection
+        title={capabilities.title}
+        subtitle={capabilities.subtitle}
+        cards={capabilities.cards}
+      />
+    ) : null,
+    stats: isSectionEnabled(statsHeader.enabled) ? (
+      <StatsSection
+        title={statsHeader.title}
+        subtitle={statsHeader.subtitle}
+        items={home.stats.map((stat) => ({
+          value: stat.value,
+          label: pick(stat.label, t(stat.labelKey)),
+          suffix: stat.suffix,
+        }))}
+      />
+    ) : null,
+    truvia: isSectionEnabled(truvia.enabled) ? <TruviaSection content={truvia} /> : null,
+    events: isSectionEnabled(events.enabled) ? (
+      <EventsSection events={home.events} title={events.title} subtitle={events.subtitle} />
+    ) : null,
+    beforeAfter: isSectionEnabled(beforeAfter.enabled) ? (
+      <BeforeAfterSection content={beforeAfter} />
+    ) : null,
+    products: isSectionEnabled(productsHeader.enabled) ? (
       <ProductCategoriesSection
         title={productsHeader.title}
         subtitle={productsHeader.subtitle}
@@ -195,62 +195,64 @@ export async function HomePage() {
         products={home.products}
         categoryOrder={home.productCategoryOrder}
       />
-
-      {isSectionEnabled(caseStudiesHeader.enabled) && (
-        <CaseStudiesSection
-          caseStudies={home.caseStudies}
-          title={caseStudiesHeader.title}
-          subtitle={caseStudiesHeader.subtitle}
-        />
-      )}
-
-      {isSectionEnabled(testimonialsHeader.enabled) && (
-        <TestimonialsSection
-          title={testimonialsHeader.title}
-          subtitle={testimonialsHeader.subtitle}
-          testimonials={home.testimonials}
-        />
-      )}
-
-      {isSectionEnabled(exclusive.enabled) && (
-        <ExclusivePartnersSection
-          title={exclusive.title}
-          partners={home.exclusivePartners}
-        />
-      )}
-
-      {isSectionEnabled(quoteFormHeader.enabled) && (
-        <HomeQuoteFormSection
-          title={quoteFormHeader.title}
-          subtitle={quoteFormHeader.subtitle}
-        />
-      )}
-
-      {/* Opt-in only — hidden unless explicitly enabled in Sanity Homepage */}
-      {isSectionEnabled(servicesHeader.enabled, false) && (
-        <ServicesSection
-          title={servicesHeader.title}
-          subtitle={servicesHeader.subtitle}
-          services={home.services}
-        />
-      )}
-
-      {isSectionEnabled(clientLogosHeader.enabled, false) && (
-        <ClientLogosSection
-          title={clientLogosHeader.title}
-          logos={home.clientLogos}
-        />
-      )}
-
-      {isSectionEnabled(newsHeader.enabled, false) && (
-        <NewsSection
-          locale={locale}
-          title={newsHeader.title}
-          subtitle={newsHeader.subtitle}
-        />
-      )}
-
+    ) : null,
+    caseStudies: isSectionEnabled(caseStudiesHeader.enabled) ? (
+      <CaseStudiesSection
+        caseStudies={home.caseStudies}
+        title={caseStudiesHeader.title}
+        subtitle={caseStudiesHeader.subtitle}
+      />
+    ) : null,
+    testimonials: isSectionEnabled(testimonialsHeader.enabled) ? (
+      <TestimonialsSection
+        title={testimonialsHeader.title}
+        subtitle={testimonialsHeader.subtitle}
+        testimonials={home.testimonials}
+      />
+    ) : null,
+    exclusive: isSectionEnabled(exclusive.enabled) ? (
+      <ExclusivePartnersSection title={exclusive.title} partners={home.exclusivePartners} />
+    ) : null,
+    quoteForm: isSectionEnabled(quoteFormHeader.enabled) ? (
+      <HomeQuoteFormSection
+        title={quoteFormHeader.title}
+        subtitle={quoteFormHeader.subtitle}
+        copy={sections.quoteFormCopy}
+      />
+    ) : null,
+    services: isSectionEnabled(servicesHeader.enabled, false) ? (
+      <ServicesSection
+        title={servicesHeader.title}
+        subtitle={servicesHeader.subtitle}
+        services={home.services}
+      />
+    ) : null,
+    clientLogos: isSectionEnabled(clientLogosHeader.enabled, false) ? (
+      <ClientLogosSection title={clientLogosHeader.title} logos={home.clientLogos} />
+    ) : null,
+    news: isSectionEnabled(newsHeader.enabled, false) ? (
+      <NewsSection
+        locale={locale}
+        title={newsHeader.title}
+        subtitle={newsHeader.subtitle}
+        viewAllLabel={newsHeader.viewAllLabel}
+      />
+    ) : null,
+    faq: isSectionEnabled(faq.enabled) ? (
       <FaqSection content={faq} contactLabel={t("faqContact")} />
+    ) : null,
+    quoteCta: <PageCtaSection content={quoteCta} />,
+  };
+
+  const order = resolveHomeSectionOrder(sections.sectionOrder);
+
+  return (
+    <>
+      <HeroSlider collage={home.heroCollage} heroCopy={heroCopy} />
+      {order.map((key) => {
+        const node = sectionNodes[key];
+        return node ? <Fragment key={key}>{node}</Fragment> : null;
+      })}
     </>
   );
 }

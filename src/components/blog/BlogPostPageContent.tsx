@@ -4,7 +4,9 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { PageHero } from "@/components/layout/PageHero";
 import { SolutionBreadcrumbs } from "@/components/solutions/SolutionBreadcrumbs";
-import { getBlogPost, getBlogPosts } from "@/lib/cms";
+import { PageCtaSection } from "@/components/cms/PageCtaSection";
+import { getBlogPageContent, getBlogPost, getBlogPosts } from "@/lib/cms";
+import { resolvePageCta } from "@/lib/cms/section-resolve";
 import { type Locale } from "@/i18n/routing";
 
 type Props = { slug: string };
@@ -15,9 +17,17 @@ export async function BlogPostPageContent({ slug }: Props) {
   if (!post) notFound();
 
   const t = await getTranslations("blog");
-  const related = (await getBlogPosts(locale))
-    .filter((item) => item.slug !== post.slug)
-    .slice(0, 3);
+  const [relatedAll, page] = await Promise.all([
+    getBlogPosts(locale),
+    getBlogPageContent(locale),
+  ]);
+  const related = relatedAll.filter((item) => item.slug !== post.slug).slice(0, 3);
+  const cta = resolvePageCta(page.cta, {
+    title: t("ctaTitle"),
+    text: t("ctaText"),
+    primaryCta: t("ctaButton"),
+    primaryCtaHref: "/contact",
+  });
 
   return (
     <>
@@ -156,14 +166,7 @@ export async function BlogPostPageContent({ slug }: Props) {
                 </div>
               )}
 
-              <div className="rounded-2xl border border-midex-line bg-white p-5 shadow-sm">
-                <h2 className="font-display text-lg font-bold text-midex-navy">{t("ctaTitle")}</h2>
-                <p className="mt-2 text-sm leading-relaxed text-midex-gray/75">{t("ctaText")}</p>
-                <Link href="/contact" className="mx-link-arrow mt-4 text-sm">
-                  {t("ctaButton")}
-                  <span className="mx-arrow">→</span>
-                </Link>
-              </div>
+              <PageCtaSection content={cta} variant="card" />
             </aside>
           </div>
         </div>

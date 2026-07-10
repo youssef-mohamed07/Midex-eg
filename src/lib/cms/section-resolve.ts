@@ -26,7 +26,7 @@ export function isSectionEnabled(enabled: boolean | undefined, fallback = true):
 
 export function resolveSectionHeader(
   cms: SectionHeaderContent | undefined | null,
-  fallback: { title: string; subtitle?: string; eyebrow?: string; image?: string },
+  fallback: { title: string; subtitle?: string; eyebrow?: string; image?: string; viewAllLabel?: string },
 ): SectionHeaderContent & { title: string; subtitle: string; eyebrow: string } {
   return {
     enabled: cms?.enabled,
@@ -34,6 +34,7 @@ export function resolveSectionHeader(
     title: pick(cms?.title, fallback.title),
     subtitle: pick(cms?.subtitle, fallback.subtitle ?? ""),
     image: cms?.image || fallback.image,
+    viewAllLabel: pick(cms?.viewAllLabel, fallback.viewAllLabel ?? ""),
   };
 }
 
@@ -160,6 +161,9 @@ export function resolveProductExplorerLabels(
     quoteShort: pick(cms?.quoteShort, fallback.quoteShort ?? ""),
     noResults: pick(cms?.noResults, fallback.noResults ?? ""),
     searchPlaceholder: pick(cms?.searchPlaceholder, fallback.searchPlaceholder ?? ""),
+    productsLabel: pick(cms?.productsLabel, fallback.productsLabel ?? ""),
+    categoriesLabel: pick(cms?.categoriesLabel, fallback.categoriesLabel ?? ""),
+    viewCategory: pick(cms?.viewCategory, fallback.viewCategory ?? ""),
   };
 }
 

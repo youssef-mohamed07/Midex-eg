@@ -5,8 +5,9 @@ import type { Locale } from "@/i18n/routing";
 import { brandManifest } from "@/lib/branding/tokens";
 import { resolveSiteContact, resolveSocialLinks } from "@/lib/cms/contact";
 import { sanityFetch } from "@/lib/cms/fetch";
-import { imageUrl, loc, locOptional } from "@/lib/cms/fragments";
+import { imageUrl, layoutChromeProjection, loc, locOptional } from "@/lib/cms/fragments";
 import type {
+  LayoutChrome,
   Product,
   ProductCategoryInfo,
   SiteContact,
@@ -45,6 +46,7 @@ export type LayoutShellData = {
   products: Pick<Product, "slug" | "category" | "image">[];
   solutionGroupsNav: ReturnType<typeof buildSolutionGroupNav>;
   siteContact: SiteContact;
+  chrome: LayoutChrome;
 };
 
 const siteSettingsProjection = `{
@@ -75,7 +77,8 @@ const siteSettingsProjection = `{
     "backgroundColor": coalesce(manifestBackgroundColor, "${brandManifest.backgroundColor}"),
     "themeColor": coalesce(manifestThemeColor, "${brandManifest.themeColor}")
   },
-  "robotsDisallow": coalesce(robotsDisallow, ["/api/"])
+  "robotsDisallow": coalesce(robotsDisallow, ["/api/"]),
+  "chrome": ${layoutChromeProjection("chrome")}
 }`;
 
 const logosProjection = `{
@@ -168,5 +171,6 @@ export async function getLayoutShellData(locale: Locale): Promise<LayoutShellDat
     products: raw.products,
     solutionGroupsNav,
     siteContact: resolveSiteContact(settings?.contact),
+    chrome: settings?.chrome ?? {},
   };
 }

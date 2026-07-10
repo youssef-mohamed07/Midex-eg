@@ -46,7 +46,68 @@ function structure(S: StructureBuilder) {
             .title("Site")
             .items([
               singleton(S, "siteSettings", "Site Settings"),
-              S.documentTypeListItem("uiMessages").title("UI Messages"),
+              S.listItem()
+                .title("UI Messages")
+                .child(
+                  S.list()
+                    .title("UI Messages by area")
+                    .items([
+                      S.listItem()
+                        .title("Nav")
+                        .child(
+                          S.documentList()
+                            .title("Nav")
+                            .apiVersion(apiVersion)
+                            .filter('_type == "uiMessages" && namespace == "nav"'),
+                        ),
+                      S.listItem()
+                        .title("Footer")
+                        .child(
+                          S.documentList()
+                            .title("Footer")
+                            .apiVersion(apiVersion)
+                            .filter('_type == "uiMessages" && namespace == "footer"'),
+                        ),
+                      S.listItem()
+                        .title("Forms (contact)")
+                        .child(
+                          S.documentList()
+                            .title("Contact")
+                            .apiVersion(apiVersion)
+                            .filter('_type == "uiMessages" && namespace == "contact"'),
+                        ),
+                      S.listItem()
+                        .title("Home chrome")
+                        .child(
+                          S.documentList()
+                            .title("Home")
+                            .apiVersion(apiVersion)
+                            .filter('_type == "uiMessages" && namespace == "home"'),
+                        ),
+                      S.listItem()
+                        .title("About / Products / Solutions / Blog")
+                        .child(
+                          S.documentList()
+                            .title("Page namespaces")
+                            .apiVersion(apiVersion)
+                            .filter(
+                              '_type == "uiMessages" && namespace in ["about", "products", "solutions", "blog", "hero"]',
+                            ),
+                        ),
+                      S.listItem()
+                        .title("Common / Social / Meta")
+                        .child(
+                          S.documentList()
+                            .title("Shell extras")
+                            .apiVersion(apiVersion)
+                            .filter(
+                              '_type == "uiMessages" && namespace in ["common", "socialFab", "meta"]',
+                            ),
+                        ),
+                      S.divider(),
+                      S.documentTypeListItem("uiMessages").title("All UI Messages"),
+                    ]),
+                ),
               S.documentTypeListItem("redirect").title("Redirects"),
             ]),
         ),

@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
+import type { QuoteFormCopy } from "@/lib/cms/types";
 
 type FormState = "idle" | "loading" | "success" | "error";
 
@@ -48,12 +49,10 @@ const INDUSTRY_KEYS = [
   "quoteFormIndustryOther",
 ] as const;
 
-const STEP_HINT_KEYS = [
-  "quoteFormStep1Hint",
-  "quoteFormStep2Hint",
-  "quoteFormStep3Hint",
-  "quoteFormStep4Hint",
-] as const;
+function pickLabel(cms: string | undefined, fallback: string): string {
+  const value = cms?.trim();
+  return value || fallback;
+}
 
 function CheckIcon({ className = "h-3.5 w-3.5" }: { className?: string }) {
   return (
@@ -101,7 +100,13 @@ function OptionGrid({
   );
 }
 
-export function MultiStepQuoteForm({ size = "default" }: { size?: "default" | "large" }) {
+export function MultiStepQuoteForm({
+  size = "default",
+  copy = {},
+}: {
+  size?: "default" | "large";
+  copy?: QuoteFormCopy;
+}) {
   const t = useTranslations("contact");
   const th = useTranslations("home");
   const isLarge = size === "large";
@@ -111,38 +116,91 @@ export function MultiStepQuoteForm({ size = "default" }: { size?: "default" | "l
   const [formData, setFormData] = useState<FormData>(initialFormData);
 
   const steps = [
-    th("quoteFormStep1"),
-    th("quoteFormStep2"),
-    th("quoteFormStep3"),
-    th("quoteFormStep4"),
+    pickLabel(copy.step1, th("quoteFormStep1")),
+    pickLabel(copy.step2, th("quoteFormStep2")),
+    pickLabel(copy.step3, th("quoteFormStep3")),
+    pickLabel(copy.step4, th("quoteFormStep4")),
   ];
 
   const stepQuestions = [
-    th("quoteFormStep1Question"),
-    th("quoteFormStep2Question"),
-    th("quoteFormStep3Question"),
-    th("quoteFormStep4Question"),
+    pickLabel(copy.step1Question, th("quoteFormStep1Question")),
+    pickLabel(copy.step2Question, th("quoteFormStep2Question")),
+    pickLabel(copy.step3Question, th("quoteFormStep3Question")),
+    pickLabel(copy.step4Question, th("quoteFormStep4Question")),
   ];
 
-  const stepHints = STEP_HINT_KEYS.map((key) => th(key));
+  const stepHints = [
+    pickLabel(copy.step1Hint, th("quoteFormStep1Hint")),
+    pickLabel(copy.step2Hint, th("quoteFormStep2Hint")),
+    pickLabel(copy.step3Hint, th("quoteFormStep3Hint")),
+    pickLabel(copy.step4Hint, th("quoteFormStep4Hint")),
+  ];
 
-  const projectTypeOptions = useMemo(
-    () =>
-      PROJECT_TYPE_KEYS.map((key) => ({
-        value: key,
-        label: th(key),
-      })),
-    [th],
-  );
+  const projectTypeOptions = useMemo(() => {
+    if (copy.projectTypes?.length) {
+      return copy.projectTypes.map((label, index) => ({
+        value: `cms-project-${index}`,
+        label,
+      }));
+    }
+    return PROJECT_TYPE_KEYS.map((key) => ({
+      value: key,
+      label: th(key),
+    }));
+  }, [copy.projectTypes, th]);
 
-  const industryOptions = useMemo(
-    () =>
-      INDUSTRY_KEYS.map((key) => ({
-        value: key,
-        label: th(key),
-      })),
-    [th],
-  );
+  const industryOptions = useMemo(() => {
+    if (copy.industries?.length) {
+      return copy.industries.map((label, index) => ({
+        value: `cms-industry-${index}`,
+        label,
+      }));
+    }
+    return INDUSTRY_KEYS.map((key) => ({
+      value: key,
+      label: th(key),
+    }));
+  }, [copy.industries, th]);
+
+  const L = {
+    validationProjectType: pickLabel(
+      copy.validationProjectType,
+      th("quoteFormValidationProjectType"),
+    ),
+    validationIndustry: pickLabel(copy.validationIndustry, th("quoteFormValidationIndustry")),
+    validationDescription: pickLabel(
+      copy.validationDescription,
+      th("quoteFormValidationDescription"),
+    ),
+    validationName: pickLabel(undefined, t("validationName")),
+    validationEmail: pickLabel(undefined, t("validationEmail")),
+    error: pickLabel(undefined, t("error")),
+    success: pickLabel(copy.success, th("quoteFormSuccess")),
+    again: pickLabel(copy.again, th("quoteFormAgain")),
+    progress: pickLabel(copy.progress, th("quoteFormProgress")),
+    location: pickLabel(copy.location, th("quoteFormLocation")),
+    timeline: pickLabel(copy.timeline, th("quoteFormTimeline")),
+    description: pickLabel(copy.description, th("quoteFormDescription")),
+    locationPlaceholder: pickLabel(
+      copy.locationPlaceholder,
+      th("quoteFormLocationPlaceholder"),
+    ),
+    timelinePlaceholder: pickLabel(
+      copy.timelinePlaceholder,
+      th("quoteFormTimelinePlaceholder"),
+    ),
+    descriptionPlaceholder: pickLabel(
+      copy.descriptionPlaceholder,
+      th("quoteFormDescriptionPlaceholder"),
+    ),
+    fullName: pickLabel(undefined, t("fullName")),
+    company: pickLabel(undefined, t("company")),
+    emailLabel: pickLabel(undefined, t("emailLabel")),
+    phoneLabel: pickLabel(undefined, t("phoneLabel")),
+    back: pickLabel(copy.back, th("quoteFormBack")),
+    next: pickLabel(copy.next, th("quoteFormNext")),
+    submit: pickLabel(copy.submit, th("quoteFormSubmit")),
+  };
 
   function updateField<K extends keyof FormData>(key: K, value: FormData[K]) {
     setFormData((prev) => ({ ...prev, [key]: value }));
@@ -154,27 +212,27 @@ export function MultiStepQuoteForm({ size = "default" }: { size?: "default" | "l
 
   function validateStep(currentStep: number) {
     if (currentStep === 0 && !formData.projectType) {
-      setErrorMessage(th("quoteFormValidationProjectType"));
+      setErrorMessage(L.validationProjectType);
       return false;
     }
 
     if (currentStep === 1 && !formData.industry) {
-      setErrorMessage(th("quoteFormValidationIndustry"));
+      setErrorMessage(L.validationIndustry);
       return false;
     }
 
     if (currentStep === 2 && !formData.message.trim()) {
-      setErrorMessage(th("quoteFormValidationDescription"));
+      setErrorMessage(L.validationDescription);
       return false;
     }
 
     if (currentStep === 3) {
       if (!formData.name.trim()) {
-        setErrorMessage(t("validationName"));
+        setErrorMessage(L.validationName);
         return false;
       }
       if (!formData.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-        setErrorMessage(t("validationEmail"));
+        setErrorMessage(L.validationEmail);
         return false;
       }
     }
@@ -242,7 +300,7 @@ export function MultiStepQuoteForm({ size = "default" }: { size?: "default" | "l
 
       if (!response.ok || !result.ok) {
         setState("error");
-        setErrorMessage(result.error ?? t("error"));
+        setErrorMessage(result.error ?? L.error);
         return;
       }
 
@@ -251,7 +309,7 @@ export function MultiStepQuoteForm({ size = "default" }: { size?: "default" | "l
       setStep(0);
     } catch {
       setState("error");
-      setErrorMessage(t("error"));
+      setErrorMessage(L.error);
     }
   }
 
@@ -262,13 +320,13 @@ export function MultiStepQuoteForm({ size = "default" }: { size?: "default" | "l
           <span className="midex-form-success__icon">
             <CheckIcon className="h-7 w-7" />
           </span>
-          <p className="midex-form-success__message">{th("quoteFormSuccess")}</p>
+          <p className="midex-form-success__message">{L.success}</p>
           <button
             type="button"
             className="mx-btn mx-btn-primary mt-8"
             onClick={() => setState("idle")}
           >
-            {th("quoteFormAgain")}
+            {L.again}
           </button>
         </div>
       </div>
@@ -277,7 +335,7 @@ export function MultiStepQuoteForm({ size = "default" }: { size?: "default" | "l
 
   return (
     <div className={`midex-multistep-form ${isLarge ? "midex-multistep-form--large" : ""}`}>
-      <div className="midex-multistep-progress" aria-label={th("quoteFormProgress")}>
+      <div className="midex-multistep-progress" aria-label={L.progress}>
         {steps.map((label, index) => {
           const done = index < step;
           const active = index === step;
@@ -344,28 +402,28 @@ export function MultiStepQuoteForm({ size = "default" }: { size?: "default" | "l
         {step === 2 && (
           <div className="midex-form-grid !mt-0">
             <div className="midex-form-field">
-              <label htmlFor="ms-location">{th("quoteFormLocation")}</label>
+              <label htmlFor="ms-location">{L.location}</label>
               <input
                 id="ms-location"
                 name="location"
                 value={formData.location}
                 onChange={(event) => updateField("location", event.target.value)}
-                placeholder={th("quoteFormLocationPlaceholder")}
+                placeholder={L.locationPlaceholder}
               />
             </div>
             <div className="midex-form-field">
-              <label htmlFor="ms-timeline">{th("quoteFormTimeline")}</label>
+              <label htmlFor="ms-timeline">{L.timeline}</label>
               <input
                 id="ms-timeline"
                 name="timeline"
                 value={formData.timeline}
                 onChange={(event) => updateField("timeline", event.target.value)}
-                placeholder={th("quoteFormTimelinePlaceholder")}
+                placeholder={L.timelinePlaceholder}
               />
             </div>
             <div className="midex-form-field midex-form-field--full">
               <label htmlFor="ms-message">
-                {th("quoteFormDescription")} <span aria-hidden="true">*</span>
+                {L.description} <span aria-hidden="true">*</span>
               </label>
               <textarea
                 id="ms-message"
@@ -373,7 +431,7 @@ export function MultiStepQuoteForm({ size = "default" }: { size?: "default" | "l
                 rows={isLarge ? 6 : 5}
                 value={formData.message}
                 onChange={(event) => updateField("message", event.target.value)}
-                placeholder={th("quoteFormDescriptionPlaceholder")}
+                placeholder={L.descriptionPlaceholder}
                 required
               />
             </div>
@@ -384,7 +442,7 @@ export function MultiStepQuoteForm({ size = "default" }: { size?: "default" | "l
           <div className="midex-form-grid !mt-0">
             <div className="midex-form-field">
               <label htmlFor="ms-name">
-                {t("fullName")} <span aria-hidden="true">*</span>
+                {L.fullName} <span aria-hidden="true">*</span>
               </label>
               <input
                 id="ms-name"
@@ -396,7 +454,7 @@ export function MultiStepQuoteForm({ size = "default" }: { size?: "default" | "l
               />
             </div>
             <div className="midex-form-field">
-              <label htmlFor="ms-company">{t("company")}</label>
+              <label htmlFor="ms-company">{L.company}</label>
               <input
                 id="ms-company"
                 name="company"
@@ -407,7 +465,7 @@ export function MultiStepQuoteForm({ size = "default" }: { size?: "default" | "l
             </div>
             <div className="midex-form-field">
               <label htmlFor="ms-email">
-                {t("emailLabel")} <span aria-hidden="true">*</span>
+                {L.emailLabel} <span aria-hidden="true">*</span>
               </label>
               <input
                 id="ms-email"
@@ -420,7 +478,7 @@ export function MultiStepQuoteForm({ size = "default" }: { size?: "default" | "l
               />
             </div>
             <div className="midex-form-field">
-              <label htmlFor="ms-phone">{t("phoneLabel")}</label>
+              <label htmlFor="ms-phone">{L.phoneLabel}</label>
               <input
                 id="ms-phone"
                 name="phone"
@@ -454,7 +512,7 @@ export function MultiStepQuoteForm({ size = "default" }: { size?: "default" | "l
             onClick={goBack}
             disabled={state === "loading"}
           >
-            {th("quoteFormBack")}
+            {L.back}
           </button>
         ) : (
           <span />
@@ -466,7 +524,7 @@ export function MultiStepQuoteForm({ size = "default" }: { size?: "default" | "l
             className="group mx-btn mx-btn-primary justify-center sm:min-w-[9rem]"
             onClick={goNext}
           >
-            {th("quoteFormNext")}
+            {L.next}
             <span className="mx-arrow">→</span>
           </button>
         ) : (
@@ -476,7 +534,7 @@ export function MultiStepQuoteForm({ size = "default" }: { size?: "default" | "l
             onClick={onSubmit}
             disabled={state === "loading"}
           >
-            {state === "loading" ? "…" : th("quoteFormSubmit")}
+            {state === "loading" ? "…" : L.submit}
             {state !== "loading" && <span className="mx-arrow">→</span>}
           </button>
         )}

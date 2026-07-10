@@ -3,8 +3,9 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { PageHero } from "@/components/layout/PageHero";
 import { PageHeroImage } from "@/components/cms/PageHeroImage";
+import { PageCtaSection } from "@/components/cms/PageCtaSection";
 import { getBlogPageContent, getBlogPosts } from "@/lib/cms";
-import { pick, resolvePageHero } from "@/lib/cms/section-resolve";
+import { pick, resolvePageCta, resolvePageHero } from "@/lib/cms/section-resolve";
 import { type Locale } from "@/i18n/routing";
 
 function PostMeta({
@@ -66,6 +67,13 @@ export async function BlogPageContent() {
   const latestLabel = pick(page.listing?.latestLabel, t("latestPosts"));
   const readPost = pick(page.listing?.readPost, t("readPost"));
   const postsLabel = pick(page.listing?.postsLabel, t("postsLabel"));
+
+  const cta = resolvePageCta(page.cta, {
+    title: t("ctaTitle"),
+    text: t("ctaText"),
+    primaryCta: t("ctaButton"),
+    primaryCtaHref: "/contact",
+  });
 
   return (
     <>
@@ -186,6 +194,8 @@ export async function BlogPageContent() {
           )}
         </div>
       </section>
+
+      <PageCtaSection content={cta} />
     </>
   );
 }

@@ -33,8 +33,16 @@ import {
 import { type Locale } from "@/i18n/routing";
 
 function resolveHeroVideoSrc() {
-  const filePath = path.join(process.cwd(), "public/videos/hero.mp4");
-  return existsSync(filePath) ? "/videos/hero.mp4" : undefined;
+  const candidates = [
+    { file: "public/videos/hero.mp4", src: "/videos/hero.mp4" },
+    {
+      file: "public/7a8724cf-a133-4fbd-b70b-125ae7356c54.mp4",
+      src: "/7a8724cf-a133-4fbd-b70b-125ae7356c54.mp4",
+    },
+  ];
+  return candidates.find(({ file }) =>
+    existsSync(path.join(process.cwd(), file)),
+  )?.src;
 }
 
 export async function HomePage() {

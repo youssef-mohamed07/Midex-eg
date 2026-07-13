@@ -213,10 +213,29 @@ async function main() {
   writeFileSync(outPath, JSON.stringify(seeds, null, 2));
   console.log(`Parsed ${seeds.length} case studies → ${outPath}`);
 
-  const existing = await client.fetch<{ _id: string; slug?: string }[]>(
-    `*[_type == "caseStudy"]{ _id, "slug": slug.current }`,
+  const existing = await client.fetch<
+    {
+      _id: string;
+      slug?: string;
+      image?: unknown;
+      gallery?: unknown[];
+      solutionGroup?: unknown;
+    }[]
+  >(
+    `*[_type == "caseStudy"]{
+      _id,
+      "slug": slug.current,
+      image,
+      gallery,
+      solutionGroup
+    }`,
   );
   console.log(`Existing case studies in Sanity: ${existing.length}`);
+  const existingBySlug = new Map(
+    existing
+      .filter((doc) => doc.slug)
+      .map((doc) => [doc.slug as string, doc]),
+  );
 
   const tx = client.transaction();
 
@@ -225,6 +244,7 @@ async function main() {
   }
 
   for (const item of seeds) {
+    const previous = existingBySlug.get(item.slug);
     tx.createOrReplace({
       _id: `caseStudy-${item.slug}`,
       _type: "caseStudy",
@@ -240,6 +260,11 @@ async function main() {
       statValue: item.statValue,
       statLabel: L(item.statLabel),
       tags: LL(item.tags),
+      ...(previous?.image ? { image: previous.image } : {}),
+      ...(previous?.gallery ? { gallery: previous.gallery } : {}),
+      ...(previous?.solutionGroup
+        ? { solutionGroup: previous.solutionGroup }
+        : {}),
       order: item.order,
     });
   }

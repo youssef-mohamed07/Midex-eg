@@ -15,6 +15,7 @@
     "seed:translations": "tsx scripts/translate-sanity-content.ts",
     "import:products": "tsx scripts/import-products-from-sheet.ts && npm run seed:translations",
     "import:case-studies": "tsx scripts/import-case-studies-from-sheet.ts && npm run seed:translations",
+    "import:case-study-images": "tsx scripts/import-case-study-images.ts",
     "patch:page-sections": "tsx scripts/patch-page-sections.ts",
     "patch:testimonial-names": "tsx scripts/patch-testimonial-names.ts"
   },

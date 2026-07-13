@@ -1,5 +1,6 @@
 import { headers } from "next/headers";
 import localFont from "next/font/local";
+import { SplashScreen } from "@/components/layout/SplashScreen";
 import { routing, type Locale } from "@/i18n/routing";
 import "./globals.css";
 
@@ -81,7 +82,10 @@ export default async function RootLayout({
         <link rel="preconnect" href={GOOGLE_MAPS} crossOrigin="anonymous" />
         <link rel="dns-prefetch" href={GOOGLE_MAPS} />
       </head>
-      <body className="overflow-x-hidden bg-white font-body antialiased">{children}</body>
+      <body className="overflow-x-hidden bg-white font-body antialiased">
+        <SplashScreen />
+        {children}
+      </body>
     </html>
   );
 }

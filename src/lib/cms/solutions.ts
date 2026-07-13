@@ -26,6 +26,7 @@ import type {
   SolutionGroupPrinciplesContent,
   SolutionGroupWorkflowContent,
 } from "@/lib/cms/types";
+import { sortByEngineeringCapabilityOrder } from "@/lib/content/engineering-capabilities";
 
 const SOLUTION_TAGS = ["solutionGroup", "solutionChild"];
 
@@ -55,11 +56,12 @@ const groupProjection = `{
 }`;
 
 export async function getSolutionGroups(locale: Locale): Promise<SolutionGroup[]> {
-  return sanityFetch<SolutionGroup[]>({
+  const groups = await sanityFetch<SolutionGroup[]>({
     query: `*[_type == "solutionGroup"] | order(order asc) ${groupProjection}`,
     params: { locale },
     tags: SOLUTION_TAGS,
   });
+  return sortByEngineeringCapabilityOrder(groups);
 }
 
 export async function getSolutionGroup(
@@ -188,7 +190,7 @@ export async function getAllSolutionGroupSlugs(): Promise<string[]> {
     query: `*[_type == "solutionGroup"] | order(order asc) { "slug": slug.current }`,
     tags: SOLUTION_TAGS,
   });
-  return rows.map((row) => row.slug);
+  return sortByEngineeringCapabilityOrder(rows).map((row) => row.slug);
 }
 
 export async function getAllSolutionChildParams(): Promise<

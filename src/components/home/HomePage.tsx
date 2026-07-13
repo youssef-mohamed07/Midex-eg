@@ -3,7 +3,6 @@ import { Fragment } from "react";
 import { getLocale, getTranslations } from "next-intl/server";
 import { CaseStudiesSection } from "@/components/home/CaseStudiesSection";
 import { BeforeAfterSection } from "@/components/home/BeforeAfterSection";
-import { ClientLogosSection } from "@/components/home/ClientLogosSection";
 import { EventsSection } from "@/components/home/EventsSection";
 import { ExclusivePartnersSection } from "@/components/home/ExclusivePartnersSection";
 import { FaqSection } from "@/components/home/FaqSection";
@@ -12,10 +11,8 @@ import { HeroSlider } from "@/components/home/HeroSlider";
 import { HomeQuoteFormSection } from "@/components/home/HomeQuoteFormSection";
 import { EngineeringCapabilitiesSection } from "@/components/home/EngineeringCapabilitiesSection";
 import { TruviaSection } from "@/components/home/TruviaSection";
-import { NewsSection } from "@/components/home/NewsSection";
 import { PartnersSection } from "@/components/home/PartnersSection";
 import { ProductCategoriesSection } from "@/components/home/ProductCategoriesSection";
-import { ServicesSection } from "@/components/home/ServicesSection";
 import { StatsSection } from "@/components/home/StatsSection";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import { PageCtaSection } from "@/components/cms/PageCtaSection";
@@ -75,23 +72,10 @@ export async function HomePage() {
     title: t("quoteFormTitle"),
     subtitle: t("quoteFormSubtitle"),
   });
-  const servicesHeader = resolveSectionHeader(sections.servicesSection, {
-    title: t("servicesTitle"),
-    subtitle: t("servicesSubtitle"),
-  });
-  const newsHeader = resolveSectionHeader(sections.newsSection, {
-    title: t("blogTitle"),
-    subtitle: t("blogSubtitle"),
-    viewAllLabel: t("viewAllArticles"),
-  });
-  const clientLogosHeader = resolveSectionHeader(sections.clientLogosSection, {
-    title: t("clientsTitle"),
-  });
   const productsHeader = resolveSectionHeader(sections.productsSection, {
     title: tp("title"),
     subtitle: tp("subtitle"),
   });
-
   const heroCopy = {
     slide1Title: pick(sections.heroCopy?.slide1Title, th("slide1Title")),
     slide1Text: pick(sections.heroCopy?.slide1Text, th("slide1Text")),
@@ -218,24 +202,6 @@ export async function HomePage() {
         title={quoteFormHeader.title}
         subtitle={quoteFormHeader.subtitle}
         copy={sections.quoteFormCopy}
-      />
-    ) : null,
-    services: isSectionEnabled(servicesHeader.enabled, false) ? (
-      <ServicesSection
-        title={servicesHeader.title}
-        subtitle={servicesHeader.subtitle}
-        services={home.services}
-      />
-    ) : null,
-    clientLogos: isSectionEnabled(clientLogosHeader.enabled, false) ? (
-      <ClientLogosSection title={clientLogosHeader.title} logos={home.clientLogos} />
-    ) : null,
-    news: isSectionEnabled(newsHeader.enabled, false) ? (
-      <NewsSection
-        locale={locale}
-        title={newsHeader.title}
-        subtitle={newsHeader.subtitle}
-        viewAllLabel={newsHeader.viewAllLabel}
       />
     ) : null,
     faq: isSectionEnabled(faq.enabled) ? (

@@ -302,5 +302,6 @@ export const caseStudyLabelsProjection = (field: string) => `${field}{
   "outcomeLabel": ${locOptional("outcomeLabel")},
   "discuss": ${locOptional("discuss")},
   "related": ${locOptional("related")},
-  "back": ${locOptional("back")}
+  "back": ${locOptional("back")},
+  "galleryTitle": ${locOptional("galleryTitle")}
 }`;

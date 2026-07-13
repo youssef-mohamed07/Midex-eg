@@ -1,5 +1,6 @@
 import type { HomeSolutionCard } from "@/components/home/HomeSolutionsAccordion";
 import type { SolutionGroup } from "@/lib/cms/types";
+import { sortByEngineeringCapabilityOrder } from "@/lib/content/engineering-capabilities";
 
 export type SolutionGroupNav = {
   slug: string;
@@ -12,7 +13,7 @@ export type SolutionGroupNav = {
 };
 
 export function buildSolutionGroupNav(groups: SolutionGroup[]): SolutionGroupNav[] {
-  return groups.map((group) => ({
+  return sortByEngineeringCapabilityOrder(groups).map((group) => ({
     slug: group.slug,
     label: group.menuLabel?.trim() || group.label,
     description: group.description,
@@ -45,7 +46,7 @@ export function buildSolutionGroupCards(
   groups: SolutionGroup[],
   highlightsByGroup: Record<string, string[]>,
 ): HomeSolutionCard[] {
-  return groups.map((group) => {
+  return sortByEngineeringCapabilityOrder(groups).map((group) => {
     const items = group.children.map((child) => child.label);
     const highlights = highlightsByGroup[group.slug] ?? [];
 

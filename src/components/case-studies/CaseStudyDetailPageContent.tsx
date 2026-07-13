@@ -1,10 +1,10 @@
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { PageHero } from "@/components/layout/PageHero";
-import { SolutionBreadcrumbs } from "@/components/solutions/SolutionBreadcrumbs";
+import { CaseStudyGallery } from "@/components/case-studies/CaseStudyGallery";
+import { CaseStudyHero } from "@/components/case-studies/CaseStudyHero";
 import { getCaseStudies, getCaseStudy, getHomePageSections, getQuoteUrl } from "@/lib/cms";
+import { getCaseStudyGalleryImages } from "@/lib/cms/helpers";
 import { pick } from "@/lib/cms/section-resolve";
 import { type Locale } from "@/i18n/routing";
 
@@ -30,6 +30,7 @@ export async function CaseStudyDetailPageContent({ slug }: Props) {
     getHomePageSections(locale),
   ]);
   const related = relatedAll.filter((item) => item.slug !== study.slug).slice(0, 3);
+  const galleryImages = getCaseStudyGalleryImages(study);
   const labels = {
     challenge: pick(sections.caseStudyLabels?.challengeLabel, t("caseStudyChallengeLabel")),
     approach: pick(sections.caseStudyLabels?.approachLabel, t("caseStudyApproachLabel")),
@@ -39,75 +40,28 @@ export async function CaseStudyDetailPageContent({ slug }: Props) {
     discuss: pick(sections.caseStudyLabels?.discuss, t("caseStudyDiscuss")),
     related: pick(sections.caseStudyLabels?.related, t("caseStudyRelated")),
     back: pick(sections.caseStudyLabels?.back, t("caseStudyBack")),
+    gallery: pick(sections.caseStudyLabels?.galleryTitle, t("caseStudyGalleryTitle")),
   };
 
   return (
     <>
-      <PageHero
-        title={study.client}
-        subtitle={study.industry}
-        compact
-        breadcrumbs={
-          <SolutionBreadcrumbs
-            light
-            items={[
-              { label: t("caseStudiesTitle"), href: "/" },
-              { label: study.client },
-            ]}
-          />
-        }
-        media={
-          study.image ? (
-            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 shadow-2xl shadow-black/20 lg:aspect-[5/4]">
-              <Image
-                src={study.image}
-                alt={study.client}
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 340px"
-                priority
-              />
-            </div>
-          ) : undefined
-        }
-      >
-        {study.tags.length > 0 && (
-          <div className="mt-5 flex flex-wrap gap-2">
-            {study.tags.map((tag) => (
-              <span
-                key={tag}
-                className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-white/90"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
-      </PageHero>
+      <CaseStudyHero study={study} breadcrumbParent={t("caseStudiesTitle")} />
+
+      <CaseStudyGallery
+        title={labels.gallery}
+        images={galleryImages}
+        alt={study.client}
+      />
 
       <section className="mx-section">
         <div className="mx-container">
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_280px] lg:gap-14">
             <article className="min-w-0">
-              {study.statValue && (
-                <div className="flex items-center gap-5 rounded-2xl border border-midex-line bg-midex-surface/40 px-5 py-4 sm:px-6 sm:py-5">
-                  <p className="font-display text-3xl font-bold leading-none text-midex-navy sm:text-4xl">
-                    {study.statValue}
-                  </p>
-                  <div className="h-10 w-px bg-midex-line" aria-hidden />
-                  <p className="text-sm font-semibold uppercase tracking-[0.12em] text-midex-blue">
-                    {study.statLabel}
-                  </p>
-                </div>
-              )}
+              {study.intro ? (
+                <p className="text-lg leading-[1.8] text-midex-gray/85">{study.intro}</p>
+              ) : null}
 
-              {study.intro && (
-                <p className="mt-8 text-lg leading-[1.8] text-midex-gray/85 sm:mt-10">
-                  {study.intro}
-                </p>
-              )}
-
-              <div className="mt-8 space-y-8 sm:mt-10">
+              <div className={`space-y-8 ${study.intro ? "mt-8 sm:mt-10" : ""}`}>
                 {study.challenge && (
                   <ContentBlock title={labels.challenge}>
                     {study.challenge}
@@ -156,7 +110,7 @@ export async function CaseStudyDetailPageContent({ slug }: Props) {
                   {labels.discuss}
                   <span className="mx-arrow">→</span>
                 </Link>
-                <Link className="mx-btn mx-btn-ghost" href="/">
+                <Link className="mx-btn mx-btn-ghost" href="/case-studies">
                   {labels.back}
                 </Link>
               </div>

@@ -103,11 +103,13 @@ export async function getHomePageData(locale: Locale): Promise<HomePageData> {
       },
       "partners": *[_type == "partner" && kind == "partner"] | order(order asc) {
         name,
-        "image": ${imageUrl("image")}
+        "image": ${imageUrl("image")},
+        "href": coalesce(href, "")
       },
       "exclusivePartners": *[_type == "partner" && kind == "exclusive"] | order(order asc) {
         name,
-        "image": ${imageUrl("image")}
+        "image": ${imageUrl("image")},
+        "href": coalesce(href, "")
       },
       "caseStudies": *[_type == "caseStudy"] | order(order asc) {
         "slug": slug.current,

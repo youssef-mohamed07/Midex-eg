@@ -1,6 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef } from "react";
+import { isValidImageSrc } from "@/lib/cms/images";
 
 type Service = {
   title: string;
@@ -111,26 +113,49 @@ function ServiceCard({
   step: string;
 }) {
   const { ref, className } = useRevealOnScroll<HTMLDivElement>(side);
+  const hasImage = isValidImageSrc(service.image);
+  const alignClass = side === "left" ? "text-end" : "text-start";
 
   return (
     <article
       className={`mx-service-card w-full lg:max-w-lg ${
         side === "left"
-          ? "lg:col-start-1 lg:justify-self-end lg:pe-12 lg:text-end"
-          : "lg:col-start-2 lg:justify-self-start lg:ps-12 lg:text-start"
+          ? "lg:col-start-1 lg:justify-self-end lg:pe-12"
+          : "lg:col-start-2 lg:justify-self-start lg:ps-12"
       }`}
     >
       <div ref={ref} className={`${className} w-full`}>
-        <div className="rounded-xl border border-midex-line bg-white px-5 py-5 shadow-sm sm:px-6 sm:py-6">
-          <span className="font-display text-xs font-bold tabular-nums text-midex-mint sm:text-sm lg:hidden">
-            {step}
-          </span>
-          <h3 className="font-display text-lg font-bold leading-snug text-midex-navy sm:text-xl">
-            {service.title}
-          </h3>
-          <p className="mt-2 text-[13px] leading-relaxed text-midex-gray/80 sm:mt-2.5 sm:text-[15px]">
-            {service.excerpt}
-          </p>
+        <div className="relative min-h-[220px] overflow-hidden rounded-xl border border-midex-line shadow-sm sm:min-h-[260px] sm:rounded-2xl">
+          {hasImage ? (
+            <>
+              <Image
+                src={service.image!}
+                alt=""
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 480px"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-midex-navy via-midex-navy/70 to-midex-navy/25" />
+            </>
+          ) : (
+            <div className="absolute inset-0 bg-midex-navy" aria-hidden />
+          )}
+
+          <div className={`relative z-10 flex h-full min-h-[220px] flex-col justify-end p-5 sm:min-h-[260px] sm:p-6 ${alignClass}`}>
+            <span
+              className={`mb-3 inline-flex rounded-full border border-white/20 bg-white/95 px-2.5 py-1 font-display text-xs font-bold tabular-nums text-midex-navy shadow-sm sm:text-sm ${
+                side === "left" ? "self-end" : "self-start"
+              }`}
+            >
+              {step}
+            </span>
+            <h3 className="font-display text-lg font-bold leading-snug text-white sm:text-xl">
+              {service.title}
+            </h3>
+            <p className="mt-2 text-[13px] leading-relaxed text-white/80 sm:mt-2.5 sm:text-[15px]">
+              {service.excerpt}
+            </p>
+          </div>
         </div>
       </div>
     </article>

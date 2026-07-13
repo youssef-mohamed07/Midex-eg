@@ -12,6 +12,7 @@ export type Service = {
 export type Partner = {
   name: string;
   image: string;
+  href?: string;
 };
 
 export type Certificate = {
@@ -79,6 +80,7 @@ export type CaseStudy = {
   statValue: string;
   statLabel: string;
   tags: string[];
+  gallery?: string[];
   solutionGroup?: {
     slug: string;
     label: string;
@@ -457,6 +459,7 @@ export type CaseStudyLabels = {
   discuss?: string;
   related?: string;
   back?: string;
+  galleryTitle?: string;
 };
 
 export type SiteContact = {

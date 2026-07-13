@@ -16,6 +16,7 @@ const staticPaths = [
   "/products",
   "/solutions",
   "/blog",
+  "/case-studies",
 ];
 
 function entry(path: string, locale: (typeof routing.locales)[number], priority = 0.7) {

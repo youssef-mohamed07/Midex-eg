@@ -16,51 +16,50 @@ function FeaturedCaseStudy({
   return (
     <Link
       href={`/case-studies/${study.slug}`}
-      className="group relative block h-full min-h-[320px] w-full overflow-hidden rounded-2xl border border-white/10 no-underline shadow-2xl sm:min-h-[420px] lg:min-h-0 lg:rounded-3xl"
+      className="group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-midex-line bg-white no-underline shadow-lg transition-all duration-500 hover:-translate-y-1 hover:border-midex-mint/40 hover:shadow-xl lg:rounded-3xl"
     >
-      {study.image ? (
-        <Image
-          src={study.image}
-          alt={study.client}
-          fill
-          className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
-          sizes="(max-width: 1024px) 100vw, 60vw"
-        />
-      ) : (
-        <div className="absolute inset-0 bg-midex-navy" aria-hidden />
-      )}
-      <div className="absolute inset-0 bg-gradient-to-t from-midex-navy via-midex-navy/55 to-midex-navy/10" />
-      <div
-        className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 mx-case-study-glow"
-        aria-hidden
-      />
+      <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden bg-gradient-to-br from-midex-surface via-white to-midex-surface sm:aspect-[5/3]">
+        {study.image ? (
+          <Image
+            src={study.image}
+            alt={study.client}
+            fill
+            className="object-contain p-8 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03] sm:p-10 lg:p-12"
+            sizes="(max-width: 1024px) 100vw, 60vw"
+          />
+        ) : (
+          <div className="absolute inset-0 bg-midex-surface" aria-hidden />
+        )}
 
-      <div className="absolute start-4 top-4 z-10 flex flex-wrap gap-2 sm:start-6 sm:top-6">
-        {study.tags.slice(0, 2).map((tag) => (
-          <span
-            key={tag}
-            className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur-sm sm:text-[11px]"
-          >
-            {tag}
-          </span>
-        ))}
+        <div className="absolute start-4 top-4 z-10 flex flex-wrap gap-2 sm:start-5 sm:top-5">
+          {study.tags.slice(0, 2).map((tag) => (
+            <span
+              key={tag}
+              className="rounded-full border border-midex-line/80 bg-white/95 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-midex-navy shadow-sm sm:text-[11px]"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <div className="absolute end-4 top-4 z-10 rounded-xl border border-midex-line/80 bg-white/95 px-3 py-2 text-center shadow-sm sm:end-5 sm:top-5 sm:px-4">
+          <p className="font-display text-xl font-bold leading-none text-midex-navy sm:text-2xl">
+            {study.statValue}
+          </p>
+          <p className="mt-1 text-[10px] font-medium uppercase tracking-wider text-midex-gray/70">
+            {study.statLabel}
+          </p>
+        </div>
       </div>
 
-      <div className="absolute end-4 top-4 z-10 rounded-xl border border-white/15 bg-white/10 px-3 py-2 text-center backdrop-blur-md sm:end-6 sm:top-6 sm:px-4 sm:py-3">
-        <p className="font-display text-2xl font-bold leading-none text-white sm:text-3xl">{study.statValue}</p>
-        <p className="mt-1 text-[10px] font-medium uppercase tracking-wider text-white/70 sm:text-[11px]">
-          {study.statLabel}
-        </p>
-      </div>
-
-      <div className="absolute inset-x-0 bottom-0 z-10 p-4 sm:p-7 lg:p-8">
+      <div className="flex flex-1 flex-col bg-midex-navy p-5 sm:p-6 lg:p-7">
         <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-midex-mint sm:text-xs">
           {study.industry}
         </p>
-        <h3 className="mt-2 font-display text-2xl font-bold leading-tight text-white sm:text-3xl lg:text-4xl">
+        <h3 className="mt-2 font-display text-2xl font-bold leading-tight text-white sm:text-3xl">
           {study.client}
         </h3>
-        <p className="mt-2 max-w-xl text-sm leading-relaxed text-white/75 sm:mt-3 sm:text-base">
+        <p className="mt-2 line-clamp-3 flex-1 text-sm leading-relaxed text-white/75 sm:mt-3 sm:text-base">
           {study.outcome}
         </p>
         <span className="mx-link-arrow mt-4 inline-flex text-sm text-midex-mint sm:mt-5">
@@ -82,44 +81,45 @@ function CaseStudyCard({
   return (
     <Link
       href={`/case-studies/${study.slug}`}
-      className="group flex h-full w-full flex-col overflow-hidden rounded-xl border border-midex-line/70 bg-white no-underline shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-midex-mint/40 hover:shadow-lg sm:rounded-2xl lg:flex-row lg:items-stretch"
+      className="group flex h-full w-full overflow-hidden rounded-xl border border-midex-line/70 bg-white no-underline shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-midex-mint/40 hover:shadow-lg sm:rounded-2xl"
     >
-      <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden lg:aspect-auto lg:h-auto lg:min-h-full lg:w-[40%] lg:self-stretch xl:w-[42%]">
+      <div className="relative w-[38%] shrink-0 self-stretch overflow-hidden bg-gradient-to-br from-midex-surface via-white to-midex-surface sm:w-[40%]">
         {study.image ? (
           <Image
             src={study.image}
             alt={study.client}
             fill
-            className="object-cover object-center transition-transform duration-600 group-hover:scale-[1.05]"
-            sizes="(max-width: 1024px) 100vw, 220px"
+            className="object-contain p-3 transition-transform duration-600 group-hover:scale-[1.03] sm:p-4"
+            sizes="(max-width: 1024px) 40vw, 180px"
           />
         ) : (
           <div className="absolute inset-0 bg-midex-surface" aria-hidden />
         )}
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-midex-navy/5 transition-colors group-hover:to-midex-navy/10" />
-        <span className="absolute start-3 top-3 z-10 font-display text-2xl font-bold tabular-nums text-white drop-shadow-md sm:start-4 sm:top-4">
+        <span className="absolute start-2 top-2 z-10 rounded-full bg-midex-navy/85 px-2 py-0.5 font-display text-[10px] font-bold tabular-nums text-white sm:start-3 sm:top-3 sm:text-xs">
           {String(index + 2).padStart(2, "0")}
         </span>
       </div>
 
-      <div className="flex flex-1 flex-col p-4 sm:p-5 lg:p-6">
+      <div className="flex min-w-0 flex-1 flex-col p-3.5 sm:p-4 lg:p-5">
         <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-midex-blue sm:text-[11px]">
           {study.industry}
         </p>
-        <h3 className="mt-1.5 font-display text-lg font-bold leading-snug text-midex-navy transition-colors group-hover:text-midex-blue sm:text-xl">
+        <h3 className="mt-1 font-display text-base font-bold leading-snug text-midex-navy transition-colors group-hover:text-midex-blue sm:text-lg">
           {study.client}
         </h3>
-        <p className="mt-2 line-clamp-2 flex-1 text-[13px] leading-relaxed text-midex-gray/75 sm:text-sm">
+        <p className="mt-1.5 line-clamp-2 flex-1 text-[12px] leading-relaxed text-midex-gray/75 sm:text-[13px]">
           {study.scope}
         </p>
-        <div className="mt-3 flex items-end justify-between gap-3 border-t border-midex-line/70 pt-3 sm:mt-4">
-          <div>
-            <p className="font-display text-lg font-bold leading-none text-midex-navy">{study.statValue}</p>
+        <div className="mt-3 flex items-end justify-between gap-2 border-t border-midex-line/70 pt-3">
+          <div className="min-w-0">
+            <p className="font-display text-base font-bold leading-none text-midex-navy sm:text-lg">
+              {study.statValue}
+            </p>
             <p className="mt-1 text-[10px] font-medium uppercase tracking-wider text-midex-gray/60">
               {study.statLabel}
             </p>
           </div>
-          <span className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-midex-line bg-midex-surface text-midex-navy transition-all duration-300 group-hover:border-midex-mint/50 group-hover:bg-midex-mint/10 group-hover:text-midex-blue">
+          <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-midex-line bg-midex-surface text-midex-navy transition-all duration-300 group-hover:border-midex-mint/50 group-hover:bg-midex-mint/10 group-hover:text-midex-navy sm:h-9 sm:w-9">
             <span className="mx-arrow text-sm">→</span>
           </span>
         </div>
@@ -132,10 +132,12 @@ export async function CaseStudiesSection({
   caseStudies: studiesProp,
   title: titleProp,
   subtitle: subtitleProp,
+  showViewAllCta = true,
 }: {
   caseStudies?: CaseStudy[];
   title?: string;
   subtitle?: string;
+  showViewAllCta?: boolean;
 } = {}) {
   const locale = (await getLocale()) as Locale;
   const t = await getTranslations("home");
@@ -145,7 +147,9 @@ export async function CaseStudiesSection({
 
   if (studies.length === 0) return null;
 
-  const [featured, ...rest] = studies;
+  // Home teaser only — full list lives on /case-studies
+  const preview = studies.slice(0, 4);
+  const [featured, ...rest] = preview;
 
   return (
     <section className="mx-section overflow-hidden">
@@ -153,24 +157,26 @@ export async function CaseStudiesSection({
         <RevealOnScroll>
           <div className="mb-8 flex flex-col gap-4 sm:mb-10 lg:mb-12 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-2xl">
-              <h2 className="mx-section-title mt-5">{title}</h2>
+              <h2 className="mx-section-title">{title}</h2>
               <p className="mx-section-subtitle mt-4">{subtitle}</p>
             </div>
-            <Link href="/contact" className="mx-link-arrow shrink-0 text-sm no-underline">
-              {t("caseStudiesCta")}
-              <span className="mx-arrow">→</span>
-            </Link>
+            {showViewAllCta ? (
+              <Link href="/case-studies" className="mx-link-arrow shrink-0 text-sm no-underline">
+                {t("caseStudiesCta")}
+                <span className="mx-arrow">→</span>
+              </Link>
+            ) : null}
           </div>
         </RevealOnScroll>
 
-        <div className="grid gap-4 sm:gap-5 lg:grid-cols-12 lg:items-stretch lg:gap-6">
-          <RevealOnScroll className="flex h-full w-full lg:col-span-7">
+        <div className="grid gap-4 sm:gap-5 lg:grid-cols-12 lg:items-start lg:gap-6">
+          <RevealOnScroll className="w-full lg:col-span-7">
             <FeaturedCaseStudy study={featured} ctaLabel={t("caseStudiesRead")} />
           </RevealOnScroll>
 
-          <div className="grid gap-4 sm:gap-5 lg:col-span-5 lg:grid-cols-1">
+          <div className="grid gap-4 sm:gap-5 lg:col-span-5">
             {rest.map((study, index) => (
-              <RevealOnScroll key={study.slug} delay={(index + 1) * 90} className="flex h-full w-full">
+              <RevealOnScroll key={study.slug} delay={(index + 1) * 90} className="w-full">
                 <CaseStudyCard study={study} index={index} />
               </RevealOnScroll>
             ))}

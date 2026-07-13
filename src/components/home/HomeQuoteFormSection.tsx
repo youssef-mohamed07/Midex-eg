@@ -23,7 +23,7 @@ export async function HomeQuoteFormSection({
   const subtitle = subtitleProp ?? t("quoteFormSubtitle");
 
   return (
-    <section className="mx-section">
+    <section id="quote-form" className="mx-section scroll-mt-28">
       <div className="mx-container">
         <RevealOnScroll>
           <div className="mb-8 max-w-2xl lg:mb-10">

@@ -1,9 +1,10 @@
 import Image from "next/image";
 import { getLocale } from "next-intl/server";
 import { WordRevealText } from "@/components/ui/WordRevealText";
+import { getAboutFounders } from "@/lib/cms";
+import { isValidImageSrc } from "@/lib/cms/images";
 import type { QuoteBlockContent } from "@/lib/cms/types";
 import { type Locale } from "@/i18n/routing";
-import { isValidImageSrc } from "@/lib/cms/images";
 
 function QuoteMark({ className = "" }: { className?: string }) {
   return (
@@ -22,9 +23,31 @@ type Props = {
   content: QuoteBlockContent & { quote: string; name: string; role: string };
 };
 
+async function resolveFounderImage(
+  locale: Locale,
+  quoteImage: string | undefined,
+  quoteName: string,
+): Promise<string | undefined> {
+  if (isValidImageSrc(quoteImage)) return quoteImage;
+
+  const founders = await getAboutFounders(locale);
+  const normalizedName = quoteName.toLowerCase();
+
+  const matched =
+    founders.find((founder) => founder.nameKey === "founder2Name") ||
+    founders.find((founder) => {
+      const name = `${founder.name ?? ""} ${founder.nameKey ?? ""}`.toLowerCase();
+      return name.includes("abdelrahman") || normalizedName.includes("abdelrahman");
+    }) ||
+    founders[0];
+
+  return isValidImageSrc(matched?.image) ? matched.image : undefined;
+}
+
 export async function FeaturedQuoteSection({ content }: Props) {
   const locale = (await getLocale()) as Locale;
   const isLatin = locale !== "ar";
+  const photo = await resolveFounderImage(locale, content.image, content.name);
 
   return (
     <section className="relative overflow-hidden mx-section">
@@ -38,19 +61,20 @@ export async function FeaturedQuoteSection({ content }: Props) {
             </p>
           </blockquote>
 
-          <figcaption className="mt-8 flex flex-col items-center gap-4 sm:mt-10">
-            {isValidImageSrc(content.image) && (
-              <div className="relative h-16 w-16 overflow-hidden rounded-full ring-2 ring-midex-mint/40 sm:h-20 sm:w-20">
+          <figcaption className="mt-8 flex flex-col items-center gap-3 sm:mt-10 sm:gap-4">
+            <span className="h-px w-10 bg-midex-blue/30" aria-hidden />
+
+            {photo ? (
+              <div className="relative h-14 w-14 overflow-hidden rounded-full border-2 border-white bg-midex-surface shadow-md ring-2 ring-midex-mint/35 sm:h-16 sm:w-16">
                 <Image
-                  src={content.image}
+                  src={photo}
                   alt={content.name}
                   fill
-                  className="object-cover"
-                  sizes="80px"
+                  className="object-cover object-top"
+                  sizes="64px"
                 />
               </div>
-            )}
-            <span className="h-px w-10 bg-midex-blue/30" aria-hidden />
+            ) : null}
 
             <cite
               className={`text-[11px] font-semibold not-italic sm:text-xs ${

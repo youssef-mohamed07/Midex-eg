@@ -450,5 +450,6 @@ export const caseStudyLabels = defineType({
     defineField({ name: "discuss", title: "Discuss CTA", type: "localeString" }),
     defineField({ name: "related", title: "Related heading", type: "localeString" }),
     defineField({ name: "back", title: "Back link", type: "localeString" }),
+    defineField({ name: "galleryTitle", title: "Gallery heading", type: "localeString" }),
   ],
 });

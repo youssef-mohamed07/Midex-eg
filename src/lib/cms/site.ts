@@ -142,7 +142,8 @@ export async function getExclusivePartners(): Promise<Partner[]> {
   return sanityFetch<Partner[]>({
     query: `*[_type == "partner" && kind == "exclusive"] | order(order asc) {
       name,
-      "image": ${imageUrl("image")}
+      "image": ${imageUrl("image")},
+      "href": coalesce(href, "")
     }`,
     tags: ["partner"],
   });
@@ -301,6 +302,7 @@ export async function getCaseStudies(locale: Locale): Promise<CaseStudy[]> {
       "slug": slug.current,
       client,
       "image": ${imageUrl()},
+      "gallery": gallery[].asset->url,
       "industry": ${loc("industry")},
       "scope": ${loc("scope")},
       "outcome": ${loc("outcome")},
@@ -326,6 +328,7 @@ export async function getCaseStudy(
       "slug": slug.current,
       client,
       "image": ${imageUrl()},
+      "gallery": gallery[].asset->url,
       "industry": ${loc("industry")},
       "scope": ${loc("scope")},
       "intro": ${locOptional("intro")},

@@ -6,11 +6,12 @@
 import type { HomeSolutionCard } from "@/components/home/HomeSolutionsAccordion";
 import type { EngineeringCapabilityCardContent } from "@/lib/cms/types";
 
+/** Display order everywhere: Installations → Systems → Welding → Modifications. */
 export const ENGINEERING_CAPABILITY_SLUGS = [
-  "solutions",
-  "welding",
-  "systems",
   "installations",
+  "systems",
+  "welding",
+  "solutions",
 ] as const;
 
 export type EngineeringCapabilitySlug = (typeof ENGINEERING_CAPABILITY_SLUGS)[number];
@@ -56,12 +57,24 @@ function isKnownSlug(slug: string): slug is EngineeringCapabilitySlug {
   return (ENGINEERING_CAPABILITY_SLUGS as readonly string[]).includes(slug);
 }
 
+function preferredIndex(slug: string): number {
+  const index = (ENGINEERING_CAPABILITY_SLUGS as readonly string[]).indexOf(slug);
+  return index === -1 ? ENGINEERING_CAPABILITY_SLUGS.length : index;
+}
+
+/** Sort solution groups / cards into the site-wide preferred order. */
+export function sortByEngineeringCapabilityOrder<T extends { slug: string }>(items: T[]): T[] {
+  return [...items].sort((a, b) => preferredIndex(a.slug) - preferredIndex(b.slug));
+}
+
 function resolveSlugOrder(cmsCards?: EngineeringCapabilityCardContent[]): string[] {
   const cmsSlugs = (cmsCards ?? [])
     .map((card) => card.slug?.trim())
     .filter((slug): slug is string => Boolean(slug));
 
-  if (cmsSlugs.length > 0) return cmsSlugs;
+  if (cmsSlugs.length > 0) {
+    return [...cmsSlugs].sort((a, b) => preferredIndex(a) - preferredIndex(b));
+  }
   return [...ENGINEERING_CAPABILITY_SLUGS];
 }
 

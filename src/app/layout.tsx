@@ -72,6 +72,7 @@ export default async function RootLayout({
       lang={locale}
       dir={dir}
       suppressHydrationWarning
+      data-scroll-behavior="smooth"
       className={`${alexandria.variable}`}
     >
       <head>

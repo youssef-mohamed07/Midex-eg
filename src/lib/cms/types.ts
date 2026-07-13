@@ -366,6 +366,7 @@ export type LayoutChrome = {
   products?: string;
   solutions?: string;
   blog?: string;
+  caseStudies?: string;
   aboutUs?: string;
   contactUs?: string;
   allSolutions?: string;

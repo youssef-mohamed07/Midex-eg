@@ -210,6 +210,7 @@ export const layoutChromeProjection = (field = "chrome") => `${field}{
   "products": ${locOptional("products")},
   "solutions": ${locOptional("solutions")},
   "blog": ${locOptional("blog")},
+  "caseStudies": ${locOptional("caseStudies")},
   "aboutUs": ${locOptional("aboutUs")},
   "contactUs": ${locOptional("contactUs")},
   "allSolutions": ${locOptional("allSolutions")},

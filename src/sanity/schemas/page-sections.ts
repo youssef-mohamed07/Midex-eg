@@ -339,6 +339,7 @@ export const layoutChrome = defineType({
     defineField({ name: "products", title: "Products", type: "localeString" }),
     defineField({ name: "solutions", title: "Solutions", type: "localeString" }),
     defineField({ name: "blog", title: "Blog", type: "localeString" }),
+    defineField({ name: "caseStudies", title: "Case studies", type: "localeString" }),
     defineField({ name: "aboutUs", title: "About us", type: "localeString" }),
     defineField({ name: "contactUs", title: "Contact us", type: "localeString" }),
     defineField({ name: "allSolutions", title: "All solutions", type: "localeString" }),

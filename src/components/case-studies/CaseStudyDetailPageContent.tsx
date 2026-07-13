@@ -45,7 +45,11 @@ export async function CaseStudyDetailPageContent({ slug }: Props) {
 
   return (
     <>
-      <CaseStudyHero study={study} breadcrumbParent={t("caseStudiesTitle")} />
+      <CaseStudyHero
+        study={study}
+        breadcrumbParent={t("caseStudiesTitle")}
+        heroImage={galleryImages[0]}
+      />
 
       <CaseStudyGallery
         title={labels.gallery}

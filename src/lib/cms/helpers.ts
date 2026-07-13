@@ -43,36 +43,11 @@ const DEFAULT_CASE_STUDY_GALLERY = [
   "/images/services/mirror-finish.png",
 ] as const;
 
-const CASE_STUDY_GALLERY_FALLBACKS: Record<string, readonly string[]> = {
-  "spimaco-pw-station": [
-    "/images/services/spray-ball.png",
-    "/images/services/orbital-welding.png",
-    "/images/services/welding-docs.png",
-  ],
-  "mars-wrigley-soft-water": [
-    "/images/services/orbital-welding.png",
-    "/images/services/mechanical-polishing.png",
-    "/images/services/pickling-passivation.png",
-  ],
-  "vacsera-ro-edi": [
-    "/images/services/orbital-welding.png",
-    "/images/services/mirror-finish.png",
-    "/images/services/welding-docs.png",
-  ],
-  "otsuka-pw-network": [
-    "/images/services/orbital-welding.png",
-    "/images/services/spray-ball.png",
-    "/images/services/mechanical-polishing.png",
-  ],
-};
-
 /** Returns project gallery images for a case study. */
 export function getCaseStudyGalleryImages(
   study: Pick<CaseStudy, "slug" | "gallery">,
 ): string[] {
   const gallery = study.gallery?.filter((src) => typeof src === "string" && src.trim().length > 0) ?? [];
   if (gallery.length > 0) return gallery;
-
-  const fallback = CASE_STUDY_GALLERY_FALLBACKS[study.slug];
-  return fallback ? [...fallback] : [...DEFAULT_CASE_STUDY_GALLERY];
+  return [...DEFAULT_CASE_STUDY_GALLERY];
 }

@@ -1,10 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import type { HeroCollage } from "@/lib/cms/types";
 
-const DEFAULT_HERO_VIDEO = "/videos/hero.mp4";
 const DEFAULT_HERO_POSTER = "/images/hero/slide-1.png";
 
 type HeroCopy = {
@@ -19,6 +19,7 @@ type HeroCopy = {
 type Props = {
   collage?: HeroCollage;
   heroCopy: HeroCopy;
+  /** Local or remote hero background video. Omit when the file is not available. */
   videoSrc?: string;
   posterSrc?: string;
 };
@@ -26,14 +27,16 @@ type Props = {
 export function HeroSlider({
   collage,
   heroCopy,
-  videoSrc = DEFAULT_HERO_VIDEO,
+  videoSrc,
   posterSrc,
 }: Props) {
   const poster = posterSrc || collage?.mobileImage || DEFAULT_HERO_POSTER;
+  const [videoFailed, setVideoFailed] = useState(false);
+  const showVideo = Boolean(videoSrc) && !videoFailed;
 
   return (
     <section className="relative isolate min-h-[min(100svh,860px)] overflow-hidden bg-midex-navy">
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 min-h-full">
         <Image
           src={poster}
           alt=""
@@ -43,17 +46,20 @@ export function HeroSlider({
           sizes="100vw"
           aria-hidden
         />
-        <video
-          className="absolute inset-0 h-full w-full object-cover"
-          src={videoSrc}
-          poster={poster}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          aria-hidden
-        />
+        {showVideo ? (
+          <video
+            className="absolute inset-0 h-full w-full object-cover"
+            src={videoSrc}
+            poster={poster}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            aria-hidden
+            onError={() => setVideoFailed(true)}
+          />
+        ) : null}
         <div className="absolute inset-0 bg-midex-navy/55" aria-hidden />
         <div
           className="absolute inset-0 bg-gradient-to-r from-midex-navy/85 via-midex-navy/50 to-midex-navy/25"

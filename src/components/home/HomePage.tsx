@@ -1,4 +1,6 @@
 import type { ReactNode } from "react";
+import { existsSync } from "node:fs";
+import path from "node:path";
 import { Fragment } from "react";
 import { getLocale, getTranslations } from "next-intl/server";
 import { CaseStudiesSection } from "@/components/home/CaseStudiesSection";
@@ -29,6 +31,11 @@ import {
   resolveSectionHeader,
 } from "@/lib/cms/section-resolve";
 import { type Locale } from "@/i18n/routing";
+
+function resolveHeroVideoSrc() {
+  const filePath = path.join(process.cwd(), "public/videos/hero.mp4");
+  return existsSync(filePath) ? "/videos/hero.mp4" : undefined;
+}
 
 export async function HomePage() {
   const locale = (await getLocale()) as Locale;
@@ -214,7 +221,11 @@ export async function HomePage() {
 
   return (
     <>
-      <HeroSlider collage={home.heroCollage} heroCopy={heroCopy} />
+      <HeroSlider
+        collage={home.heroCollage}
+        heroCopy={heroCopy}
+        videoSrc={resolveHeroVideoSrc()}
+      />
       {order.map((key) => {
         const node = sectionNodes[key];
         return node ? <Fragment key={key}>{node}</Fragment> : null;

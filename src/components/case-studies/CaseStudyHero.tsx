@@ -7,10 +7,17 @@ import type { CaseStudy } from "@/lib/cms/types";
 type Props = {
   study: CaseStudy;
   breadcrumbParent: string;
+  /** Project photo shown on the right of the hero. */
+  heroImage?: string;
 };
 
-export function CaseStudyHero({ study, breadcrumbParent }: Props) {
+export function CaseStudyHero({ study, breadcrumbParent, heroImage }: Props) {
   const logoSrc = isValidImageSrc(study.image) ? study.image : undefined;
+  const photoSrc = isValidImageSrc(heroImage)
+    ? heroImage
+    : isValidImageSrc(study.gallery?.[0])
+      ? study.gallery![0]
+      : "/images/services/orbital-welding.png";
 
   return (
     <PageHero
@@ -28,18 +35,45 @@ export function CaseStudyHero({ study, breadcrumbParent }: Props) {
         />
       }
       media={
-        logoSrc ? (
-          <div className="relative mx-auto h-40 w-full max-w-[280px] overflow-hidden rounded-2xl border border-white/12 bg-white shadow-xl shadow-black/20 sm:h-44 lg:mx-0 lg:h-48 lg:w-full lg:max-w-[320px]">
+        <div className="relative mx-auto w-full max-w-[380px] overflow-hidden rounded-2xl border border-white/15 bg-midex-navy shadow-2xl shadow-black/30 lg:mx-0">
+          <div className="relative aspect-[16/10] w-full">
             <Image
-              src={logoSrc}
+              src={photoSrc}
               alt={study.client}
               fill
               priority
-              className="object-contain p-5 sm:p-6"
-              sizes="(max-width: 1024px) 280px, 320px"
+              className="object-cover"
+              sizes="(max-width: 1024px) 380px, 380px"
             />
+            <div
+              className="absolute inset-0 bg-gradient-to-t from-midex-navy/55 via-transparent to-midex-navy/20"
+              aria-hidden
+            />
+
+            {logoSrc ? (
+              <div className="absolute bottom-4 start-4 z-10">
+                <div className="relative h-14 w-36 overflow-hidden rounded-xl border border-white/70 bg-white shadow-lg">
+                  <Image
+                    src={logoSrc}
+                    alt=""
+                    fill
+                    className="object-contain p-2"
+                    sizes="144px"
+                  />
+                </div>
+              </div>
+            ) : study.statValue ? (
+              <div className="absolute bottom-4 start-4 z-10 rounded-xl border border-white/20 bg-white/95 px-3.5 py-2.5 shadow-lg sm:bottom-5 sm:start-5 sm:px-4 sm:py-3">
+                <p className="font-display text-2xl font-bold leading-none text-midex-navy">
+                  {study.statValue}
+                </p>
+                <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-midex-gray/65">
+                  {study.statLabel}
+                </p>
+              </div>
+            ) : null}
           </div>
-        ) : undefined
+        </div>
       }
     >
       {study.tags.length > 0 ? (
@@ -55,7 +89,7 @@ export function CaseStudyHero({ study, breadcrumbParent }: Props) {
         </div>
       ) : null}
 
-      {study.statValue ? (
+      {study.statValue && logoSrc ? (
         <div className="mt-5 inline-flex items-center gap-4 rounded-2xl border border-white/12 bg-white/8 px-4 py-3 backdrop-blur-sm sm:mt-6 sm:px-5 sm:py-4">
           <p className="font-display text-2xl font-bold leading-none text-white sm:text-3xl">
             {study.statValue}

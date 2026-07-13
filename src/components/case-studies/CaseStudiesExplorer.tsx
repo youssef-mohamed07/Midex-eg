@@ -38,89 +38,6 @@ function clientInitials(client: string) {
   return `${parts[0]![0] ?? ""}${parts[1]![0] ?? ""}`.toUpperCase();
 }
 
-const COVER_POOLS: { match: RegExp; images: string[] }[] = [
-  {
-    match: /\b(wfi|purified water|pw|ro|water station|distiller|membrane)\b/i,
-    images: [
-      "/images/hero/slide-2.png",
-      "/images/services/passivation-test.png",
-      "/images/news/news-1756730723.png",
-      "/images/events/event-1756814991.jpg",
-    ],
-  },
-  {
-    match: /\b(piping|stainless|ss |weld|orbital|homogenizer|pure steam)\b/i,
-    images: [
-      "/images/services/orbital-welding.png",
-      "/images/services/mirror-finish.png",
-      "/images/services/pickling-passivation.png",
-      "/images/services/bore-scoping.png",
-    ],
-  },
-  {
-    match: /\b(filter|filtration|housing)\b/i,
-    images: [
-      "/images/products/product-1725277497.webp",
-      "/images/products/product-1725277406.webp",
-      "/images/services/spray-ball.png",
-      "/images/news/news-1756383611.png",
-    ],
-  },
-  {
-    match: /\b(compressed air|clean gas|sanitary drain|cip|sip|scada)\b/i,
-    images: [
-      "/images/services/mechanical-polishing.png",
-      "/images/services/welding-docs.png",
-      "/images/hero/slide-3.png",
-      "/images/events/event-1755506225.jpg",
-    ],
-  },
-  {
-    match: /\b(spare|heat exchanger|hex|dosing|metering)\b/i,
-    images: [
-      "/images/products/product-1725239365.jpg",
-      "/images/products/product-1724113383.jpg",
-      "/images/services/roughness-test.png",
-      "/images/events/event-1755506266.jpg",
-    ],
-  },
-];
-
-const DEFAULT_COVERS = [
-  "/images/events/event-1755506196.jpg",
-  "/images/events/event-1755506209.jpg",
-  "/images/events/event-1755506225.jpg",
-  "/images/events/event-1755506266.jpg",
-  "/images/events/event-1755506276.jpg",
-  "/images/hero/slide-1.png",
-  "/images/news/news-1756383611.png",
-  "/images/blog/blog-1725325779.jpg",
-];
-
-function hashSlug(slug: string) {
-  let hash = 0;
-  for (let i = 0; i < slug.length; i += 1) {
-    hash = (hash * 31 + slug.charCodeAt(i)) >>> 0;
-  }
-  return hash;
-}
-
-function resolveCover(study: CaseStudy) {
-  const galleryCover = study.gallery?.find(Boolean);
-  if (galleryCover) return { src: galleryCover, kind: "photo" as const };
-
-  const haystack = `${study.scope} ${study.tags.join(" ")}`;
-  for (const pool of COVER_POOLS) {
-    if (pool.match.test(haystack)) {
-      const index = hashSlug(study.slug) % pool.images.length;
-      return { src: pool.images[index]!, kind: "photo" as const };
-    }
-  }
-
-  const index = hashSlug(study.slug) % DEFAULT_COVERS.length;
-  return { src: DEFAULT_COVERS[index]!, kind: "photo" as const };
-}
-
 function FilterSelect({
   label,
   options,
@@ -217,78 +134,52 @@ function YearSegment({
 }
 
 function CaseStudyCard({ study, readLabel }: { study: CaseStudy; readLabel: string }) {
-  const { title, location } = parseScope(study.scope);
+  const { title } = parseScope(study.scope);
   const year = /^\d{4}$/.test(study.statValue) ? study.statValue : null;
-  const cover = resolveCover(study);
   const logo = study.image || null;
 
   return (
     <Link
       href={`/case-studies/${study.slug}`}
-      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-midex-line/80 bg-white no-underline transition-all duration-500 hover:-translate-y-1 hover:border-midex-mint/40 hover:shadow-[0_24px_50px_-32px_rgba(11,31,59,0.35)]"
+      className="group flex h-full flex-col overflow-hidden rounded-xl border border-midex-line/80 bg-white no-underline transition-all duration-300 hover:-translate-y-0.5 hover:border-midex-mint/40 hover:shadow-md"
     >
-      <div className="relative aspect-[16/10] overflow-hidden bg-midex-navy">
-        <Image
-          src={cover.src}
-          alt=""
-          fill
-          className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-          sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
-        />
-        <div
-          className="absolute inset-0 bg-gradient-to-t from-midex-navy/75 via-midex-navy/15 to-midex-navy/10"
-          aria-hidden
-        />
-
-        <div className="absolute inset-x-0 top-0 flex items-start justify-between gap-3 p-3.5 sm:p-4">
-          {year ? (
-            <span className="rounded-lg bg-white/95 px-2.5 py-1 text-[11px] font-bold tracking-wide text-midex-navy shadow-sm">
-              {year}
-            </span>
-          ) : (
-            <span />
-          )}
-          <span className="rounded-lg bg-midex-navy/55 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-white backdrop-blur-sm">
-            {study.industry}
+      <div className="relative flex aspect-[2/1] items-center justify-center bg-gradient-to-br from-midex-surface via-white to-midex-surface px-4 py-3">
+        {year ? (
+          <span className="absolute start-2.5 top-2.5 rounded bg-midex-navy px-1.5 py-0.5 text-[9px] font-bold tracking-wide text-white">
+            {year}
           </span>
-        </div>
+        ) : null}
 
-        <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-3.5 sm:p-4">
-          <div className="relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl border border-white/70 bg-white shadow-sm sm:h-14 sm:w-14">
-            {logo ? (
-              <Image
-                src={logo}
-                alt={study.client}
-                fill
-                className="object-contain p-1.5"
-                sizes="56px"
-              />
-            ) : (
-              <span className="text-xs font-bold tracking-wide text-midex-navy/75">
+        <div className="relative h-[70%] w-[70%] max-w-[180px]">
+          {logo ? (
+            <Image
+              src={logo}
+              alt={study.client}
+              fill
+              className="object-contain transition-transform duration-400 group-hover:scale-[1.03]"
+              sizes="(max-width: 640px) 40vw, 180px"
+            />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center">
+              <span className="font-display text-2xl font-bold tracking-tight text-midex-navy/20 sm:text-3xl">
                 {clientInitials(study.client)}
               </span>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
 
-      <div className="flex flex-1 flex-col px-4 py-4 sm:px-5 sm:py-5">
-        <h3 className="font-display text-xl font-bold leading-snug text-midex-navy transition-colors group-hover:text-midex-blue">
+      <div className="flex flex-1 flex-col px-3 py-3 sm:px-3.5">
+        <h3 className="font-display text-[15px] font-bold leading-snug text-midex-navy transition-colors group-hover:text-midex-blue sm:text-base">
           {study.client}
         </h3>
-        <p className="mt-2 line-clamp-2 text-[15px] leading-relaxed text-midex-navy/80">
-          {title || study.scope}
+        <p className="mt-1 line-clamp-1 text-[12px] leading-snug text-midex-gray/65">
+          {title || study.industry}
         </p>
-        {location ? (
-          <p className="mt-2 line-clamp-1 text-sm text-midex-gray/60">{location}</p>
-        ) : null}
-
-        <div className="mt-auto pt-5">
-          <span className="mx-link-arrow text-sm font-semibold text-midex-navy group-hover:text-midex-blue">
-            {readLabel}
-            <span className="mx-arrow">→</span>
-          </span>
-        </div>
+        <span className="mx-link-arrow mt-2.5 text-xs font-semibold text-midex-navy group-hover:text-midex-blue">
+          {readLabel}
+          <span className="mx-arrow">→</span>
+        </span>
       </div>
     </Link>
   );
@@ -450,7 +341,7 @@ export function CaseStudiesExplorer({ studies, labels }: Props) {
           </button>
         </div>
       ) : (
-        <div className="mt-8 grid gap-5 sm:mt-10 sm:grid-cols-2 sm:gap-6 xl:grid-cols-3">
+        <div className="mt-6 grid grid-cols-2 gap-3 sm:mt-8 sm:gap-4 md:grid-cols-3 xl:grid-cols-4">
           {filtered.map((study) => (
             <CaseStudyCard key={study.slug} study={study} readLabel={labels.read} />
           ))}

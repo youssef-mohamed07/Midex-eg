@@ -27,6 +27,8 @@ type Labels = {
   quoteShort: string;
   productsLabel: string;
   explore: string;
+  showMore: string;
+  showLess: string;
 };
 
 type Props = {
@@ -41,7 +43,9 @@ function quoteUrlFor(title: string) {
 }
 
 export function ProductsExplorer({ products, categories, labels, initialCategory = null }: Props) {
+  const MOBILE_PAGE_SIZE = 8;
   const [activeCategory, setActiveCategory] = useState<string | null>(initialCategory);
+  const [mobileVisibleCount, setMobileVisibleCount] = useState(MOBILE_PAGE_SIZE);
   const [activeSlug, setActiveSlug] = useState<string>(() => {
     const first = initialCategory
       ? products.find((p) => p.category === initialCategory)
@@ -62,6 +66,7 @@ export function ProductsExplorer({ products, categories, labels, initialCategory
 
   function handleCategory(slug: string | null) {
     setActiveCategory(slug);
+    setMobileVisibleCount(MOBILE_PAGE_SIZE);
     const next = slug ? products.find((p) => p.category === slug) : products[0];
     if (next) setActiveSlug(next.slug);
   }
@@ -114,7 +119,7 @@ export function ProductsExplorer({ products, categories, labels, initialCategory
 
       {/* Mobile: self-contained product cards */}
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:hidden">
-        {filtered.map((product) => (
+        {filtered.slice(0, mobileVisibleCount).map((product) => (
           <article
             key={product.slug}
             className="group relative overflow-hidden rounded-2xl border border-midex-line/60 bg-midex-navy shadow-md"
@@ -158,6 +163,21 @@ export function ProductsExplorer({ products, categories, labels, initialCategory
           </article>
         ))}
       </div>
+      {filtered.length > MOBILE_PAGE_SIZE ? (
+        <div className="mt-5 flex justify-center lg:hidden">
+          <button
+            type="button"
+            onClick={() =>
+              setMobileVisibleCount((current) =>
+                current >= filtered.length ? MOBILE_PAGE_SIZE : filtered.length,
+              )
+            }
+            className="mx-btn mx-btn-ghost min-w-36 justify-center"
+          >
+            {mobileVisibleCount >= filtered.length ? labels.showLess : labels.showMore}
+          </button>
+        </div>
+      ) : null}
 
       {/* Desktop: interactive split explorer */}
       <div className="hidden gap-6 lg:grid lg:grid-cols-[1fr_minmax(0,1.15fr)]">
@@ -215,7 +235,7 @@ export function ProductsExplorer({ products, categories, labels, initialCategory
           </div>
         </div>
 
-        <ul className="order-1 flex flex-col gap-1.5">
+        <ul className="order-1 flex max-h-[610px] flex-col gap-1.5 overflow-y-auto pe-2 [scrollbar-color:rgba(11,31,59,0.28)_transparent] [scrollbar-width:thin]">
           {filtered.map((product, index) => {
             const isActive = product.slug === active.slug;
             return (
@@ -224,7 +244,7 @@ export function ProductsExplorer({ products, categories, labels, initialCategory
                   href={`/products/${product.slug}`}
                   onMouseEnter={() => setActiveSlug(product.slug)}
                   onFocus={() => setActiveSlug(product.slug)}
-                  className={`group flex w-full items-center gap-4 rounded-2xl border px-5 py-4 text-start no-underline transition-all duration-300 ${
+                  className={`group flex w-full items-center gap-3 rounded-xl border px-4 py-2.5 text-start no-underline transition-all duration-300 ${
                     isActive
                       ? "border-midex-navy/15 bg-midex-navy text-white shadow-lg shadow-midex-navy/15"
                       : "border-midex-line/60 bg-white text-midex-navy hover:border-midex-mint/40 hover:bg-midex-surface/40"
@@ -245,7 +265,7 @@ export function ProductsExplorer({ products, categories, labels, initialCategory
                     >
                       {product.categoryLabel}
                     </span>
-                    <span className="mt-0.5 block line-clamp-2 font-display text-base font-bold leading-snug">
+                    <span className="mt-0.5 block line-clamp-1 font-display text-sm font-bold leading-snug">
                       {product.title}
                     </span>
                   </span>

@@ -9,6 +9,11 @@ import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import path from "node:path";
 import { config as loadEnv } from "dotenv";
 import { createClient } from "@sanity/client";
+import {
+  localeString as L,
+  localeText as LT,
+  localeStringList as LL,
+} from "./lib/locale";
 
 loadEnv({ path: ".env.local" });
 loadEnv({ path: ".env" });
@@ -190,18 +195,6 @@ function toSeed(row: SheetRow): CaseStudySeed {
     tags: buildTags(row.scope, title),
     order: row.number - 1,
   };
-}
-
-function L(en: string) {
-  return { _type: "localeString" as const, en };
-}
-
-function LT(en: string) {
-  return { _type: "localeText" as const, en };
-}
-
-function LL(en: string[]) {
-  return { _type: "localeStringList" as const, en };
 }
 
 async function main() {

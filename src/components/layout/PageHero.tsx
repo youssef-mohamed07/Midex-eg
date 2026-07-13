@@ -14,6 +14,8 @@ type PageHeroProps = {
   mediaFirstOnMobile?: boolean;
   /** Hide the media column below this breakpoint (e.g. solutions hero). */
   hideMediaBelow?: "lg" | "md";
+  /** Vertical alignment of the copy and media columns on large screens. */
+  mediaAlign?: "start" | "center";
 };
 
 function HeroBody({
@@ -56,6 +58,7 @@ export function PageHero({
   compact = false,
   mediaFirstOnMobile = false,
   hideMediaBelow,
+  mediaAlign = "start",
 }: PageHeroProps) {
   const body = (
     <HeroBody eyebrow={eyebrow} title={title} subtitle={subtitle}>
@@ -85,7 +88,9 @@ export function PageHero({
 
         {media ? (
           <div
-            className={`grid items-start gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(280px,360px)] lg:gap-12 xl:grid-cols-[minmax(0,1fr)_380px] xl:gap-14 ${
+            className={`grid gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(280px,360px)] lg:gap-12 xl:grid-cols-[minmax(0,1fr)_380px] xl:gap-14 ${
+              mediaAlign === "center" ? "items-center" : "items-start"
+            } ${
               breadcrumbs ? "mt-4" : ""
             }`}
           >

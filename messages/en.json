@@ -308,6 +308,8 @@
     "categoriesSectionSubtitle": "Select a product family to explore specifications and request pricing.",
     "highlightsTitle": "Category highlights",
     "viewCategory": "View category",
+    "showMore": "Show more",
+    "showLess": "Show less",
     "ctaTitle": "Need pricing or specifications?",
     "ctaText": "Send us your BOM or application details — our team responds with availability, lead times, and documentation.",
     "noProducts": "No products found in this category."

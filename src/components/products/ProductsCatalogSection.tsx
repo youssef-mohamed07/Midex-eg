@@ -33,6 +33,8 @@ export async function ProductsCatalogSection({
     quoteShort: explorerLabelsProp?.quoteShort ?? t("quoteShort"),
     productsLabel: explorerLabelsProp?.productsLabel ?? t("productsLabel"),
     explore: explorerLabelsProp?.viewCategory ?? t("viewCategory"),
+    showMore: t("showMore"),
+    showLess: t("showLess"),
   };
   const [productCategories, allProducts] = await Promise.all([
     getProductCategories(locale),

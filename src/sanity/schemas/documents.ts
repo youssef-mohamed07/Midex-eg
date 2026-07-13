@@ -833,8 +833,20 @@ export const product = defineType({
       validation: required,
       group: "content",
     }),
+    defineField({
+      name: "subcategory",
+      title: "Subcategory",
+      type: "localeString",
+      group: "content",
+    }),
     defineField({ name: "excerpt", title: "Excerpt", type: "localeText", group: "content" }),
     defineField({ name: "description", title: "Description", type: "localeText", group: "content" }),
+    defineField({
+      name: "applications",
+      title: "Applications",
+      type: "localeText",
+      group: "details",
+    }),
     defineField({ name: "image", title: "Main image", type: "imageWithAlt", group: "media" }),
     defineField({
       name: "gallery",

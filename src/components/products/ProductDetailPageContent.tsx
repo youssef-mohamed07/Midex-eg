@@ -71,7 +71,15 @@ export async function ProductDetailPageContent({ slug }: Props) {
         title={product.title}
         subtitle={product.excerpt}
         compact
-        media={<PageHeroImage src={product.image} alt={product.title} priority />}
+        mediaAlign="center"
+        media={
+          <PageHeroImage
+            src={product.image}
+            alt={product.title}
+            priority
+            variant="product"
+          />
+        }
         breadcrumbs={
           <SolutionBreadcrumbs
             light
@@ -90,6 +98,11 @@ export async function ProductDetailPageContent({ slug }: Props) {
           />
         }
       >
+        {product.subcategory ? (
+          <p className="mt-5 text-xs font-semibold uppercase tracking-[0.16em] text-midex-mint">
+            {product.subcategory}
+          </p>
+        ) : null}
         <div className="mt-6 flex flex-wrap gap-3">
           <Link
             className="group mx-btn mx-btn-primary border-white/20 bg-white text-midex-navy hover:bg-midex-mint hover:text-midex-navy"
@@ -208,13 +221,13 @@ export async function ProductDetailPageContent({ slug }: Props) {
                 </div>
               )}
 
-              {category?.description && (
+              {(product.applications || category?.description) && (
                 <div>
                   <h3 className="font-display text-lg font-bold text-midex-navy sm:text-xl">
                     {labels.applicationsTitle}
                   </h3>
                   <p className="mt-4 max-w-3xl text-base leading-relaxed text-midex-gray/80">
-                    {category.description}
+                    {product.applications || category?.description}
                   </p>
                 </div>
               )}

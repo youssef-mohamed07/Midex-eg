@@ -494,8 +494,10 @@ export type Product = {
   slug: string;
   title: string;
   category: string;
+  subcategory?: string;
   excerpt: string;
   description: string;
+  applications?: string;
   image: string;
   gallery?: string[];
   highlights?: string[];

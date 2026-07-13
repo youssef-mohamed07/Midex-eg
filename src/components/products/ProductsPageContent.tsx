@@ -108,7 +108,14 @@ export async function ProductsPageContent({ category = null }: Props) {
         title={hero.title}
         subtitle={hero.subtitle}
         compact
-        media={<PageHeroImage src={hero.image} alt={hero.title} />}
+        mediaAlign="center"
+        media={
+          <PageHeroImage
+            src={hero.image}
+            alt={hero.title}
+            variant="product"
+          />
+        }
       >
         <p className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-white/70">
           {!category && (

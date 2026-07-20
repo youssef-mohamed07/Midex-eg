@@ -4,11 +4,22 @@ import {
   getProduct,
   getProductCategories,
   getProductsByCategory,
+  getSolutionChildPage,
   getSolutionGroup,
+  getSolutionGroupFaq,
 } from "@/lib/cms";
 import { getGroupLabel } from "@/components/solutions/solution-labels";
 import type { Locale } from "@/i18n/routing";
 import type { SeoTemplateContext } from "@/lib/seo/types";
+import type { FaqJsonLdItem } from "@/lib/seo/json-ld";
+
+function firstMeaningful(...values: Array<string | undefined | null>) {
+  for (const value of values) {
+    const trimmed = value?.trim();
+    if (trimmed) return trimmed;
+  }
+  return undefined;
+}
 
 export async function getProductSeoContext(slug: string, locale: Locale) {
   const product = await getProduct(slug, locale);
@@ -43,8 +54,18 @@ export async function getProductCategorySeoContext(slug: string, locale: Locale)
 }
 
 export async function getSolutionGroupSeoContext(slug: string, locale: Locale) {
-  const group = await getSolutionGroup(slug, locale);
+  const [group, faq] = await Promise.all([
+    getSolutionGroup(slug, locale),
+    getSolutionGroupFaq(slug, locale),
+  ]);
   if (!group) return null;
+
+  const faqItems: FaqJsonLdItem[] = (faq?.items ?? [])
+    .map((item) => ({
+      question: item.question?.trim() ?? "",
+      answer: item.answer?.trim() ?? "",
+    }))
+    .filter((item) => item.question && item.answer);
 
   return {
     context: {
@@ -52,6 +73,7 @@ export async function getSolutionGroupSeoContext(slug: string, locale: Locale) {
       description: group.description,
       image: group.image,
     } satisfies SeoTemplateContext,
+    faq: faqItems,
   };
 }
 
@@ -60,18 +82,42 @@ export async function getSolutionChildSeoContext(
   childSlug: string,
   locale: Locale,
 ) {
-  const group = await getSolutionGroup(groupSlug, locale);
+  const [group, page] = await Promise.all([
+    getSolutionGroup(groupSlug, locale),
+    getSolutionChildPage(groupSlug, childSlug, locale),
+  ]);
   const child = group?.children.find((item) => item.slug === childSlug);
   if (!group || !child) return null;
 
+  const title = firstMeaningful(page?.heroTitle, child.label) ?? child.label;
+  const description =
+    firstMeaningful(
+      page?.heroSubtitle,
+      page?.overviewIntro,
+      child.excerpt,
+      group.description,
+    ) ?? child.excerpt;
+
+  const faqItems: FaqJsonLdItem[] = (page?.faq?.items ?? [])
+    .map((item) => ({
+      question: item.question?.trim() ?? "",
+      answer: item.answer?.trim() ?? "",
+    }))
+    .filter((item) => item.question && item.answer);
+
   return {
     context: {
-      title: child.label,
-      description: child.excerpt,
+      title,
+      description,
       excerpt: child.excerpt,
       group: getGroupLabel(group),
-      image: child.image,
+      image: child.image || group.image,
     } satisfies SeoTemplateContext,
+    service: {
+      serviceType: title,
+      areaServed: "Egypt",
+    },
+    faq: faqItems,
   };
 }
 

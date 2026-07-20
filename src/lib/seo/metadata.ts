@@ -55,10 +55,15 @@ export async function buildSeoMetadata(input: BuildSeoMetadataInput): Promise<Me
     ? buildOgImageMeta(seo.openGraph.image, seo.openGraph.title ?? seo.title)
     : undefined;
 
+  const keywords = [
+    ...(seo.keywords ?? []),
+    ...(seo.focusKeyword ? [seo.focusKeyword] : []),
+  ].filter((value, index, all) => value && all.indexOf(value) === index);
+
   return {
     title: seo.title,
     description: seo.description,
-    keywords: seo.keywords,
+    keywords: keywords.length ? keywords : undefined,
     alternates: {
       canonical: seo.canonicalUrl,
       languages: seo.alternates,

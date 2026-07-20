@@ -19,6 +19,8 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata(): Promise<Metadata> {
+  const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION?.trim();
+
   return {
     metadataBase: new URL(getSiteUrl()),
     applicationName: siteConfig.name,
@@ -32,6 +34,9 @@ export async function generateMetadata(): Promise<Metadata> {
       address: false,
       telephone: false,
     },
+    ...(googleVerification
+      ? { verification: { google: googleVerification } }
+      : {}),
   };
 }
 

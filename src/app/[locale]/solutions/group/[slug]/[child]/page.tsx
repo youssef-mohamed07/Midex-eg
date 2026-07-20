@@ -45,6 +45,8 @@ export default async function SolutionGroupChildPage({ params }: Props) {
         params={{ slug, child: childSlug }}
         context={data.context}
         slug={childSlug}
+        service={data.service}
+        faq={data.faq}
       />
       <SolutionChildPageContent slug={slug} childSlug={childSlug} />
     </>

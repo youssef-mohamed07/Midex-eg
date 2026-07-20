@@ -46,6 +46,7 @@ export default async function SolutionGroupPage({ params }: Props) {
         params={{ slug }}
         context={data.context}
         slug={slug}
+        faq={data.faq}
       />
       <SolutionGroupPageContent slug={slug} />
     </>

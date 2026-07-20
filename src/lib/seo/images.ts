@@ -1,11 +1,27 @@
 import type { SeoTemplateContext } from "@/lib/seo/types";
 import { getSiteUrl, siteConfig } from "@/lib/seo/config";
 
+/** Map mistranslated CMS placeholders back to English context keys. */
+const PLACEHOLDER_ALIASES: Record<string, string> = {
+  Titel: "title",
+  titel: "title",
+  Beschreibung: "description",
+  beschreibung: "description",
+  Gruppe: "group",
+  gruppe: "group",
+  وصف: "description",
+  عنوان: "title",
+  مجموعة: "group",
+};
+
 export function interpolateSeoTemplate(
   template: string,
   context: SeoTemplateContext = {},
 ): string {
-  return template.replace(/\{(\w+)\}/g, (_, key: string) => context[key]?.trim() ?? "");
+  return template.replace(/\{([^}]+)\}/g, (_, rawKey: string) => {
+    const key = PLACEHOLDER_ALIASES[rawKey] ?? rawKey;
+    return context[key]?.trim() ?? "";
+  });
 }
 
 /** Returns a resolved image path, or undefined if placeholders were not filled. */
@@ -21,9 +37,19 @@ export function resolveTemplateImage(
   return value;
 }
 
+/** Prefer optimized local WebP heroes when CMS still points at legacy PNGs. */
+function preferLocalWebp(path: string): string {
+  const map: Record<string, string> = {
+    "/images/hero/slide-1.png": "/images/hero/slide-1.webp",
+    "/images/hero/slide-2.png": "/images/hero/slide-1.webp",
+    "/images/hero/slide-3.png": "/images/hero/slide-1.webp",
+  };
+  return map[path] ?? path;
+}
+
 export function toAbsoluteImageUrl(path?: string): string {
   const siteUrl = getSiteUrl();
-  const resolved = path?.trim() || siteConfig.defaultOgImage;
+  const resolved = preferLocalWebp(path?.trim() || siteConfig.defaultOgImage);
 
   return resolved.startsWith("http") ? resolved : `${siteUrl}${resolved}`;
 }

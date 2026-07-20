@@ -5,7 +5,7 @@ import type { SeoRouteKey, SeoTemplateContext } from "@/lib/seo/types";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { getSiteSettings } from "@/lib/cms";
 import type { Locale } from "@/i18n/routing";
-import { buildJsonLdGraph } from "@/lib/seo/json-ld";
+import { buildJsonLdGraph, type FaqJsonLdItem } from "@/lib/seo/json-ld";
 import { localizedPath } from "@/lib/seo/paths";
 import { resolveSeo } from "@/lib/seo/resolve";
 
@@ -20,6 +20,11 @@ type SeoHeadProps = {
   breadcrumbs?: Breadcrumb[];
   article?: { datePublished?: string; dateModified?: string };
   product?: { sku?: string; category?: string };
+  service?: {
+    serviceType?: string;
+    areaServed?: string | string[];
+  };
+  faq?: FaqJsonLdItem[];
 };
 
 /** Mirrors the visible breadcrumb trails so BreadcrumbList JSON-LD ships on every page. */
@@ -60,7 +65,12 @@ async function defaultBreadcrumbs(
       return [
         { name: nav("solutions"), path: path("/solutions") },
         ...(context.group
-          ? [{ name: context.group, path: path(`/solutions/group/${params.slug ?? ""}`) }]
+          ? [
+              {
+                name: context.group,
+                path: path(`/solutions/group/${params.slug ?? ""}`),
+              },
+            ]
           : []),
         ...(context.title ? [{ name: context.title }] : []),
       ];
@@ -71,15 +81,23 @@ async function defaultBreadcrumbs(
         { name: nav("blog"), path: path("/blog") },
         ...(context.title ? [{ name: context.title }] : []),
       ];
+    case "case-studies":
+      return [{ name: nav("caseStudies"), path: path("/case-studies") }];
     case "case-study":
-      return context.title ? [{ name: context.title }] : [];
+      return [
+        { name: nav("caseStudies"), path: path("/case-studies") },
+        ...(context.title ? [{ name: context.title }] : []),
+      ];
     default:
       return [];
   }
 }
 
 export async function SeoHead(props: SeoHeadProps) {
-  const [seo, settings] = await Promise.all([resolveSeo(props), getSiteSettings()]);
+  const [seo, settings] = await Promise.all([
+    resolveSeo(props),
+    getSiteSettings(),
+  ]);
   const breadcrumbs =
     props.breadcrumbs ??
     (await defaultBreadcrumbs(
@@ -95,6 +113,8 @@ export async function SeoHead(props: SeoHeadProps) {
     breadcrumbs,
     article: props.article,
     product: props.product,
+    service: props.service,
+    faq: props.faq,
   });
 
   return <JsonLd data={graph} />;

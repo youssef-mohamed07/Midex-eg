@@ -63,9 +63,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
 
     for (const group of solutionGroups) {
-      urls.push(entry(`/solutions/group/${group.slug}`, locale, 0.75));
+      // Solution groups + service (child) pages are primary SEO surfaces.
+      urls.push(entry(`/solutions/group/${group.slug}`, locale, 0.85));
       for (const child of group.children) {
-        urls.push(entry(`/solutions/group/${group.slug}/${child.slug}`, locale, 0.65));
+        urls.push(entry(`/solutions/group/${group.slug}/${child.slug}`, locale, 0.8));
       }
     }
 

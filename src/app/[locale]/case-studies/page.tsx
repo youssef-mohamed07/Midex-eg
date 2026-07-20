@@ -12,24 +12,34 @@ type Props = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const [metadata, page] = await Promise.all([
-    buildSeoMetadata({ routeKey: "case-studies", locale }),
-    getCaseStudiesPageContent(locale as Locale),
-  ]);
-  return {
-    ...metadata,
-    title: page.hero?.title || metadata.title,
-    description: page.hero?.subtitle || metadata.description,
-  };
+  const page = await getCaseStudiesPageContent(locale as Locale);
+  return buildSeoMetadata({
+    routeKey: "case-studies",
+    locale,
+    context: {
+      title: page.hero?.title,
+      description: page.hero?.subtitle,
+      image: page.hero?.image,
+    },
+  });
 }
 
 export default async function CaseStudiesPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const page = await getCaseStudiesPageContent(locale as Locale);
 
   return (
     <>
-      <SeoHead routeKey="case-studies" locale={locale} />
+      <SeoHead
+        routeKey="case-studies"
+        locale={locale}
+        context={{
+          title: page.hero?.title,
+          description: page.hero?.subtitle,
+          image: page.hero?.image,
+        }}
+      />
       <CaseStudiesPageContent />
     </>
   );

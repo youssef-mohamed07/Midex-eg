@@ -8,6 +8,7 @@ import type {
   SeoTemplateContext,
 } from "@/lib/seo/types";
 import { parseLocale, siteConfig } from "@/lib/seo/config";
+import { getFallbackSeoEntry } from "@/lib/seo/fallback-entries";
 import {
   interpolateSeoTemplate,
   resolveTemplateImage,
@@ -75,7 +76,10 @@ export async function resolveSeo({
 
   const path = resolvePathFromRoute(routeKey, params);
   const override = await getSeoOverride(routeKey, locale, slug);
-  const base = override ?? (await getSeoEntry(routeKey, locale));
+  const base =
+    override ??
+    (await getSeoEntry(routeKey, locale)) ??
+    getFallbackSeoEntry(routeKey, locale);
 
   if (!base) {
     const fallbackTitle = context.title ?? siteConfig.name;

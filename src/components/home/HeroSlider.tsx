@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import type { HeroCollage } from "@/lib/cms/types";
 
-const DEFAULT_HERO_POSTER = "/images/hero/slide-1.png";
+const DEFAULT_HERO_POSTER = "/images/hero/slide-1.webp";
 
 type HeroCopy = {
   slide1Title: string;

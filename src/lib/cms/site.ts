@@ -115,7 +115,7 @@ export async function getFeaturedNavImage(): Promise<string> {
     query: `*[_type == "homePage"][0]{ "image": ${imageUrl("featuredNavImage")} }`,
     tags: ["homePage"],
   });
-  return result?.image || "/images/hero/slide-1.png";
+  return result?.image || "/images/hero/slide-1.webp";
 }
 
 export async function getServices(locale: Locale): Promise<Service[]> {

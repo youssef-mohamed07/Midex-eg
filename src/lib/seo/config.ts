@@ -21,7 +21,7 @@ export const siteConfig = {
     whatsApp: "https://wa.me/201026228403",
   },
   brandIcon: "/images/brand/favicon.svg",
-  defaultOgImage: "/images/hero/slide-1.png",
+  defaultOgImage: "/images/hero/slide-1.webp",
   twitterHandle: "",
   openGraphLocales: {
     en: "en_US",

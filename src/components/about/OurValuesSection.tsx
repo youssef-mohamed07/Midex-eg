@@ -41,7 +41,7 @@ export async function OurValuesSection({ title, subtitle, items: itemsProp }: Pr
     return {
       id: cms?.id ?? key,
       // Always prefer the shared Our Standards photography set.
-      image: local ?? resolveImageSrc(cms?.image) ?? "/images/hero/slide-1.png",
+      image: local ?? resolveImageSrc(cms?.image) ?? "/images/hero/slide-1.webp",
       alt: cms?.alt ?? pick(cms?.title, valueKeys[index] ? t(`${valueKeys[index]}Title`) : ""),
       step: String(index + 1).padStart(2, "0"),
       title: pick(cms?.title, valueKeys[index] ? t(`${valueKeys[index]}Title`) : ""),

@@ -33,7 +33,7 @@ function HeroLogoFallback({ priority = false }: { priority?: boolean }) {
 export function PageHeroImage({
   src,
   alt,
-  priority = false,
+  priority = true,
   variant = "portrait",
 }: Props) {
   if (!isValidImageSrc(src)) {

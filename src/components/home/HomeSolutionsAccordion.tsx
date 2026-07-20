@@ -87,7 +87,7 @@ export function HomeSolutionsAccordion({ cards, exploreLabel, servicesLabel }: P
             className="group/card relative h-full min-h-0 shrink-0 cursor-pointer overflow-hidden rounded-xl ring-1 ring-transparent transition-[width,box-shadow,ring-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:shadow-xl hover:shadow-midex-navy/20 hover:ring-midex-mint/45 motion-reduce:transition-none sm:rounded-2xl"
           >
             <Image
-              src={card.image || "/images/hero/slide-1.png"}
+              src={card.image || "/images/hero/slide-1.webp"}
               alt={card.label}
               fill
               className={`object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/card:scale-[1.06] ${

@@ -167,7 +167,7 @@ export async function getLayoutShellData(locale: Locale): Promise<LayoutShellDat
 
   return {
     settings,
-    featuredImage: raw.featuredImage || "/images/hero/slide-1.png",
+    featuredImage: raw.featuredImage || "/images/hero/slide-1.webp",
     logos,
     productCategories,
     products: raw.products,

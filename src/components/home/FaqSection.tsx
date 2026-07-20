@@ -4,7 +4,7 @@ import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
 import { resolveImageSrc } from "@/lib/cms/images";
 import type { FaqSectionContent } from "@/lib/cms/types";
 
-const FAQ_IMAGE_FALLBACK = "/images/about/values/reliability.png";
+const FAQ_IMAGE_FALLBACK = "/images/about/values/reliability.webp";
 
 type Props = {
   content: FaqSectionContent & {
@@ -37,10 +37,10 @@ export async function FaqSection({ content, contactLabel }: Props) {
                 <Image
                   src={image}
                   alt=""
-                  width={1586}
-                  height={992}
+                  width={800}
+                  height={1000}
+                  sizes="(max-width: 1024px) 100vw, 420px"
                   className="aspect-[4/5] h-auto w-full object-cover object-center sm:aspect-[5/6] lg:max-h-[28rem]"
-                  loading="eager"
                   decoding="async"
                 />
               </figure>

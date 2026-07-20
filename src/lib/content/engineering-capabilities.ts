@@ -107,7 +107,7 @@ export function buildEngineeringCapabilityCards(
       slug,
       label,
       description,
-      image: cms?.image ?? "/images/hero/slide-1.png",
+      image: cms?.image ?? "/images/hero/slide-1.webp",
       href: cmsCard?.href?.trim() || `/solutions/group/${slug}`,
       tags: [],
       serviceCount: items.length,

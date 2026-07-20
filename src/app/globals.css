@@ -502,13 +502,21 @@
 
   .mx-reveal {
     opacity: 0;
-    transform: translateY(2rem);
-    transition: opacity 0.8s var(--ease-premium), transform 0.8s var(--ease-premium);
+    transform: translateY(1rem);
+    transition: opacity 0.4s var(--ease-premium), transform 0.4s var(--ease-premium);
   }
 
   .mx-reveal.is-visible {
     opacity: 1;
     transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mx-reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
   }
 
   .mx-word {
@@ -535,8 +543,8 @@
   .mx-timeline-item {
     opacity: 0;
     transition:
-      opacity 0.85s var(--ease-premium),
-      transform 0.85s var(--ease-premium);
+      opacity 0.45s var(--ease-premium),
+      transform 0.45s var(--ease-premium);
   }
 
   .mx-timeline-item--left {

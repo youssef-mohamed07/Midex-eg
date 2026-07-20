@@ -26,7 +26,7 @@ function useRevealOnScroll<T extends HTMLElement>(side?: "left" | "right") {
           observer.unobserve(el);
         }
       },
-      { threshold: 0.08, rootMargin: "0px 0px 4% 0px" },
+      { threshold: 0.08, rootMargin: "200px 0px" },
     );
 
     observer.observe(el);

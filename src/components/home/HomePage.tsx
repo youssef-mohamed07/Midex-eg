@@ -120,14 +120,14 @@ export async function HomePage() {
       t("processAfter4"),
       t("processAfter5"),
     ],
-    beforeImage: "/images/before-after/before.png",
-    afterImage: "/images/before-after/after.png",
+    beforeImage: "/images/before-after/before.webp",
+    afterImage: "/images/before-after/after.webp",
   });
 
   const faq = resolveFaq(sections.faq, {
     title: t("faqTitle"),
     intro: t("faqSubtitle"),
-    image: "/images/about/values/reliability.png",
+    image: "/images/about/values/reliability.webp",
     items: [1, 2, 3, 4, 5, 6].map((index) => ({
       question: t(`faqQ${index}`),
       answer: t(`faqA${index}`),

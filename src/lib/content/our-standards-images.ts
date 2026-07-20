@@ -2,12 +2,12 @@
  * Canonical "Our Standards" card images (shared across About + Solutions pages).
  */
 export const OUR_STANDARDS_IMAGES = [
-  "/images/about/values/precision.png",
-  "/images/about/values/compliance.png",
-  "/images/about/values/reliability.png",
-  "/images/about/values/full-traceability.png",
-  "/images/about/values/contamination-control.png",
-  "/images/about/values/proven-expertise.png",
+  "/images/about/values/precision.webp",
+  "/images/about/values/compliance.webp",
+  "/images/about/values/reliability.webp",
+  "/images/about/values/full-traceability.webp",
+  "/images/about/values/contamination-control.webp",
+  "/images/about/values/proven-expertise.webp",
 ] as const;
 
 export const OUR_STANDARDS_IMAGE_BY_KEY: Record<string, string> = {

@@ -81,7 +81,7 @@ export async function AboutPageContent() {
   const faq = resolveFaq(page.faq, {
     title: t("faqTitle"),
     intro: t("faqSubtitle"),
-    image: "/images/about/values/reliability.png",
+    image: "/images/about/values/reliability.webp",
     items: [1, 2, 3, 4, 5].map((index) => ({
       question: t(`faqQ${index}`),
       answer: t(`faqA${index}`),

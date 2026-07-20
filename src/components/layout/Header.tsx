@@ -867,7 +867,6 @@ export function Header({
                 width={200}
                 height={58}
                 className="midex-header__logo midex-header__logo--dark h-9 w-auto max-w-[150px] sm:h-10"
-                priority
               />
             </Link>
 

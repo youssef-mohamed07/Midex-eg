@@ -1,7 +1,7 @@
 import { headers } from "next/headers";
 import localFont from "next/font/local";
+import Script from "next/script";
 import { SplashScreen } from "@/components/layout/SplashScreen";
-import { SPLASH_BOOT_SCRIPT } from "@/components/layout/splash-boot";
 import { routing, type Locale } from "@/i18n/routing";
 import "./globals.css";
 
@@ -75,16 +75,16 @@ export default async function RootLayout({
       dir={dir}
       suppressHydrationWarning
       data-scroll-behavior="smooth"
-      className={`${alexandria.variable}`}
+      className={`${alexandria.variable} midex-splash-pending`}
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: SPLASH_BOOT_SCRIPT }} />
         <link rel="preconnect" href={SANITY_CDN} crossOrigin="anonymous" />
         <link rel="dns-prefetch" href={SANITY_CDN} />
         <link rel="preconnect" href={GOOGLE_MAPS} crossOrigin="anonymous" />
         <link rel="dns-prefetch" href={GOOGLE_MAPS} />
       </head>
       <body className="overflow-x-hidden bg-white font-body antialiased">
+        <Script src="/splash-boot.js" strategy="beforeInteractive" />
         <SplashScreen />
         {children}
       </body>

@@ -18,8 +18,11 @@ type Props = {
 export async function FaqSection({ content, contactLabel }: Props) {
   if (content.items.length === 0) return null;
 
+  // Prefer local curated photos so dev and production stay identical; only
+  // honour a CMS image when it is itself a local /images asset.
+  const cmsImage = resolveImageSrc(content.image);
   const image =
-    resolveImageSrc(content.image) ?? FAQ_IMAGE_FALLBACK;
+    cmsImage && cmsImage.startsWith("/images/") ? cmsImage : FAQ_IMAGE_FALLBACK;
 
   return (
     <section className="mx-section-band">

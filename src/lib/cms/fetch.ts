@@ -1,8 +1,9 @@
 import "server-only";
 
-import type { QueryParams } from "next-sanity";
+import { createClient, type QueryParams } from "next-sanity";
 import { cache } from "react";
 import { getClient, getPreviewClient } from "@/lib/cms/client";
+import { apiVersion, dataset, projectId } from "@/sanity/env";
 
 /** Default ISR window for CMS content (matches page-level `revalidate`). */
 export const CMS_REVALIDATE = 86400;
@@ -24,13 +25,60 @@ async function isDraftModeEnabled(): Promise<boolean> {
   }
 }
 
+function isNetworkError(error: unknown): boolean {
+  if (!error || typeof error !== "object") return false;
+  const err = error as {
+    message?: string;
+    cause?: { code?: string; message?: string };
+    code?: string;
+  };
+  const text = `${err.message ?? ""} ${err.cause?.message ?? ""} ${err.cause?.code ?? ""} ${err.code ?? ""}`;
+  return /ENOTFOUND|ECONNREFUSED|ECONNRESET|ETIMEDOUT|UND_ERR_CONNECT_TIMEOUT|fetch failed|Connect Timeout/i.test(
+    text,
+  );
+}
+
+/** Direct API origin — used when the CDN hostname fails (DNS / timeout). */
+function getApiFallbackClient() {
+  if (!projectId) throw new Error("Sanity projectId is not configured");
+  return createClient({
+    projectId,
+    dataset,
+    apiVersion,
+    useCdn: false,
+    perspective: "published",
+  });
+}
+
+async function fetchPublished<T>(
+  query: string,
+  params: QueryParams,
+  tags: string[],
+): Promise<T> {
+  const isDev = process.env.NODE_ENV === "development";
+  const options = isDev
+    ? { cache: "no-store" as const }
+    : { next: { revalidate: CMS_REVALIDATE, tags } };
+
+  try {
+    return await getClient().fetch<T>(query, params, options);
+  } catch (error) {
+    if (!isNetworkError(error)) throw error;
+
+    console.warn(
+      "[sanity] CDN fetch failed — retrying via api.sanity.io",
+      error instanceof Error ? error.message : error,
+    );
+    return getApiFallbackClient().fetch<T>(query, params, options);
+  }
+}
+
 async function sanityFetchUncached<T>({
   query,
   params = {},
   tags = [],
 }: SanityFetchOptions): Promise<T> {
   const isDraft = await isDraftModeEnabled();
-  const isDev = process.env.NODE_ENV === "development";
 
   if (isDraft && process.env.SANITY_API_READ_TOKEN) {
     return getPreviewClient().fetch<T>(query, params, {
@@ -38,16 +86,7 @@ async function sanityFetchUncached<T>({
     });
   }
 
-  // Dev must see Sanity/image patches immediately — no Data Cache lag.
-  if (isDev) {
-    return getClient().fetch<T>(query, params, {
-      cache: "no-store",
-    });
-  }
-
-  return getClient().fetch<T>(query, params, {
-    next: { revalidate: CMS_REVALIDATE, tags },
-  });
+  return fetchPublished<T>(query, params, tags);
 }
 
 /**

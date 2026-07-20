@@ -16,18 +16,20 @@ export const deliveryStepImages: Record<(typeof deliveryStepKeys)[number], strin
   step5: DELIVERY_STEP5_IMAGE,
 };
 
-/** Prefer compressed WebP for known local process assets. */
-function preferLocalWebp(src: string): string {
-  if (src.startsWith("/images/process/") && src.endsWith(".png")) {
-    return src.replace(/\.png$/, ".webp");
-  }
-  return src;
+const ORDERED_STEP_IMAGES = deliveryStepKeys.map((key) => deliveryStepImages[key]);
+
+/**
+ * Always use the curated local process photos so dev and production match.
+ * CMS images are intentionally ignored for these decorative workflow steps.
+ */
+export function localDeliveryStepImage(index: number): string {
+  return ORDERED_STEP_IMAGES[index % ORDERED_STEP_IMAGES.length] ?? DELIVERY_STEP5_IMAGE;
 }
 
 /** Prefer the documentation desk photo for handover / documentation steps. */
 export function resolveDeliveryStepImage(
   stepKey: string | undefined,
-  image: string | undefined,
+  _image?: string | undefined,
   fallback: string = DELIVERY_STEP5_IMAGE,
 ): string {
   const key = (stepKey ?? "").toLowerCase();
@@ -37,6 +39,7 @@ export function resolveDeliveryStepImage(
     key === "step5";
 
   if (isDocumentationStep) return DELIVERY_STEP5_IMAGE;
-  const resolved = image?.trim() || fallback;
-  return preferLocalWebp(resolved);
+
+  const byKey = deliveryStepImages[key as (typeof deliveryStepKeys)[number]];
+  return byKey ?? fallback;
 }

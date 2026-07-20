@@ -90,8 +90,10 @@ const logosProjection = `{
 
 /** One round-trip for header, footer, and floating social button. */
 export async function getLayoutShellData(locale: Locale): Promise<LayoutShellData> {
-  const raw = await sanityFetch<LayoutShellRaw>({
-    query: `{
+  let raw: LayoutShellRaw;
+  try {
+    raw = await sanityFetch<LayoutShellRaw>({
+      query: `{
       "settings": *[_type == "siteSettings"][0] ${siteSettingsProjection},
       "logos": *[_type == "siteSettings"][0] ${logosProjection},
       "featuredImage": *[_type == "homePage"][0]{ "url": ${imageUrl("featuredNavImage")} }.url,
@@ -117,16 +119,27 @@ export async function getLayoutShellData(locale: Locale): Promise<LayoutShellDat
         }
       }
     }`,
-    params: { locale },
-    tags: [
-      "siteSettings",
-      "homePage",
-      "product",
-      "productCategory",
-      "solutionGroup",
-      "solutionChild",
-    ],
-  });
+      params: { locale },
+      tags: [
+        "siteSettings",
+        "homePage",
+        "product",
+        "productCategory",
+        "solutionGroup",
+        "solutionChild",
+      ],
+    });
+  } catch (error) {
+    console.error("[layout] Sanity unavailable — using shell fallbacks", error);
+    raw = {
+      settings: null,
+      logos: null,
+      featuredImage: "",
+      productCategories: [],
+      products: [],
+      solutionGroups: [],
+    };
+  }
 
   const settings = raw.settings
     ? {

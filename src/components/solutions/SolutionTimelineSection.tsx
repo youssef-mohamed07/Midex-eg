@@ -2,9 +2,8 @@ import { getTranslations } from "next-intl/server";
 import { ServicesTimeline } from "@/components/home/ServicesTimeline";
 import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
 import {
-  deliveryStepImages,
   deliveryStepKeys,
-  resolveDeliveryStepImage,
+  localDeliveryStepImage,
 } from "@/components/solutions/solution-delivery-steps";
 import type { TimelineStepContent } from "@/lib/cms/types";
 import { pick } from "@/lib/cms/section-resolve";
@@ -20,16 +19,12 @@ export async function SolutionTimelineSection({
 }) {
   const t = await getTranslations("solutions");
 
-  const services = deliveryStepKeys.map((key) => {
+  const services = deliveryStepKeys.map((key, index) => {
     const cmsStep = cmsSteps?.find((step) => step.key === key);
     return {
       title: pick(cmsStep?.title, t(`${key}Title`)),
       excerpt: pick(cmsStep?.text, t(`${key}Text`)),
-      image: resolveDeliveryStepImage(
-        key,
-        cmsStep?.image || deliveryStepImages[key],
-        deliveryStepImages[key],
-      ),
+      image: localDeliveryStepImage(index),
     };
   });
 

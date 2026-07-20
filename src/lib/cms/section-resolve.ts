@@ -71,7 +71,8 @@ export function resolveFaq(
     enabled: cms?.enabled,
     title: pick(cms?.title, fallback.title ?? ""),
     intro: pick(cms?.intro, fallback.intro ?? ""),
-    image: cms?.image || fallback.image,
+    // Curated local photo — keep dev and production identical.
+    image: fallback.image || cms?.image,
     items,
   };
 }
@@ -101,8 +102,9 @@ export function resolveBeforeAfter(
     afterTitle: pick(cms?.afterTitle, fallback.afterTitle ?? ""),
     beforeItems: cms?.beforeItems?.length ? cms.beforeItems : (fallback.beforeItems ?? []),
     afterItems: cms?.afterItems?.length ? cms.afterItems : (fallback.afterItems ?? []),
-    beforeImage: cms?.beforeImage || fallback.beforeImage,
-    afterImage: cms?.afterImage || fallback.afterImage,
+    // Curated local photos — keep dev and production identical.
+    beforeImage: fallback.beforeImage || cms?.beforeImage,
+    afterImage: fallback.afterImage || cms?.afterImage,
   };
 }
 

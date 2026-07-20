@@ -18,8 +18,14 @@ export default async function manifest(): Promise<MetadataRoute.Manifest> {
     theme_color: settings?.manifest.themeColor || brandManifest.themeColor,
     icons: [
       {
-        src: "/images/brand/favicon.png",
-        sizes: "64x64",
+        src: "/images/brand/favicon-192.png",
+        sizes: "192x192",
+        type: "image/png",
+        purpose: "any",
+      },
+      {
+        src: "/images/brand/favicon-512.png",
+        sizes: "512x512",
         type: "image/png",
         purpose: "any",
       },

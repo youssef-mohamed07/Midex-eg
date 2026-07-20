@@ -11,9 +11,12 @@ export function absoluteUrl(path: string, locale: Locale): string {
 }
 
 export function buildAlternateUrls(path: string): Record<string, string> {
-  return Object.fromEntries(
-    siteConfig.locales.map((locale) => [locale, absoluteUrl(path, locale)]),
-  );
+  return {
+    ...Object.fromEntries(
+      siteConfig.locales.map((locale) => [locale, absoluteUrl(path, locale)]),
+    ),
+    "x-default": absoluteUrl(path, siteConfig.defaultLocale),
+  };
 }
 
 export function resolvePathFromRoute(

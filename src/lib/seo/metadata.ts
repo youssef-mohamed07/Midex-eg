@@ -16,12 +16,15 @@ type BuildSeoMetadataInput = {
 };
 
 export function buildSiteIcons(): NonNullable<Metadata["icons"]> {
+  // Google requires favicons in multiples of 48px; 48/96/192 cover it.
   return {
     icon: [
-      { url: "/images/brand/favicon.png", sizes: "64x64", type: "image/png" },
+      { url: "/images/brand/favicon-48.png", sizes: "48x48", type: "image/png" },
+      { url: "/images/brand/favicon-96.png", sizes: "96x96", type: "image/png" },
+      { url: "/images/brand/favicon-192.png", sizes: "192x192", type: "image/png" },
       { url: siteConfig.brandIcon, type: "image/svg+xml" },
     ],
-    shortcut: "/images/brand/favicon.png",
+    shortcut: "/favicon.ico",
     apple: [{ url: "/apple-icon", sizes: "180x180", type: "image/png" }],
   };
 }

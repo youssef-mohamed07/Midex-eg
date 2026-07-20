@@ -26,9 +26,12 @@ function entry(path: string, locale: (typeof routing.locales)[number], priority 
     changeFrequency: "weekly" as const,
     priority,
     alternates: {
-      languages: Object.fromEntries(
-        routing.locales.map((lang) => [lang, absoluteUrl(path, lang)]),
-      ),
+      languages: {
+        ...Object.fromEntries(
+          routing.locales.map((lang) => [lang, absoluteUrl(path, lang)]),
+        ),
+        "x-default": absoluteUrl(path, routing.defaultLocale),
+      },
     },
   };
 }

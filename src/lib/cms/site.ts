@@ -193,21 +193,68 @@ export async function getAboutMilestones(locale: Locale): Promise<Milestone[]> {
   });
 }
 
+const FOUNDER_IMAGES = {
+  abdelrahman: "/images/about/founders/abdelrahman.webp",
+  mohamed: "/images/about/founders/mohamed.webp",
+} as const;
+
 export async function getAboutFounders(locale: Locale): Promise<Founder[]> {
-  return sanityFetch<Founder[]>({
-    query: `*[_type == "founder"] | order(order asc) {
-      "id": key,
-      "image": ${imageUrl()},
-      nameKey,
-      roleKey,
-      bioKey,
-      "name": ${locOptional("name")},
-      "role": ${locOptional("role")},
-      "bio": ${locOptional("bio")}
-    }`,
-    params: { locale },
-    tags: ["founder"],
-  });
+  let founders: Founder[] = [];
+  try {
+    founders = await sanityFetch<Founder[]>({
+      query: `*[_type == "founder"] | order(order asc) {
+        "id": key,
+        "image": ${imageUrl()},
+        nameKey,
+        roleKey,
+        bioKey,
+        "name": ${locOptional("name")},
+        "role": ${locOptional("role")},
+        "bio": ${locOptional("bio")}
+      }`,
+      params: { locale },
+      tags: ["founder"],
+    });
+  } catch (error) {
+    console.warn("[founders] Sanity unavailable — using local portraits", error);
+  }
+
+  const abdelrahman = founders.find(
+    (f) =>
+      f.nameKey === "founder2Name" ||
+      f.id === "abdelrahman-fouad" ||
+      f.id?.includes("abdelrahman"),
+  );
+  const mohamed = founders.find(
+    (f) =>
+      f.nameKey === "founder1Name" ||
+      f.id === "mohamed-samir" ||
+      f.id?.includes("mohamed"),
+  );
+
+  // Always Abdelrahman left / Mohamed right with local portraits (ignore Sanity assets).
+  return [
+    {
+      id: abdelrahman?.id ?? "abdelrahman-fouad",
+      nameKey: "founder2Name",
+      roleKey: abdelrahman?.roleKey ?? "founder2Role",
+      bioKey: abdelrahman?.bioKey ?? "founder2Bio",
+      name: abdelrahman?.name,
+      role: abdelrahman?.role,
+      bio: abdelrahman?.bio,
+      image: FOUNDER_IMAGES.abdelrahman,
+    },
+    {
+      id: mohamed?.id ?? "mohamed-samir",
+      nameKey: "founder1Name",
+      roleKey: mohamed?.roleKey ?? "founder1Role",
+      bioKey: mohamed?.bioKey ?? "founder1Bio",
+      name: mohamed?.name,
+      role: mohamed?.role,
+      bio: mohamed?.bio,
+      image: FOUNDER_IMAGES.mohamed,
+    },
+  ];
 }
 
 export async function getAboutStandards(

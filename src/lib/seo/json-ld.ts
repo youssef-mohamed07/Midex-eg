@@ -18,7 +18,7 @@ export function buildOrganizationJsonLd(settings?: SiteSettings | null) {
     name: settings?.name || siteConfig.name,
     legalName: settings?.legalName || siteConfig.legalName,
     url: getSiteUrl(),
-    logo: toAbsoluteImageUrl(siteConfig.brandIcon),
+    logo: toAbsoluteImageUrl(siteConfig.brandLogo),
     image: toAbsoluteImageUrl(siteConfig.defaultOgImage),
     email: settings?.contact.email || siteConfig.email,
     telephone: settings?.contact.phones.length ? settings.contact.phones : siteConfig.phones,
@@ -110,7 +110,7 @@ export function buildPageJsonLd({ seo, settings, breadcrumbs, article, product }
       url: getSiteUrl(),
       logo: {
         "@type": "ImageObject",
-        url: toAbsoluteImageUrl(siteConfig.brandIcon),
+        url: toAbsoluteImageUrl(siteConfig.brandLogo),
       },
     };
   }

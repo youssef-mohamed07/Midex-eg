@@ -21,6 +21,8 @@ export const siteConfig = {
     whatsApp: "https://wa.me/201026228403",
   },
   brandIcon: "/images/brand/favicon.svg",
+  // Raster logo for structured data — Google requires a rasterizable image ≥112x112.
+  brandLogo: "/images/brand/favicon-512.png",
   defaultOgImage: "/images/hero/slide-1.webp",
   twitterHandle: "",
   openGraphLocales: {

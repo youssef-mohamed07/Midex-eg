@@ -4,10 +4,13 @@ import type { Locale } from "@/i18n/routing";
 import { sanityFetch } from "@/lib/cms/fetch";
 import {
   beforeAfterProjection,
+  blogDetailLabelsProjection,
+  caseStudiesExplorerLabelsProjection,
   caseStudyLabelsProjection,
   contactFormCopyProjection,
   engineeringCapabilitiesProjection,
   faqProjection,
+  fileUrl,
   homeHeroCopyProjection,
   imageUrl,
   loc,
@@ -21,12 +24,12 @@ import {
   quoteBlockProjection,
   quoteFormCopyProjection,
   sectionHeaderProjection,
-  solutionChildLabelsProjection,
   timelineSectionProjection,
 } from "@/lib/cms/fragments";
 import type {
   AboutPageContent,
   BlogPageContent,
+  CaseStudiesPageContent,
   ContactPageContent,
   HomePageSections,
   ProductsPageContent,
@@ -35,6 +38,8 @@ import type {
 
 const homePageSectionsQuery = `*[_type == "homePage"][0]{
   "sectionOrder": coalesce(sectionOrder, []),
+  "heroVideo": ${fileUrl("heroVideo")},
+  "heroVideoPoster": ${imageUrl("heroVideoPoster")},
   ${homeHeroCopyProjection()},
   "partnersSection": ${sectionHeaderProjection("partnersSection")},
   "featuredQuote": ${quoteBlockProjection("featuredQuote")},
@@ -59,12 +64,19 @@ const homePageSectionsQuery = `*[_type == "homePage"][0]{
 
 const aboutPageQuery = `*[_type == "aboutPage"][0]{
   "hero": ${pageHeroProjection("hero")},
+  "heroMetrics": heroMetrics{
+    "primaryValue": ${locOptional("primaryValue")},
+    "primaryLabel": ${locOptional("primaryLabel")},
+    "badge": ${locOptional("badge")}
+  },
   "missionVision": ${missionVisionProjection("missionVision")},
   "milestonesSection": ${sectionHeaderProjection("milestonesSection")},
   "foundersSection": ${sectionHeaderProjection("foundersSection")},
   "standardsSection": standardsSection{
+    "eyebrow": ${locOptional("eyebrow")},
     "title": ${locOptional("title")},
     "subtitle": ${locOptional("subtitle")},
+    "footnote": ${locOptional("footnote")},
     "items": coalesce(items[]{
       key,
       "text": ${loc("text")},
@@ -139,6 +151,18 @@ const blogPageQuery = `*[_type == "blogPage"][0]{
     "minRead": ${locOptional("minRead")},
     "viewAllArticles": ${locOptional("viewAllArticles")}
   },
+  "detailLabels": ${blogDetailLabelsProjection("detailLabels")},
+  "cta": ${pageCtaProjection("cta")}
+}`;
+
+const caseStudiesPageQuery = `*[_type == "caseStudiesPage"][0]{
+  "hero": ${pageHeroProjection("hero")},
+  "explorerLabels": ${caseStudiesExplorerLabelsProjection("explorerLabels")},
+  "testimonialsSection": ${sectionHeaderProjection("testimonialsSection")},
+  "quoteFormSection": ${sectionHeaderProjection("quoteFormSection")},
+  "quoteFormCopy": ${quoteFormCopyProjection("quoteFormCopy")},
+  "faq": ${faqProjection()},
+  "detailLabels": ${caseStudyLabelsProjection("detailLabels")},
   "cta": ${pageCtaProjection("cta")}
 }`;
 
@@ -192,6 +216,17 @@ export async function getBlogPageContent(locale: Locale): Promise<BlogPageConten
     query: blogPageQuery,
     params: { locale },
     tags: ["blogPage"],
+  });
+  return data ?? {};
+}
+
+export async function getCaseStudiesPageContent(
+  locale: Locale,
+): Promise<CaseStudiesPageContent> {
+  const data = await sanityFetch<CaseStudiesPageContent | null>({
+    query: caseStudiesPageQuery,
+    params: { locale },
+    tags: ["caseStudiesPage"],
   });
   return data ?? {};
 }

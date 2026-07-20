@@ -95,6 +95,12 @@ export function HeroSlider({
             >
               {heroCopy.seeSolutions}
             </Link>
+            <Link
+              className="mx-btn w-full justify-center border border-white/20 bg-transparent text-white hover:border-white/40 hover:bg-white/10 sm:w-auto"
+              href={heroCopy.viewProductsHref}
+            >
+              {heroCopy.viewProducts}
+            </Link>
           </div>
         </div>
       </div>

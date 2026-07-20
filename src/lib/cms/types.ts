@@ -128,6 +128,7 @@ export type SectionHeaderContent = {
   eyebrow?: string;
   title?: string;
   subtitle?: string;
+  footnote?: string;
   image?: string;
   viewAllLabel?: string;
 };
@@ -173,6 +174,7 @@ export type PromoSectionContent = {
   body?: string;
   ctaLabel?: string;
   ctaHref?: string;
+  badge?: string;
   image?: string;
   secondaryImage?: string;
   features?: PromoFeature[];
@@ -229,6 +231,7 @@ export type FaqSectionContent = {
   enabled?: boolean;
   title?: string;
   intro?: string;
+  image?: string;
   items?: { id?: string; question: string; answer: string }[];
 };
 
@@ -271,17 +274,28 @@ export type HomePageSections = {
   caseStudyLabels?: CaseStudyLabels;
   faq?: FaqSectionContent;
   quoteCta?: PageCtaContent;
+  heroVideo?: string;
+  heroVideoPoster?: string;
+};
+
+export type HeroMetricsContent = {
+  primaryValue?: string;
+  primaryLabel?: string;
+  badge?: string;
 };
 
 export type AboutPageContent = {
   hero?: PageHeroContent;
+  heroMetrics?: HeroMetricsContent;
   missionVision?: MissionVisionContent;
   milestonesSection?: SectionHeaderContent;
   foundersSection?: SectionHeaderContent;
   standardsSection?: {
+    eyebrow?: string;
     title?: string;
     subtitle?: string;
-    items?: { key: string; text: string }[];
+    footnote?: string;
+    items?: { key: string; text: string; description?: string }[];
   };
   certificationsSection?: SectionHeaderContent;
   eventsSection?: SectionHeaderContent;
@@ -334,6 +348,11 @@ export type ProductDetailLabels = {
   backToCatalog?: string;
   requestQuote?: string;
   relatedSolutionTitle?: string;
+  contactUs?: string;
+  galleryTitle?: string;
+  galleryPrevious?: string;
+  galleryNext?: string;
+  galleryView?: string;
 };
 
 export type SolutionsPageContent = {
@@ -358,6 +377,41 @@ export type BlogPageContent = {
     minRead?: string;
     viewAllArticles?: string;
   };
+  detailLabels?: BlogDetailLabels;
+  cta?: PageCtaContent;
+};
+
+export type BlogDetailLabels = {
+  blogLabel?: string;
+  minRead?: string;
+  authorLabel?: string;
+  relatedPosts?: string;
+  backToBlog?: string;
+  contactCta?: string;
+};
+
+export type CaseStudiesExplorerLabels = {
+  searchPlaceholder?: string;
+  all?: string;
+  year?: string;
+  capability?: string;
+  industry?: string;
+  results?: string;
+  noResults?: string;
+  clearFilters?: string;
+  read?: string;
+  countLabel?: string;
+  contactLabel?: string;
+};
+
+export type CaseStudiesPageContent = {
+  hero?: PageHeroContent;
+  explorerLabels?: CaseStudiesExplorerLabels;
+  testimonialsSection?: SectionHeaderContent;
+  quoteFormSection?: SectionHeaderContent;
+  quoteFormCopy?: QuoteFormCopy;
+  faq?: FaqSectionContent;
+  detailLabels?: CaseStudyLabels;
   cta?: PageCtaContent;
 };
 
@@ -566,6 +620,7 @@ export type SolutionGroupPrinciple = {
   title: string;
   text: string;
   image: string;
+  href?: string;
 };
 
 export type SolutionGroupPrinciplesContent = {
@@ -596,6 +651,7 @@ export type SolutionGroupFaqItem = {
 export type SolutionGroupFaqContent = {
   title: string;
   intro: string;
+  image?: string;
   items: SolutionGroupFaqItem[];
 };
 
@@ -610,6 +666,7 @@ export type SolutionChildPageContent = {
   workflow: SolutionGroupWorkflowContent;
   relatedSectionTitle: string;
   faq: SolutionGroupFaqContent;
+  cta?: PageCtaContent;
 };
 
 /* Site settings */

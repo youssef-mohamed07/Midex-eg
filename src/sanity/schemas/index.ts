@@ -34,11 +34,15 @@ import {
   contactFormCopy,
   quoteFormCopy,
   caseStudyLabels,
+  caseStudiesExplorerLabels,
+  blogDetailLabels,
+  heroMetricsBlock,
 } from "./page-sections";
 import {
   aboutPage,
   author,
   blogPage,
+  caseStudiesPage,
   blogPost,
   caseStudy,
   certificate,
@@ -100,6 +104,9 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   contactFormCopy,
   quoteFormCopy,
   caseStudyLabels,
+  caseStudiesExplorerLabels,
+  blogDetailLabels,
+  heroMetricsBlock,
   // Singletons
   siteSettings,
   homePage,
@@ -108,6 +115,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   productsPage,
   solutionsPage,
   blogPage,
+  caseStudiesPage,
   // Collections
   service,
   partner,
@@ -140,4 +148,5 @@ export const singletonTypes = new Set([
   "productsPage",
   "solutionsPage",
   "blogPage",
+  "caseStudiesPage",
 ]);

@@ -73,6 +73,8 @@ export async function SolutionsPageContent() {
       th("processAfter4"),
       th("processAfter5"),
     ],
+    beforeImage: "/images/before-after/before.png",
+    afterImage: "/images/before-after/after.png",
   });
 
   const timeline = resolveTimelineSection(page.timelineSection, {

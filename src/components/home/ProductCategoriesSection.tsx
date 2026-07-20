@@ -3,7 +3,7 @@ import { getTranslations, getLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
 import { getProductCategories, getProducts } from "@/lib/cms";
-import type { CaseStudy, Product, ProductCategoryInfo } from "@/lib/cms/types";
+import type { Product, ProductCategoryInfo } from "@/lib/cms/types";
 import { type Locale } from "@/i18n/routing";
 
 type CategoryCard = {

@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { PageHero } from "@/components/layout/PageHero";
+import { PageCtaSection } from "@/components/cms/PageCtaSection";
 import { SolutionBreadcrumbs } from "@/components/solutions/SolutionBreadcrumbs";
 import { getGroupLabel } from "@/components/solutions/solution-labels";
 import { HomeFaqSection } from "@/components/home/HomeFaqSection";
@@ -14,7 +15,7 @@ import {
   getSolutionGroupHighlights,
   getSolutionsPageContent,
 } from "@/lib/cms";
-import { pick, resolveSolutionChildLabels } from "@/lib/cms/section-resolve";
+import { resolvePageCta, resolveSolutionChildLabels } from "@/lib/cms/section-resolve";
 import { type Locale } from "@/i18n/routing";
 import { SolutionChildOverviewSection } from "@/components/solutions/SolutionChildOverviewSection";
 import { SolutionChildRelatedSection } from "@/components/solutions/SolutionChildRelatedSection";
@@ -39,6 +40,12 @@ export async function SolutionChildPageContent({ slug, childSlug }: Props) {
   const related = group.children.filter((item) => item.slug !== child.slug);
 
   if (page) {
+    const cta = resolvePageCta(page.cta ?? group.cta, {
+      title: child.label,
+      text: child.excerpt,
+      primaryCta: page.heroCtaLabel,
+      primaryCtaHref: getQuoteUrl(child.label),
+    });
     return (
       <>
         <PageHero
@@ -90,6 +97,8 @@ export async function SolutionChildPageContent({ slug, childSlug }: Props) {
         <HomeQuoteFormSection />
 
         <SolutionGroupFaqSection content={page.faq} />
+
+        <PageCtaSection content={cta} />
       </>
     );
   }
@@ -113,6 +122,12 @@ export async function SolutionChildPageContent({ slug, childSlug }: Props) {
 
   const introBody =
     child.intro?.trim() || t("childIntro", { service: child.label });
+  const cta = resolvePageCta(group.cta, {
+    title: child.label,
+    text: child.excerpt,
+    primaryCta: labels.heroCtaLabel,
+    primaryCtaHref: getQuoteUrl(child.label),
+  });
 
   return (
     <>
@@ -222,6 +237,8 @@ export async function SolutionChildPageContent({ slug, childSlug }: Props) {
       <HomeQuoteFormSection />
 
       {faq ? <SolutionGroupFaqSection content={faq} /> : <HomeFaqSection />}
+
+      <PageCtaSection content={cta} />
     </>
   );
 }

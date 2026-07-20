@@ -12,6 +12,7 @@ export type SeoRouteKey =
   | "solution-child"
   | "blog"
   | "blog-post"
+  | "case-studies"
   | "case-study";
 
 export type SeoRobots = {

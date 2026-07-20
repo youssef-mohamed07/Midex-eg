@@ -19,11 +19,6 @@ export function SolutionOverviewPanel({ title, intro, items, image, imageAlt }: 
   const itemRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const scrollFrame = useRef(0);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [imagePulse, setImagePulse] = useState(false);
-
-  useEffect(() => {
-    setActiveIndex(0);
-  }, [items, image]);
 
   const syncActiveFromScroll = useCallback(() => {
     const panel = panelRef.current;
@@ -77,12 +72,6 @@ export function SolutionOverviewPanel({ title, intro, items, image, imageAlt }: 
     };
   }, [syncActiveFromScroll]);
 
-  useEffect(() => {
-    setImagePulse(true);
-    const id = window.setTimeout(() => setImagePulse(false), 650);
-    return () => window.clearTimeout(id);
-  }, [activeIndex, image]);
-
   const selectItem = useCallback((index: number) => {
     setActiveIndex(index);
     itemRefs.current[index]?.scrollIntoView({
@@ -99,12 +88,11 @@ export function SolutionOverviewPanel({ title, intro, items, image, imageAlt }: 
       <div className="order-2 lg:order-1">
         <div className="relative min-h-[260px] overflow-hidden rounded-2xl border border-midex-line/60 shadow-[0_16px_48px_rgba(14,26,50,0.1)] sm:min-h-[360px] sm:rounded-[1.75rem] lg:min-h-[560px] lg:rounded-[2rem] xl:min-h-[620px]">
           <Image
+            key={`${image}-${activeIndex}`}
             src={image}
             alt={imageAlt}
             fill
-            className={`object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-              imagePulse ? "scale-[1.04]" : "scale-100"
-            }`}
+            className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
             sizes="(max-width: 1024px) 100vw, 55vw"
             priority
           />

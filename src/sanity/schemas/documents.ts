@@ -96,6 +96,27 @@ export const homePage = defineType({
   ],
   fields: [
     defineField({
+      name: "heroVideo",
+      title: "Hero background video",
+      type: "file",
+      options: { accept: "video/mp4,video/webm" },
+      group: "media",
+      fields: [
+        defineField({
+          name: "sourcePath",
+          title: "Source path",
+          type: "string",
+          hidden: true,
+        }),
+      ],
+    }),
+    defineField({
+      name: "heroVideoPoster",
+      title: "Hero video poster",
+      type: "imageWithAlt",
+      group: "media",
+    }),
+    defineField({
       name: "heroCollageLeft",
       title: "Hero collage — left column",
       type: "array",
@@ -208,6 +229,9 @@ export const homePage = defineType({
           { title: "Products", value: "products" },
           { title: "Case studies", value: "caseStudies" },
           { title: "Testimonials", value: "testimonials" },
+          { title: "Services", value: "services" },
+          { title: "News / blog", value: "news" },
+          { title: "Client logos", value: "clientLogos" },
           { title: "Quote form", value: "quoteForm" },
           { title: "FAQ", value: "faq" },
           { title: "Bottom CTA", value: "quoteCta" },
@@ -236,6 +260,7 @@ export const aboutPage = defineType({
   ],
   fields: [
     defineField({ name: "hero", title: "Hero", type: "pageHero", group: "hero" }),
+    defineField({ name: "heroMetrics", title: "Hero metrics", type: "heroMetricsBlock", group: "hero" }),
     defineField({ name: "missionVision", title: "Mission & vision", type: "missionVisionBlock", group: "mission" }),
     defineField({ name: "milestonesSection", title: "Milestones section", type: "sectionHeader", group: "milestones" }),
     defineField({ name: "foundersSection", title: "Founders section", type: "sectionHeader", group: "founders" }),
@@ -245,8 +270,10 @@ export const aboutPage = defineType({
       type: "object",
       group: "standards",
       fields: [
+        defineField({ name: "eyebrow", title: "Eyebrow", type: "localeString" }),
         defineField({ name: "title", title: "Title", type: "localeString" }),
         defineField({ name: "subtitle", title: "Subtitle", type: "localeText" }),
+        defineField({ name: "footnote", title: "Footnote", type: "localeText" }),
         defineField({
           name: "items",
           title: "Standards",
@@ -447,6 +474,7 @@ export const blogPage = defineType({
   groups: [
     { name: "hero", title: "Hero", default: true },
     { name: "listing", title: "Listing" },
+    { name: "detail", title: "Article detail" },
     { name: "cta", title: "Sidebar CTA" },
   ],
   fields: [
@@ -465,9 +493,51 @@ export const blogPage = defineType({
         defineField({ name: "viewAllArticles", title: "View all articles", type: "localeString" }),
       ],
     }),
+    defineField({ name: "detailLabels", title: "Article detail labels", type: "blogDetailLabels", group: "detail" }),
     defineField({ name: "cta", title: "Sidebar CTA", type: "pageCta", group: "cta" }),
   ],
   preview: { prepare: () => ({ title: "Blog Page" }) },
+});
+
+export const caseStudiesPage = defineType({
+  name: "caseStudiesPage",
+  title: "Case Studies Page",
+  type: "document",
+  groups: [
+    { name: "hero", title: "Hero", default: true },
+    { name: "explorer", title: "Explorer" },
+    { name: "testimonials", title: "Testimonials" },
+    { name: "quoteForm", title: "Quote form" },
+    { name: "faq", title: "FAQ" },
+    { name: "detail", title: "Case study detail" },
+    { name: "cta", title: "Bottom CTA" },
+  ],
+  fields: [
+    defineField({ name: "hero", title: "Hero", type: "pageHero", group: "hero" }),
+    defineField({
+      name: "explorerLabels",
+      title: "Explorer labels",
+      type: "caseStudiesExplorerLabels",
+      group: "explorer",
+    }),
+    defineField({
+      name: "testimonialsSection",
+      title: "Testimonials section",
+      type: "sectionHeader",
+      group: "testimonials",
+    }),
+    defineField({
+      name: "quoteFormSection",
+      title: "Quote form section",
+      type: "sectionHeader",
+      group: "quoteForm",
+    }),
+    defineField({ name: "quoteFormCopy", title: "Quote form copy", type: "quoteFormCopy", group: "quoteForm" }),
+    defineField({ name: "faq", title: "FAQ", type: "faqSection", group: "faq" }),
+    defineField({ name: "detailLabels", title: "Detail labels", type: "caseStudyLabels", group: "detail" }),
+    defineField({ name: "cta", title: "Bottom CTA", type: "pageCta", group: "cta" }),
+  ],
+  preview: { prepare: () => ({ title: "Case Studies Page" }) },
 });
 
 /* ------------------------------------------------------------------ */
@@ -969,6 +1039,7 @@ export const solutionChild = defineType({
         defineField({ name: "principles", title: "Principles section", type: "principlesSection" }),
         defineField({ name: "workflow", title: "Workflow section", type: "workflowSection" }),
         defineField({ name: "faq", title: "FAQ section", type: "faqSection" }),
+        defineField({ name: "cta", title: "Bottom CTA", type: "pageCta" }),
       ],
     }),
   ],
@@ -999,6 +1070,7 @@ export const seoEntry = defineType({
           { title: "Solution service (template)", value: "solution-child" },
           { title: "Blog index", value: "blog" },
           { title: "Blog post (template)", value: "blog-post" },
+          { title: "Case studies index", value: "case-studies" },
           { title: "Case study (template)", value: "case-study" },
         ],
       },

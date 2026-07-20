@@ -168,7 +168,7 @@ export async function getHomePageData(locale: Locale): Promise<HomePageData> {
         "excerpt": ${loc("excerpt")},
         "description": ${loc("description")},
         "image": ${imageUrl("image")},
-        "gallery": gallery[].asset->url
+        "gallery": gallery[]{"url": coalesce(asset->url, sourcePath)}[].url
       }
     }`,
     params: { locale },

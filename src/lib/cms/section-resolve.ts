@@ -71,6 +71,7 @@ export function resolveFaq(
     enabled: cms?.enabled,
     title: pick(cms?.title, fallback.title ?? ""),
     intro: pick(cms?.intro, fallback.intro ?? ""),
+    image: cms?.image || fallback.image,
     items,
   };
 }
@@ -116,6 +117,7 @@ export function resolvePromo(
     body: pick(cms?.body, fallback.body ?? ""),
     ctaLabel: pick(cms?.ctaLabel, fallback.ctaLabel ?? ""),
     ctaHref: cms?.ctaHref || fallback.ctaHref || "",
+    badge: pick(cms?.badge, fallback.badge ?? ""),
     image: cms?.image || fallback.image,
     secondaryImage: cms?.secondaryImage || fallback.secondaryImage,
     features: cms?.features?.length ? cms.features : fallback.features,
@@ -180,6 +182,11 @@ export function resolveProductDetailLabels(
     backToCatalog: pick(cms?.backToCatalog, fallback.backToCatalog ?? ""),
     requestQuote: pick(cms?.requestQuote, fallback.requestQuote ?? ""),
     relatedSolutionTitle: pick(cms?.relatedSolutionTitle, fallback.relatedSolutionTitle ?? ""),
+    contactUs: pick(cms?.contactUs, fallback.contactUs ?? ""),
+    galleryTitle: pick(cms?.galleryTitle, fallback.galleryTitle ?? ""),
+    galleryPrevious: pick(cms?.galleryPrevious, fallback.galleryPrevious ?? ""),
+    galleryNext: pick(cms?.galleryNext, fallback.galleryNext ?? ""),
+    galleryView: pick(cms?.galleryView, fallback.galleryView ?? ""),
   };
 }
 

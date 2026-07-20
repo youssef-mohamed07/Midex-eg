@@ -1,6 +1,4 @@
 import type { ReactNode } from "react";
-import { existsSync } from "node:fs";
-import path from "node:path";
 import { Fragment } from "react";
 import { getLocale, getTranslations } from "next-intl/server";
 import { CaseStudiesSection } from "@/components/home/CaseStudiesSection";
@@ -17,6 +15,9 @@ import { PartnersSection } from "@/components/home/PartnersSection";
 import { ProductCategoriesSection } from "@/components/home/ProductCategoriesSection";
 import { StatsSection } from "@/components/home/StatsSection";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
+import { ServicesSection } from "@/components/home/ServicesSection";
+import { NewsSection } from "@/components/home/NewsSection";
+import { ClientLogosSection } from "@/components/home/ClientLogosSection";
 import { PageCtaSection } from "@/components/cms/PageCtaSection";
 import { getHomePageData, getHomePageSections } from "@/lib/cms";
 import { resolveHomeSectionOrder, type HomeSectionKey } from "@/lib/cms/section-driven";
@@ -31,19 +32,6 @@ import {
   resolveSectionHeader,
 } from "@/lib/cms/section-resolve";
 import { type Locale } from "@/i18n/routing";
-
-function resolveHeroVideoSrc() {
-  const candidates = [
-    { file: "public/videos/hero.mp4", src: "/videos/hero.mp4" },
-    {
-      file: "public/7a8724cf-a133-4fbd-b70b-125ae7356c54.mp4",
-      src: "/7a8724cf-a133-4fbd-b70b-125ae7356c54.mp4",
-    },
-  ];
-  return candidates.find(({ file }) =>
-    existsSync(path.join(process.cwd(), file)),
-  )?.src;
-}
 
 export async function HomePage() {
   const locale = (await getLocale()) as Locale;
@@ -91,6 +79,18 @@ export async function HomePage() {
     title: tp("title"),
     subtitle: tp("subtitle"),
   });
+  const servicesHeader = resolveSectionHeader(sections.servicesSection, {
+    title: t("servicesTitle"),
+    subtitle: t("servicesSubtitle"),
+  });
+  const newsHeader = resolveSectionHeader(sections.newsSection, {
+    title: t("blogTitle"),
+    subtitle: t("blogSubtitle"),
+    viewAllLabel: t("viewAllArticles"),
+  });
+  const clientLogosHeader = resolveSectionHeader(sections.clientLogosSection, {
+    title: t("partnersTitle"),
+  });
   const heroCopy = {
     slide1Title: pick(sections.heroCopy?.slide1Title, th("slide1Title")),
     slide1Text: pick(sections.heroCopy?.slide1Text, th("slide1Text")),
@@ -107,6 +107,7 @@ export async function HomePage() {
   });
 
   const truvia = resolvePromo(sections.truviaSection, {
+    badge: "ASME BPE",
     title: t("truviaTitle"),
     body: t("truviaSubtitle"),
     ctaLabel: t("truviaDiscover"),
@@ -136,11 +137,14 @@ export async function HomePage() {
       t("processAfter4"),
       t("processAfter5"),
     ],
+    beforeImage: "/images/before-after/before.png",
+    afterImage: "/images/before-after/after.png",
   });
 
   const faq = resolveFaq(sections.faq, {
     title: t("faqTitle"),
     intro: t("faqSubtitle"),
+    image: "/images/about/values/reliability.png",
     items: [1, 2, 3, 4, 5, 6].map((index) => ({
       question: t(`faqQ${index}`),
       answer: t(`faqA${index}`),
@@ -209,6 +213,24 @@ export async function HomePage() {
         testimonials={home.testimonials}
       />
     ) : null,
+    services: isSectionEnabled(servicesHeader.enabled) ? (
+      <ServicesSection
+        title={servicesHeader.title}
+        subtitle={servicesHeader.subtitle}
+        services={home.services}
+      />
+    ) : null,
+    news: isSectionEnabled(newsHeader.enabled) ? (
+      <NewsSection
+        locale={locale}
+        title={newsHeader.title}
+        subtitle={newsHeader.subtitle}
+        viewAllLabel={newsHeader.viewAllLabel}
+      />
+    ) : null,
+    clientLogos: isSectionEnabled(clientLogosHeader.enabled) ? (
+      <ClientLogosSection title={clientLogosHeader.title} logos={home.clientLogos} />
+    ) : null,
     exclusive: isSectionEnabled(exclusive.enabled) ? (
       <ExclusivePartnersSection title={exclusive.title} partners={home.exclusivePartners} />
     ) : null,
@@ -232,7 +254,8 @@ export async function HomePage() {
       <HeroSlider
         collage={home.heroCollage}
         heroCopy={heroCopy}
-        videoSrc={resolveHeroVideoSrc()}
+        videoSrc={sections.heroVideo || undefined}
+        posterSrc={sections.heroVideoPoster || undefined}
       />
       {order.map((key) => {
         const node = sectionNodes[key];

@@ -12,17 +12,14 @@ type Props = {
 export function WordRevealText({ text, className = "", wordDelayMs = 90 }: Props) {
   const ref = useRef<HTMLSpanElement>(null);
   const words = useMemo(() => text.trim().split(/\s+/).filter(Boolean), [text]);
-  const [revealed, setRevealed] = useState(false);
-
-  useEffect(() => {
-    setRevealed(false);
-  }, [text]);
+  const [revealedText, setRevealedText] = useState<string | null>(null);
+  const revealed = revealedText === text;
 
   useEffect(() => {
     const node = ref.current;
     if (!node) return;
 
-    const show = () => setRevealed(true);
+    const show = () => setRevealedText(text);
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       show();

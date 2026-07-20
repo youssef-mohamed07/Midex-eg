@@ -6,7 +6,7 @@ import { PageHero } from "@/components/layout/PageHero";
 import { SolutionBreadcrumbs } from "@/components/solutions/SolutionBreadcrumbs";
 import { PageCtaSection } from "@/components/cms/PageCtaSection";
 import { getBlogPageContent, getBlogPost, getBlogPosts } from "@/lib/cms";
-import { resolvePageCta } from "@/lib/cms/section-resolve";
+import { pick, resolvePageCta } from "@/lib/cms/section-resolve";
 import { type Locale } from "@/i18n/routing";
 
 type Props = { slug: string };
@@ -28,6 +28,14 @@ export async function BlogPostPageContent({ slug }: Props) {
     primaryCta: t("ctaButton"),
     primaryCtaHref: "/contact",
   });
+  const labels = {
+    blog: pick(page.detailLabels?.blogLabel, t("title")),
+    minRead: pick(page.detailLabels?.minRead, t("minRead")),
+    author: pick(page.detailLabels?.authorLabel, t("authorLabel")),
+    related: pick(page.detailLabels?.relatedPosts, t("relatedPosts")),
+    back: pick(page.detailLabels?.backToBlog, t("backToBlog")),
+    contact: pick(page.detailLabels?.contactCta, t("ctaButton")),
+  };
 
   return (
     <>
@@ -40,7 +48,7 @@ export async function BlogPostPageContent({ slug }: Props) {
           <SolutionBreadcrumbs
             light
             items={[
-              { label: t("title"), href: "/blog" },
+              { label: labels.blog, href: "/blog" },
               { label: post.title },
             ]}
           />
@@ -50,7 +58,7 @@ export async function BlogPostPageContent({ slug }: Props) {
           <time className="text-midex-mint">{post.date}</time>
           <span aria-hidden>·</span>
           <span>
-            {post.readTime} {t("minRead")}
+            {post.readTime} {labels.minRead}
           </span>
         </p>
       </PageHero>
@@ -79,7 +87,7 @@ export async function BlogPostPageContent({ slug }: Props) {
                 <time className="text-midex-blue">{post.date}</time>
                 <span aria-hidden>·</span>
                 <span>
-                  {post.readTime} {t("minRead")}
+                  {post.readTime} {labels.minRead}
                 </span>
                 <span aria-hidden>·</span>
                 <span className="rounded-full bg-midex-surface px-2.5 py-0.5 text-midex-navy">
@@ -95,11 +103,11 @@ export async function BlogPostPageContent({ slug }: Props) {
 
               <div className="mt-10 flex flex-wrap gap-3 border-t border-midex-line pt-8">
                 <Link className="group mx-btn mx-btn-primary" href="/contact">
-                  {t("ctaButton")}
+                  {labels.contact}
                   <span className="mx-arrow">→</span>
                 </Link>
                 <Link className="mx-btn mx-btn-ghost" href="/blog">
-                  {t("backToBlog")}
+                  {labels.back}
                 </Link>
               </div>
             </article>
@@ -121,7 +129,7 @@ export async function BlogPostPageContent({ slug }: Props) {
                     ) : null}
                     <div className="min-w-0">
                       <p className="text-xs font-semibold uppercase tracking-wider text-midex-blue">
-                        {t("authorLabel")}
+                        {labels.author}
                       </p>
                       <p className="mt-1 font-display text-base font-bold text-midex-navy">
                         {post.author.name}
@@ -143,7 +151,7 @@ export async function BlogPostPageContent({ slug }: Props) {
                 <div className="overflow-hidden rounded-2xl border border-midex-line bg-midex-surface/50">
                   <div className="border-b border-midex-line px-5 py-4">
                     <h2 className="font-display text-sm font-bold uppercase tracking-wider text-midex-navy">
-                      {t("relatedPosts")}
+                      {labels.related}
                     </h2>
                   </div>
                   <ul className="divide-y divide-midex-line">

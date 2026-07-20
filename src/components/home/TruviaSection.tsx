@@ -3,7 +3,7 @@ import { Link } from "@/i18n/navigation";
 import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
 import type { PromoSectionContent } from "@/lib/cms/types";
 
-const DEFAULT_IMAGE = "/images/products/product-1724113383.jpg";
+const DEFAULT_IMAGE = "/images/exclusive/truvia-section.png";
 const DEFAULT_LOGO = "/images/exclusive/truvia.png";
 
 type Props = {
@@ -91,9 +91,11 @@ export async function TruviaSection({ content }: Props) {
                   className="h-8 max-w-[120px] object-contain brightness-0 invert sm:h-12 sm:max-w-[140px]"
                   style={{ width: "auto" }}
                 />
-                <span className="shrink-0 rounded-full border border-white/20 bg-white/10 px-2.5 py-0.5 text-[9px] font-semibold text-white backdrop-blur-sm sm:px-3 sm:py-1 sm:text-[10px]">
-                  ASME BPE
-                </span>
+                {content.badge ? (
+                  <span className="shrink-0 rounded-full border border-white/20 bg-white/10 px-2.5 py-0.5 text-[9px] font-semibold text-white backdrop-blur-sm sm:px-3 sm:py-1 sm:text-[10px]">
+                    {content.badge}
+                  </span>
+                ) : null}
               </div>
             </div>
           </RevealOnScroll>

@@ -13,6 +13,8 @@ type StandardItem = {
 type Props = {
   title: string;
   subtitle: string;
+  eyebrow?: string;
+  footnote?: string;
   items?: StandardItem[];
 };
 
@@ -64,7 +66,13 @@ function StandardCard({
   );
 }
 
-export async function AboutStandardsSection({ title, subtitle, items: itemsProp }: Props) {
+export async function AboutStandardsSection({
+  title,
+  subtitle,
+  eyebrow,
+  footnote,
+  items: itemsProp,
+}: Props) {
   const t = await getTranslations("about");
   const locale = (await getLocale()) as Locale;
   const cmsItems = itemsProp ?? (await getAboutStandards(locale));
@@ -86,7 +94,7 @@ export async function AboutStandardsSection({ title, subtitle, items: itemsProp 
       <div className="mx-container">
         <RevealOnScroll>
           <div className="mx-auto mb-8 max-w-2xl text-center sm:mb-10">
-            <p className="mx-eyebrow mx-auto">{t("standardsEyebrow")}</p>
+            <p className="mx-eyebrow mx-auto">{eyebrow || t("standardsEyebrow")}</p>
             <h2 className="mx-section-title mt-4">{title}</h2>
             <p className="mx-section-subtitle mx-auto mt-4">{subtitle}</p>
           </div>
@@ -109,7 +117,7 @@ export async function AboutStandardsSection({ title, subtitle, items: itemsProp 
 
         <RevealOnScroll delay={120}>
           <p className="mx-auto mt-8 max-w-3xl text-center text-sm leading-relaxed text-midex-gray/70 sm:mt-10">
-            {t("standardsText")}
+            {footnote || t("standardsText")}
           </p>
         </RevealOnScroll>
       </div>

@@ -18,6 +18,9 @@ export const HOME_SECTION_KEYS = [
   "products",
   "caseStudies",
   "testimonials",
+  "services",
+  "news",
+  "clientLogos",
   "quoteForm",
   "faq",
   "quoteCta",
@@ -58,27 +61,8 @@ export function resolveSectionOrder<T extends string>(
   return ordered;
 }
 
-function placeRelative(
-  order: HomeSectionKey[],
-  key: HomeSectionKey,
-  anchor: HomeSectionKey,
-  position: "before" | "after",
-): HomeSectionKey[] {
-  if (!order.includes(key)) return order;
-  const without = order.filter((item) => item !== key);
-  const anchorIdx = without.indexOf(anchor);
-  if (anchorIdx < 0) return order;
-  const insertAt = position === "before" ? anchorIdx : anchorIdx + 1;
-  without.splice(insertAt, 0, key);
-  return without;
-}
-
 export function resolveHomeSectionOrder(
   cmsOrder: string[] | undefined | null,
 ): HomeSectionKey[] {
-  let ordered = resolveSectionOrder(cmsOrder, DEFAULT_HOME_SECTION_ORDER, HOME_KEY_SET);
-  // Exclusive brands directly before Truvia; stats/numbers directly after Truvia.
-  ordered = placeRelative(ordered, "exclusive", "truvia", "before");
-  ordered = placeRelative(ordered, "stats", "truvia", "after");
-  return ordered;
+  return resolveSectionOrder(cmsOrder, DEFAULT_HOME_SECTION_ORDER, HOME_KEY_SET);
 }

@@ -25,7 +25,7 @@ const productProjection = `{
   "description": ${loc("description")},
   "applications": ${locOptional("applications")},
   "image": ${imageUrl("image")},
-  "gallery": gallery[].asset->url,
+  "gallery": gallery[]{"url": coalesce(asset->url, sourcePath)}[].url,
   "highlights": ${locList("highlights")},
   "specs": coalesce(specs[]{
     "label": ${loc("label")},

@@ -108,12 +108,36 @@ function pageCta(ns: string, titleKey: string, textKey: string, ctaKey: string, 
   };
 }
 
-/** Merge fields into a singleton — never replaces the whole document (keeps media). */
+function flattenForSetIfMissing(
+  value: Record<string, unknown>,
+  prefix = "",
+): Record<string, unknown> {
+  const result: Record<string, unknown> = {};
+  for (const [key, entry] of Object.entries(value)) {
+    if (entry === undefined) continue;
+    const pathKey = prefix ? `${prefix}.${key}` : key;
+    if (
+      entry &&
+      typeof entry === "object" &&
+      !Array.isArray(entry)
+    ) {
+      Object.assign(
+        result,
+        flattenForSetIfMissing(entry as Record<string, unknown>, pathKey),
+      );
+    } else {
+      result[pathKey] = entry;
+    }
+  }
+  return result;
+}
+
+/** Seed only missing paths — never overwrites editor changes or existing media. */
 async function mergeSingleton(id: string, type: string, doc: Record<string, unknown>) {
   await client
     .transaction()
     .createIfNotExists({ _id: id, _type: type })
-    .patch(id, (p) => p.set(doc))
+    .patch(id, (p) => p.setIfMissing(flattenForSetIfMissing(doc)))
     .commit();
   console.log(`✓ ${type}`);
 }
@@ -301,6 +325,7 @@ async function main() {
       discuss: L("home", "caseStudyDiscuss"),
       related: L("home", "caseStudyRelated"),
       back: L("home", "caseStudyBack"),
+      galleryTitle: L("home", "caseStudyGalleryTitle"),
     },
     testimonialsSection: sectionHeader("home", "testimonialsTitle", "testimonialsSubtitle"),
     exclusiveSection: sectionHeader("home", "exclusiveTitle"),
@@ -317,6 +342,25 @@ async function main() {
       secondaryCta: L("hero", "viewProducts"),
       secondaryCtaHref: "/products",
     },
+    sectionOrder: [
+      "partners",
+      "featuredQuote",
+      "capabilities",
+      "exclusive",
+      "truvia",
+      "stats",
+      "events",
+      "beforeAfter",
+      "products",
+      "caseStudies",
+      "testimonials",
+      "services",
+      "news",
+      "clientLogos",
+      "quoteForm",
+      "faq",
+      "quoteCta",
+    ],
   });
 
   await mergeSingleton("aboutPage", "aboutPage", {
@@ -330,6 +374,12 @@ async function main() {
       secondaryCta: L("products", "requestQuote"),
       secondaryCtaHref: "/contact",
     },
+    heroMetrics: {
+      _type: "heroMetricsBlock",
+      primaryValue: L("about", "heroYears"),
+      primaryLabel: L("about", "heroYearsLabel"),
+      badge: L("about", "heroFocusLabel"),
+    },
     missionVision: {
       _type: "missionVisionBlock",
       title: L("about", "missionVisionTitle"),
@@ -341,8 +391,10 @@ async function main() {
     milestonesSection: sectionHeader("about", "milestonesTitle", "milestonesSubtitle"),
     foundersSection: sectionHeader("about", "foundersTitle"),
     standardsSection: {
+      eyebrow: L("about", "standardsEyebrow"),
       title: L("about", "standardsTitle"),
       subtitle: LT("about", "standardsSubtitle"),
+      footnote: LT("about", "standardsText"),
       items: ["standard1", "standard2", "standard3", "standard4", "standard5"].map((key) => ({
         _type: "standardItem",
         _key: key,
@@ -351,6 +403,15 @@ async function main() {
       })),
     },
     eventsSection: sectionHeader("about", "eventsTitle", "eventsIntro"),
+    certificationsSection: sectionHeader(
+      "about",
+      "certificationsTitle",
+      "certificationsSubtitle",
+      {
+        eyebrow: L("about", "certificationsEyebrow"),
+        footnote: LT("about", "certificationsFootnote"),
+      },
+    ),
     valuesSection: {
       title: L("about", "valuesTitle"),
       subtitle: LT("about", "valuesSubtitle"),
@@ -427,6 +488,11 @@ async function main() {
       backToCatalog: L("products", "backToCatalog"),
       requestQuote: L("products", "requestQuote"),
       relatedSolutionTitle: L("products", "relatedSolutionTitle"),
+      contactUs: L("nav", "contactUs"),
+      galleryTitle: L("products", "galleryTitle"),
+      galleryPrevious: L("products", "galleryPrevious"),
+      galleryNext: L("products", "galleryNext"),
+      galleryView: L("products", "galleryView"),
     },
     detailCta: pageCta("products", "ctaTitle", "ctaText", "requestQuote", "/contact"),
     statsSection: sectionHeader("home", "statsTitle", "statsSubtitle"),
@@ -462,7 +528,19 @@ async function main() {
         "processAfter5",
       ]),
     },
-    timelineSection: sectionHeader("solutions", "stepsGridTitle", "stepsGridSubtitle"),
+    timelineSection: {
+      _type: "timelineSectionBlock",
+      enabled: true,
+      title: L("solutions", "stepsGridTitle"),
+      subtitle: LT("solutions", "stepsGridSubtitle"),
+      steps: [1, 2, 3, 4, 5].map((n) => ({
+        _type: "timelineStep",
+        _key: `step${n}`,
+        key: `step${n}`,
+        title: L("solutions", `step${n}Title`),
+        text: LT("solutions", `step${n}Text`),
+      })),
+    },
     statsSection: sectionHeader("home", "statsTitle", "statsSubtitle"),
     caseStudiesSection: sectionHeader("home", "caseStudiesTitle", "caseStudiesSubtitle"),
     testimonialsSection: sectionHeader("home", "testimonialsTitle", "testimonialsSubtitle"),
@@ -485,7 +563,56 @@ async function main() {
       minRead: L("blog", "minRead"),
       viewAllArticles: L("home", "viewAllArticles"),
     },
+    detailLabels: {
+      _type: "blogDetailLabels",
+      blogLabel: L("blog", "title"),
+      minRead: L("blog", "minRead"),
+      authorLabel: L("blog", "authorLabel"),
+      relatedPosts: L("blog", "relatedPosts"),
+      backToBlog: L("blog", "backToBlog"),
+      contactCta: L("blog", "ctaButton"),
+    },
     cta: pageCta("blog", "ctaTitle", "ctaText", "ctaButton", "/contact"),
+  });
+
+  await mergeSingleton("caseStudiesPage", "caseStudiesPage", {
+    hero: {
+      _type: "pageHero",
+      eyebrow: L("home", "caseStudiesBadge"),
+      title: L("home", "caseStudiesTitle"),
+      subtitle: LT("home", "caseStudiesSubtitle"),
+    },
+    explorerLabels: {
+      _type: "caseStudiesExplorerLabels",
+      searchPlaceholder: L("home", "caseStudiesSearchPlaceholder"),
+      all: L("home", "caseStudiesFilterAll"),
+      year: L("home", "caseStudiesFilterYear"),
+      capability: L("home", "caseStudiesFilterCapability"),
+      industry: L("home", "caseStudiesFilterIndustry"),
+      results: L("home", "caseStudiesResults"),
+      noResults: LT("home", "caseStudiesNoResults"),
+      clearFilters: L("home", "caseStudiesClearFilters"),
+      read: L("home", "caseStudiesRead"),
+      countLabel: L("home", "caseStudiesBadge"),
+      contactLabel: L("home", "faqContact"),
+    },
+    testimonialsSection: sectionHeader("home", "testimonialsTitle", "testimonialsSubtitle"),
+    quoteFormSection: sectionHeader("home", "quoteFormTitle", "quoteFormSubtitle"),
+    quoteFormCopy: buildQuoteFormCopy(),
+    faq: buildFaq("home", 6),
+    detailLabels: {
+      _type: "caseStudyLabels",
+      scopeLabel: L("home", "caseStudyScopeLabel"),
+      challengeLabel: L("home", "caseStudyChallengeLabel"),
+      approachLabel: L("home", "caseStudyApproachLabel"),
+      highlightsLabel: L("home", "caseStudyHighlightsLabel"),
+      outcomeLabel: L("home", "caseStudyOutcomeLabel"),
+      discuss: L("home", "caseStudyDiscuss"),
+      related: L("home", "caseStudyRelated"),
+      back: L("home", "caseStudyBack"),
+      galleryTitle: L("home", "caseStudyGalleryTitle"),
+    },
+    cta: pageCta("home", "quoteTitle", "quoteText", "quoteButton", "/contact"),
   });
 
   const stats = await client.fetch<Array<{ _id: string; labelKey: string }>>(
@@ -530,7 +657,21 @@ async function main() {
   }
 
   // Service page fallback labels on each solutionChild
-  const children = await client.fetch<Array<{ _id: string }>>(`*[_type == "solutionChild"]{ _id }`);
+  const children = await client.fetch<
+    Array<{
+      _id: string;
+      label?: LocalizedValue;
+      excerpt?: LocalizedValue;
+      pageHeroCtaLabel?: LocalizedValue;
+      hasPage: boolean;
+    }>
+  >(`*[_type == "solutionChild"]{
+    _id,
+    label,
+    excerpt,
+    "hasPage": defined(page),
+    "pageHeroCtaLabel": page.heroCtaLabel
+  }`);
   const serviceLabels = {
     _type: "solutionChildLabels",
     introductionTitle: L("solutions", "introduction"),
@@ -540,7 +681,21 @@ async function main() {
     browseGroupLabel: L("solutions", "browseGroup"),
   };
   for (const child of children) {
-    await client.patch(child._id).set({ labels: serviceLabels }).commit();
+    const patch = client.patch(child._id).setIfMissing({ labels: serviceLabels });
+    if (child.hasPage) {
+      patch.setIfMissing({
+          "page.cta": {
+            _type: "pageCta",
+            enabled: true,
+            title: child.label ?? L("solutions", "ctaTitle"),
+            text: child.excerpt ?? LT("solutions", "ctaText"),
+            primaryCta:
+              child.pageHeroCtaLabel ?? L("solutions", "contactUs"),
+            primaryCtaHref: "/contact",
+          },
+        });
+    }
+    await patch.commit();
     console.log(`✓ solutionChild labels: ${child._id}`);
   }
 

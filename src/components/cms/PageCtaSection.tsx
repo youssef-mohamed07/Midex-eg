@@ -5,6 +5,8 @@ import { isValidImageSrc } from "@/lib/cms/images";
 import { isSectionEnabled } from "@/lib/cms/section-resolve";
 import type { PageCtaContent } from "@/lib/cms/types";
 
+const CTA_LOGO = "/images/brand/logo-white.png";
+
 type Props = {
   content: PageCtaContent & { title: string; text: string };
   /** Compact card for sidebars (e.g. blog post). */
@@ -38,11 +40,7 @@ export function PageCtaSection({ content, variant = "band" }: Props) {
     <section className="mx-section--tight">
       <div className="mx-container">
         <RevealOnScroll>
-          <div
-            className={`relative overflow-hidden rounded-2xl border border-midex-line/60 bg-midex-navy sm:rounded-[1.75rem] ${
-              hasImage ? "grid lg:grid-cols-2" : ""
-            }`}
-          >
+          <div className="relative grid overflow-hidden rounded-2xl border border-midex-line/60 bg-midex-navy sm:rounded-[1.75rem] lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
             <div className="flex flex-col justify-center p-6 sm:p-8 lg:p-10 xl:p-12">
               <h2 className="font-display text-2xl font-bold leading-snug text-white sm:text-3xl lg:text-[2.1rem]">
                 {content.title}
@@ -82,14 +80,29 @@ export function PageCtaSection({ content, variant = "band" }: Props) {
                   alt={content.title}
                   fill
                   className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  sizes="(max-width: 1024px) 100vw, 40vw"
                 />
                 <div
                   className="absolute inset-0 bg-gradient-to-t from-midex-navy/40 to-transparent lg:bg-gradient-to-l"
                   aria-hidden
                 />
               </div>
-            ) : null}
+            ) : (
+              <div className="relative flex min-h-[140px] items-center justify-center px-8 py-10 sm:min-h-[180px] lg:min-h-full lg:justify-end lg:pe-12 xl:pe-16">
+                <div
+                  className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_70%_50%,rgba(122,201,199,0.18),transparent_55%)]"
+                  aria-hidden
+                />
+                <Image
+                  src={CTA_LOGO}
+                  alt="MIDEX"
+                  width={280}
+                  height={80}
+                  className="relative h-10 w-auto max-w-[11rem] opacity-95 sm:h-12 sm:max-w-[13rem] lg:h-14 lg:max-w-[15rem]"
+                  decoding="async"
+                />
+              </div>
+            )}
           </div>
         </RevealOnScroll>
       </div>

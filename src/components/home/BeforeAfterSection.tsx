@@ -3,8 +3,8 @@ import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
 import type { BeforeAfterContent } from "@/lib/cms/types";
 
 const BEFORE_AFTER_MEDIA = {
-  beforePoster: "/images/services/pickling-passivation.png",
-  afterPoster: "/images/services/mirror-finish.png",
+  beforePoster: "/images/before-after/before.png",
+  afterPoster: "/images/before-after/after.png",
 } as const;
 
 type Props = {

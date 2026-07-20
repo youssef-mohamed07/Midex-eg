@@ -106,6 +106,12 @@ export const principleItem = defineType({
     defineField({ name: "title", title: "Title", type: "localeString" }),
     defineField({ name: "text", title: "Text", type: "localeText" }),
     defineField({ name: "image", title: "Image", type: "imageWithAlt" }),
+    defineField({
+      name: "href",
+      title: "Optional link",
+      type: "string",
+      description: "Internal or external destination for this nested service card.",
+    }),
   ],
   preview: {
     select: { title: "title.en", subtitle: "key", media: "image" },
@@ -201,6 +207,12 @@ export const faqSection = defineType({
     }),
     defineField({ name: "title", title: "Title", type: "localeString" }),
     defineField({ name: "intro", title: "Intro", type: "localeText" }),
+    defineField({
+      name: "image",
+      title: "Side image",
+      type: "imageWithAlt",
+      description: "Shown beside the FAQ list on desktop.",
+    }),
     defineField({
       name: "items",
       title: "Items",

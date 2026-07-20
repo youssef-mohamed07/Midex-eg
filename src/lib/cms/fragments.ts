@@ -4,6 +4,10 @@
 export const imageUrl = (field = "image") =>
   `coalesce(${field}.asset->url, ${field}.sourcePath, "")`;
 
+/** Resolves a Sanity file field to a CDN URL. */
+export const fileUrl = (field: string) =>
+  `coalesce(${field}.asset->url, ${field}.sourcePath, "")`;
+
 /** Localized string/text with English fallback. */
 export const loc = (field: string, fallback = '""') =>
   `coalesce(${field}[$locale], ${field}.en, ${fallback})`;
@@ -24,7 +28,8 @@ export const principlesProjection = (field = "principles") => `${field}{
     "id": key,
     "title": ${loc("title")},
     "text": ${loc("text")},
-    "image": ${imageUrl("image")}
+    "image": ${imageUrl("image")},
+    "href": coalesce(href, "")
   }
 }`;
 
@@ -45,6 +50,7 @@ export const faqProjection = (field = "faq") => `${field}{
   enabled,
   "title": ${loc("title")},
   "intro": ${loc("intro")},
+  "image": ${imageUrl("image")},
   "items": items[]{
     "id": key,
     "question": ${loc("question")},
@@ -73,6 +79,7 @@ export const sectionHeaderProjection = (field: string) => `${field}{
   "eyebrow": ${locOptional("eyebrow")},
   "title": ${locOptional("title")},
   "subtitle": ${locOptional("subtitle")},
+  "footnote": ${locOptional("footnote")},
   "image": ${imageUrl("image")},
   "viewAllLabel": ${locOptional("viewAllLabel")}
 }`;
@@ -117,6 +124,7 @@ export const promoSectionProjection = (field: string) => `${field}{
   "body": ${locOptional("body")},
   "ctaLabel": ${locOptional("ctaLabel")},
   "ctaHref": coalesce(ctaHref, ""),
+  "badge": ${locOptional("badge")},
   "image": ${imageUrl("image")},
   "secondaryImage": ${imageUrl("secondaryImage")},
   "features": coalesce(features[]{
@@ -194,7 +202,35 @@ export const productDetailLabelsProjection = (field: string) => `${field}{
   "relatedProductsTitle": ${locOptional("relatedProductsTitle")},
   "backToCatalog": ${locOptional("backToCatalog")},
   "requestQuote": ${locOptional("requestQuote")},
-  "relatedSolutionTitle": ${locOptional("relatedSolutionTitle")}
+  "relatedSolutionTitle": ${locOptional("relatedSolutionTitle")},
+  "contactUs": ${locOptional("contactUs")},
+  "galleryTitle": ${locOptional("galleryTitle")},
+  "galleryPrevious": ${locOptional("galleryPrevious")},
+  "galleryNext": ${locOptional("galleryNext")},
+  "galleryView": ${locOptional("galleryView")}
+}`;
+
+export const caseStudiesExplorerLabelsProjection = (field: string) => `${field}{
+  "searchPlaceholder": ${locOptional("searchPlaceholder")},
+  "all": ${locOptional("all")},
+  "year": ${locOptional("year")},
+  "capability": ${locOptional("capability")},
+  "industry": ${locOptional("industry")},
+  "results": ${locOptional("results")},
+  "noResults": ${locOptional("noResults")},
+  "clearFilters": ${locOptional("clearFilters")},
+  "read": ${locOptional("read")},
+  "countLabel": ${locOptional("countLabel")},
+  "contactLabel": ${locOptional("contactLabel")}
+}`;
+
+export const blogDetailLabelsProjection = (field: string) => `${field}{
+  "blogLabel": ${locOptional("blogLabel")},
+  "minRead": ${locOptional("minRead")},
+  "authorLabel": ${locOptional("authorLabel")},
+  "relatedPosts": ${locOptional("relatedPosts")},
+  "backToBlog": ${locOptional("backToBlog")},
+  "contactCta": ${locOptional("contactCta")}
 }`;
 
 export const solutionChildLabelsProjection = (field: string) => `${field}{

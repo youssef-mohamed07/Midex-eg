@@ -7,9 +7,6 @@ import { getClient, getPreviewClient } from "@/lib/cms/client";
 /** Default ISR window for CMS content (matches page-level `revalidate`). */
 export const CMS_REVALIDATE = 86400;
 
-/** Short cache in dev — fast reloads without stale pre-seed empty results. */
-const DEV_REVALIDATE = 60;
-
 type SanityFetchOptions = {
   query: string;
   params?: QueryParams;
@@ -41,10 +38,15 @@ async function sanityFetchUncached<T>({
     });
   }
 
-  const revalidate = isDev ? DEV_REVALIDATE : CMS_REVALIDATE;
+  // Dev must see Sanity/image patches immediately — no Data Cache lag.
+  if (isDev) {
+    return getClient().fetch<T>(query, params, {
+      cache: "no-store",
+    });
+  }
 
   return getClient().fetch<T>(query, params, {
-    next: { revalidate, tags },
+    next: { revalidate: CMS_REVALIDATE, tags },
   });
 }
 

@@ -1,16 +1,22 @@
 "use client";
 
 import Image from "next/image";
-import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
+
+type GalleryLabels = {
+  title: string;
+  previous: string;
+  next: string;
+  view: string;
+};
 
 type Props = {
   images: string[];
   alt: string;
+  labels: GalleryLabels;
 };
 
-export function ProductGallery({ images, alt }: Props) {
-  const t = useTranslations("products");
+export function ProductGallery({ images, alt, labels }: Props) {
   const [active, setActive] = useState(0);
   const total = images.length;
   const current = images[active] ?? images[0];
@@ -28,7 +34,7 @@ export function ProductGallery({ images, alt }: Props) {
   return (
     <div>
       <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-midex-gray/65">
-        {t("galleryTitle")}
+        {labels.title}
       </p>
 
       <div className="overflow-hidden rounded-xl border border-midex-line bg-midex-surface/40 sm:rounded-2xl">
@@ -50,7 +56,7 @@ export function ProductGallery({ images, alt }: Props) {
                 type="button"
                 onClick={() => goTo(active - 1)}
                 className="absolute start-3 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-midex-line bg-white/95 text-midex-navy shadow-sm transition hover:border-midex-mint/50 hover:text-midex-blue"
-                aria-label={t("galleryPrevious")}
+                aria-label={labels.previous}
               >
                 ‹
               </button>
@@ -58,7 +64,7 @@ export function ProductGallery({ images, alt }: Props) {
                 type="button"
                 onClick={() => goTo(active + 1)}
                 className="absolute end-3 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-midex-line bg-white/95 text-midex-navy shadow-sm transition hover:border-midex-mint/50 hover:text-midex-blue"
-                aria-label={t("galleryNext")}
+                aria-label={labels.next}
               >
                 ›
               </button>
@@ -74,7 +80,7 @@ export function ProductGallery({ images, alt }: Props) {
         <div
           className="mt-3 flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           role="tablist"
-          aria-label={t("galleryTitle")}
+          aria-label={labels.title}
         >
           {images.map((src, index) => {
             const selected = index === active;
@@ -85,7 +91,7 @@ export function ProductGallery({ images, alt }: Props) {
                 type="button"
                 role="tab"
                 aria-selected={selected}
-                aria-label={t("galleryView", { number: index + 1 })}
+                aria-label={labels.view.replace("{number}", String(index + 1))}
                 onClick={() => setActive(index)}
                 className={`relative h-14 w-14 shrink-0 overflow-hidden rounded-lg border bg-white p-1 transition-all sm:h-[4.5rem] sm:w-[4.5rem] sm:rounded-xl sm:p-1.5 ${
                   selected

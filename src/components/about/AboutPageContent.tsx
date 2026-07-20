@@ -56,12 +56,13 @@ export async function AboutPageContent() {
   });
 
   const standards = {
+    eyebrow: pick(page.standardsSection?.eyebrow, t("standardsEyebrow")),
     title: pick(page.standardsSection?.title, t("standardsTitle")),
     subtitle: pick(page.standardsSection?.subtitle, t("standardsSubtitle")),
+    footnote: pick(page.standardsSection?.footnote, t("standardsText")),
     items: page.standardsSection?.items,
   };
-
-  const certificationsHeader = resolveSectionHeader(page.certificationsSection, {
+  const certifications = resolveSectionHeader(page.certificationsSection, {
     title: t("certificationsTitle"),
     subtitle: t("certificationsSubtitle"),
   });
@@ -80,6 +81,7 @@ export async function AboutPageContent() {
   const faq = resolveFaq(page.faq, {
     title: t("faqTitle"),
     intro: t("faqSubtitle"),
+    image: "/images/about/values/reliability.png",
     items: [1, 2, 3, 4, 5].map((index) => ({
       question: t(`faqQ${index}`),
       answer: t(`faqA${index}`),
@@ -92,6 +94,11 @@ export async function AboutPageContent() {
     primaryCta: t("contactUs"),
     primaryCtaHref: "/contact",
   });
+  const heroMetrics = {
+    primaryValue: pick(page.heroMetrics?.primaryValue, t("heroYears")),
+    primaryLabel: pick(page.heroMetrics?.primaryLabel, t("heroYearsLabel")),
+    badge: pick(page.heroMetrics?.badge, t("heroFocusLabel")),
+  };
 
   return (
     <>
@@ -109,15 +116,15 @@ export async function AboutPageContent() {
         <p className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-white/70 sm:mt-8">
           <span>
             <strong className="font-display text-2xl font-bold text-midex-mint">
-              {t("heroYears")}
+              {heroMetrics.primaryValue}
             </strong>{" "}
-            {t("heroYearsLabel")}
+            {heroMetrics.primaryLabel}
           </span>
           <span className="hidden text-white/25 sm:inline" aria-hidden>
             ·
           </span>
           <span className="rounded-full border border-white/15 bg-white/8 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-white/85">
-            {t("heroFocusLabel")}
+            {heroMetrics.badge}
           </span>
         </p>
       </PageHero>
@@ -136,12 +143,26 @@ export async function AboutPageContent() {
         <AboutFoundersSection title={foundersHeader.title} />
       )}
 
-      <AboutStandardsSection title={standards.title} subtitle={standards.subtitle} items={standards.items} />
+      <AboutStandardsSection
+        title={standards.title}
+        subtitle={standards.subtitle}
+        eyebrow={standards.eyebrow}
+        footnote={standards.footnote}
+        items={standards.items}
+      />
 
-      {isSectionEnabled(certificationsHeader.enabled) && (
+      <OurValuesSection
+        title={values.title}
+        subtitle={values.subtitle}
+        items={values.items}
+      />
+
+      {isSectionEnabled(certifications.enabled) && (
         <CertificationsSection
-          title={certificationsHeader.title}
-          subtitle={certificationsHeader.subtitle}
+          title={certifications.title}
+          subtitle={certifications.subtitle}
+          eyebrow={certifications.eyebrow}
+          footnote={certifications.footnote}
         />
       )}
 
@@ -152,8 +173,6 @@ export async function AboutPageContent() {
           subtitle={eventsHeader.subtitle}
         />
       )}
-
-      <OurValuesSection title={values.title} subtitle={values.subtitle} items={values.items} />
 
       {isSectionEnabled(faq.enabled) && (
         <AboutFaqSection content={faq} contactLabel={t("faqContact")} />

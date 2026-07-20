@@ -15,6 +15,7 @@ export const sectionHeader = defineType({
     defineField({ name: "eyebrow", title: "Eyebrow", type: "localeString" }),
     defineField({ name: "title", title: "Title", type: "localeString" }),
     defineField({ name: "subtitle", title: "Subtitle", type: "localeText" }),
+    defineField({ name: "footnote", title: "Footnote", type: "localeText" }),
     defineField({
       name: "image",
       title: "Section image",
@@ -50,6 +51,18 @@ export const pageHero = defineType({
       type: "imageWithAlt",
       description: "Optional side image shown on large screens.",
     }),
+  ],
+});
+
+/** About-page metrics displayed below the hero copy. */
+export const heroMetricsBlock = defineType({
+  name: "heroMetricsBlock",
+  title: "Hero metrics",
+  type: "object",
+  fields: [
+    defineField({ name: "primaryValue", title: "Primary value", type: "localeString" }),
+    defineField({ name: "primaryLabel", title: "Primary label", type: "localeString" }),
+    defineField({ name: "badge", title: "Focus badge", type: "localeString" }),
   ],
 });
 
@@ -94,6 +107,12 @@ export const promoSection = defineType({
     defineField({ name: "body", title: "Body", type: "localeText" }),
     defineField({ name: "ctaLabel", title: "CTA label", type: "localeString" }),
     defineField({ name: "ctaHref", title: "CTA link", type: "string" }),
+    defineField({
+      name: "badge",
+      title: "Image badge",
+      type: "localeString",
+      description: "Small label over the promo image (e.g. ASME BPE).",
+    }),
     defineField({ name: "image", title: "Image", type: "imageWithAlt" }),
     defineField({ name: "secondaryImage", title: "Secondary image", type: "imageWithAlt" }),
     defineField({
@@ -312,6 +331,46 @@ export const productDetailLabels = defineType({
     defineField({ name: "backToCatalog", title: "Back to catalog", type: "localeString" }),
     defineField({ name: "requestQuote", title: "Request quote", type: "localeString" }),
     defineField({ name: "relatedSolutionTitle", title: "Related solution", type: "localeString" }),
+    defineField({ name: "contactUs", title: "Contact us", type: "localeString" }),
+    defineField({ name: "galleryTitle", title: "Gallery title", type: "localeString" }),
+    defineField({ name: "galleryPrevious", title: "Previous image", type: "localeString" }),
+    defineField({ name: "galleryNext", title: "Next image", type: "localeString" }),
+    defineField({ name: "galleryView", title: "View image", type: "localeString" }),
+  ],
+});
+
+/** Case studies listing filters and card labels. */
+export const caseStudiesExplorerLabels = defineType({
+  name: "caseStudiesExplorerLabels",
+  title: "Case studies explorer labels",
+  type: "object",
+  fields: [
+    defineField({ name: "searchPlaceholder", title: "Search placeholder", type: "localeString" }),
+    defineField({ name: "all", title: "All filter", type: "localeString" }),
+    defineField({ name: "year", title: "Year filter", type: "localeString" }),
+    defineField({ name: "capability", title: "Capability filter", type: "localeString" }),
+    defineField({ name: "industry", title: "Industry filter", type: "localeString" }),
+    defineField({ name: "results", title: "Results label", type: "localeString" }),
+    defineField({ name: "noResults", title: "No results", type: "localeText" }),
+    defineField({ name: "clearFilters", title: "Clear filters", type: "localeString" }),
+    defineField({ name: "read", title: "Read case study", type: "localeString" }),
+    defineField({ name: "countLabel", title: "Hero count label", type: "localeString" }),
+    defineField({ name: "contactLabel", title: "FAQ contact label", type: "localeString" }),
+  ],
+});
+
+/** Blog article-template labels. */
+export const blogDetailLabels = defineType({
+  name: "blogDetailLabels",
+  title: "Blog detail labels",
+  type: "object",
+  fields: [
+    defineField({ name: "blogLabel", title: "Blog breadcrumb", type: "localeString" }),
+    defineField({ name: "minRead", title: "Minutes read suffix", type: "localeString" }),
+    defineField({ name: "authorLabel", title: "Author label", type: "localeString" }),
+    defineField({ name: "relatedPosts", title: "Related posts", type: "localeString" }),
+    defineField({ name: "backToBlog", title: "Back to blog", type: "localeString" }),
+    defineField({ name: "contactCta", title: "Contact CTA", type: "localeString" }),
   ],
 });
 

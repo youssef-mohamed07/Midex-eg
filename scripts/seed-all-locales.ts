@@ -65,8 +65,13 @@ async function main() {
     const tx = client.transaction();
 
     for (const { _id, doc } of slice) {
-      const { _id: _ignoredId, _rev, _createdAt, _updatedAt, _type, ...rest } =
-        doc;
+      const rest = { ...doc };
+      const _type = rest._type;
+      delete rest._id;
+      delete rest._rev;
+      delete rest._createdAt;
+      delete rest._updatedAt;
+      delete rest._type;
       tx.createOrReplace({
         _id,
         _type: String(_type),

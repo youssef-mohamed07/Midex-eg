@@ -176,7 +176,8 @@ export async function getSolutionChildPage(
         "relatedSectionTitle": ${loc("relatedSectionTitle")},
         "principles": ${principlesProjection()},
         "workflow": ${workflowProjection()},
-        "faq": ${faqProjection()}
+        "faq": ${faqProjection()},
+        "cta": ${pageCtaProjection("cta")}
       }
     }`,
     params: { locale, groupSlug, childSlug },

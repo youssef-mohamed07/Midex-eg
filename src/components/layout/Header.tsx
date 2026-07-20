@@ -563,24 +563,27 @@ export function Header({
   const th = useTranslations("home");
   const ts = useTranslations("solutions");
   const tp = useTranslations("products");
-  const labels = {
-    products: pickLabel(chrome.products, t("products")),
-    solutions: pickLabel(chrome.solutions, t("solutions")),
-    blog: pickLabel(chrome.blog, t("blog")),
-    caseStudies: pickLabel(chrome.caseStudies, t("caseStudies")),
-    aboutUs: pickLabel(chrome.aboutUs, t("aboutUs")),
-    contactUs: pickLabel(chrome.contactUs, t("contactUs")),
-    allSolutions: pickLabel(chrome.allSolutions, t("allSolutions")),
-    allCategories: pickLabel(chrome.allCategories, tp("allCategories")),
-    menu: pickLabel(chrome.menu, t("menu")),
-    close: pickLabel(chrome.close, t("close")),
-    capabilitiesTitle: pickLabel(chrome.capabilitiesTitle, th("capabilitiesTitle")),
-    capabilitiesSubtitle: pickLabel(
-      chrome.capabilitiesSubtitle,
-      th("capabilitiesSubtitle"),
-    ),
-    servicesLabel: pickLabel(chrome.servicesLabel, ts("services")),
-  };
+  const labels = useMemo(
+    () => ({
+      products: pickLabel(chrome.products, t("products")),
+      solutions: pickLabel(chrome.solutions, t("solutions")),
+      blog: pickLabel(chrome.blog, t("blog")),
+      caseStudies: pickLabel(chrome.caseStudies, t("caseStudies")),
+      aboutUs: pickLabel(chrome.aboutUs, t("aboutUs")),
+      contactUs: pickLabel(chrome.contactUs, t("contactUs")),
+      allSolutions: pickLabel(chrome.allSolutions, t("allSolutions")),
+      allCategories: pickLabel(chrome.allCategories, tp("allCategories")),
+      menu: pickLabel(chrome.menu, t("menu")),
+      close: pickLabel(chrome.close, t("close")),
+      capabilitiesTitle: pickLabel(chrome.capabilitiesTitle, th("capabilitiesTitle")),
+      capabilitiesSubtitle: pickLabel(
+        chrome.capabilitiesSubtitle,
+        th("capabilitiesSubtitle"),
+      ),
+      servicesLabel: pickLabel(chrome.servicesLabel, ts("services")),
+    }),
+    [chrome, t, th, tp, ts],
+  );
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [headerVisible, setHeaderVisible] = useState(true);

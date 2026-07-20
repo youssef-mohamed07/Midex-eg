@@ -4,11 +4,26 @@ import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
 import { getLocale } from "next-intl/server";
 import { getCompanyValues } from "@/lib/cms";
 import { pick } from "@/lib/cms/section-resolve";
-import { isValidImageSrc, resolveImageSrc } from "@/lib/cms/images";
+import { resolveImageSrc } from "@/lib/cms/images";
 import type { CompanyValue } from "@/lib/cms/types";
 import type { Locale } from "@/i18n/routing";
 
 const valueKeys = ["value1", "value2", "value3", "value4", "value5", "value6"] as const;
+
+const VALUE_IMAGE_FALLBACKS: Record<string, string> = {
+  precision: "/images/about/values/precision.png",
+  compliance: "/images/about/values/compliance.png",
+  reliability: "/images/about/values/reliability.png",
+  "full-traceability": "/images/about/values/full-traceability.png",
+  "contamination-control": "/images/about/values/contamination-control.png",
+  "proven-expertise": "/images/about/values/proven-expertise.png",
+  value1: "/images/about/values/precision.png",
+  value2: "/images/about/values/compliance.png",
+  value3: "/images/about/values/reliability.png",
+  value4: "/images/about/values/full-traceability.png",
+  value5: "/images/about/values/contamination-control.png",
+  value6: "/images/about/values/proven-expertise.png",
+};
 
 type Props = {
   title: string;
@@ -21,18 +36,25 @@ export async function OurValuesSection({ title, subtitle, items: itemsProp }: Pr
   const locale = (await getLocale()) as Locale;
   const companyValues = itemsProp ?? (await getCompanyValues(locale));
 
-  const values = valueKeys.map((key, index) => {
+  const sourceKeys =
+    companyValues.length > 0
+      ? companyValues.map((item, index) => item.id || valueKeys[index] || `value-${index + 1}`)
+      : [...valueKeys];
+  const values = sourceKeys.map((key, index) => {
     const cms = companyValues[index];
+    const cmsId = (cms?.id ?? "").toLowerCase();
+    const local =
+      VALUE_IMAGE_FALLBACKS[cmsId] ??
+      VALUE_IMAGE_FALLBACKS[key] ??
+      Object.values(VALUE_IMAGE_FALLBACKS)[index];
     return {
       id: cms?.id ?? key,
       image:
-        resolveImageSrc(cms?.image) ??
-        resolveImageSrc(companyValues[companyValues.length - 1]?.image) ??
-        "/images/hero/slide-1.png",
-      alt: cms?.alt ?? pick(cms?.title, t(`${key}Title`)),
+        resolveImageSrc(cms?.image) ?? local ?? "/images/hero/slide-1.png",
+      alt: cms?.alt ?? pick(cms?.title, valueKeys[index] ? t(`${valueKeys[index]}Title`) : ""),
       step: String(index + 1).padStart(2, "0"),
-      title: pick(cms?.title, t(`${key}Title`)),
-      text: pick(cms?.text, t(`${key}Text`)),
+      title: pick(cms?.title, valueKeys[index] ? t(`${valueKeys[index]}Title`) : ""),
+      text: pick(cms?.text, valueKeys[index] ? t(`${valueKeys[index]}Text`) : ""),
     };
   });
 

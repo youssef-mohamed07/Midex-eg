@@ -3,7 +3,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { CaseStudyGallery } from "@/components/case-studies/CaseStudyGallery";
 import { CaseStudyHero } from "@/components/case-studies/CaseStudyHero";
-import { getCaseStudies, getCaseStudy, getHomePageSections, getQuoteUrl } from "@/lib/cms";
+import { getCaseStudies, getCaseStudy, getCaseStudiesPageContent, getQuoteUrl } from "@/lib/cms";
 import { getCaseStudyGalleryImages } from "@/lib/cms/helpers";
 import { pick } from "@/lib/cms/section-resolve";
 import { type Locale } from "@/i18n/routing";
@@ -25,22 +25,22 @@ export async function CaseStudyDetailPageContent({ slug }: Props) {
   if (!study) notFound();
 
   const t = await getTranslations("home");
-  const [relatedAll, sections] = await Promise.all([
+  const [relatedAll, page] = await Promise.all([
     getCaseStudies(locale),
-    getHomePageSections(locale),
+    getCaseStudiesPageContent(locale),
   ]);
   const related = relatedAll.filter((item) => item.slug !== study.slug).slice(0, 3);
   const galleryImages = getCaseStudyGalleryImages(study);
   const labels = {
-    challenge: pick(sections.caseStudyLabels?.challengeLabel, t("caseStudyChallengeLabel")),
-    approach: pick(sections.caseStudyLabels?.approachLabel, t("caseStudyApproachLabel")),
-    scope: pick(sections.caseStudyLabels?.scopeLabel, t("caseStudyScopeLabel")),
-    highlights: pick(sections.caseStudyLabels?.highlightsLabel, t("caseStudyHighlightsLabel")),
-    outcome: pick(sections.caseStudyLabels?.outcomeLabel, t("caseStudyOutcomeLabel")),
-    discuss: pick(sections.caseStudyLabels?.discuss, t("caseStudyDiscuss")),
-    related: pick(sections.caseStudyLabels?.related, t("caseStudyRelated")),
-    back: pick(sections.caseStudyLabels?.back, t("caseStudyBack")),
-    gallery: pick(sections.caseStudyLabels?.galleryTitle, t("caseStudyGalleryTitle")),
+    challenge: pick(page.detailLabels?.challengeLabel, t("caseStudyChallengeLabel")),
+    approach: pick(page.detailLabels?.approachLabel, t("caseStudyApproachLabel")),
+    scope: pick(page.detailLabels?.scopeLabel, t("caseStudyScopeLabel")),
+    highlights: pick(page.detailLabels?.highlightsLabel, t("caseStudyHighlightsLabel")),
+    outcome: pick(page.detailLabels?.outcomeLabel, t("caseStudyOutcomeLabel")),
+    discuss: pick(page.detailLabels?.discuss, t("caseStudyDiscuss")),
+    related: pick(page.detailLabels?.related, t("caseStudyRelated")),
+    back: pick(page.detailLabels?.back, t("caseStudyBack")),
+    gallery: pick(page.detailLabels?.galleryTitle, t("caseStudyGalleryTitle")),
   };
 
   return (

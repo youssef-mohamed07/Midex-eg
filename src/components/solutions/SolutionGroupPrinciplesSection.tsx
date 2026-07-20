@@ -32,7 +32,7 @@ export async function SolutionGroupPrinciplesSection({ content }: Props) {
           }`}
         >
           {content.items.map((item, index) => {
-            const href = getSolutionPrincipleHref(item.id, productSlugs);
+            const href = item.href || getSolutionPrincipleHref(item.id, productSlugs);
             const card = (
               <>
                 <Image

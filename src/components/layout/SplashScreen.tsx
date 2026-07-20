@@ -1,35 +1,65 @@
 "use client";
 
-import Image from "next/image";
-import { useEffect, useState } from "react";
+import { startTransition, useEffect, useState } from "react";
 
+const STORAGE_KEY = "midex-splash-seen";
 const ANIMATION_DURATION_MS = 2_000;
-const FADE_DURATION_MS = 400;
+const FADE_DURATION_MS = 350;
+
+/** Survives React Strict Mode remounts in the same page load. */
+let splashLocked = false;
+
+function hasSeenSplash() {
+  try {
+    return window.sessionStorage.getItem(STORAGE_KEY) === "1";
+  } catch {
+    return true;
+  }
+}
+
+function markSplashSeen() {
+  try {
+    window.sessionStorage.setItem(STORAGE_KEY, "1");
+  } catch {
+    // ignore
+  }
+}
+
+function prefersReducedMotion() {
+  try {
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  } catch {
+    return false;
+  }
+}
 
 export function SplashScreen() {
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
   const [exiting, setExiting] = useState(false);
 
   useEffect(() => {
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    if (splashLocked || hasSeenSplash() || prefersReducedMotion()) {
+      return;
+    }
 
-    const exitTimer = window.setTimeout(
-      () => setExiting(true),
-      ANIMATION_DURATION_MS,
-    );
-    const removeTimer = window.setTimeout(
-      () => {
-        document.body.style.overflow = previousOverflow;
+    splashLocked = true;
+    startTransition(() => setVisible(true));
+
+    const exitTimer = window.setTimeout(() => {
+      startTransition(() => setExiting(true));
+    }, ANIMATION_DURATION_MS);
+
+    const doneTimer = window.setTimeout(() => {
+      markSplashSeen();
+      startTransition(() => {
         setVisible(false);
-      },
-      ANIMATION_DURATION_MS + FADE_DURATION_MS,
-    );
+        setExiting(false);
+      });
+    }, ANIMATION_DURATION_MS + FADE_DURATION_MS);
 
     return () => {
       window.clearTimeout(exitTimer);
-      window.clearTimeout(removeTimer);
-      document.body.style.overflow = previousOverflow;
+      window.clearTimeout(doneTimer);
     };
   }, []);
 
@@ -37,19 +67,21 @@ export function SplashScreen() {
 
   return (
     <div
-      className={`fixed inset-0 z-[9999] bg-black transition-opacity duration-[400ms] ease-out ${
-        exiting ? "pointer-events-none opacity-0" : "opacity-100"
+      className={`pointer-events-none fixed inset-0 z-[9999] flex items-center justify-center bg-black transition-opacity duration-300 ease-out ${
+        exiting ? "opacity-0" : "opacity-100"
       }`}
       aria-hidden="true"
     >
-      <Image
+      {/* eslint-disable-next-line @next/next/no-img-element -- animated GIF needs native img */}
+      <img
         src="/gif.gif"
         alt=""
-        fill
-        preload
-        unoptimized
-        sizes="100vw"
-        className="object-cover"
+        width={1920}
+        height={1080}
+        decoding="async"
+        fetchPriority="high"
+        draggable={false}
+        className="h-full w-full object-contain"
       />
     </div>
   );

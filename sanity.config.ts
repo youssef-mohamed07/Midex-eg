@@ -125,6 +125,7 @@ function structure(S: StructureBuilder) {
               singleton(S, "productsPage", "Products Page"),
               singleton(S, "solutionsPage", "Solutions Page"),
               singleton(S, "blogPage", "Blog Page"),
+              singleton(S, "caseStudiesPage", "Case Studies Page"),
             ]),
         ),
       S.listItem()

@@ -56,6 +56,11 @@ export async function ProductDetailPageContent({ slug }: Props) {
     backToCatalog: t("backToCatalog"),
     requestQuote: t("requestQuote"),
     relatedSolutionTitle: t("relatedSolutionTitle"),
+    contactUs: tn("contactUs"),
+    galleryTitle: t("galleryTitle"),
+    galleryPrevious: t("galleryPrevious"),
+    galleryNext: t("galleryNext"),
+    galleryView: t.raw("galleryView"),
   });
 
   const detailCta = resolvePageCta(page.detailCta, {
@@ -124,7 +129,16 @@ export async function ProductDetailPageContent({ slug }: Props) {
         <div className="mx-container">
           <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(280px,360px)] lg:items-start lg:gap-14">
             <aside className="order-1 space-y-4 sm:space-y-6 lg:order-2 lg:col-start-2 lg:sticky lg:top-24 lg:self-start">
-              <ProductGallery images={galleryImages} alt={product.title} />
+              <ProductGallery
+                images={galleryImages}
+                alt={product.title}
+                labels={{
+                  title: labels.galleryTitle,
+                  previous: labels.galleryPrevious,
+                  next: labels.galleryNext,
+                  view: labels.galleryView,
+                }}
+              />
 
               <div className="rounded-xl border border-midex-line bg-white p-4 shadow-sm sm:rounded-2xl sm:p-5">
                 <p className="text-xs font-semibold uppercase tracking-wider text-midex-blue">
@@ -144,7 +158,7 @@ export async function ProductDetailPageContent({ slug }: Props) {
                   className="mx-btn mx-btn-ghost mt-3 w-full justify-center"
                   href="/contact"
                 >
-                  {tn("contactUs")}
+                  {labels.contactUs}
                 </Link>
                 {product.category && categoryLabel && (
                   <Link

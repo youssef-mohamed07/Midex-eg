@@ -7,9 +7,9 @@ export const deliveryStepKeys = [
 ] as const;
 
 export const deliveryStepImages: Record<(typeof deliveryStepKeys)[number], string> = {
-  step1: "/images/hero/slide-1.png",
-  step2: "/images/services/welding-docs.png",
-  step3: "/images/services/orbital-welding.png",
-  step4: "/images/services/passivation-test.png",
-  step5: "/images/services/mirror-finish.png",
+  step1: "/images/process/step-1-site-assessment.png",
+  step2: "/images/process/step-2-plan-procedure.png",
+  step3: "/images/process/step-3-execution.png",
+  step4: "/images/process/step-4-inspection.png",
+  step5: "/images/process/step-5-documentation.png",
 };

@@ -43,6 +43,8 @@ export function resolvePathFromRoute(
       return "/blog";
     case "blog-post":
       return `/blog/${params.slug ?? ""}`;
+    case "case-studies":
+      return "/case-studies";
     case "case-study":
       return `/case-studies/${params.slug ?? ""}`;
     default:

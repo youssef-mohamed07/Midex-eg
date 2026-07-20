@@ -3,6 +3,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { PageHero } from "@/components/layout/PageHero";
 import { PageCtaSection } from "@/components/cms/PageCtaSection";
+import { PageHeroImage } from "@/components/cms/PageHeroImage";
 import { SolutionBreadcrumbs } from "@/components/solutions/SolutionBreadcrumbs";
 import { getGroupLabel } from "@/components/solutions/solution-labels";
 import { HomeFaqSection } from "@/components/home/HomeFaqSection";
@@ -52,6 +53,8 @@ export async function SolutionChildPageContent({ slug, childSlug }: Props) {
           title={page.heroTitle}
           subtitle={page.heroSubtitle}
           compact
+          mediaAlign="center"
+          media={<PageHeroImage src={child.image} alt={child.label} />}
           breadcrumbs={
             <SolutionBreadcrumbs
               light
@@ -135,6 +138,8 @@ export async function SolutionChildPageContent({ slug, childSlug }: Props) {
         title={child.label}
         subtitle={child.excerpt}
         compact
+        mediaAlign="center"
+        media={<PageHeroImage src={child.image} alt={child.label} />}
         breadcrumbs={
           <SolutionBreadcrumbs
             light

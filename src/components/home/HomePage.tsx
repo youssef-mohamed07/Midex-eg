@@ -15,9 +15,6 @@ import { PartnersSection } from "@/components/home/PartnersSection";
 import { ProductCategoriesSection } from "@/components/home/ProductCategoriesSection";
 import { StatsSection } from "@/components/home/StatsSection";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
-import { ServicesSection } from "@/components/home/ServicesSection";
-import { NewsSection } from "@/components/home/NewsSection";
-import { ClientLogosSection } from "@/components/home/ClientLogosSection";
 import { PageCtaSection } from "@/components/cms/PageCtaSection";
 import { getHomePageData, getHomePageSections } from "@/lib/cms";
 import { resolveHomeSectionOrder, type HomeSectionKey } from "@/lib/cms/section-driven";
@@ -79,24 +76,10 @@ export async function HomePage() {
     title: tp("title"),
     subtitle: tp("subtitle"),
   });
-  const servicesHeader = resolveSectionHeader(sections.servicesSection, {
-    title: t("servicesTitle"),
-    subtitle: t("servicesSubtitle"),
-  });
-  const newsHeader = resolveSectionHeader(sections.newsSection, {
-    title: t("blogTitle"),
-    subtitle: t("blogSubtitle"),
-    viewAllLabel: t("viewAllArticles"),
-  });
-  const clientLogosHeader = resolveSectionHeader(sections.clientLogosSection, {
-    title: t("partnersTitle"),
-  });
   const heroCopy = {
     slide1Title: pick(sections.heroCopy?.slide1Title, th("slide1Title")),
     slide1Text: pick(sections.heroCopy?.slide1Text, th("slide1Text")),
     requestQuote: pick(sections.heroCopy?.requestQuote, th("requestQuote")),
-    viewProducts: pick(sections.heroCopy?.viewProducts, th("viewProducts")),
-    viewProductsHref: sections.heroCopy?.viewProductsHref || "/products",
     seeSolutions: pick(sections.heroCopy?.seeSolutions, th("seeSolutions")),
   };
 
@@ -213,24 +196,9 @@ export async function HomePage() {
         testimonials={home.testimonials}
       />
     ) : null,
-    services: isSectionEnabled(servicesHeader.enabled) ? (
-      <ServicesSection
-        title={servicesHeader.title}
-        subtitle={servicesHeader.subtitle}
-        services={home.services}
-      />
-    ) : null,
-    news: isSectionEnabled(newsHeader.enabled) ? (
-      <NewsSection
-        locale={locale}
-        title={newsHeader.title}
-        subtitle={newsHeader.subtitle}
-        viewAllLabel={newsHeader.viewAllLabel}
-      />
-    ) : null,
-    clientLogos: isSectionEnabled(clientLogosHeader.enabled) ? (
-      <ClientLogosSection title={clientLogosHeader.title} logos={home.clientLogos} />
-    ) : null,
+    services: null,
+    news: null,
+    clientLogos: null,
     exclusive: isSectionEnabled(exclusive.enabled) ? (
       <ExclusivePartnersSection title={exclusive.title} partners={home.exclusivePartners} />
     ) : null,

@@ -76,7 +76,9 @@ export async function buildSeoMetadata(input: BuildSeoMetadataInput): Promise<Me
       title: seo.twitter.title ?? seo.title,
       description: seo.twitter.description ?? seo.description,
       images: seo.twitter.image ? [seo.twitter.image] : undefined,
-      site: siteConfig.twitterHandle,
+      ...(siteConfig.twitterHandle
+        ? { site: siteConfig.twitterHandle }
+        : {}),
     },
   };
 }

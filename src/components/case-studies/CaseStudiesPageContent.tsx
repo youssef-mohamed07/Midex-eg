@@ -5,6 +5,7 @@ import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import { CaseStudiesExplorer } from "@/components/case-studies/CaseStudiesExplorer";
 import { PageHero } from "@/components/layout/PageHero";
 import { PageCtaSection } from "@/components/cms/PageCtaSection";
+import { PageHeroImage } from "@/components/cms/PageHeroImage";
 import { getCaseStudies, getCaseStudiesPageContent } from "@/lib/cms";
 import {
   pick,
@@ -73,6 +74,8 @@ export async function CaseStudiesPageContent() {
         title={hero.title}
         subtitle={hero.subtitle}
         compact
+        mediaAlign="center"
+        media={<PageHeroImage src={hero.image} alt={hero.title} />}
       >
         <p className="mt-6 text-sm text-white/70 sm:mt-7">
           <strong className="font-semibold text-white">{studies.length}</strong>{" "}

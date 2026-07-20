@@ -68,6 +68,8 @@ const siteSettingsProjection = `{
   },
   "social": {
     "linkedIn": linkedIn,
+    "facebook": facebook,
+    "youtube": youtube,
     "twitter": twitter,
     "whatsApp": whatsApp
   },

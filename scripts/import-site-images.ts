@@ -576,14 +576,14 @@ async function patchProcessWorkflow() {
     console.log(`✓ process public ${step.publicName}`);
   }
 
-  // Step 5 folder is empty in the export — reuse inspection image.
-  if (!images[4] && images[3]) {
-    images[4] = images[3];
-    copyToPublic(
-      path.join(PUBLIC, "process/step-4-inspection.png"),
-      "process/step-5-documentation.png",
-    );
-    console.log("✓ process step-5 reuses inspection image");
+  // Step 5 folder is empty in the export — use the documentation desk photo.
+  if (!images[4]) {
+    const deskSrc = path.join(PUBLIC, "services/welding-docs.png");
+    if (existsSync(deskSrc)) {
+      const sourcePath = copyToPublic(deskSrc, "process/step-5-documentation.png");
+      images[4] = await uploadImage(deskSrc, sourcePath, "Documentation desk");
+      console.log("✓ process step-5 uses documentation desk image");
+    }
   }
 
   const groups = await client.fetch<

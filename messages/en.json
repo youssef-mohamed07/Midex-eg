@@ -31,9 +31,10 @@
     "open": "Connect with Midex",
     "close": "Close social links",
     "linkedIn": "LinkedIn",
+    "facebook": "Facebook",
+    "youtube": "YouTube",
     "whatsapp": "WhatsApp",
-    "email": "Email",
-    "twitter": "X (Twitter)"
+    "email": "Email"
   },
   "home": {
     "integratedEngineering": "Integrated Engineering",

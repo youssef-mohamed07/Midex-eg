@@ -439,6 +439,8 @@ export type LayoutChrome = {
   socialOpen?: string;
   socialClose?: string;
   socialLinkedIn?: string;
+  socialFacebook?: string;
+  socialYoutube?: string;
   socialWhatsapp?: string;
   socialEmail?: string;
   socialTwitter?: string;
@@ -684,6 +686,8 @@ export type SiteSettings = {
   };
   social: {
     linkedIn?: string;
+    facebook?: string;
+    youtube?: string;
     twitter?: string;
     whatsApp?: string;
   };

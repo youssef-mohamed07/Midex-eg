@@ -35,19 +35,11 @@ export function getProductImages(product: Pick<Product, "image" | "gallery">): s
   return [product.image];
 }
 
-/** Default project photos when a case study has no CMS gallery yet. */
-const DEFAULT_CASE_STUDY_GALLERY = [
-  "/images/services/orbital-welding.png",
-  "/images/services/mechanical-polishing.png",
-  "/images/services/spray-ball.png",
-  "/images/services/mirror-finish.png",
-] as const;
-
-/** Returns project gallery images for a case study. */
+/** Returns CMS project gallery images for a case study (empty until photos are uploaded). */
 export function getCaseStudyGalleryImages(
   study: Pick<CaseStudy, "slug" | "gallery">,
 ): string[] {
-  const gallery = study.gallery?.filter((src) => typeof src === "string" && src.trim().length > 0) ?? [];
-  if (gallery.length > 0) return gallery;
-  return [...DEFAULT_CASE_STUDY_GALLERY];
+  return (
+    study.gallery?.filter((src) => typeof src === "string" && src.trim().length > 0) ?? []
+  );
 }

@@ -1,5 +1,6 @@
 import { Link } from "@/i18n/navigation";
 import { PageHero } from "@/components/layout/PageHero";
+import { PageHeroImage } from "@/components/cms/PageHeroImage";
 import type { PageHeroContent } from "@/lib/cms/types";
 
 type Props = {
@@ -28,7 +29,14 @@ export function SolutionsPageHero({
   const secondaryCta = hero.secondaryCta?.trim() || secondaryCtaFallback;
 
   return (
-    <PageHero eyebrow={eyebrow} title={hero.title} subtitle={hero.subtitle} compact>
+    <PageHero
+      eyebrow={eyebrow}
+      title={hero.title}
+      subtitle={hero.subtitle}
+      compact
+      mediaAlign="center"
+      media={<PageHeroImage src={hero.image} alt={hero.title} />}
+    >
       <p className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-white/70 sm:mt-7">
         <span>
           <strong className="font-semibold text-white">{groupsCount}</strong> {groupsLabel}

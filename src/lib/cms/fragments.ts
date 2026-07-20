@@ -265,6 +265,8 @@ export const layoutChromeProjection = (field = "chrome") => `${field}{
   "socialOpen": ${locOptional("socialOpen")},
   "socialClose": ${locOptional("socialClose")},
   "socialLinkedIn": ${locOptional("socialLinkedIn")},
+  "socialFacebook": ${locOptional("socialFacebook")},
+  "socialYoutube": ${locOptional("socialYoutube")},
   "socialWhatsapp": ${locOptional("socialWhatsapp")},
   "socialEmail": ${locOptional("socialEmail")},
   "socialTwitter": ${locOptional("socialTwitter")},

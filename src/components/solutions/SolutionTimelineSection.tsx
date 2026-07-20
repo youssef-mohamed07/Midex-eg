@@ -4,6 +4,7 @@ import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
 import {
   deliveryStepImages,
   deliveryStepKeys,
+  resolveDeliveryStepImage,
 } from "@/components/solutions/solution-delivery-steps";
 import type { TimelineStepContent } from "@/lib/cms/types";
 import { pick } from "@/lib/cms/section-resolve";
@@ -24,7 +25,11 @@ export async function SolutionTimelineSection({
     return {
       title: pick(cmsStep?.title, t(`${key}Title`)),
       excerpt: pick(cmsStep?.text, t(`${key}Text`)),
-      image: cmsStep?.image || deliveryStepImages[key],
+      image: resolveDeliveryStepImage(
+        key,
+        cmsStep?.image || deliveryStepImages[key],
+        deliveryStepImages[key],
+      ),
     };
   });
 

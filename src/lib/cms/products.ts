@@ -1,6 +1,10 @@
 import "server-only";
 
 import type { Locale } from "@/i18n/routing";
+import {
+  EXCLUSIVE_BRAND_CATEGORY_SLUGS,
+  getExclusiveBrandCategory,
+} from "@/lib/cms/exclusive-brand-categories";
 import { sanityFetch } from "@/lib/cms/fetch";
 import {
   imageUrl,
@@ -9,6 +13,10 @@ import {
   locOptional,
   pageHeroProjection,
 } from "@/lib/cms/fragments";
+import {
+  getPrincipleProduct,
+  getPrincipleProductSlugs,
+} from "@/lib/content/solution-principle-products";
 import type {
   Product,
   ProductCategoryDetails,
@@ -52,7 +60,7 @@ export async function getProduct(slug: string, locale: Locale): Promise<Product 
     params: { locale, slug },
     tags: ["product", "productCategory"],
   });
-  return product ?? undefined;
+  return product ?? getPrincipleProduct(slug, locale);
 }
 
 export async function getProductsByCategory(
@@ -83,12 +91,26 @@ export async function getProductCategories(
     tags: ["productCategory"],
   });
 
-  return Object.fromEntries(
+  const fromCms = Object.fromEntries(
     categories.map(({ slug, label, description, image }) => [
       slug,
       { label, description, image: image || undefined },
     ]),
   );
+
+  for (const slug of EXCLUSIVE_BRAND_CATEGORY_SLUGS) {
+    if (fromCms[slug]) continue;
+    const brand = getExclusiveBrandCategory(slug, locale);
+    if (brand) {
+      fromCms[slug] = {
+        label: brand.label,
+        description: brand.description,
+        image: brand.image,
+      };
+    }
+  }
+
+  return fromCms;
 }
 
 export async function getProductCategory(
@@ -105,7 +127,7 @@ export async function getProductCategory(
     params: { locale, category },
     tags: ["productCategory"],
   });
-  return row ?? undefined;
+  return row ?? getExclusiveBrandCategory(category, locale);
 }
 
 export async function getProductCategoryDetails(
@@ -131,7 +153,9 @@ export async function getAllProductSlugs(): Promise<string[]> {
     query: `*[_type == "product"] | order(order asc) { "slug": slug.current }`,
     tags: ["product"],
   });
-  return rows.map((row) => row.slug);
+  const slugs = new Set(rows.map((row) => row.slug));
+  for (const slug of getPrincipleProductSlugs()) slugs.add(slug);
+  return [...slugs];
 }
 
 export async function getAllProductCategorySlugs(): Promise<string[]> {
@@ -139,5 +163,7 @@ export async function getAllProductCategorySlugs(): Promise<string[]> {
     query: `*[_type == "productCategory"] | order(order asc) { "slug": slug.current }`,
     tags: ["productCategory"],
   });
-  return rows.map((row) => row.slug);
+  const slugs = new Set(rows.map((row) => row.slug));
+  for (const slug of EXCLUSIVE_BRAND_CATEGORY_SLUGS) slugs.add(slug);
+  return [...slugs];
 }

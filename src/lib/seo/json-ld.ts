@@ -32,7 +32,8 @@ export function buildOrganizationJsonLd(settings?: SiteSettings | null) {
     },
     sameAs: [
       settings?.social.linkedIn ?? siteConfig.social.linkedIn,
-      settings?.social.twitter ?? siteConfig.social.twitter,
+      settings?.social.facebook ?? siteConfig.social.facebook,
+      settings?.social.youtube ?? siteConfig.social.youtube,
       settings?.social.whatsApp ?? siteConfig.social.whatsApp,
     ].filter(Boolean),
   };

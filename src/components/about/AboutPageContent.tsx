@@ -10,7 +10,6 @@ import { EventsSection } from "@/components/home/EventsSection";
 import { PageCtaSection } from "@/components/cms/PageCtaSection";
 import { PageHero } from "@/components/layout/PageHero";
 import { PageHeroImage } from "@/components/cms/PageHeroImage";
-import { isValidImageSrc } from "@/lib/cms/images";
 import {
   getAboutMilestones,
   getAboutPageContent,
@@ -62,6 +61,7 @@ export async function AboutPageContent() {
     footnote: pick(page.standardsSection?.footnote, t("standardsText")),
     items: page.standardsSection?.items,
   };
+  const showCertifications = false;
   const certifications = resolveSectionHeader(page.certificationsSection, {
     title: t("certificationsTitle"),
     subtitle: t("certificationsSubtitle"),
@@ -107,11 +107,7 @@ export async function AboutPageContent() {
         title={hero.title}
         subtitle={hero.subtitle}
         compact
-        media={
-          isValidImageSrc(hero.image) ? (
-            <PageHeroImage src={hero.image} alt={hero.title} priority />
-          ) : undefined
-        }
+        media={<PageHeroImage src={hero.image} alt={hero.title} priority />}
       >
         <p className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-white/70 sm:mt-8">
           <span>
@@ -157,7 +153,7 @@ export async function AboutPageContent() {
         items={values.items}
       />
 
-      {isSectionEnabled(certifications.enabled) && (
+      {showCertifications && isSectionEnabled(certifications.enabled) && (
         <CertificationsSection
           title={certifications.title}
           subtitle={certifications.subtitle}

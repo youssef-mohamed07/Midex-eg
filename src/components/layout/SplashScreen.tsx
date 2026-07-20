@@ -1,9 +1,10 @@
 "use client";
 
-import { startTransition, useEffect, useState } from "react";
+import { startTransition, useEffect, useRef, useState } from "react";
 
 const STORAGE_KEY = "midex-splash-seen";
-const ANIMATION_DURATION_MS = 2_000;
+/** Full playthrough of /public/gif.gif (91 frames ≈ 3.03s). */
+const GIF_DURATION_MS = 3_100;
 const FADE_DURATION_MS = 350;
 
 /** Survives React Strict Mode remounts in the same page load. */
@@ -36,6 +37,8 @@ function prefersReducedMotion() {
 export function SplashScreen() {
   const [visible, setVisible] = useState(false);
   const [exiting, setExiting] = useState(false);
+  const finishStarted = useRef(false);
+  const timers = useRef<number[]>([]);
 
   useEffect(() => {
     if (splashLocked || hasSeenSplash() || prefersReducedMotion()) {
@@ -45,9 +48,26 @@ export function SplashScreen() {
     splashLocked = true;
     startTransition(() => setVisible(true));
 
+    // Safety: never block the site if the GIF fails to load/decode.
+    const safetyTimer = window.setTimeout(() => {
+      finishSplash(0);
+    }, GIF_DURATION_MS + 4_000);
+    timers.current.push(safetyTimer);
+
+    return () => {
+      for (const id of timers.current) window.clearTimeout(id);
+      timers.current = [];
+    };
+  }, []);
+
+  function finishSplash(playMs = GIF_DURATION_MS) {
+    if (finishStarted.current) return;
+    finishStarted.current = true;
+
     const exitTimer = window.setTimeout(() => {
       startTransition(() => setExiting(true));
-    }, ANIMATION_DURATION_MS);
+    }, playMs);
+    timers.current.push(exitTimer);
 
     const doneTimer = window.setTimeout(() => {
       markSplashSeen();
@@ -55,20 +75,16 @@ export function SplashScreen() {
         setVisible(false);
         setExiting(false);
       });
-    }, ANIMATION_DURATION_MS + FADE_DURATION_MS);
-
-    return () => {
-      window.clearTimeout(exitTimer);
-      window.clearTimeout(doneTimer);
-    };
-  }, []);
+    }, playMs + FADE_DURATION_MS);
+    timers.current.push(doneTimer);
+  }
 
   if (!visible) return null;
 
   return (
     <div
-      className={`pointer-events-none fixed inset-0 z-[9999] flex items-center justify-center bg-black transition-opacity duration-300 ease-out ${
-        exiting ? "opacity-0" : "opacity-100"
+      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-black transition-opacity duration-300 ease-out ${
+        exiting ? "pointer-events-none opacity-0" : "opacity-100"
       }`}
       aria-hidden="true"
     >
@@ -81,6 +97,8 @@ export function SplashScreen() {
         decoding="async"
         fetchPriority="high"
         draggable={false}
+        onLoad={() => finishSplash()}
+        onError={() => finishSplash(0)}
         className="h-full w-full object-contain"
       />
     </div>

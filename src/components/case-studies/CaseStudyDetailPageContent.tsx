@@ -45,17 +45,15 @@ export async function CaseStudyDetailPageContent({ slug }: Props) {
 
   return (
     <>
-      <CaseStudyHero
-        study={study}
-        breadcrumbParent={t("caseStudiesTitle")}
-        heroImage={galleryImages[0]}
-      />
+      <CaseStudyHero study={study} breadcrumbParent={t("caseStudiesTitle")} />
 
-      <CaseStudyGallery
-        title={labels.gallery}
-        images={galleryImages}
-        alt={study.client}
-      />
+      {galleryImages.length > 0 ? (
+        <CaseStudyGallery
+          title={labels.gallery}
+          images={galleryImages}
+          alt={study.client}
+        />
+      ) : null}
 
       <section className="mx-section">
         <div className="mx-container">

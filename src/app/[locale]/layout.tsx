@@ -85,9 +85,10 @@ export default async function LocaleLayout({
           open: shell.chrome.socialOpen,
           close: shell.chrome.socialClose,
           linkedIn: shell.chrome.socialLinkedIn,
+          facebook: shell.chrome.socialFacebook,
+          youtube: shell.chrome.socialYoutube,
           whatsapp: shell.chrome.socialWhatsapp,
           email: shell.chrome.socialEmail,
-          twitter: shell.chrome.socialTwitter,
         }}
       />
       </div>

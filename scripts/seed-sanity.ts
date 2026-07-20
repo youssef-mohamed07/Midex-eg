@@ -299,9 +299,9 @@ async function seedSiteSettings() {
     mapsUrl: siteContact.mapsUrl,
     mapsEmbedUrl: siteContact.mapsEmbedUrl,
     linkedIn: siteConfig.social.linkedIn,
-    twitter: siteConfig.social.twitter,
+    facebook: siteConfig.social.facebook,
+    youtube: siteConfig.social.youtube,
     whatsApp: siteConfig.social.whatsApp,
-    twitterHandle: siteConfig.twitterHandle,
     manifestDescription:
       "Validated purified water, WFI, and hygienic process engineering for pharmaceutical, food, and cosmetics industries.",
     manifestBackgroundColor: "#080f1f",

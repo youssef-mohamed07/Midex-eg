@@ -12,11 +12,12 @@ type Props = {
 
 /** Fallback product/category paths when CMS href is empty. */
 const EXCLUSIVE_HREF_BY_NAME: Record<string, string> = {
-  truvia: "/products/category/piping-and-fitting",
-  "sing-tao": "/products",
-  singtao: "/products",
-  eternalwater: "/products",
-  eternal: "/products",
+  truvia: "/products/category/truvia",
+  "sing-tao": "/products/category/sing-tao",
+  singtao: "/products/category/sing-tao",
+  "eternal-water": "/products/category/eternal-water",
+  eternalwater: "/products/category/eternal-water",
+  eternal: "/products/category/eternal-water",
 };
 
 function partnerHref(partner: Partner): string {

@@ -15,13 +15,14 @@ export const siteConfig = {
     country: "EG",
   },
   social: {
-    linkedIn: "https://www.linkedin.com/company/midex-eg",
-    twitter: "https://x.com/midex_eg",
+    linkedIn: "https://www.linkedin.com/company/midex-eg/",
+    facebook: "https://www.facebook.com/share/194M9bvSDd/",
+    youtube: "https://www.youtube.com/@midexco",
     whatsApp: "https://wa.me/201026228403",
   },
   brandIcon: "/images/brand/favicon.svg",
   defaultOgImage: "/images/hero/slide-1.png",
-  twitterHandle: "@midex_eg",
+  twitterHandle: "",
   openGraphLocales: {
     en: "en_US",
     ar: "ar_EG",

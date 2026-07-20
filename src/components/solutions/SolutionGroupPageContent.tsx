@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { PageHero } from "@/components/layout/PageHero";
+import { PageHeroImage } from "@/components/cms/PageHeroImage";
 import { SolutionBreadcrumbs } from "@/components/solutions/SolutionBreadcrumbs";
 import {
   SolutionGroupCard,
@@ -66,6 +67,8 @@ export async function SolutionGroupPageContent({ slug }: Props) {
         title={group.heroTitle ?? label}
         subtitle={group.description}
         compact
+        mediaAlign="center"
+        media={<PageHeroImage src={group.image} alt={label} />}
         breadcrumbs={
           <SolutionBreadcrumbs
             light

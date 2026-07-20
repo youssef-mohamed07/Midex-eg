@@ -42,6 +42,8 @@ const siteSettingsQuery = `*[_type == "siteSettings"][0]{
   },
   "social": {
     "linkedIn": linkedIn,
+    "facebook": facebook,
+    "youtube": youtube,
     "twitter": twitter,
     "whatsApp": whatsApp
   },

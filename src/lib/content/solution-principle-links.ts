@@ -9,32 +9,15 @@ export const PRODUCT_LINKED_PRINCIPLE_IDS = new Set([
 ]);
 
 /** When the product slug differs from the principle key. */
-export const PRODUCT_SLUG_ALIASES: Record<string, string> = {
-  "reverse-osmosis": "reverse-osmosis-double-pass-station",
-};
+export const PRODUCT_SLUG_ALIASES: Record<string, string> = {};
 
-export function resolveProductSlug(
-  principleId: string,
-  productSlugs: readonly string[],
-): string | undefined {
+export function resolveProductSlug(principleId: string): string | undefined {
   if (!PRODUCT_LINKED_PRINCIPLE_IDS.has(principleId)) return undefined;
-
-  const candidates = [PRODUCT_SLUG_ALIASES[principleId], principleId].filter(
-    (slug): slug is string => Boolean(slug),
-  );
-
-  for (const slug of candidates) {
-    if (productSlugs.includes(slug)) return slug;
-  }
-
-  return undefined;
+  return PRODUCT_SLUG_ALIASES[principleId] ?? principleId;
 }
 
-export function getSolutionPrincipleHref(
-  principleId: string,
-  productSlugs: readonly string[],
-): string | undefined {
-  const slug = resolveProductSlug(principleId, productSlugs);
+export function getSolutionPrincipleHref(principleId: string): string | undefined {
+  const slug = resolveProductSlug(principleId);
   if (!slug) return undefined;
   return `/products/${slug}`;
 }

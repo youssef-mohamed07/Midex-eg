@@ -1,17 +1,33 @@
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
-import { getAllProductSlugs } from "@/lib/cms";
 import type { SolutionGroupPrinciplesContent } from "@/lib/cms/types";
-import { getSolutionPrincipleHref } from "@/lib/content/solution-principle-links";
+import { resolveOurStandardsImage } from "@/lib/content/our-standards-images";
+import {
+  getSolutionPrincipleHref,
+  PRODUCT_LINKED_PRINCIPLE_IDS,
+} from "@/lib/content/solution-principle-links";
 
 type Props = {
   content: SolutionGroupPrinciplesContent;
 };
 
-export async function SolutionGroupPrinciplesSection({ content }: Props) {
-  const productSlugs = await getAllProductSlugs();
+function resolvePrincipleCardImage(
+  item: SolutionGroupPrinciplesContent["items"][number],
+  index: number,
+  items: SolutionGroupPrinciplesContent["items"],
+): string {
+  // Keep product-technology cards (RO / EDI / sanitization, etc.) untouched.
+  const isProductGrid = items.some((entry) =>
+    PRODUCT_LINKED_PRINCIPLE_IDS.has(entry.id),
+  );
+  if (isProductGrid) return item.image;
 
+  // Same Our Standards photography on every standards-style principles grid.
+  return resolveOurStandardsImage(item.id, index) ?? item.image;
+}
+
+export async function SolutionGroupPrinciplesSection({ content }: Props) {
   return (
     <section className="mx-section">
       <div className="mx-container">
@@ -32,11 +48,12 @@ export async function SolutionGroupPrinciplesSection({ content }: Props) {
           }`}
         >
           {content.items.map((item, index) => {
-            const href = item.href || getSolutionPrincipleHref(item.id, productSlugs);
+            const href = item.href?.trim() || getSolutionPrincipleHref(item.id);
+            const image = resolvePrincipleCardImage(item, index, content.items);
             const card = (
               <>
                 <Image
-                  src={item.image}
+                  src={image}
                   alt={item.title}
                   fill
                   className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]"

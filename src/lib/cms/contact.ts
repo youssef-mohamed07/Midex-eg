@@ -30,8 +30,11 @@ export function resolveSiteContact(contact?: Partial<SiteContact> | null): SiteC
 export function resolveSocialLinks(social?: SiteSettings["social"] | null) {
   return {
     linkedIn: social?.linkedIn?.trim() || siteConfig.social.linkedIn,
-    twitter: social?.twitter?.trim() || siteConfig.social.twitter,
+    facebook: social?.facebook?.trim() || siteConfig.social.facebook,
+    youtube: social?.youtube?.trim() || siteConfig.social.youtube,
     whatsApp: social?.whatsApp?.trim() || siteConfig.social.whatsApp,
+    // No X/Twitter presence — ignore any CMS leftover URL.
+    twitter: undefined,
   };
 }
 

@@ -31,7 +31,7 @@ export async function getProductCategorySeoContext(slug: string, locale: Locale)
   if (!category) return null;
 
   const products = await getProductsByCategory(slug, locale);
-  const image = products[0]?.image;
+  const image = products[0]?.image || category.image;
 
   return {
     context: {

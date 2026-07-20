@@ -1,5 +1,6 @@
 import { ServicesTimeline } from "@/components/home/ServicesTimeline";
 import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
+import { resolveDeliveryStepImage } from "@/components/solutions/solution-delivery-steps";
 import type { SolutionGroupWorkflowContent } from "@/lib/cms/types";
 
 type Props = {
@@ -10,7 +11,7 @@ export function SolutionGroupWorkflowSection({ content }: Props) {
   const services = content.steps.map((step) => ({
     title: step.title,
     excerpt: step.text,
-    image: step.image,
+    image: resolveDeliveryStepImage(step.id, step.image),
   }));
 
   return (

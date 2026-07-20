@@ -1,88 +1,96 @@
 "use client";
 
-import { startTransition, useEffect, useRef, useState } from "react";
+import { useLayoutEffect, useState } from "react";
+import {
+  SPLASH_PENDING_CLASS,
+  SPLASH_STORAGE_KEY,
+} from "@/components/layout/splash-boot";
 
-const STORAGE_KEY = "midex-splash-seen";
 /** Full playthrough of /public/gif.gif (91 frames ≈ 3.03s). */
 const GIF_DURATION_MS = 3_100;
 const FADE_DURATION_MS = 350;
 
-/** Survives React Strict Mode remounts in the same page load. */
-let splashLocked = false;
+/** Module state survives Strict Mode remounts in the same page load. */
+let finishStarted = false;
+let exitTimers: number[] = [];
 
-function hasSeenSplash() {
-  try {
-    return window.sessionStorage.getItem(STORAGE_KEY) === "1";
-  } catch {
-    return true;
-  }
-}
+const splashHandlers: {
+  onExit: () => void;
+  onDone: () => void;
+} = {
+  onExit: () => undefined,
+  onDone: () => undefined,
+};
 
 function markSplashSeen() {
   try {
-    window.sessionStorage.setItem(STORAGE_KEY, "1");
+    window.sessionStorage.setItem(SPLASH_STORAGE_KEY, "1");
   } catch {
     // ignore
   }
 }
 
-function prefersReducedMotion() {
-  try {
-    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  } catch {
-    return false;
-  }
+function clearSplashPending() {
+  document.documentElement.classList.remove(SPLASH_PENDING_CLASS);
+}
+
+function finishSplash(playMs: number) {
+  if (finishStarted) return;
+  finishStarted = true;
+
+  for (const id of exitTimers) window.clearTimeout(id);
+  exitTimers = [];
+
+  exitTimers.push(
+    window.setTimeout(() => {
+      // Reveal the site under the fade — don't keep the black html cover.
+      clearSplashPending();
+      splashHandlers.onExit();
+    }, playMs),
+  );
+
+  exitTimers.push(
+    window.setTimeout(() => {
+      markSplashSeen();
+      splashHandlers.onDone();
+    }, playMs + FADE_DURATION_MS),
+  );
 }
 
 export function SplashScreen() {
   const [visible, setVisible] = useState(false);
   const [exiting, setExiting] = useState(false);
-  const finishStarted = useRef(false);
-  const timers = useRef<number[]>([]);
 
-  useEffect(() => {
-    if (splashLocked || hasSeenSplash() || prefersReducedMotion()) {
+  splashHandlers.onExit = () => setExiting(true);
+  splashHandlers.onDone = () => {
+    setVisible(false);
+    setExiting(false);
+  };
+
+  useLayoutEffect(() => {
+    if (!document.documentElement.classList.contains(SPLASH_PENDING_CLASS)) {
       return;
     }
 
-    splashLocked = true;
-    startTransition(() => setVisible(true));
+    // Show immediately (before paint) so the site never peeks through.
+    setVisible(true);
 
-    // Safety: never block the site if the GIF fails to load/decode.
+    if (finishStarted) return;
+
     const safetyTimer = window.setTimeout(() => {
       finishSplash(0);
     }, GIF_DURATION_MS + 4_000);
-    timers.current.push(safetyTimer);
 
     return () => {
-      for (const id of timers.current) window.clearTimeout(id);
-      timers.current = [];
+      window.clearTimeout(safetyTimer);
     };
   }, []);
-
-  function finishSplash(playMs = GIF_DURATION_MS) {
-    if (finishStarted.current) return;
-    finishStarted.current = true;
-
-    const exitTimer = window.setTimeout(() => {
-      startTransition(() => setExiting(true));
-    }, playMs);
-    timers.current.push(exitTimer);
-
-    const doneTimer = window.setTimeout(() => {
-      markSplashSeen();
-      startTransition(() => {
-        setVisible(false);
-        setExiting(false);
-      });
-    }, playMs + FADE_DURATION_MS);
-    timers.current.push(doneTimer);
-  }
 
   if (!visible) return null;
 
   return (
     <div
+      data-midex-splash
       className={`fixed inset-0 z-[9999] flex items-center justify-center bg-black transition-opacity duration-300 ease-out ${
         exiting ? "pointer-events-none opacity-0" : "opacity-100"
       }`}
@@ -97,7 +105,7 @@ export function SplashScreen() {
         decoding="async"
         fetchPriority="high"
         draggable={false}
-        onLoad={() => finishSplash()}
+        onLoad={() => finishSplash(GIF_DURATION_MS)}
         onError={() => finishSplash(0)}
         className="h-full w-full object-contain"
       />

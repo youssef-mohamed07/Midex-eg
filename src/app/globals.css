@@ -116,6 +116,24 @@
     overscroll-behavior-x: none;
   }
 
+  /* Cover the page before React mounts so first visit never flashes site → splash. */
+  html.midex-splash-pending {
+    background: #000;
+  }
+
+  html.midex-splash-pending body {
+    overflow: hidden;
+  }
+
+  html.midex-splash-pending::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    background: #000;
+    pointer-events: none;
+  }
+
   body {
     @apply font-body text-midex-ink antialiased bg-white;
     font-feature-settings: "kern", "liga", "calt";

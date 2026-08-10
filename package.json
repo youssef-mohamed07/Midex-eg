@@ -12,6 +12,7 @@
     "seed:sanity": "tsx scripts/seed-sanity.ts",
     "seed:locales": "tsx scripts/seed-all-locales.ts",
     "seed:content": "npm run patch:page-sections && npm run seed:locales && npm run seed:translations",
+    "seed:audit": "tsx scripts/apply-arabic-audit.ts",
     "seed:translations": "tsx scripts/translate-sanity-content.ts",
     "import:products": "tsx scripts/import-products-from-sheet.ts && npm run seed:translations",
     "import:case-studies": "tsx scripts/import-case-studies-from-sheet.ts && npm run seed:translations",

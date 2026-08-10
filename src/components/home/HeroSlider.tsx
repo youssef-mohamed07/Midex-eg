@@ -75,7 +75,7 @@ export function HeroSlider({
             {heroCopy.slide1Title}
           </h1>
 
-          <p className="mt-5 max-w-xl text-[15px] leading-relaxed text-white/80 text-pretty sm:mt-6 sm:text-lg">
+          <p className="mt-5 max-w-2xl text-[15px] leading-relaxed text-white/80 text-pretty sm:mt-6 sm:text-lg">
             {heroCopy.slide1Text}
           </p>
 

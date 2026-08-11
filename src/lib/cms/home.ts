@@ -224,7 +224,7 @@ export async function getHomePageData(locale: Locale): Promise<HomePageData> {
     events: data.events ?? [],
     partners: data.partners ?? [],
     exclusivePartners: data.exclusivePartners ?? [],
-    caseStudies: data.caseStudies ?? [],
+    caseStudies: (data.caseStudies ?? []).filter((cs) => cs.client !== "Cons Korra"),
     clientLogos: data.clientLogos ?? [],
     testimonials: data.testimonials ?? [],
     solutionCards,

@@ -1,21 +1,10 @@
 import { revalidatePath, revalidateTag } from "next/cache";
 import { NextResponse, type NextRequest } from "next/server";
 import { parseBody } from "next-sanity/webhook";
-import { routing } from "@/i18n/routing";
 
 type WebhookPayload = {
-  _id?: string;
   _type?: string;
 };
-
-function getPathsForDocument(type: string): string[] {
-  switch (type) {
-    case "homePage":
-      return routing.locales.map((locale) => `/${locale}`);
-    default:
-      return [];
-  }
-}
 
 /**
  * Sanity webhook target: revalidates the cache tag matching the changed
@@ -38,13 +27,14 @@ export async function POST(request: NextRequest) {
     }
 
     revalidateTag(body._type, { expire: 0 });
+    revalidatePath("/", "layout");
 
-    const paths = getPathsForDocument(body._type);
-    for (const path of paths) {
-      revalidatePath(path);
-    }
-
-    return NextResponse.json({ revalidated: true, tag: body._type, paths });
+    return NextResponse.json({
+      revalidated: true,
+      tag: body._type,
+      path: "/",
+      type: "layout",
+    });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json({ message }, { status: 500 });

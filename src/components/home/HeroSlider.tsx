@@ -58,13 +58,16 @@ export function HeroSlider({
             onError={() => setVideoFailed(true)}
           />
         ) : null}
-        <div className="absolute inset-0 bg-midex-navy/55" aria-hidden />
+        {/* Light overall tint so the video stays visible but readable */}
+        <div className="absolute inset-0 bg-midex-navy/10" aria-hidden />
+        {/* Dark gradient on the text side (start), fading to transparent on the far side (end) */}
         <div
-          className="absolute inset-0 bg-gradient-to-r from-midex-navy/85 via-midex-navy/50 to-midex-navy/25"
+          className="absolute inset-0 ltr:bg-gradient-to-r rtl:bg-gradient-to-l from-midex-navy/95 via-midex-navy/50 to-transparent"
           aria-hidden
         />
+        {/* Subtle bottom gradient to anchor the section */}
         <div
-          className="absolute inset-0 bg-gradient-to-t from-midex-navy/75 via-transparent to-midex-navy/35"
+          className="absolute inset-0 bg-gradient-to-t from-midex-navy/40 via-transparent to-transparent"
           aria-hidden
         />
       </div>

@@ -43,9 +43,11 @@ export type Founder = {
   nameKey: string;
   roleKey: string;
   bioKey: string;
+  quoteKey: string;
   name?: string;
   role?: string;
   bio?: string;
+  quote?: string;
 };
 
 export type Testimonial = {
@@ -699,4 +701,15 @@ export type SiteSettings = {
     themeColor: string;
   };
   robotsDisallow: string[];
+  promoPopup?: PromoPopupData;
+};
+
+export type PromoPopupData = {
+  isActive: boolean;
+  headline: string;
+  date: string;
+  body: string;
+  ctaLabel: string;
+  ctaUrl: string;
+  image: string;
 };

@@ -57,7 +57,7 @@ async function fetchPublished<T>(
 ): Promise<T> {
   const isDev = process.env.NODE_ENV === "development";
   const options = isDev
-    ? { cache: "no-store" as const }
+    ? { next: { revalidate: 30, tags } }
     : { next: { revalidate: CMS_REVALIDATE, tags } };
 
   try {
@@ -69,7 +69,12 @@ async function fetchPublished<T>(
       "[sanity] CDN fetch failed — retrying via api.sanity.io",
       error instanceof Error ? error.message : error,
     );
-    return getApiFallbackClient().fetch<T>(query, params, options);
+    try {
+      return await getApiFallbackClient().fetch<T>(query, params, options);
+    } catch (fallbackError) {
+      console.error("[sanity] Fallback fetch failed:", fallbackError);
+      return (Array.isArray(query) ? [] : {}) as T;
+    }
   }
 }
 

@@ -80,7 +80,16 @@ const siteSettingsProjection = `{
     "themeColor": coalesce(manifestThemeColor, "${brandManifest.themeColor}")
   },
   "robotsDisallow": coalesce(robotsDisallow, ["/api/"]),
-  "chrome": ${layoutChromeProjection("chrome")}
+  "chrome": ${layoutChromeProjection("chrome")},
+  "promoPopup": promoPopup {
+    "isActive": coalesce(isActive, false),
+    "headline": ${loc("headline")},
+    "date": ${loc("date")},
+    "body": ${loc("body")},
+    "ctaLabel": ${loc("ctaLabel")},
+    "ctaUrl": coalesce(ctaUrl, ""),
+    "image": ${imageUrl("image")}
+  }
 }`;
 
 const logosProjection = `{

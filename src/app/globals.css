@@ -439,11 +439,11 @@
   }
 
   .mx-marquee-track--events {
-    animation: marquee 42s linear infinite;
+    animation: marquee 180s linear infinite;
   }
 
   .mx-marquee-track--events.mx-marquee-track--reverse {
-    animation: marquee-reverse 42s linear infinite;
+    animation: marquee-reverse 180s linear infinite;
   }
 
   .mx-marquee-track--testimonials {

@@ -6,6 +6,7 @@ import { routing, type Locale } from "@/i18n/routing";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { FloatingSocialButton } from "@/components/layout/FloatingSocialButton";
+import { PromoPopup } from "@/components/layout/PromoPopup";
 import { LocaleDirectionSync } from "@/components/layout/LocaleDirectionSync";
 import { getSiteUrl, siteConfig } from "@/lib/seo/config";
 import { buildSiteIcons } from "@/lib/seo/metadata";
@@ -96,6 +97,7 @@ export default async function LocaleLayout({
           email: shell.chrome.socialEmail,
         }}
       />
+      <PromoPopup data={shell.settings?.promoPopup} />
       </div>
     </NextIntlClientProvider>
   );

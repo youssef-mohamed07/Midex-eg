@@ -58,22 +58,26 @@ function finishSplash(playMs: number) {
 }
 
 export function SplashScreen() {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(() => {
+    if (typeof document !== "undefined") {
+      return document.documentElement.classList.contains(SPLASH_PENDING_CLASS);
+    }
+    return false;
+  });
   const [exiting, setExiting] = useState(false);
 
-  splashHandlers.onExit = () => setExiting(true);
-  splashHandlers.onDone = () => {
-    setVisible(false);
-    setExiting(false);
-  };
+  useLayoutEffect(() => {
+    splashHandlers.onExit = () => setExiting(true);
+    splashHandlers.onDone = () => {
+      setVisible(false);
+      setExiting(false);
+    };
+  }, []);
 
   useLayoutEffect(() => {
     if (!document.documentElement.classList.contains(SPLASH_PENDING_CLASS)) {
       return;
     }
-
-    // Show immediately (before paint) so the site never peeks through.
-    setVisible(true);
 
     if (finishStarted) return;
 
@@ -107,7 +111,7 @@ export function SplashScreen() {
         draggable={false}
         onLoad={() => finishSplash(GIF_DURATION_MS)}
         onError={() => finishSplash(0)}
-        className="h-full w-full object-contain"
+        className="h-full w-full object-cover"
       />
     </div>
   );

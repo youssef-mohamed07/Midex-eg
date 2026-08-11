@@ -208,9 +208,11 @@ export async function getAboutFounders(locale: Locale): Promise<Founder[]> {
         nameKey,
         roleKey,
         bioKey,
-        "name": ${locOptional("name")},
-        "role": ${locOptional("role")},
-        "bio": ${locOptional("bio")}
+        "quoteKey": coalesce(quoteKey, "quoteKey_fallback"),
+        "name": coalesce(name[$locale], name.en, name),
+        "role": coalesce(role[$locale], role.en, role),
+        "bio": coalesce(bio[$locale], bio.en, bio),
+        "quote": coalesce(quote[$locale], quote.en, quote)
       }`,
       params: { locale },
       tags: ["founder"],
@@ -239,9 +241,11 @@ export async function getAboutFounders(locale: Locale): Promise<Founder[]> {
       nameKey: "founder2Name",
       roleKey: abdelrahman?.roleKey ?? "founder2Role",
       bioKey: abdelrahman?.bioKey ?? "founder2Bio",
+      quoteKey: "founder2Quote",
       name: abdelrahman?.name,
       role: abdelrahman?.role,
       bio: abdelrahman?.bio,
+      quote: abdelrahman?.quote,
       image: FOUNDER_IMAGES.abdelrahman,
     },
     {
@@ -249,9 +253,11 @@ export async function getAboutFounders(locale: Locale): Promise<Founder[]> {
       nameKey: "founder1Name",
       roleKey: mohamed?.roleKey ?? "founder1Role",
       bioKey: mohamed?.bioKey ?? "founder1Bio",
+      quoteKey: "founder1Quote",
       name: mohamed?.name,
       role: mohamed?.role,
       bio: mohamed?.bio,
+      quote: mohamed?.quote,
       image: FOUNDER_IMAGES.mohamed,
     },
   ];
@@ -346,7 +352,7 @@ export async function getNewsItems(locale: Locale): Promise<NewsItem[]> {
 }
 
 export async function getCaseStudies(locale: Locale): Promise<CaseStudy[]> {
-  return sanityFetch<CaseStudy[]>({
+  const caseStudies = await sanityFetch<CaseStudy[]>({
     query: `*[_type == "caseStudy"] | order(order asc) {
       "slug": slug.current,
       client,
@@ -366,6 +372,69 @@ export async function getCaseStudies(locale: Locale): Promise<CaseStudy[]> {
     params: { locale },
     tags: ["caseStudy"],
   });
+
+  // HOTFIX: Sanity API mutations are blocked by policy (403), so we filter out 
+  // the old duplicated "Cons Korra" case studies and inject the consolidated one locally.
+  const filtered = caseStudies.filter((cs) => cs.client !== "Cons Korra");
+
+  const korraImage = caseStudies.find((cs) => cs.client === "Cons Korra")?.image ?? "";
+
+  const korraConsolidated: CaseStudy = {
+    slug: "cons-korra-portfolio",
+    client: "Cons Korra",
+    image: korraImage,
+    industry: locale === "ar" ? "الصيدلانية" : locale === "de" ? "Pharmazeutisch" : "Pharmaceutical",
+    scope: locale === "ar" 
+      ? "شراكة مستمرة كمقاول من الباطن ضمن نطاق المقاولات العامة، تمتد عبر عدة منشآت من بينها VBC ومصر للمستحضرات ومينا فارم — وتشمل شبكات أنابيب من الستانلس ستيل، وحلقات مياه منقاة ومياه حقن، وشبكات هواء مضغوط وغازات نظيفة، وتطوير محطات المياه وتوريد قطع الغيار."
+      : locale === "de"
+      ? "Laufende Generalunternehmer-Partnerschaft für mehrere Anlagen, darunter VBC, Misr Company For Pharmaceuticals und Mina Pharm - einschließlich Edelstahl-Rohrleitungsnetze, gereinigtes Wasser und WFI-Kreisläufe, Druckluft- und Reingasnetze sowie Modernisierung von Wasserstationen und Ersatzteillieferung."
+      : "Ongoing general-contracting partnership spanning multiple facilities, including VBC, Misr Company For Pharmaceuticals, and Mina Pharm — covering stainless-steel piping networks, purified water and WFI loops, compressed air and clean gases networks, and water station upgrades and spare parts supply.",
+    intro: locale === "ar"
+      ? "Cons Korra مقاول عام تتعاون معه ميدكس عبر عدة منشآت صيدلانية — من بينها VBC، ومصر للمستحضرات (Misr Company For Pharmaceuticals)، ومينا فارم — حيث تقدّم ميدكس أنابيب صحية وشبكات مرافق وأنظمة مياه منقاة مصممة خصيصًا لكل موقع."
+      : locale === "de"
+      ? "Cons Korra ist ein Generalunternehmer, mit dem MIDEX in verschiedenen pharmazeutischen Anlagen - darunter VBC, Misr Company For Pharmaceuticals und Mina Pharm - zusammengearbeitet hat, um hygienische Rohrleitungen, Versorgungsnetze und Systeme für gereinigtes Wasser maßgeschneidert für jeden Standort zu liefern."
+      : "Cons Korra is a general contractor MIDEX has partnered with across multiple pharmaceutical facilities — including VBC, Misr Company For Pharmaceuticals, and Mina Pharm — delivering hygienic piping, utility networks, and purified water systems tailored to each site.",
+    challenge: locale === "ar"
+      ? "بصفتها المقاول العام لمشاريع صيدلانية كبرى، احتاجت Cons Korra إلى مقاول من الباطن متخصص في الهندسة الصحية، قادر على تقديم أنظمة متوافقة ومتسقة عبر محفظة من منشآت العملاء المختلفة — لكل منها تخطيطها وجدولها الزمني ومتطلباتها الفنية الخاصة."
+      : locale === "de"
+      ? "Als Generalunternehmer für große Pharmabauten benötigte Cons Korra einen spezialisierten Subunternehmer für Hygiene-Engineering, der in der Lage ist, konsistente, konforme Systeme für ein Portfolio verschiedener Endkundenanlagen zu liefern - jede mit ihrem eigenen Layout, Zeitplan und technischen Anforderungen."
+      : "As general contractor on large pharmaceutical builds, Cons Korra needed a specialized hygienic-engineering subcontractor capable of delivering consistent, compliant systems across a portfolio of different end-client facilities — each with its own layout, timeline, and technical requirements.",
+    approach: locale === "ar"
+      ? "تعمل ميدكس كشريك هندسي صحي لـCons Korra مشروعًا بمشروع، وتُكيّف تصميمات أنابيب الستانلس ستيل وأنظمة المياه وشبكات المرافق مع كل منشأة، مع الالتزام بنفس معايير GMP في كل تركيب."
+      : locale === "de"
+      ? "MIDEX arbeitet als Cons Korras Partner für hygienisches Engineering Projekt für Projekt und passt die Designs für Edelstahlrohrleitungen, Wassersysteme und Versorgungsnetze an jede Anlage an, wobei jede Installation an den gleichen GMP-ausgerichteten Standard gehalten wird."
+      : "MIDEX works as Cons Korra's hygienic engineering partner project by project, adapting stainless-steel piping, water systems, and utility network designs to each facility while holding every installation to the same GMP-aligned standard.",
+    highlights: locale === "ar"
+      ? [
+          "شبكات أنابيب من الستانلس ستيل عبر عدة منشآت",
+          "تركيب حلقات مياه منقاة (PW) ومياه حقن (WFI)",
+          "شبكات هواء مضغوط وغازات نظيفة",
+          "تطوير محطات المياه وتعديلاتها وتوريد قطع الغيار"
+        ]
+      : locale === "de"
+      ? [
+          "Edelstahl-Rohrleitungsnetze in mehreren Anlagen",
+          "Installationen von gereinigtem Wasser (PW) und WFI-Kreisläufen",
+          "Druckluft- und Reingasnetze",
+          "Modernisierung und Anpassung von Wasserstationen sowie Ersatzteillieferung"
+        ]
+      : [
+          "Stainless-steel piping networks across multiple facilities",
+          "Purified water (PW) and WFI loop installations",
+          "Compressed air and clean gases networks",
+          "Water station upgrades, modifications, and spare parts supply"
+        ],
+    outcome: locale === "ar"
+      ? "تواصل Cons Korra الاعتماد على ميدكس كمقاول الهندسة الصحية المفضّل لديها عبر محفظة مشاريعها الصيدلانية، بمعيار امتثال ثابت من موقع لآخر."
+      : locale === "de"
+      ? "Cons Korra verlässt sich weiterhin auf MIDEX als Subunternehmer für Hygiene-Engineering für sein gesamtes Portfolio an Pharmaprojekten, mit einem konsistenten Compliance-Standard von Standort zu Standort."
+      : "Cons Korra continues to rely on MIDEX as its go-to hygienic engineering subcontractor across its portfolio of pharmaceutical projects, with a consistent standard of compliance delivered site to site.",
+    statValue: "",
+    statLabel: "",
+    tags: locale === "ar" ? ["الفولاذ المقاوم للصدأ", "الأنظمة"] : locale === "de" ? ["Edelstahl", "Systeme"] : ["Stainless Steel", "Systems"],
+  };
+
+  return [korraConsolidated, ...filtered];
 }
 
 export async function getCaseStudy(

@@ -16,6 +16,7 @@ export const siteSettings = defineType({
     { name: "social", title: "Social" },
     { name: "chrome", title: "Nav & Footer" },
     { name: "manifest", title: "Manifest & Robots" },
+    { name: "promo", title: "Promo Popup" },
   ],
   fields: [
     defineField({ name: "name", title: "Site name", type: "string", group: "identity", validation: required }),
@@ -79,6 +80,13 @@ export const siteSettings = defineType({
       type: "array",
       of: [{ type: "string" }],
       group: "manifest",
+    }),
+    defineField({
+      name: "promoPopup",
+      title: "Promotional Popup",
+      type: "promoPopup",
+      group: "promo",
+      description: "Manage the global promotional popup shown to visitors.",
     }),
   ],
   preview: { prepare: () => ({ title: "Site Settings" }) },

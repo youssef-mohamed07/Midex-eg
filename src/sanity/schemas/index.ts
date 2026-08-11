@@ -12,6 +12,7 @@ import {
   specItem,
   workflowSection,
   workflowStep,
+  promoPopup,
 } from "./objects";
 import {
   beforeAfterContent,
@@ -83,6 +84,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   principlesSection,
   workflowSection,
   faqSection,
+  promoPopup,
   seoFields,
   sectionHeader,
   pageHero,

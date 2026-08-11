@@ -61,7 +61,7 @@ function EventsMarquee({
   const track = [...events, ...events];
 
   return (
-    <div className="mx-marquee-fade mx-marquee-fade--white">
+    <div className="relative w-full overflow-hidden">
       <div
         className={`mx-marquee-track mx-marquee-track--events gap-4 sm:gap-5 ${
           direction === "right" ? "mx-marquee-track--reverse" : ""

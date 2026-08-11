@@ -4,7 +4,7 @@
   "private": true,
   "description": "Midex corporate website — Next.js",
   "scripts": {
-    "dev": "NODE_OPTIONS=--no-experimental-webstorage next dev",
+    "dev": "NODE_OPTIONS=--no-experimental-webstorage next dev --webpack",
     "build": "NODE_OPTIONS=--no-experimental-webstorage next build",
     "start": "NODE_OPTIONS=--no-experimental-webstorage next start",
     "lint": "eslint",
@@ -19,7 +19,9 @@
     "import:case-study-images": "tsx scripts/import-case-study-images.ts",
     "import:site-images": "tsx scripts/import-site-images.ts",
     "patch:page-sections": "tsx scripts/patch-page-sections.ts",
-    "patch:testimonial-names": "tsx scripts/patch-testimonial-names.ts"
+    "patch:testimonial-names": "tsx scripts/patch-testimonial-names.ts",
+    "sanity:case-studies": "tsx scripts/sync-case-studies.ts",
+    "sanity:case-studies:dry-run": "DRY_RUN=true tsx scripts/sync-case-studies.ts"
   },
   "dependencies": {
     "@sanity/image-url": "^2.1.1",

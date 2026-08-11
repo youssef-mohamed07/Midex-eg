@@ -322,3 +322,49 @@ export const seoFields = defineType({
     }),
   ],
 });
+
+/** Promotional popup schema used in siteSettings */
+export const promoPopup = defineType({
+  name: "promoPopup",
+  title: "Promotional Popup",
+  type: "object",
+  fields: [
+    defineField({
+      name: "isActive",
+      title: "Is Active",
+      type: "boolean",
+      description: "Toggle to show or hide the popup across the site.",
+      initialValue: false,
+    }),
+    defineField({
+      name: "headline",
+      title: "Headline",
+      type: "localeString",
+    }),
+    defineField({
+      name: "date",
+      title: "Date / Time",
+      type: "localeString",
+    }),
+    defineField({
+      name: "body",
+      title: "Body Copy",
+      type: "localeText",
+    }),
+    defineField({
+      name: "ctaLabel",
+      title: "Button Label",
+      type: "localeString",
+    }),
+    defineField({
+      name: "ctaUrl",
+      title: "Button URL",
+      type: "url",
+    }),
+    defineField({
+      name: "image",
+      title: "Image",
+      type: "imageWithAlt",
+    }),
+  ],
+});

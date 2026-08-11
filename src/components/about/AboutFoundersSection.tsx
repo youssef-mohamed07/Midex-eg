@@ -29,6 +29,7 @@ export async function AboutFoundersSection({ title }: Props) {
             {aboutFounders.map((founder, index) => {
               const name = pick(founder.name, t(founder.nameKey));
               const role = pick(founder.role, t(founder.roleKey));
+              const quote = pick(founder.quote, founder.quoteKey ? t(founder.quoteKey as any) : undefined);
 
               return (
                 <RevealOnScroll key={founder.id} delay={index * 70} className="h-full">
@@ -54,6 +55,11 @@ export async function AboutFoundersSection({ title }: Props) {
                       <p className="mt-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-midex-blue sm:text-xs">
                         {role}
                       </p>
+                      {quote && (
+                        <blockquote className="mt-4 border-l-2 border-midex-mint/30 pl-4 text-sm leading-relaxed text-midex-navy/80 sm:mt-5 sm:text-[15px]">
+                          <p>&ldquo;{quote}&rdquo;</p>
+                        </blockquote>
+                      )}
                     </div>
                   </article>
                 </RevealOnScroll>

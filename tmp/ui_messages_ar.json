@@ -1,0 +1,2042 @@
+[
+  {
+    "namespace": "about",
+    "entries": [
+      {
+        "key": "title",
+        "ar": "نهندس النقاء ونبني الثقة",
+        "en": "Engineering Purity, Building Trust"
+      },
+      {
+        "key": "subtitle",
+        "ar": "لأكثر من 15 عاماً، تصمم ميدكس وتركب أنظمة أنابيب متقدمة وحلولاً متكاملة للنقل الآمن والصحي للسوائل والغازات — موثوقة من عملاء الأدوية والأغذية والمشروبات والتقنية الحيوية والمختبرات والرعاية الصحية الذين يتطلبون الدقة.",
+        "en": "For over 15 years, MIDEX has designed and installed advanced piping systems and integrated solutions for the safe, hygienic transfer of liquids and gases — trusted by pharmaceutical, food & beverage, biotechnology, laboratory, and healthcare clients who demand precision."
+      },
+      {
+        "key": "intro",
+        "ar": "ميدكس للمشروعات المتكاملة والمقاولات تقدم هندسة مُؤهَّلة ومتحقق من أدائها لصناعات الأدوية والأغذية ومستحضرات التجميل في مصر والمنطقة.",
+        "en": "Midex for Integrated Projects and Contracting delivers validated engineering for pharmaceutical, food, and cosmetics industries across Egypt and the region."
+      },
+      {
+        "key": "storyLabel",
+        "ar": "قصتنا",
+        "en": "Our story"
+      },
+      {
+        "key": "storyTitle",
+        "ar": "هندسة يمكنك الاعتماد عليها",
+        "en": "Engineering you can validate"
+      },
+      {
+        "key": "storyText1",
+        "ar": "ميدكس شركة هندسية متخصصة تخدم صناعات الأدوية والأغذية ومستحضرات التجميل. نصمم وننفذ أنظمة المياه المنقاة (PW) وتخزين WFI والتحكم في العمليات الصحية.",
+        "en": "Midex is a specialized engineering company serving the pharmaceutical, food, and cosmetics industries. We design, build, and commission purified water systems, WFI storage and distribution, and hygienic process controls."
+      },
+      {
+        "key": "storyText2",
+        "ar": "من الفكرة إلى التأهيل، يقدم فريقنا مشاريع متكاملة مع التوثيق والتتبع والدعم الذي تتطلبه منشآت GMP.",
+        "en": "From concept to qualification, our team delivers turnkey projects with the documentation, traceability, and support that GMP facilities require."
+      },
+      {
+        "key": "exploreSolutions",
+        "ar": "استكشف حلولنا",
+        "en": "Explore our solutions"
+      },
+      {
+        "key": "missionVisionTitle",
+        "ar": "ما يحرّكنا",
+        "en": "What Drives Us"
+      },
+      {
+        "key": "visionLabel",
+        "ar": "الرؤية",
+        "en": "Vision"
+      },
+      {
+        "key": "visionText",
+        "ar": "أن نكون المزود الرائد للحلول الهندسية المبتكرة والموثوقة لصناعات الأدوية والأغذية والمشروبات ومستحضرات التجميل — لضمان أعلى معايير الجودة والسلامة والكفاءة في توليد المياه المنقاة (PW) وأنظمة العمليات الصحية على مستوى العالم.",
+        "en": "To be the leading provider of innovative and reliable engineering solutions for the pharmaceutical, food & beverage, and cosmetics industries — ensuring the highest standards of quality, safety, and efficiency in purified water generation and hygienic process systems worldwide."
+      },
+      {
+        "key": "missionLabel",
+        "ar": "المهمة",
+        "en": "Mission"
+      },
+      {
+        "key": "missionText",
+        "ar": "تقديم حلول هندسية متكاملة استثنائية من خلال خبرتنا في أنظمة المياه المنقاة (PW) والتحكم في العمليات الصحية وشبكات أنابيب المرافق (Utility Piping) — مع الالتزام بالمعايير العالمية مثل FDA و ISPE و ASME BPE و EHEDG، وتجاوز توقعات العملاء في كل مرحلة.",
+        "en": "To deliver exceptional turnkey engineering solutions by leveraging our expertise in purified water systems, hygienic process controls, and utility transfer pipelines — adhering to global standards such as FDA, ISPE, ASME BPE, and EHEDG, and exceeding client expectations at every stage."
+      },
+      {
+        "key": "milestonesTitle",
+        "ar": "أكثر من 15 عاماً من أثر قابل للقياس",
+        "en": "15+ Years of Measurable Impact"
+      },
+      {
+        "key": "milestonesSubtitle",
+        "ar": "من التأسيس إلى الريادة — الأرقام وراء رحلتنا.",
+        "en": "From foundation to leadership — the numbers behind our journey."
+      },
+      {
+        "key": "milestone1",
+        "ar": "محطات مياه منقاة (PW) (PW) كاملة تم بناؤها",
+        "en": "Complete Purified Water (PW) stations built"
+      },
+      {
+        "key": "milestone2",
+        "ar": "محطات قائمة تم تعديلها وترقيتها",
+        "en": "Existing stations modified and upgraded"
+      },
+      {
+        "key": "milestone3",
+        "ar": "خطوط إنتاج تم تحسين أدائها",
+        "en": "Production lines improved for performance"
+      },
+      {
+        "key": "milestone4",
+        "ar": "خطوط إنتاج تشغيلية كاملة تم تسليمها",
+        "en": "Fully operational production lines delivered"
+      },
+      {
+        "key": "milestone5",
+        "ar": "نظام صرف صحي كامل تم تصميمه وتركيبه",
+        "en": "Complete sanitary drainage systems designed and installed"
+      },
+      {
+        "key": "milestone6",
+        "ar": "فلاتر تهوية مُسخَّنة (Heated Vent Filters) تم تصنيعه وتسليمه",
+        "en": "Heated Vent Filters manufactured and delivered"
+      },
+      {
+        "key": "milestone7",
+        "ar": "مصرف صحي تم تصنيعه وتسليمه",
+        "en": "Sanitary Drains manufactured and delivered"
+      },
+      {
+        "key": "foundersTitle",
+        "ar": "الأشخاص وراء ميدكس",
+        "en": "The People Behind MIDEX"
+      },
+      {
+        "key": "founder1Name",
+        "ar": "محمد سمير",
+        "en": "Mohamed Samir"
+      },
+      {
+        "key": "founder1Role",
+        "ar": "مؤسس مشارك",
+        "en": "Co-founder"
+      },
+      {
+        "key": "founder1Bio",
+        "ar": "مهندس ميكانيكي بخبرة في تصنيع الستانلس ستيل ومحطات معالجة المياه وشبكات الإنتاج وأنظمة الأنابيب. يعمل محمد عن كثب مع شركات الأدوية والأغذية ومستحضرات التجميل لتقديم حلول متخصصة، ويقود مشاريع معقدة برؤية استراتيجية تركز على الجودة والكفاءة.",
+        "en": "A mechanical engineer with expertise in stainless steel manufacturing, water treatment plants, production networks, and pipeline systems. Mohamed works closely with pharmaceutical, food, and cosmetics companies to deliver specialized solutions, leading complex projects with a strategic vision focused on quality and efficiency."
+      },
+      {
+        "key": "founder2Name",
+        "ar": "عبد الرحمن فؤاد",
+        "en": "Abdelrahman Fouad"
+      },
+      {
+        "key": "founder2Role",
+        "ar": "مؤسس مشارك",
+        "en": "Co-founder"
+      },
+      {
+        "key": "founder2Bio",
+        "ar": "مهندس ميكانيكي ومؤسس مشارك لميدكس، بخبرة واسعة في محطات معالجة المياه وشبكات الإنتاج الصحية. قاد Abdelrahman الشركة عبر محطات عديدة، وعزز موقعها في السوق من خلال نهج استراتيجي مدفوع بالابتكار لخدمات الهندسة عبر صناعات الأدوية والأغذية والمشروبات ومستحضرات التجميل.",
+        "en": "A mechanical engineer and co-founder of MIDEX, with extensive experience in water treatment plants and hygienic production networks. Abdelrahman has led the company through numerous milestones, strengthening its market position through a strategic, innovation-driven approach to engineering services across pharmaceutical, food & beverage, and cosmetics industries."
+      },
+      {
+        "key": "standardsTitle",
+        "ar": "مبنية وفق المعايير العالمية",
+        "en": "Built to Global Standards"
+      },
+      {
+        "key": "standardsSubtitle",
+        "ar": "كل مشروع نسلّمه يلتزم بأشد الأطر التنظيمية في الصناعة.",
+        "en": "Every project we deliver adheres to the industry's most stringent regulatory frameworks."
+      },
+      {
+        "key": "standardsText",
+        "ar": "أنظمتنا وتوثيقنا يتوافقان مع الأطر التنظيمية التي يعتمد عليها عملاؤنا.",
+        "en": "Our systems and documentation align with the regulatory frameworks our clients rely on."
+      },
+      {
+        "key": "standard1",
+        "ar": "إدارة الغذاء والدواء الأمريكية (FDA)",
+        "en": "FDA"
+      },
+      {
+        "key": "standard2",
+        "ar": "ISPE",
+        "en": "ISPE"
+      },
+      {
+        "key": "standard3",
+        "ar": "ASME BPE",
+        "en": "ASME BPE"
+      },
+      {
+        "key": "standard4",
+        "ar": "EHEDG – المجموعة الأوروبية لهندسة وتصميم المعدات الصحية",
+        "en": "EHEDG"
+      },
+      {
+        "key": "standard5",
+        "ar": "ممارسات التصنيع الجيدة",
+        "en": "GMP"
+      },
+      {
+        "key": "eventsTitle",
+        "ar": "فعاليات شاركنا فيها",
+        "en": "Events We've Been Part Of"
+      },
+      {
+        "key": "eventsIntro",
+        "ar": "على مر السنوات، شاركت ميدكس في أبرز المعارض والمؤتمرات في الصناعة، وتواصلت مع شركاء وعملاء يشكلون مستقبل الهندسة الدوائية والصحية في المنطقة.",
+        "en": "Over the years, MIDEX has taken part in the industry's leading exhibitions and conferences, connecting with partners and clients shaping the future of pharmaceutical and hygienic engineering across the region."
+      },
+      {
+        "key": "valuesTitle",
+        "ar": "ما نؤمن به",
+        "en": "What We Stand For"
+      },
+      {
+        "key": "valuesSubtitle",
+        "ar": "المبادئ التي توجه كل مشروع نصممه وننفذه ونسلّمه.",
+        "en": "The principles that guide every project we design, build, and deliver."
+      },
+      {
+        "key": "value1Title",
+        "ar": "الدقة",
+        "en": "Precision"
+      },
+      {
+        "key": "value1Text",
+        "ar": "كل مشروع مُهندس ويُنفذ وفق مواصفات دقيقة، دون مجال للاختصارات.",
+        "en": "Every project is engineered and executed to exact specifications, with no room for shortcuts."
+      },
+      {
+        "key": "value2Title",
+        "ar": "الامتثال",
+        "en": "Compliance"
+      },
+      {
+        "key": "value2Text",
+        "ar": "نلتزم بأعلى المعايير الصحية والتنظيمية في كل نظام، من FDA إلى ASME BPE.",
+        "en": "We hold every system to the highest sanitary and regulatory standards, from FDA to ASME BPE."
+      },
+      {
+        "key": "value3Title",
+        "ar": "الموثوقية",
+        "en": "Reliability"
+      },
+      {
+        "key": "value3Text",
+        "ar": "أنظمتنا مبنية للأداء المتسق، مشروعاً بعد مشروع، وعميلاً بعد عميل.",
+        "en": "Our systems are built to perform consistently, project after project, client after client."
+      },
+      {
+        "key": "value4Title",
+        "ar": "الابتكار",
+        "en": "Innovation"
+      },
+      {
+        "key": "value4Text",
+        "ar": "نجلب تقنيات وحلولاً متقدمة لحل أكثر التحديات الهندسية تطلباً لدى عملائنا.",
+        "en": "We bring advanced techniques and technologies to solve our clients' most demanding engineering challenges."
+      },
+      {
+        "key": "value5Title",
+        "ar": "الشراكة",
+        "en": "Partnership"
+      },
+      {
+        "key": "value5Text",
+        "ar": "نعمل كامتداد لفرق عملائنا، ملتزمين بنجاحهم التشغيلي على المدى الطويل.",
+        "en": "We work as an extension of our clients' teams, committed to their long-term operational success."
+      },
+      {
+        "key": "value6Title",
+        "ar": "مسؤولية متكاملة",
+        "en": "Turnkey accountability"
+      },
+      {
+        "key": "value6Text",
+        "ar": "شريك واحد مسؤول من الفكرة واختبار FAT حتى التشغيل والتدريب ودعم ما بعد البيع.",
+        "en": "One accountable partner from concept and FAT through commissioning, training, and after-sales support."
+      },
+      {
+        "key": "expertiseTitle",
+        "ar": "خبراتنا الأساسية",
+        "en": "Core expertise"
+      },
+      {
+        "key": "expertiseSubtitle",
+        "ar": "قدرات متكاملة في المرافق وخطوط العمليات والتركيبات المعتمدة.",
+        "en": "Integrated capabilities across utilities, process piping, and validated installations."
+      },
+      {
+        "key": "expertise1Title",
+        "ar": "أنظمة المياه المنقاة (PW) و WFI",
+        "en": "Purified water & WFI systems"
+      },
+      {
+        "key": "expertise1Text",
+        "ar": "أنظمة RO و EDI وتخزين وحلقات توزيع مصممة للإنتاج الدوائي.",
+        "en": "RO, EDI, storage, and distribution loops designed for pharmaceutical-grade production."
+      },
+      {
+        "key": "expertise2Title",
+        "ar": "أنابيب صحية ولحام مداري",
+        "en": "Hygienic piping & orbital welding"
+      },
+      {
+        "key": "expertise2Text",
+        "ar": "أنابيب ASME BPE مع لحام يدوي ومداري آلي وسجلات فحص كاملة.",
+        "en": "ASME BPE piping with manual and automatic orbital welding and full inspection records."
+      },
+      {
+        "key": "expertise3Title",
+        "ar": "التحقق من CIP / SIP",
+        "en": "CIP / SIP validation"
+      },
+      {
+        "key": "expertise3Text",
+        "ar": "أنظمة تنظيف وتعقيم مع اختبار التغطية ودورات موثقة.",
+        "en": "Cleaning and sanitization systems with coverage testing and documented cycles."
+      },
+      {
+        "key": "expertise4Title",
+        "ar": "تركيبات دوائية متكاملة",
+        "en": "Turnkey pharmaceutical installations"
+      },
+      {
+        "key": "expertise4Text",
+        "ar": "تسليم مشروع شامل — هندسة وتصنيع وتركيب وتشغيل.",
+        "en": "End-to-end project delivery — engineering, fabrication, installation, and commissioning."
+      },
+      {
+        "key": "timelineTitle",
+        "ar": "كيف نُسلّم مشاريعنا",
+        "en": "How we deliver"
+      },
+      {
+        "key": "certificationsTitle",
+        "ar": "الشهادات",
+        "en": "Certifications"
+      },
+      {
+        "key": "certificationsSubtitle",
+        "ar": "هندسة مُؤهَّلة ومتحقق من أدائها وتوثيق وأنظمة جودة متوافقة مع أطر الصناعات الدوائية والتصميم الصحي العالمية.",
+        "en": "Validated engineering, documentation, and quality systems aligned with global pharmaceutical and hygienic design frameworks."
+      },
+      {
+        "key": "cert1Desc",
+        "ar": "متطلبات تصنيع الأدوية والجودة للمنشآت الخاضعة للرقابة.",
+        "en": "Pharmaceutical manufacturing and quality requirements for regulated facilities."
+      },
+      {
+        "key": "cert2Desc",
+        "ar": "ممارسات هندسية سليمة لتصميم منشآت الأدوية والتقنية الحيوية.",
+        "en": "Good engineering practice for pharmaceutical and biotech facility design."
+      },
+      {
+        "key": "cert3Desc",
+        "ar": "معايير تصميم معدات المعالجة الحيوية للأنابيب والمكونات الصحية.",
+        "en": "Bioprocessing equipment design standards for hygienic piping and components."
+      },
+      {
+        "key": "cert4Desc",
+        "ar": "إرشادات التصميم الصحي الأوروبية لبيئات الأغذية والأدوية.",
+        "en": "European hygienic equipment design guidelines for food and pharma environments."
+      },
+      {
+        "key": "cert5Desc",
+        "ar": "ممارسات التصنيع الجيد (GMP) للإنتاج المعتمد والتوثيق.",
+        "en": "Good Manufacturing Practice for validated production and documentation."
+      },
+      {
+        "key": "faqBadge",
+        "ar": "الأسئلة الشائعة",
+        "en": "FAQ"
+      },
+      {
+        "key": "faqTitle",
+        "ar": "الأسئلة الشائعة",
+        "en": "Frequently Asked Questions"
+      },
+      {
+        "key": "faqSubtitle",
+        "ar": "إجابات على الأسئلة التي نسمعها أكثر حول ميدكس.",
+        "en": "Answers to the questions we hear most about MIDEX."
+      },
+      {
+        "key": "faqContact",
+        "ar": "لا تزال لديك أسئلة؟ تواصل معنا",
+        "en": "Still have questions? Contact us"
+      },
+      {
+        "key": "faqQ1",
+        "ar": "ما الصناعات التي تخدمها ميدكس؟",
+        "en": "What industries does MIDEX serve?"
+      },
+      {
+        "key": "faqA1",
+        "ar": "تخدم ميدكس عملاء الأدوية والأغذية والمشروبات والتقنية الحيوية والمختبرات والرعاية الصحية — صناعات حيث الجودة الصحية والدقة أمر أساسي.",
+        "en": "MIDEX serves pharmaceutical, food & beverage, biotechnology, laboratory, and healthcare clients — industries where hygienic quality and precision are essential."
+      },
+      {
+        "key": "faqQ2",
+        "ar": "منذ متى تعمل ميدكس في هذا المجال؟",
+        "en": "How long has MIDEX been in the industry?"
+      },
+      {
+        "key": "faqA2",
+        "ar": "تجلب ميدكس أكثر من 15 عاماً من الخبرة في تصميم وتركيب أنظمة الأنابيب المتقدمة والحلول الصحية المتكاملة.",
+        "en": "MIDEX brings over 15 years of expertise designing and installing advanced piping systems and integrated hygienic solutions."
+      },
+      {
+        "key": "faqQ3",
+        "ar": "ما المعايير التي تلتزم بها ميدكس؟",
+        "en": "What standards does MIDEX comply with?"
+      },
+      {
+        "key": "faqA3",
+        "ar": "مشاريعنا تلتزم بالمعايير العالمية بما في ذلك FDA و ISPE و ASME BPE و EHEDG.",
+        "en": "Our projects adhere to global standards including FDA, ISPE, ASME BPE, and EHEDG."
+      },
+      {
+        "key": "faqQ4",
+        "ar": "ما نوع المشاريع التي نفذتها ميدكس؟",
+        "en": "What kind of projects has MIDEX delivered?"
+      },
+      {
+        "key": "faqA4",
+        "ar": "سجلنا يتضمن محطات مياه منقاة (PW) كاملة، وتعديلات وترقيات للمحطات، وتحسينات خطوط الإنتاج، وأنظمة صرف صحي، وتصنيع وتوريداً واسع النطاق لمكونات مثل المرشحات والمصارف.",
+        "en": "Our track record includes complete purified water stations, station modifications and upgrades, production line improvements, sanitary drainage systems, and large-scale manufacturing and supply of components like filters and drains."
+      },
+      {
+        "key": "faqQ5",
+        "ar": "من يقود ميدكس؟",
+        "en": "Who leads MIDEX?"
+      },
+      {
+        "key": "faqA5",
+        "ar": "يقود ميدكس كلٌّ من محمد سمير وعبدالرحمن فؤاد، كلاهما مهندسان ميكانيكيان بخبرة عميقة في محطات معالجة المياه وشبكات الإنتاج الصحية.",
+        "en": "MIDEX is led by Mohamed Samir and Abdelrahman Fouad, both mechanical engineers with deep expertise in water treatment plants and hygienic production networks."
+      },
+      {
+        "key": "ctaTitle",
+        "ar": "مستعد للعمل مع ميدكس؟",
+        "en": "Ready to work with Midex?"
+      },
+      {
+        "key": "ctaText",
+        "ar": "ناقش مشروعك مع فريق الهندسة — من النطاق الأولي إلى التسليم المعتمد.",
+        "en": "Discuss your project with our engineering team — from initial scope to validated handover."
+      },
+      {
+        "key": "contactUs",
+        "ar": "اتصل بنا",
+        "en": "Contact us"
+      }
+    ]
+  },
+  {
+    "namespace": "blog",
+    "entries": [
+      {
+        "key": "title",
+        "ar": "المدونة",
+        "en": "Blog"
+      },
+      {
+        "key": "subtitle",
+        "ar": "أخبار ورؤى من فريق الهندسة لدينا.",
+        "en": "News and insights from our engineering team."
+      },
+      {
+        "key": "readPost",
+        "ar": "قراءة المقال",
+        "en": "Read article"
+      },
+      {
+        "key": "featured",
+        "ar": "مقال مميز",
+        "en": "Featured article"
+      },
+      {
+        "key": "latestPosts",
+        "ar": "أحدث المقالات",
+        "en": "Latest articles"
+      },
+      {
+        "key": "minRead",
+        "ar": "دقائق قراءة",
+        "en": "min read"
+      },
+      {
+        "key": "relatedPosts",
+        "ar": "مقالات أخرى",
+        "en": "More articles"
+      },
+      {
+        "key": "backToBlog",
+        "ar": "العودة للمدونة",
+        "en": "Back to blog"
+      },
+      {
+        "key": "ctaTitle",
+        "ar": "ناقش مشروعك",
+        "en": "Discuss your project"
+      },
+      {
+        "key": "ctaText",
+        "ar": "فريق الهندسة لدينا يساعد في تصميم الأنظمة والتحقق والتسليم المتكامل.",
+        "en": "Our engineering team can help with system design, validation, and turnkey delivery."
+      },
+      {
+        "key": "ctaButton",
+        "ar": "اتصل بنا",
+        "en": "Contact us"
+      }
+    ]
+  },
+  {
+    "namespace": "common",
+    "entries": [
+      {
+        "key": "learnMore",
+        "ar": "اعرف المزيد",
+        "en": "Learn more"
+      },
+      {
+        "key": "loading",
+        "ar": "جاري التحميل…",
+        "en": "Loading…"
+      },
+      {
+        "key": "language",
+        "ar": "اللغة",
+        "en": "Language"
+      },
+      {
+        "key": "langEn",
+        "ar": "إنجليزي",
+        "en": "English"
+      },
+      {
+        "key": "langAr",
+        "ar": "العربية",
+        "en": "Arabic"
+      },
+      {
+        "key": "langDe",
+        "ar": "Deutsch",
+        "en": "German"
+      },
+      {
+        "key": "prevTestimonial",
+        "ar": "الشهادة السابقة",
+        "en": "Previous testimonial"
+      },
+      {
+        "key": "nextTestimonial",
+        "ar": "الشهادة التالية",
+        "en": "Next testimonial"
+      },
+      {
+        "key": "showTestimonial",
+        "ar": "عرض شهادة {name}",
+        "en": "Show testimonial from {name}"
+      }
+    ]
+  },
+  {
+    "namespace": "contact",
+    "entries": [
+      {
+        "key": "title",
+        "ar": "اتصل بنا",
+        "en": "Contact Us"
+      },
+      {
+        "key": "intro",
+        "ar": "اطلب عرض سعر، اسأل عن منتج، أو ناقش حلاً متكاملاً مع فريق الهندسة لدينا.",
+        "en": "Request a quote, ask about a product, or discuss a turnkey solution with our engineering team."
+      },
+      {
+        "key": "salesQuotes",
+        "ar": "المبيعات وعروض الأسعار",
+        "en": "Sales & Quotes"
+      },
+      {
+        "key": "office",
+        "ar": "المكتب",
+        "en": "Office"
+      },
+      {
+        "key": "email",
+        "ar": "البريد الإلكتروني",
+        "en": "Email"
+      },
+      {
+        "key": "phone",
+        "ar": "الهاتف",
+        "en": "Phone"
+      },
+      {
+        "key": "asideIntro",
+        "ar": "تواصل مع فريق المبيعات مباشرة — نرد خلال يوم عمل واحد.",
+        "en": "Reach our sales team directly — we respond within one business day."
+      },
+      {
+        "key": "getDirections",
+        "ar": "عرض على الخريطة",
+        "en": "Get directions"
+      },
+      {
+        "key": "viewOnMap",
+        "ar": "عرض الخريطة",
+        "en": "View on map"
+      },
+      {
+        "key": "mapTitle",
+        "ar": "موقعنا",
+        "en": "Find us"
+      },
+      {
+        "key": "mapSubtitle",
+        "ar": "مكتبنا الهندسي في 6 أكتوبر — افتح الخريطة للحصول على الاتجاهات.",
+        "en": "Our engineering office in 6th of October City — open the map for turn-by-turn directions."
+      },
+      {
+        "key": "sendMessage",
+        "ar": "أرسل لنا رسالة",
+        "en": "Send us a message"
+      },
+      {
+        "key": "formIntro",
+        "ar": "املأ النموذج أدناه وسيرد فريق المبيعات بالأسعار والتوفر أو الإرشاد الفني.",
+        "en": "Fill in the form below and our sales team will respond with pricing, availability, or technical guidance."
+      },
+      {
+        "key": "quoteFor",
+        "ar": "طلب عرض سعر لـ:",
+        "en": "Quote request for:"
+      },
+      {
+        "key": "fullName",
+        "ar": "الاسم الكامل",
+        "en": "Full name"
+      },
+      {
+        "key": "emailLabel",
+        "ar": "البريد الإلكتروني",
+        "en": "Email"
+      },
+      {
+        "key": "phoneLabel",
+        "ar": "الهاتف",
+        "en": "Phone"
+      },
+      {
+        "key": "company",
+        "ar": "الشركة",
+        "en": "Company"
+      },
+      {
+        "key": "subject",
+        "ar": "الموضوع",
+        "en": "Subject"
+      },
+      {
+        "key": "productProject",
+        "ar": "المنتج / المشروع (اختياري)",
+        "en": "Product / project (optional)"
+      },
+      {
+        "key": "productPlaceholder",
+        "ar": "مثال: وحدة UV صحية، محطة PW، لحام مداري",
+        "en": "e.g. Hygienic UV Unit, PW station, orbital welding"
+      },
+      {
+        "key": "message",
+        "ar": "الرسالة",
+        "en": "Message"
+      },
+      {
+        "key": "messagePlaceholder",
+        "ar": "أخبرنا عن متطلباتك والكميات والجدول الزمني أو الأسئلة الفنية…",
+        "en": "Tell us about your requirements, quantities, timeline, or technical questions…"
+      },
+      {
+        "key": "submit",
+        "ar": "إرسال الرسالة",
+        "en": "Send message"
+      },
+      {
+        "key": "subjectQuote",
+        "ar": "طلب عرض سعر",
+        "en": "Quote request"
+      },
+      {
+        "key": "subjectProduct",
+        "ar": "استفسار عن منتج",
+        "en": "Product inquiry"
+      },
+      {
+        "key": "subjectGeneral",
+        "ar": "استفسار عام",
+        "en": "General inquiry"
+      },
+      {
+        "key": "success",
+        "ar": "شكراً لرسالتك. سيرد فريقنا خلال يوم عمل واحد.",
+        "en": "Thank you for your message. Our team will respond within one business day."
+      },
+      {
+        "key": "error",
+        "ar": "تعذر إرسال رسالتك. يرجى مراسلتنا مباشرة على sales@midex-eg.com.",
+        "en": "We could not send your message. Please email us directly at sales@midex-eg.com."
+      },
+      {
+        "key": "validationName",
+        "ar": "يرجى إدخال اسمك.",
+        "en": "Please enter your name."
+      },
+      {
+        "key": "validationEmail",
+        "ar": "يرجى إدخال بريد إلكتروني صالح.",
+        "en": "Please enter a valid email address."
+      },
+      {
+        "key": "validationMessage",
+        "ar": "يرجى إدخال رسالتك.",
+        "en": "Please enter your message."
+      }
+    ]
+  },
+  {
+    "namespace": "footer",
+    "entries": [
+      {
+        "key": "tagline",
+        "ar": "ميدكس للمشروعات المتكاملة والمقاولات — هندسة للصناعات الدوائية والغذائية ومستحضرات التجميل.",
+        "en": "Midex for Integrated Projects and Contracting — pharmaceutical, food & cosmetics engineering."
+      },
+      {
+        "key": "services",
+        "ar": "الخدمات",
+        "en": "Services"
+      },
+      {
+        "key": "usefulLinks",
+        "ar": "روابط مفيدة",
+        "en": "Useful Links"
+      },
+      {
+        "key": "contactUs",
+        "ar": "اتصل بنا",
+        "en": "Contact us"
+      },
+      {
+        "key": "privacyPolicy",
+        "ar": "سياسة الخصوصية",
+        "en": "Privacy Policy"
+      },
+      {
+        "key": "address",
+        "ar": "29 المحور المركزي، أول 6 أكتوبر، مدينة السادس من أكتوبر (2)، محافظة الجيزة 3225614",
+        "en": "29 Al Mehwar Al Markazi, First 6th of October, 6th of October City (2), Giza Governorate 3225614"
+      },
+      {
+        "key": "rights",
+        "ar": "جميع الحقوق محفوظة.",
+        "en": "All rights reserved."
+      }
+    ]
+  },
+  {
+    "namespace": "hero",
+    "entries": [
+      {
+        "key": "slide1Title",
+        "ar": "نهندس الأنظمة التي تحافظ على نقاء عملياتك",
+        "en": "Engineering the Systems That Keep Industries Pure"
+      },
+      {
+        "key": "slide1Text",
+        "ar": "تصميم ولحام وتركيب أنظمة صحية للأدوية والأغذية والمشروبات والتكنولوجيا الحيوية ومستحضرات التجميل — بخبرة تزيد عن 15 عاماً من الدقة.",
+        "en": "Designing, welding, and installing hygienic systems for pharma, food & beverage, biotech, and cosmetics — with 15+ years of precision."
+      },
+      {
+        "key": "slide2Title",
+        "ar": "مجالات خبرة ميدكس",
+        "en": "Midex's Areas of Expertise"
+      },
+      {
+        "key": "slide2Text",
+        "ar": "الامتثال لـ FDA و ISPE و ASME BPE و EHEDG. مشاريع متكاملة توفر حلولاً موثوقة وفعالة وآمنة للعمليات الحرجة.",
+        "en": "Compliance with FDA, ISPE, ASME BPE, and EHEDG. Turnkey projects that provide reliable, efficient, and safe solutions for critical operations."
+      },
+      {
+        "key": "slide3Title",
+        "ar": "هندسة للتميز الدوائي",
+        "en": "Engineered for Pharmaceutical Excellence"
+      },
+      {
+        "key": "slide3Text",
+        "ar": "من محطات المياه المنقاة (PW) إلى اللحام المداري والتركيبات الصحية — أنظمة معتمدة وفق معايير GMP.",
+        "en": "From purified water stations to orbital welding and hygienic installations — validated systems built to GMP standards."
+      },
+      {
+        "key": "aboutUs",
+        "ar": "من نحن",
+        "en": "About Us"
+      },
+      {
+        "key": "ourServices",
+        "ar": "خدماتنا",
+        "en": "Our Services"
+      },
+      {
+        "key": "contactUs",
+        "ar": "اتصل بنا",
+        "en": "Contact Us"
+      },
+      {
+        "key": "requestQuote",
+        "ar": "طلب عرض سعر",
+        "en": "Request a quote"
+      },
+      {
+        "key": "seeSolutions",
+        "ar": "استكشف الحلول",
+        "en": "See solutions"
+      },
+      {
+        "key": "viewProducts",
+        "ar": "عرض المنتجات",
+        "en": "View Products"
+      }
+    ]
+  },
+  {
+    "namespace": "home",
+    "entries": [
+      {
+        "key": "integratedEngineering",
+        "ar": "الهندسة المتكاملة",
+        "en": "Integrated Engineering"
+      },
+      {
+        "key": "ourEvents",
+        "ar": "فعاليات شاركنا فيها",
+        "en": "Events We've Been Part Of"
+      },
+      {
+        "key": "eventsSubtitle",
+        "ar": "على مر السنوات، شاركت ميدكس في أبرز المعارض والمؤتمرات في القطاع، للتواصل مع الشركاء والعملاء الذين يشكلون مستقبل الهندسة الصيدلانية والصحية في المنطقة.",
+        "en": "Over the years, MIDEX has taken part in the industry's leading exhibitions and conferences, connecting with partners and clients shaping the future of pharmaceutical and hygienic engineering across the region."
+      },
+      {
+        "key": "eventsFeatured",
+        "ar": "مميز",
+        "en": "Featured"
+      },
+      {
+        "key": "eventsCount",
+        "ar": "فعالية",
+        "en": "events"
+      },
+      {
+        "key": "eventsExhibitions",
+        "ar": "معارض وملتقيات",
+        "en": "Exhibitions & trade fairs"
+      },
+      {
+        "key": "viewImage",
+        "ar": "عرض الصورة",
+        "en": "View image"
+      },
+      {
+        "key": "announcement",
+        "ar": "إعلان",
+        "en": "Announcement"
+      },
+      {
+        "key": "collabTitle",
+        "ar": "خط جديد بالتعاون مع ميدكس",
+        "en": "New Line In Collaboration With Midex"
+      },
+      {
+        "key": "readMore",
+        "ar": "اقرأ المزيد",
+        "en": "Read more"
+      },
+      {
+        "key": "servicesTitle",
+        "ar": "الخدمات والمنتجات",
+        "en": "Services & Products"
+      },
+      {
+        "key": "servicesSubtitle",
+        "ar": "خدمات عمليات صحية احترافية ومكونات هندسية.",
+        "en": "Professional hygienic process services and engineered components."
+      },
+      {
+        "key": "newProducts",
+        "ar": "منتجات جديدة",
+        "en": "New Products"
+      },
+      {
+        "key": "newProductsSubtitle",
+        "ar": "أحدث الإضافات إلى دليل المنتجات الصحية.",
+        "en": "Latest additions to our hygienic equipment catalog."
+      },
+      {
+        "key": "request",
+        "ar": "طلب",
+        "en": "Request"
+      },
+      {
+        "key": "partnersTitle",
+        "ar": "شركاء العلامات التجارية",
+        "en": "Trademark Partners"
+      },
+      {
+        "key": "partnersSubtitle",
+        "ar": "علامات تجارية موثوقة نمثلها وندمجها.",
+        "en": "Trusted brands we represent and integrate."
+      },
+      {
+        "key": "featuredQuoteText",
+        "ar": "كل أنبوب نلحمه ينقل أكثر من الماء؛ فهو يحمل وعدًا بالنقاء يعتمد عليه مرضى عملائنا ومستهلكو منتجاتهم. هذه المسؤولية هي ما وجّه ميدكس منذ اليوم الأول، وهي ما يدفع كل مشروع نتولاه اليوم.",
+        "en": "Every pipe we weld carries more than water, it carries a promise of purity our clients' patients and consumers depend on. That responsibility is what has guided MIDEX since day one, and it's what drives every project we take on today."
+      },
+      {
+        "key": "featuredQuoteName",
+        "ar": "م. عبدالرحمن",
+        "en": "Eng Abdelrahman"
+      },
+      {
+        "key": "featuredQuoteRole",
+        "ar": "الشريك المؤسس — ميدكس",
+        "en": "Co-founder Midex"
+      },
+      {
+        "key": "solutionsTitle",
+        "ar": "حلولنا",
+        "en": "Our solutions"
+      },
+      {
+        "key": "solutionsSubtitle",
+        "ar": "أنظمة متكاملة وتعديلات ولحام وتركيبات لبيئات العمليات الصحية.",
+        "en": "Turnkey systems, modifications, welding, and installation for hygienic process environments."
+      },
+      {
+        "key": "capabilitiesTitle",
+        "ar": "قدراتنا الهندسية",
+        "en": "Our Engineering Capabilities"
+      },
+      {
+        "key": "capabilitiesSubtitle",
+        "ar": "أربعة تخصصات أساسية، ومعيار واحد للدقة — تقدّم ميدكس حلولًا هندسية متكاملة لأنظمة العمليات الصحية وفق متطلبات الصناعة الدوائية.",
+        "en": "Four core disciplines, one standard of precision — MIDEX delivers end-to-end hygienic engineering solutions built to pharmaceutical-grade compliance."
+      },
+      {
+        "key": "exploreSolution",
+        "ar": "استكشف الحل",
+        "en": "Explore solution"
+      },
+      {
+        "key": "truviaTitle",
+        "ar": "Truvia، خط الأنابيب الفاخر الجديد",
+        "en": "Truvia, our New Premium Piping Line"
+      },
+      {
+        "key": "truviaSubtitle",
+        "ar": "نقاء معتمد ASME BPE، أداء بمعايير أوروبية، متوفر محليًا الآن.",
+        "en": "ASME BPE-certified purity, European-grade performance, now locally available."
+      },
+      {
+        "key": "truviaFeature1Title",
+        "ar": "معتمد وفق أعلى المعايير العالمية",
+        "en": "Certified to the Highest Global Standards"
+      },
+      {
+        "key": "truviaFeature1Text",
+        "ar": "مصنع بالشراكة مع Ghwa ومتوافق مع ASME BPE وISO و3-A Sanitary Standards وSMS وDIN وBS.",
+        "en": "Manufactured in partnership with Ghwa and compliant with ASME BPE, ISO, 3-A Sanitary Standards, SMS, DIN, and BS."
+      },
+      {
+        "key": "truviaFeature2Title",
+        "ar": "جودة بمستوى أوروبي، وتوفّر محلي",
+        "en": "European-Grade Quality, Local Availability"
+      },
+      {
+        "key": "truviaFeature2Text",
+        "ar": "يتوافق مع متانة وأداء العلامات الأوروبية الرائدة، مع ميزة المخزون والدعم المحلي.",
+        "en": "Matches the durability and performance of leading European brands, with the advantage of local stock and support."
+      },
+      {
+        "key": "truviaFeature3Title",
+        "ar": "مصمَّم لأداء دقيق ومتّسق في كل مرة",
+        "en": "Built for Precision, Every Time"
+      },
+      {
+        "key": "truviaFeature3Text",
+        "ar": "أنابيب ووصلات من الفولاذ المقاوم للصدأ عالي النقاء بتشطيبات سطحية من 32 μin (Ra) إلى 10 μin (Ra) لتناسب أي تطبيق.",
+        "en": "High-purity stainless steel tubes and fittings with surface finishes ranging from 32 μin (Ra) to 10 μin (Ra) to suit any application."
+      },
+      {
+        "key": "truviaFeature4Title",
+        "ar": "مجموعة منتجات متكاملة",
+        "en": "A Complete Product Range"
+      },
+      {
+        "key": "truviaFeature4Text",
+        "ar": "من وصلات الأنابيب والمشابك والمحولات إلى أجزاء الاتحاد والحشيات والحاملات وكرات الرش — كل ما تحتاجه تحت اسم واحد موثوق.",
+        "en": "From tube fittings, clamps, and adapters to union parts, gaskets, hangers, and spray balls — everything you need under one trusted name."
+      },
+      {
+        "key": "truviaDiscover",
+        "ar": "اكتشف",
+        "en": "Discover"
+      },
+      {
+        "key": "processPerformanceTitle",
+        "ar": "من العملية إلى الأداء",
+        "en": "From Process to Performance"
+      },
+      {
+        "key": "processDuringLabel",
+        "ar": "أثناء التنفيذ",
+        "en": "During Construction"
+      },
+      {
+        "key": "processAfterLabel",
+        "ar": "بعد التسليم",
+        "en": "After Construction"
+      },
+      {
+        "key": "processDuring1",
+        "ar": "الدقة",
+        "en": "Precision"
+      },
+      {
+        "key": "processDuring2",
+        "ar": "اللحام",
+        "en": "Welding"
+      },
+      {
+        "key": "processDuring3",
+        "ar": "الامتثال",
+        "en": "Compliance"
+      },
+      {
+        "key": "processDuring4",
+        "ar": "التركيب",
+        "en": "Installation"
+      },
+      {
+        "key": "processDuring5",
+        "ar": "الاختبار",
+        "en": "Testing"
+      },
+      {
+        "key": "processAfter1",
+        "ar": "الأداء",
+        "en": "Performance"
+      },
+      {
+        "key": "processAfter2",
+        "ar": "الموثوقية",
+        "en": "Reliability"
+      },
+      {
+        "key": "processAfter3",
+        "ar": "النقاء",
+        "en": "Purity"
+      },
+      {
+        "key": "processAfter4",
+        "ar": "الكفاءة",
+        "en": "Efficiency"
+      },
+      {
+        "key": "processAfter5",
+        "ar": "النتائج",
+        "en": "Results"
+      },
+      {
+        "key": "beforeAfterBadge",
+        "ar": "قبل وبعد",
+        "en": "Before & After"
+      },
+      {
+        "key": "beforeAfterTitle",
+        "ar": "سترى الفرق الذي نحدثه في عملياتك",
+        "en": "You will see the difference we bring to your operations"
+      },
+      {
+        "key": "beforeAfterBefore",
+        "ar": "قبل",
+        "en": "Before"
+      },
+      {
+        "key": "beforeAfterAfter",
+        "ar": "بعد",
+        "en": "After"
+      },
+      {
+        "key": "beforeAfterItem1Before",
+        "ar": "تتبع محدود",
+        "en": "Limited visibility"
+      },
+      {
+        "key": "beforeAfterItem2Before",
+        "ar": "توثيق يدوي",
+        "en": "Manual documentation"
+      },
+      {
+        "key": "beforeAfterItem3Before",
+        "ar": "متابعات مستمرة",
+        "en": "Reactive follow-ups"
+      },
+      {
+        "key": "beforeAfterItem4Before",
+        "ar": "مهام يدوية",
+        "en": "Manual tasks"
+      },
+      {
+        "key": "beforeAfterItem5Before",
+        "ar": "سير عمل مجزأ",
+        "en": "Fragmented workflows"
+      },
+      {
+        "key": "beforeAfterItem6Before",
+        "ar": "تحقق بطيء",
+        "en": "Slow validation"
+      },
+      {
+        "key": "beforeAfterItem1After",
+        "ar": "رؤية واضحة",
+        "en": "Clear visibility"
+      },
+      {
+        "key": "beforeAfterItem2After",
+        "ar": "تحقق آلي",
+        "en": "Automated validation"
+      },
+      {
+        "key": "beforeAfterItem3After",
+        "ar": "تسليم استباقي GMP",
+        "en": "Proactive GMP delivery"
+      },
+      {
+        "key": "beforeAfterItem4After",
+        "ar": "مهام مؤتمتة",
+        "en": "Automated repeat tasks"
+      },
+      {
+        "key": "beforeAfterItem5After",
+        "ar": "أقل جهد يدوي",
+        "en": "Minimal manual effort"
+      },
+      {
+        "key": "beforeAfterItem6After",
+        "ar": "تسليم أسرع",
+        "en": "Faster handover"
+      },
+      {
+        "key": "exclusiveTitle",
+        "ar": "التمثيل الحصري",
+        "en": "Exclusive Representation"
+      },
+      {
+        "key": "statsTitle",
+        "ar": "ميدكس بالأرقام",
+        "en": "Midex in Numbers"
+      },
+      {
+        "key": "statsSubtitle",
+        "ar": "تقديم هندسة مُؤهَّلة ومتحقق من أدائها في مصر والمنطقة.",
+        "en": "Delivering validated engineering across Egypt and the region."
+      },
+      {
+        "key": "statProjects",
+        "ar": "مشاريعنا",
+        "en": "Our Projects"
+      },
+      {
+        "key": "statClients",
+        "ar": "عملاء",
+        "en": "Clients"
+      },
+      {
+        "key": "statYearsExcellence",
+        "ar": "سنوات من التميز الهندسي",
+        "en": "Years of Engineering Excellence"
+      },
+      {
+        "key": "statCompliance",
+        "ar": "معيار الامتثال الصحي",
+        "en": "Hygienic Compliance Standard"
+      },
+      {
+        "key": "testimonialsTitle",
+        "ar": "ماذا يقول عملاؤنا",
+        "en": "What Our Clients Say"
+      },
+      {
+        "key": "testimonialsSubtitle",
+        "ar": "موثوق به من قبل أبرز الأسماء في صناعات الأدوية والأغذية والمشروبات والتكنولوجيا الحيوية.",
+        "en": "Trusted by leading names in pharmaceutical, food & beverage, and biotechnology manufacturing."
+      },
+      {
+        "key": "caseStudiesBadge",
+        "ar": "دراسات حالة",
+        "en": "Case Studies"
+      },
+      {
+        "key": "caseStudiesTitle",
+        "ar": "مثبت على أرض الواقع",
+        "en": "Proven in the Field"
+      },
+      {
+        "key": "caseStudiesSubtitle",
+        "ar": "مشاريع حقيقية ونتائج حقيقية — اكتشف كيف حلت ميدكس تحديات الهندسة الصحية المعقدة لعملائها في المنطقة.",
+        "en": "Real projects, real results — explore how MIDEX has solved complex hygienic engineering challenges for clients across the region."
+      },
+      {
+        "key": "caseStudiesCta",
+        "ar": "عرض جميع دراسات الحالة",
+        "en": "View All Case Studies"
+      },
+      {
+        "key": "caseStudiesRead",
+        "ar": "ناقش هذا النطاق",
+        "en": "Discuss this scope"
+      },
+      {
+        "key": "newsTitle",
+        "ar": "آخر الأخبار",
+        "en": "Latest News"
+      },
+      {
+        "key": "newsSubtitle",
+        "ar": "محطات المشاريع الأخيرة وتحديثات الشركة.",
+        "en": "Recent project milestones and company updates."
+      },
+      {
+        "key": "newsFeatured",
+        "ar": "أحدث مشروع",
+        "en": "Latest project"
+      },
+      {
+        "key": "blogTitle",
+        "ar": "من المدونة",
+        "en": "From the Blog"
+      },
+      {
+        "key": "blogSubtitle",
+        "ar": "رؤى حول الهندسة الصحية وأنظمة العمليات.",
+        "en": "Insights on hygienic engineering and process systems."
+      },
+      {
+        "key": "viewAllArticles",
+        "ar": "عرض كل المقالات",
+        "en": "View all articles"
+      },
+      {
+        "key": "clientsTitle",
+        "ar": "عملاؤنا",
+        "en": "Our Clients"
+      },
+      {
+        "key": "clientsSubtitle",
+        "ar": "موثوق به من قبل كبار مصنعي الأدوية والأغذية.",
+        "en": "Trusted by leading pharmaceutical and food manufacturers."
+      },
+      {
+        "key": "faqBadge",
+        "ar": "الأسئلة الشائعة",
+        "en": "FAQ"
+      },
+      {
+        "key": "faqTitle",
+        "ar": "الأسئلة المتكررة",
+        "en": "Frequently Asked Questions"
+      },
+      {
+        "key": "faqSubtitle",
+        "ar": "إجابات سريعة عن القطاعات التي نخدمها وخدماتنا ومعاييرنا وكيفية البدء.",
+        "en": "Quick answers about the industries we serve, our services, standards, and how to get started."
+      },
+      {
+        "key": "faqContact",
+        "ar": "لديك سؤال آخر؟ تواصل مع فريقنا",
+        "en": "Still have questions? Contact our team"
+      },
+      {
+        "key": "faqQ1",
+        "ar": "ما القطاعات التي تخدمها ميدكس؟",
+        "en": "What industries does MIDEX serve?"
+      },
+      {
+        "key": "faqA1",
+        "ar": "تتخصص ميدكس في قطاعات الأدوية والأغذية والمشروبات والتكنولوجيا الحيوية ومستحضرات التجميل، وتقدم أنظمة هندسية صحية مصممة لتلبية معايير الامتثال الصارمة التي يفرضها كل قطاع.",
+        "en": "MIDEX specializes in pharmaceutical, food & beverage, biotechnology, and cosmetics industries, delivering hygienic engineering systems built to meet the strict compliance standards each sector demands."
+      },
+      {
+        "key": "faqQ2",
+        "ar": "هل تتولى ميدكس التركيب وصيانة الأنظمة القائمة؟",
+        "en": "Does MIDEX handle both installation and maintenance of existing systems?"
+      },
+      {
+        "key": "faqA2",
+        "ar": "نعم. إلى جانب التركيبات الجديدة، تقدم ميدكس ترقيات وتعديلات على الأنظمة — بما في ذلك تعديلات محطات المياه المنقاة (PW) ووحدات توزيع المياه المنقاة (Distribution Skids) — لتمديد عمر البنية التحتية الحالية وتحسين أدائها.",
+        "en": "Yes. Beyond new installations, MIDEX offers system upgrades and modifications — including purified water station and distribution skid modifications — to extend and enhance the performance of existing infrastructure."
+      },
+      {
+        "key": "faqQ3",
+        "ar": "ما معايير اللحام التي تتبعها ميدكس؟",
+        "en": "What welding standards does MIDEX follow?"
+      },
+      {
+        "key": "faqA3",
+        "ar": "تنفذ ميدكس اللحام اليدوي والمداري الآلي وفق معايير الصناعات ذات المتطلبات الصحية الصارمة والصحية، لضمان سلامة اللحام في أنظمة المياه المنقاة (PW) الحرجة وخطوط أنابيب العمليات.",
+        "en": "MIDEX performs both manual and automatic orbital welding to hygienic and sanitary industry standards, ensuring weld integrity for critical purified water and process piping systems."
+      },
+      {
+        "key": "faqQ4",
+        "ar": "هل يمكن لميدكس توريد المكونات بالإضافة إلى تركيب الأنظمة؟",
+        "en": "Can MIDEX supply components as well as install systems?"
+      },
+      {
+        "key": "faqA4",
+        "ar": "نعم. يغطي دليل منتجاتنا الأنابيب والوصلات والصمامات والأجهزة ووحدات UV وخزانات الستانلس ستيل والمضخات والفلاتر والمصارف الصحية — جميعها من مصادر تلبي مواصفات الصناعات ذات المتطلبات الصحية الصارمة.",
+        "en": "Yes. Our product catalogue covers piping and fittings, valves, instruments, UV units, stainless steel tanks, pumps, filters, and hygienic drains — all sourced to meet hygienic industry specifications."
+      },
+      {
+        "key": "faqQ5",
+        "ar": "كيف تبدأ عملية المشروع؟",
+        "en": "How does the project process start?"
+      },
+      {
+        "key": "faqA5",
+        "ar": "ما عليك سوى تعبئة نموذج طلب المشروع. سيراجع مهندس من ميدكس متطلباتك ويتواصل معك خلال 24 ساعة لمناقشة الحل المناسب لاحتياجاتك.",
+        "en": "Simply fill out our project request form. A MIDEX engineer will review your requirements and reach out within 24 hours to discuss the right solution for your needs."
+      },
+      {
+        "key": "faqQ6",
+        "ar": "هل تعمل ميدكس خارج مصر؟",
+        "en": "Does MIDEX work outside Egypt?"
+      },
+      {
+        "key": "faqA6",
+        "ar": "تخدم ميدكس عملاء في مصر والمنطقة الأوسع، وتطبق نفس معايير الهندسة الصحية في كل مشروع بغض النظر عن الموقع.",
+        "en": "MIDEX serves clients across Egypt and the broader region, bringing the same hygienic engineering standards to every project regardless of location."
+      },
+      {
+        "key": "quoteTitle",
+        "ar": "طلب عرض سعر",
+        "en": "Request a Quote"
+      },
+      {
+        "key": "quoteText",
+        "ar": "أخبرنا عن مشروعك وسيرد فريقنا بالأسعار والمدة.",
+        "en": "Tell us about your project and our team will respond with pricing and lead times."
+      },
+      {
+        "key": "quoteButton",
+        "ar": "طلب عرض سعر",
+        "en": "Request a Quote"
+      },
+      {
+        "key": "quoteFormBadge",
+        "ar": "ابدأ الآن",
+        "en": "Get started"
+      },
+      {
+        "key": "quoteFormTitle",
+        "ar": "ابدأ مشروعك",
+        "en": "Start Your Project"
+      },
+      {
+        "key": "quoteFormSubtitle",
+        "ar": "أخبرنا بما تحتاج — سنعود إليك بالحل المناسب.",
+        "en": "Tell us what you need — we'll get back to you with the right solution."
+      },
+      {
+        "key": "quoteFormStep1",
+        "ar": "نوع المشروع",
+        "en": "Project Type"
+      },
+      {
+        "key": "quoteFormStep2",
+        "ar": "القطاع",
+        "en": "Industry"
+      },
+      {
+        "key": "quoteFormStep3",
+        "ar": "تفاصيل المشروع",
+        "en": "Project Details"
+      },
+      {
+        "key": "quoteFormStep4",
+        "ar": "معلومات التواصل",
+        "en": "Contact Information"
+      },
+      {
+        "key": "quoteFormStep1Question",
+        "ar": "ما الذي تبحث عنه؟",
+        "en": "What are you looking for?"
+      },
+      {
+        "key": "quoteFormStep2Question",
+        "ar": "في أي قطاع تعمل؟",
+        "en": "Which industry are you in?"
+      },
+      {
+        "key": "quoteFormStep3Question",
+        "ar": "أخبرنا عن مشروعك",
+        "en": "Tell us about your project"
+      },
+      {
+        "key": "quoteFormStep4Question",
+        "ar": "كيف نتواصل معك؟",
+        "en": "How can we reach you?"
+      },
+      {
+        "key": "quoteFormStep1Hint",
+        "ar": "اختر الخدمة الأقرب لاحتياجك.",
+        "en": "Pick the service that best matches your needs."
+      },
+      {
+        "key": "quoteFormStep2Hint",
+        "ar": "نخصص كل عرض وفق معايير قطاعك.",
+        "en": "We tailor every proposal to your sector's standards."
+      },
+      {
+        "key": "quoteFormStep3Hint",
+        "ar": "شاركنا الموقع والجدول الزمني ونبذة مختصرة.",
+        "en": "Share location, timeline, and a short overview."
+      },
+      {
+        "key": "quoteFormStep4Hint",
+        "ar": "سنرد خلال يوم عمل واحد.",
+        "en": "We'll respond within one business day."
+      },
+      {
+        "key": "quoteFormProjectTypeModification",
+        "ar": "ترقية / تعديل أنظمة",
+        "en": "System Upgrade / Modification"
+      },
+      {
+        "key": "quoteFormProjectTypeWelding",
+        "ar": "خدمات اللحام الصحي",
+        "en": "Hygienic Welding Service"
+      },
+      {
+        "key": "quoteFormProjectTypeSystem",
+        "ar": "أنظمة المعالجة / المياه",
+        "en": "Process / Water Treatment System"
+      },
+      {
+        "key": "quoteFormProjectTypePiping",
+        "ar": "تركيب الأنابيب",
+        "en": "Piping Installation"
+      },
+      {
+        "key": "quoteFormProjectTypeSourcing",
+        "ar": "توريد منتجات",
+        "en": "Product Sourcing"
+      },
+      {
+        "key": "quoteFormProjectTypeOther",
+        "ar": "أخرى",
+        "en": "Other"
+      },
+      {
+        "key": "quoteFormIndustryPharma",
+        "ar": "الأدوية",
+        "en": "Pharmaceutical"
+      },
+      {
+        "key": "quoteFormIndustryFood",
+        "ar": "الأغذية والمشروبات",
+        "en": "Food & Beverage"
+      },
+      {
+        "key": "quoteFormIndustryBiotech",
+        "ar": "التكنولوجيا الحيوية",
+        "en": "Biotechnology"
+      },
+      {
+        "key": "quoteFormIndustryCosmetics",
+        "ar": "مستحضرات التجميل",
+        "en": "Cosmetics"
+      },
+      {
+        "key": "quoteFormIndustryOther",
+        "ar": "أخرى",
+        "en": "Other"
+      },
+      {
+        "key": "quoteFormLocation",
+        "ar": "موقع المشروع",
+        "en": "Project Location"
+      },
+      {
+        "key": "quoteFormTimeline",
+        "ar": "الجدول الزمني المتوقع",
+        "en": "Estimated Timeline"
+      },
+      {
+        "key": "quoteFormDescription",
+        "ar": "وصف مختصر",
+        "en": "Brief Description"
+      },
+      {
+        "key": "quoteFormLocationPlaceholder",
+        "ar": "مثال: القاهرة، مصر",
+        "en": "e.g. Cairo, Egypt"
+      },
+      {
+        "key": "quoteFormTimelinePlaceholder",
+        "ar": "مثال: الربع الثالث 2026",
+        "en": "e.g. Q3 2026"
+      },
+      {
+        "key": "quoteFormDescriptionPlaceholder",
+        "ar": "صف النطاق أو السعة أو المتطلبات الرئيسية…",
+        "en": "Describe scope, capacity, or key requirements…"
+      },
+      {
+        "key": "quoteFormNext",
+        "ar": "متابعة",
+        "en": "Continue"
+      },
+      {
+        "key": "quoteFormBack",
+        "ar": "رجوع",
+        "en": "Back"
+      },
+      {
+        "key": "quoteFormSubmit",
+        "ar": "إرسال الطلب",
+        "en": "Submit Request"
+      },
+      {
+        "key": "quoteFormSuccess",
+        "ar": "شكراً لك — سيتواصل معك مهندس من ميدكس خلال 24 ساعة لمناقشة مشروعك.",
+        "en": "Thank you — a MIDEX engineer will be in touch within 24 hours to discuss your project."
+      },
+      {
+        "key": "quoteFormAgain",
+        "ar": "إرسال طلب آخر",
+        "en": "Send another request"
+      },
+      {
+        "key": "quoteFormProgress",
+        "ar": "تقدم النموذج",
+        "en": "Form progress"
+      },
+      {
+        "key": "quoteFormValidationProjectType",
+        "ar": "يرجى اختيار نوع المشروع.",
+        "en": "Please select a project type."
+      },
+      {
+        "key": "quoteFormValidationIndustry",
+        "ar": "يرجى اختيار القطاع.",
+        "en": "Please select an industry."
+      },
+      {
+        "key": "quoteFormValidationDescription",
+        "ar": "يرجى إدخال وصف مختصر للمشروع.",
+        "en": "Please enter a brief project description."
+      }
+    ]
+  },
+  {
+    "namespace": "meta",
+    "entries": [
+      {
+        "key": "siteName",
+        "ar": "ميديكس",
+        "en": "Midex"
+      },
+      {
+        "key": "siteDescription",
+        "ar": "ميدكس للمشروعات المتكاملة والمقاولات — هندسة للصناعات الدوائية والغذائية ومستحضرات التجميل.",
+        "en": "Midex for Integrated Projects and Contracting — pharmaceutical, food & cosmetics engineering."
+      }
+    ]
+  },
+  {
+    "namespace": "nav",
+    "entries": [
+      {
+        "key": "products",
+        "ar": "المنتجات",
+        "en": "Products"
+      },
+      {
+        "key": "solutions",
+        "ar": "الحلول",
+        "en": "Solutions"
+      },
+      {
+        "key": "blog",
+        "ar": "المدونة",
+        "en": "Blog"
+      },
+      {
+        "key": "aboutUs",
+        "ar": "من نحن",
+        "en": "About Us"
+      },
+      {
+        "key": "contactUs",
+        "ar": "اتصل بنا",
+        "en": "Contact Us"
+      },
+      {
+        "key": "allSolutions",
+        "ar": "جميع الحلول",
+        "en": "All Solutions"
+      },
+      {
+        "key": "systems",
+        "ar": "الأنظمة",
+        "en": "Systems"
+      },
+      {
+        "key": "modifications",
+        "ar": "التعديلات",
+        "en": "Modifications"
+      },
+      {
+        "key": "welding",
+        "ar": "اللحام",
+        "en": "Welding"
+      },
+      {
+        "key": "installations",
+        "ar": "التركيبات",
+        "en": "Installations"
+      },
+      {
+        "key": "menu",
+        "ar": "القائمة",
+        "en": "Menu"
+      },
+      {
+        "key": "close",
+        "ar": "إغلاق",
+        "en": "Close"
+      }
+    ]
+  },
+  {
+    "namespace": "products",
+    "entries": [
+      {
+        "key": "title",
+        "ar": "منتجاتنا",
+        "en": "Our Products"
+      },
+      {
+        "key": "subtitle",
+        "ar": "مجموعة متكاملة من المكونات الموردة وفق معايير الصناعات ذات المتطلبات الصحية الصارمة.",
+        "en": "A complete catalogue of components sourced and supplied to hygienic industry standards."
+      },
+      {
+        "key": "viewDetails",
+        "ar": "عرض التفاصيل",
+        "en": "View details"
+      },
+      {
+        "key": "requestQuote",
+        "ar": "طلب عرض سعر",
+        "en": "Request a Quote"
+      },
+      {
+        "key": "quoteShort",
+        "ar": "عرض سعر",
+        "en": "Quote"
+      },
+      {
+        "key": "backToCatalog",
+        "ar": "العودة إلى دليل المنتجات",
+        "en": "Back to catalog"
+      },
+      {
+        "key": "overview",
+        "ar": "نظرة عامة",
+        "en": "Overview"
+      },
+      {
+        "key": "featuresTitle",
+        "ar": "الميزات الرئيسية",
+        "en": "Key features"
+      },
+      {
+        "key": "specificationsTitle",
+        "ar": "المواصفات",
+        "en": "Specifications"
+      },
+      {
+        "key": "applicationsTitle",
+        "ar": "التطبيقات",
+        "en": "Applications"
+      },
+      {
+        "key": "relatedProductsTitle",
+        "ar": "منتجات ذات صلة",
+        "en": "Related products"
+      },
+      {
+        "key": "galleryTitle",
+        "ar": "معرض الصور",
+        "en": "Product gallery"
+      },
+      {
+        "key": "galleryPrevious",
+        "ar": "الصورة السابقة",
+        "en": "Previous image"
+      },
+      {
+        "key": "galleryNext",
+        "ar": "الصورة التالية",
+        "en": "Next image"
+      },
+      {
+        "key": "galleryView",
+        "ar": "عرض الصورة {number}",
+        "en": "View image {number}"
+      },
+      {
+        "key": "allCategories",
+        "ar": "جميع المنتجات",
+        "en": "All Products"
+      },
+      {
+        "key": "allProductsDescription",
+        "ar": "تصفح دليل ميدكس الكامل في مكان واحد.",
+        "en": "Browse the full MIDEX catalogue in one place."
+      },
+      {
+        "key": "categoriesLabel",
+        "ar": "فئات",
+        "en": "categories"
+      },
+      {
+        "key": "productsLabel",
+        "ar": "منتجات",
+        "en": "products"
+      },
+      {
+        "key": "catalogNav",
+        "ar": "تصفية حسب الفئة",
+        "en": "Filter by category"
+      },
+      {
+        "key": "catalogHeading",
+        "ar": "دليل المنتجات",
+        "en": "Full catalog"
+      },
+      {
+        "key": "catalogSubtitle",
+        "ar": "مكونات صناعية بتصميم صحي — اطلب عرض سعر لأي منتج.",
+        "en": "Industrial-grade components with hygienic design — request a quote for any item."
+      },
+      {
+        "key": "categoriesSectionTitle",
+        "ar": "تصفح حسب الفئة",
+        "en": "Browse by category"
+      },
+      {
+        "key": "categoriesSectionSubtitle",
+        "ar": "اختر فئة المنتجات لاستكشاف المواصفات وطلب التسعير.",
+        "en": "Select a product family to explore specifications and request pricing."
+      },
+      {
+        "key": "highlightsTitle",
+        "ar": "أبرز مميزات الفئة",
+        "en": "Category highlights"
+      },
+      {
+        "key": "viewCategory",
+        "ar": "عرض الفئة",
+        "en": "View category"
+      },
+      {
+        "key": "ctaTitle",
+        "ar": "تحتاج تسعيراً أو مواصفات؟",
+        "en": "Need pricing or specifications?"
+      },
+      {
+        "key": "ctaText",
+        "ar": "أرسل قائمة المواد أو تفاصيل التطبيق — يرد فريقنا بالتوفر وأوقات التسليم والوثائق.",
+        "en": "Send us your BOM or application details — our team responds with availability, lead times, and documentation."
+      },
+      {
+        "key": "noProducts",
+        "ar": "لا توجد منتجات في هذه الفئة.",
+        "en": "No products found in this category."
+      }
+    ]
+  },
+  {
+    "namespace": "socialFab",
+    "entries": [
+      {
+        "key": "open",
+        "ar": "تواصل مع ميدكس",
+        "en": "Connect with Midex"
+      },
+      {
+        "key": "close",
+        "ar": "إغلاق روابط التواصل",
+        "en": "Close social links"
+      },
+      {
+        "key": "linkedIn",
+        "ar": "لينكدإن",
+        "en": "LinkedIn"
+      },
+      {
+        "key": "whatsapp",
+        "ar": "واتساب",
+        "en": "WhatsApp"
+      },
+      {
+        "key": "email",
+        "ar": "البريد الإلكتروني",
+        "en": "Email"
+      },
+      {
+        "key": "twitter",
+        "ar": "إكس (تويتر)",
+        "en": "X (Twitter)"
+      }
+    ]
+  },
+  {
+    "namespace": "solutions",
+    "entries": [
+      {
+        "key": "title",
+        "ar": "الحلول",
+        "en": "Solutions"
+      },
+      {
+        "key": "subtitle",
+        "ar": "أنظمة متكاملة وتعديلات ولحام وخدمات تركيب لبيئات العمليات الصحية.",
+        "en": "Turnkey systems, modifications, welding, and installation services for hygienic process environments."
+      },
+      {
+        "key": "viewSolution",
+        "ar": "عرض الحل",
+        "en": "View solution"
+      },
+      {
+        "key": "introduction",
+        "ar": "مقدمة",
+        "en": "Introduction"
+      },
+      {
+        "key": "specifications",
+        "ar": "المواصفات",
+        "en": "Specifications"
+      },
+      {
+        "key": "allGroups",
+        "ar": "جميع مجموعات الحلول",
+        "en": "All solution groups"
+      },
+      {
+        "key": "groups",
+        "ar": "مجموعات",
+        "en": "groups"
+      },
+      {
+        "key": "services",
+        "ar": "خدمات",
+        "en": "services"
+      },
+      {
+        "key": "groupLabel",
+        "ar": "المجموعة",
+        "en": "Group"
+      },
+      {
+        "key": "browseGroup",
+        "ar": "تصفح المجموعة",
+        "en": "Browse group"
+      },
+      {
+        "key": "jumpToGroup",
+        "ar": "انتقل إلى مجموعة الحلول",
+        "en": "Jump to solution group"
+      },
+      {
+        "key": "allServices",
+        "ar": "جميع الخدمات",
+        "en": "All services"
+      },
+      {
+        "key": "allServicesSubtitle",
+        "ar": "تصفح كل أنظمة التعديل واللحام والتركيب التي نقدمها.",
+        "en": "Browse every system, modification, welding, and installation service we deliver."
+      },
+      {
+        "key": "featuredTitle",
+        "ar": "حلول مميزة",
+        "en": "Featured solutions"
+      },
+      {
+        "key": "ctaTitle",
+        "ar": "تحتاج حلًا متكاملًا؟",
+        "en": "Need a turnkey solution?"
+      },
+      {
+        "key": "ctaText",
+        "ar": "أخبرنا عن مشروعك — يرد فريق الهندسة بالنطاق والأسعار والمدة.",
+        "en": "Tell us about your project — our engineering team responds with scope, pricing, and lead times."
+      },
+      {
+        "key": "childIntro",
+        "ar": "ميدكس تقدم هندسة مُؤهَّلة ومتحقق من أدائها لـ {service} — من التصميم والتصنيع إلى التركيب والتشغيل والتوثيق وفق معايير GMP.",
+        "en": "Midex delivers validated engineering for {service} — from design and fabrication to installation, commissioning, and documentation aligned with GMP standards."
+      },
+      {
+        "key": "groupServicesTitle",
+        "ar": "خدمات هذه المجموعة",
+        "en": "Services in this group"
+      },
+      {
+        "key": "groupServicesSubtitle",
+        "ar": "اختر خدمة لمعرفة المزيد عن نطاق عملنا وقدراتنا ومنهج التسليم.",
+        "en": "Select a service to learn more about our scope, capabilities, and delivery approach."
+      },
+      {
+        "key": "groupImportanceTitle",
+        "ar": "لماذا يهم هذا",
+        "en": "Why this matters"
+      },
+      {
+        "key": "servicePartOf",
+        "ar": "ضمن {group}",
+        "en": "Part of {group}"
+      },
+      {
+        "key": "otherGroups",
+        "ar": "مجموعات حلول أخرى",
+        "en": "Other solution groups"
+      },
+      {
+        "key": "relatedServices",
+        "ar": "خدمات ذات صلة",
+        "en": "Related services"
+      },
+      {
+        "key": "capabilities",
+        "ar": "ما نقدمه",
+        "en": "What we deliver"
+      },
+      {
+        "key": "contactUs",
+        "ar": "اتصل بنا",
+        "en": "Contact us"
+      },
+      {
+        "key": "stepsGridTitle",
+        "ar": "نهج متكامل من البداية إلى التسليم",
+        "en": "Our A-Z Approach"
+      },
+      {
+        "key": "stepsGridSubtitle",
+        "ar": "منهج واضح ومنظم من أول استشارة حتى التسليم النهائي.",
+        "en": "A clear, structured approach from first consultation to final handover."
+      },
+      {
+        "key": "timelineTitle",
+        "ar": "نهج متكامل من البداية إلى التسليم",
+        "en": "Our A-Z Approach"
+      },
+      {
+        "key": "timelineSubtitle",
+        "ar": "منهج واضح ومنظم من أول استشارة حتى التسليم النهائي.",
+        "en": "A clear, structured approach from first consultation to final handover."
+      },
+      {
+        "key": "step1Title",
+        "ar": "الاستشارة",
+        "en": "Consultation"
+      },
+      {
+        "key": "step1Text",
+        "ar": "نبدأ بفهم عملياتكم ومنشأتكم ومتطلبات الامتثال لديكم.",
+        "en": "We start by understanding your process, your facility, and your compliance requirements."
+      },
+      {
+        "key": "step2Title",
+        "ar": "التقييم والتصميم",
+        "en": "Assessment & Design"
+      },
+      {
+        "key": "step2Text",
+        "ar": "يقيّم مهندسونا الموقع ويصممون حلاً يطابق مواصفاتكم بدقة.",
+        "en": "Our engineers assess the site and design a solution matched to your exact specifications."
+      },
+      {
+        "key": "step3Title",
+        "ar": "التنفيذ",
+        "en": "Execution"
+      },
+      {
+        "key": "step3Text",
+        "ar": "من اللحام إلى التركيب، ينفذ فريقنا المشروع وفق المعايير الصحية والدولية.",
+        "en": "From welding to installation, our team executes the project to hygienic and international standards."
+      },
+      {
+        "key": "step4Title",
+        "ar": "الاختبار والتحقق",
+        "en": "Testing & Validation"
+      },
+      {
+        "key": "step4Text",
+        "ar": "يُختبر كل نظام ويُتحقَّق من أدائه قبل التسليم، لضمان الامتثال الكامل والموثوقية.",
+        "en": "Every system is tested and validated before handover, ensuring full compliance and reliability."
+      },
+      {
+        "key": "step5Title",
+        "ar": "الدعم والصيانة",
+        "en": "Support & Maintenance"
+      },
+      {
+        "key": "step5Text",
+        "ar": "نبقى معكم بعد التركيب، نقدم الترقيات والتعديلات والدعم المستمر مع تطور احتياجاتكم.",
+        "en": "We stay involved post-installation, offering upgrades, modifications, and ongoing support as your needs evolve."
+      },
+      {
+        "key": "step6Title",
+        "ar": "التسليم",
+        "en": "Handover"
+      },
+      {
+        "key": "step6Text",
+        "ar": "توثيق كامل وتدريب المشغّلين وإغلاق رسمي للمشروع — ليكون فريقكم جاهزاً من أول يوم.",
+        "en": "Complete documentation, operator training, and formal project close-out — so your team is ready from day one."
+      }
+    ]
+  }
+]

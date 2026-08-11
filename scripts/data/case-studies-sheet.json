@@ -1,24 +1,24 @@
 [
   {
-    "slug": "01-cons-korra-ss-piping-network",
+    "slug": "cons-korra-portfolio",
     "client": "Cons Korra",
     "industry": "Pharmaceutical",
-    "scope": "SS Piping Network. Location: Badr City (Future Pro facility). Year of implementation: 2023.",
-    "intro": "Cons Korra partnered with MIDEX to upgrade the stainless-steel process piping serving its pharmaceutical manufacturing operations at the Future Pro facility in Badr City.",
-    "challenge": "The Future Pro facility needed a hygienic, corrosion-resistant piping network capable of meeting pharmaceutical-grade process requirements, with minimal disruption to ongoing production.",
-    "approach": "MIDEX's engineering team surveyed the existing utilities, designed the stainless-steel routing to GMP hygienic-piping standards, and carried out orbital welding, pressure testing and passivation on site.",
+    "scope": "Ongoing general-contracting partnership spanning multiple facilities, including VBC, Misr Company For Pharmaceuticals, and Mina Pharm — covering stainless-steel piping networks, purified water and WFI loops, compressed air and clean gases networks, and water station upgrades and spare parts supply.",
+    "intro": "Cons Korra is a general contractor MIDEX has partnered with across multiple pharmaceutical facilities — including VBC, Misr Company For Pharmaceuticals, and Mina Pharm — delivering hygienic piping, utility networks, and purified water systems tailored to each site.",
+    "challenge": "As general contractor on large pharmaceutical builds, Cons Korra needed a specialized hygienic-engineering subcontractor capable of delivering consistent, compliant systems across a portfolio of different end-client facilities — each with its own layout, timeline, and technical requirements.",
+    "approach": "MIDEX works as Cons Korra's hygienic engineering partner project by project, adapting stainless-steel piping, water systems, and utility network designs to each facility while holding every installation to the same GMP-aligned standard.",
     "highlights": [
-      "Detailed piping isometrics and layout drawings",
-      "stainless-steel fabrication and orbital welding",
-      "pressure and leak testing",
-      "passivation and documentation package for QA sign-off"
+      "Stainless-steel piping networks across multiple facilities",
+      "Purified water (PW) and WFI loop installations",
+      "Compressed air and clean gases networks",
+      "Water station upgrades, modifications, and spare parts supply"
     ],
-    "outcome": "A validated, GMP-compliant stainless-steel piping network was commissioned on schedule, giving Cons Korra a reliable process utility backbone at Future Pro.",
-    "statValue": "2023",
-    "statLabel": "Year",
+    "outcome": "Cons Korra continues to rely on MIDEX as its go-to hygienic engineering subcontractor across its portfolio of pharmaceutical projects, with a consistent standard of compliance delivered site to site.",
+    "statValue": "",
+    "statLabel": "",
     "tags": [
-      "Stainless steel",
-      "Piping"
+      "Stainless Steel",
+      "Systems"
     ],
     "order": 0
   },
@@ -44,29 +44,6 @@
       "Piping"
     ],
     "order": 1
-  },
-  {
-    "slug": "03-cons-korra-ss-works",
-    "client": "Cons Korra",
-    "industry": "Pharmaceutical",
-    "scope": "SS Works. Location: 6th of October City (AstraZeneca facility). Year of implementation: 2024.",
-    "intro": "Cons Korra partnered with MIDEX to upgrade the stainless-steel process piping serving its pharmaceutical manufacturing operations at the AstraZeneca facility in 6th of October City.",
-    "challenge": "The AstraZeneca facility needed a hygienic, corrosion-resistant piping network capable of meeting pharmaceutical-grade process requirements, with minimal disruption to ongoing production.",
-    "approach": "MIDEX's engineering team surveyed the existing utilities, designed the stainless-steel routing to GMP hygienic-piping standards, and carried out orbital welding, pressure testing and passivation on site.",
-    "highlights": [
-      "Detailed piping isometrics and layout drawings",
-      "stainless-steel fabrication and orbital welding",
-      "pressure and leak testing",
-      "passivation and documentation package for QA sign-off"
-    ],
-    "outcome": "A validated, GMP-compliant stainless-steel piping network was commissioned on schedule, giving Cons Korra a reliable process utility backbone at AstraZeneca.",
-    "statValue": "2024",
-    "statLabel": "Year",
-    "tags": [
-      "Stainless steel",
-      "Piping"
-    ],
-    "order": 2
   },
   {
     "slug": "04-pure-power-ss-piping-network-and-ss-works",
@@ -204,29 +181,6 @@
       "Piping"
     ],
     "order": 8
-  },
-  {
-    "slug": "10-cons-korra-ss-piping-network-and-fitting",
-    "client": "Cons Korra",
-    "industry": "Pharmaceutical",
-    "scope": "SS Piping Network and fitting. Location: Amreya Alexandria (Pharco Pharma facility). Year of implementation: 2026.",
-    "intro": "Cons Korra partnered with MIDEX to upgrade the stainless-steel process piping serving its pharmaceutical manufacturing operations at the Pharco Pharma facility in Amreya Alexandria.",
-    "challenge": "The Pharco Pharma facility needed a hygienic, corrosion-resistant piping network capable of meeting pharmaceutical-grade process requirements, with minimal disruption to ongoing production.",
-    "approach": "MIDEX's engineering team surveyed the existing utilities, designed the stainless-steel routing to GMP hygienic-piping standards, and carried out orbital welding, pressure testing and passivation on site.",
-    "highlights": [
-      "Detailed piping isometrics and layout drawings",
-      "stainless-steel fabrication and orbital welding",
-      "pressure and leak testing",
-      "passivation and documentation package for QA sign-off"
-    ],
-    "outcome": "A validated, GMP-compliant stainless-steel piping network was commissioned on schedule, giving Cons Korra a reliable process utility backbone at Pharco Pharma.",
-    "statValue": "2026",
-    "statLabel": "Year",
-    "tags": [
-      "Stainless steel",
-      "Piping"
-    ],
-    "order": 9
   },
   {
     "slug": "11-mtbi-ro-water-station-modifications",
@@ -591,50 +545,6 @@
     "order": 25
   },
   {
-    "slug": "27-cons-korra-compressed-air-piping-network",
-    "client": "Cons Korra",
-    "industry": "Pharmaceutical",
-    "scope": "Compressed Air Piping Network. Location: Al-salheia City (MEVAC3 facility). Year of implementation: 2025.",
-    "intro": "Cons Korra contracted MIDEX to install a compressed air piping network at its MEVAC3 facility in Al-salheia City.",
-    "challenge": "The facility needed a reliable, correctly sized compressed air distribution network to serve its process and utility equipment.",
-    "approach": "MIDEX designed the compressed air network layout, sized the distribution lines, and installed the piping with quality control checks at every stage.",
-    "highlights": [
-      "Compressed air network design",
-      "pipe routing and installation",
-      "pressure testing",
-      "documentation handover"
-    ],
-    "outcome": "Cons Korra now operates a dependable compressed air distribution network at MEVAC3.",
-    "statValue": "2025",
-    "statLabel": "Year",
-    "tags": [
-      "Compressed air"
-    ],
-    "order": 26
-  },
-  {
-    "slug": "28-cons-korra-compressed-air-piping-network",
-    "client": "Cons Korra",
-    "industry": "Pharmaceutical",
-    "scope": "Compressed Air Piping Network. Location: Al-salheia City (MEVAC5 facility). Year of implementation: 2025.",
-    "intro": "Cons Korra contracted MIDEX to install a compressed air piping network at its MEVAC5 facility in Al-salheia City.",
-    "challenge": "The facility needed a reliable, correctly sized compressed air distribution network to serve its process and utility equipment.",
-    "approach": "MIDEX designed the compressed air network layout, sized the distribution lines, and installed the piping with quality control checks at every stage.",
-    "highlights": [
-      "Compressed air network design",
-      "pipe routing and installation",
-      "pressure testing",
-      "documentation handover"
-    ],
-    "outcome": "Cons Korra now operates a dependable compressed air distribution network at MEVAC5.",
-    "statValue": "2025",
-    "statLabel": "Year",
-    "tags": [
-      "Compressed air"
-    ],
-    "order": 27
-  },
-  {
     "slug": "29-future-pharma-clean-gases-network",
     "client": "Future Pharma",
     "industry": "Pharmaceutical",
@@ -677,50 +587,6 @@
       "Clean gases"
     ],
     "order": 29
-  },
-  {
-    "slug": "31-cons-korra-clean-gases-network",
-    "client": "Cons Korra",
-    "industry": "Pharmaceutical",
-    "scope": "Clean Gases Network. Location: Al-salheia City (MEVAC3 facility). Year of implementation: 2025.",
-    "intro": "Cons Korra worked with MIDEX to install a clean gases network at its MEVAC3 facility in Al-salheia City.",
-    "challenge": "The site required a clean gases distribution network built to pharmaceutical hygienic and safety standards.",
-    "approach": "MIDEX engineered the clean gases routing, selected appropriate materials and fittings, and installed and tested the network to specification.",
-    "highlights": [
-      "Clean gases network design",
-      "piping fabrication and installation",
-      "leak and pressure testing",
-      "as-built documentation"
-    ],
-    "outcome": "The completed clean gases network gives Cons Korra a safe, specification-compliant gas supply at MEVAC3.",
-    "statValue": "2025",
-    "statLabel": "Year",
-    "tags": [
-      "Clean gases"
-    ],
-    "order": 30
-  },
-  {
-    "slug": "32-cons-korra-clean-gases-network",
-    "client": "Cons Korra",
-    "industry": "Pharmaceutical",
-    "scope": "Clean Gases Network. Location: Al-salheia City (MEVAC5 facility). Year of implementation: 2025.",
-    "intro": "Cons Korra worked with MIDEX to install a clean gases network at its MEVAC5 facility in Al-salheia City.",
-    "challenge": "The site required a clean gases distribution network built to pharmaceutical hygienic and safety standards.",
-    "approach": "MIDEX engineered the clean gases routing, selected appropriate materials and fittings, and installed and tested the network to specification.",
-    "highlights": [
-      "Clean gases network design",
-      "piping fabrication and installation",
-      "leak and pressure testing",
-      "as-built documentation"
-    ],
-    "outcome": "The completed clean gases network gives Cons Korra a safe, specification-compliant gas supply at MEVAC5.",
-    "statValue": "2025",
-    "statLabel": "Year",
-    "tags": [
-      "Clean gases"
-    ],
-    "order": 31
   },
   {
     "slug": "33-gmp-tech-sanitary-drain",
@@ -858,29 +724,6 @@
     "order": 37
   },
   {
-    "slug": "39-cons-korra-purified-water-loop",
-    "client": "Cons Korra",
-    "industry": "Pharmaceutical",
-    "scope": "Purified Water loop. Location: Amreya Alexandria (Pharco Pharma facility). Year of implementation: 2024.",
-    "intro": "Cons Korra partnered with MIDEX to deliver a Purified Water (PW) loop at its Pharco Pharma facility in Amreya Alexandria.",
-    "challenge": "The facility needed a hygienic, continuously circulating purified water distribution loop meeting pharmacopoeial water-quality standards.",
-    "approach": "MIDEX designed the PW loop, fabricated and installed the stainless-steel piping with orbital welding, and validated the loop's flow and quality performance.",
-    "highlights": [
-      "PW loop design and routing",
-      "stainless-steel fabrication and orbital welding",
-      "passivation",
-      "commissioning and performance verification"
-    ],
-    "outcome": "The purified water loop now supplies Cons Korra's production areas at Pharco Pharma reliably and to specification.",
-    "statValue": "2024",
-    "statLabel": "Year",
-    "tags": [
-      "Purified water",
-      "Distribution loop"
-    ],
-    "order": 38
-  },
-  {
     "slug": "40-delta-care-purified-water-loop-modification",
     "client": "Delta Care",
     "industry": "Pharmaceutical",
@@ -903,51 +746,6 @@
       "Distribution loop"
     ],
     "order": 39
-  },
-  {
-    "slug": "41-cons-korra-purified-water-loop",
-    "client": "Cons Korra",
-    "industry": "Pharmaceutical",
-    "scope": "Purified water loop. Location: Al-salheia City (MEVAC5 facility). Year of implementation: 2025.",
-    "intro": "Cons Korra partnered with MIDEX to deliver a Purified Water (PW) loop at its MEVAC5 facility in Al-salheia City.",
-    "challenge": "The facility needed a hygienic, continuously circulating purified water distribution loop meeting pharmacopoeial water-quality standards.",
-    "approach": "MIDEX designed the PW loop, fabricated and installed the stainless-steel piping with orbital welding, and validated the loop's flow and quality performance.",
-    "highlights": [
-      "PW loop design and routing",
-      "stainless-steel fabrication and orbital welding",
-      "passivation",
-      "commissioning and performance verification"
-    ],
-    "outcome": "The purified water loop now supplies Cons Korra's production areas at MEVAC5 reliably and to specification.",
-    "statValue": "2025",
-    "statLabel": "Year",
-    "tags": [
-      "Purified water",
-      "Distribution loop"
-    ],
-    "order": 40
-  },
-  {
-    "slug": "42-cons-korra-pure-steam-pipe-line-network",
-    "client": "Cons Korra",
-    "industry": "Pharmaceutical",
-    "scope": "Pure steam pipe line network. Location: Al-salheia City (MEVAC5 facility). Year of implementation: 2025.",
-    "intro": "Cons Korra engaged MIDEX to install a pure steam pipeline network at its MEVAC5 facility in Al-salheia City.",
-    "challenge": "The site required a pure steam distribution network engineered to hygienic design standards and capable of maintaining steam quality to point of use.",
-    "approach": "MIDEX designed the pure steam routing, selected suitable materials and insulation, and installed and tested the network to pharmaceutical standards.",
-    "highlights": [
-      "Pure steam network design",
-      "piping fabrication and installation",
-      "insulation",
-      "pressure testing and documentation"
-    ],
-    "outcome": "Cons Korra now benefits from a validated pure steam distribution network at MEVAC5.",
-    "statValue": "2025",
-    "statLabel": "Year",
-    "tags": [
-      "Pure steam pipe line network."
-    ],
-    "order": 41
   },
   {
     "slug": "43-mash-pharma-purified-water-loop",
@@ -1017,29 +815,6 @@
       "Distribution loop"
     ],
     "order": 44
-  },
-  {
-    "slug": "46-cons-korra-wfi-water-loop",
-    "client": "Cons Korra",
-    "industry": "Pharmaceutical",
-    "scope": "WFI water loop. Location: Al-salheia City (MEVAC5 facility). Year of implementation: 2025.",
-    "intro": "Cons Korra selected MIDEX to install a Water for Injection (WFI) loop at its MEVAC5 facility in Al-salheia City.",
-    "challenge": "The facility needed a continuously circulating WFI distribution loop meeting the highest pharmacopoeial water-quality requirements.",
-    "approach": "MIDEX engineered and installed the WFI loop in high-grade stainless steel with orbital welding, electropolishing and passivation to maintain water purity throughout distribution.",
-    "highlights": [
-      "WFI loop design",
-      "stainless-steel fabrication and orbital welding",
-      "electropolishing and passivation",
-      "commissioning and quality verification"
-    ],
-    "outcome": "The WFI loop now supplies Cons Korra's critical production processes at MEVAC5 to pharmacopoeial standard.",
-    "statValue": "2025",
-    "statLabel": "Year",
-    "tags": [
-      "WFI",
-      "Distribution loop"
-    ],
-    "order": 45
   },
   {
     "slug": "47-otsuka-pharma-egypt-wfi-water-loop",
@@ -1196,50 +971,6 @@
       "Purified water"
     ],
     "order": 52
-  },
-  {
-    "slug": "54-cons-korra-spare-parts-water-station",
-    "client": "Cons Korra",
-    "industry": "Pharmaceutical",
-    "scope": "Spare Parts Water Station. Location: Heliopolis (Nova Pharma facility). Year of implementation: 2024.",
-    "intro": "Cons Korra sourced spare parts for its water station at the Nova Pharma facility in Heliopolis through MIDEX.",
-    "challenge": "The site needed genuine, specification-matched spare parts to keep its water station running without unplanned downtime.",
-    "approach": "MIDEX identified the required spare parts, sourced and supplied them, and supported installation to restore the water station to full performance.",
-    "highlights": [
-      "Spare parts identification and sourcing",
-      "supply of components",
-      "installation support",
-      "handover documentation"
-    ],
-    "outcome": "Cons Korra's water station at Nova Pharma continues to run reliably with the supplied spare parts in place.",
-    "statValue": "2024",
-    "statLabel": "Year",
-    "tags": [
-      "Spare parts"
-    ],
-    "order": 53
-  },
-  {
-    "slug": "55-cons-korra-spare-parts-water-station",
-    "client": "Cons Korra",
-    "industry": "Pharmaceutical",
-    "scope": "Spare Parts Water Station. Location: Amreya Alexandria (Pharco Pharma facility). Year of implementation: 2025.",
-    "intro": "Cons Korra sourced spare parts for its water station at the Pharco Pharma facility in Amreya Alexandria through MIDEX.",
-    "challenge": "The site needed genuine, specification-matched spare parts to keep its water station running without unplanned downtime.",
-    "approach": "MIDEX identified the required spare parts, sourced and supplied them, and supported installation to restore the water station to full performance.",
-    "highlights": [
-      "Spare parts identification and sourcing",
-      "supply of components",
-      "installation support",
-      "handover documentation"
-    ],
-    "outcome": "Cons Korra's water station at Pharco Pharma continues to run reliably with the supplied spare parts in place.",
-    "statValue": "2025",
-    "statLabel": "Year",
-    "tags": [
-      "Spare parts"
-    ],
-    "order": 54
   },
   {
     "slug": "56-acdima-spare-parts-water-station",

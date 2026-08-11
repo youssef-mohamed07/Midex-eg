@@ -44,7 +44,7 @@ const seoProjection = `{
 }`;
 
 function toSeoEntry(raw: RawSeoEntry | null, locale: Locale): SeoEntry | undefined {
-  if (!raw) return undefined;
+  if (!raw || !raw.routeKey) return undefined;
 
   return {
     routeKey: raw.routeKey,
@@ -52,7 +52,7 @@ function toSeoEntry(raw: RawSeoEntry | null, locale: Locale): SeoEntry | undefin
     title: raw.title,
     description: raw.description,
     focusKeyword: raw.focusKeyword ?? undefined,
-    keywords: raw.keywords.length ? raw.keywords : undefined,
+    keywords: raw.keywords?.length ? raw.keywords : undefined,
     canonicalPath: raw.canonicalPath ?? undefined,
     robots:
       raw.robotsIndex === undefined && raw.robotsFollow === undefined

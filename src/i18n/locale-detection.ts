@@ -2,26 +2,6 @@ import type { NextRequest } from "next/server";
 import type { Locale } from "./routing";
 import { routing } from "./routing";
 
-const ARAB_COUNTRIES = new Set([
-  "EG",
-  "SA",
-  "AE",
-  "KW",
-  "QA",
-  "BH",
-  "OM",
-  "JO",
-  "LB",
-  "SY",
-  "IQ",
-  "YE",
-  "LY",
-  "TN",
-  "DZ",
-  "MA",
-  "SD",
-  "PS",
-]);
 
 const GERMAN_COUNTRIES = new Set(["DE", "AT", "CH", "LI", "LU"]);
 
@@ -40,7 +20,6 @@ export function detectLocaleFromGeo(request: NextRequest): Locale | undefined {
   const country = readCountry(request);
   if (!country || country === "XX") return undefined;
 
-  if (ARAB_COUNTRIES.has(country)) return "ar";
   if (GERMAN_COUNTRIES.has(country)) return "de";
   return "en";
 }

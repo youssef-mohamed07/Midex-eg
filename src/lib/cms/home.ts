@@ -93,7 +93,7 @@ export async function getHomePageData(locale: Locale): Promise<HomePageData> {
           ""
         )
       },
-      "events": *[_type == "eventItem"] | order(order asc) {
+      "events": *[_type == "eventItem"] | order(order asc)[0..11] {
         "src": ${imageUrl("image")},
         "title": ${loc("title")},
         "subtitle": ${locOptional("subtitle")},

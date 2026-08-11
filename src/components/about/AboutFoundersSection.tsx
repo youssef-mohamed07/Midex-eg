@@ -29,7 +29,7 @@ export async function AboutFoundersSection({ title }: Props) {
             {aboutFounders.map((founder, index) => {
               const name = pick(founder.name, t(founder.nameKey));
               const role = pick(founder.role, t(founder.roleKey));
-              const quote = pick(founder.quote, founder.quoteKey ? t(founder.quoteKey as any) : undefined);
+              const quote = pick(founder.quote, founder.quoteKey ? t(founder.quoteKey as any) : "");
 
               return (
                 <RevealOnScroll key={founder.id} delay={index * 70} className="h-full">

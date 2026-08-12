@@ -210,12 +210,6 @@ export const homePage = defineType({
     defineField({ name: "newsSection", title: "News / blog section", type: "sectionHeader", group: "news", description: "Hidden on homepage by default — enable in Show section to display." }),
     defineField({ name: "clientLogosSection", title: "Client logos section", type: "sectionHeader", group: "clients", description: "Hidden on homepage by default — enable in Show section to display." }),
     defineField({ name: "quoteFormSection", title: "Quote form section", type: "sectionHeader", group: "quoteForm" }),
-    defineField({
-      name: "caseStudyLabels",
-      title: "Case study detail labels",
-      type: "caseStudyLabels",
-      group: "caseStudies",
-    }),
     defineField({ name: "faq", title: "FAQ", type: "faqSection", group: "faq" }),
     defineField({ name: "quoteCta", title: "Bottom CTA", type: "pageCta", group: "cta" }),
     defineField({
@@ -995,13 +989,6 @@ export const solutionChild = defineType({
       title: "Capabilities",
       type: "localeStringList",
       description: "Service-specific capability bullets (fallback layout).",
-      group: "content",
-    }),
-    defineField({
-      name: "labels",
-      title: "Page labels",
-      type: "solutionChildLabels",
-      description: "Section headings for the fallback layout when Detail page is empty.",
       group: "content",
     }),
     defineField({ name: "order", title: "Order", type: "number", validation: required, group: "content" }),

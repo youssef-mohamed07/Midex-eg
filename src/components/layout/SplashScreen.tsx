@@ -58,15 +58,16 @@ function finishSplash(playMs: number) {
 }
 
 export function SplashScreen() {
-  const [visible, setVisible] = useState(() => {
-    if (typeof document !== "undefined") {
-      return document.documentElement.classList.contains(SPLASH_PENDING_CLASS);
-    }
-    return false;
-  });
+  const [visible, setVisible] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [exiting, setExiting] = useState(false);
 
   useLayoutEffect(() => {
+    setMounted(true);
+    if (document.documentElement.classList.contains(SPLASH_PENDING_CLASS)) {
+      setVisible(true);
+    }
+
     splashHandlers.onExit = () => setExiting(true);
     splashHandlers.onDone = () => {
       setVisible(false);
@@ -90,7 +91,7 @@ export function SplashScreen() {
     };
   }, []);
 
-  if (!visible) return null;
+  if (!mounted || !visible) return null;
 
   return (
     <div

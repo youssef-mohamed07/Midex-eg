@@ -78,13 +78,13 @@ export default async function RootLayout({
       className={`${alexandria.variable} midex-splash-pending`}
     >
       <head>
+        <Script src="/splash-boot.js" strategy="beforeInteractive" />
         <link rel="preconnect" href={SANITY_CDN} crossOrigin="anonymous" />
         <link rel="dns-prefetch" href={SANITY_CDN} />
         <link rel="preconnect" href={GOOGLE_MAPS} crossOrigin="anonymous" />
         <link rel="dns-prefetch" href={GOOGLE_MAPS} />
       </head>
       <body className="overflow-x-hidden bg-white font-body antialiased">
-        <Script src="/splash-boot.js" strategy="beforeInteractive" />
         <SplashScreen />
         {children}
       </body>

@@ -186,7 +186,7 @@ export const timelineSectionProjection = (field: string) => `${field}{
   }, [])
 }`;
 
-export const productExplorerLabelsProjection = (namespace = "productExplorerLabels") => `*[_type == "uiMessages" && namespace == "${namespace}"][0]{
+export const productExplorerLabelsProjection = (namespace = "productExplorerLabels") => `*[_type == "uiMessages" && (namespace == "${namespace}" || name == "${namespace}")][0]{
   "allCategories": ${uiMsg("allCategories")},
   "viewDetails": ${uiMsg("viewDetails")},
   "requestQuote": ${uiMsg("requestQuote")},
@@ -198,7 +198,7 @@ export const productExplorerLabelsProjection = (namespace = "productExplorerLabe
   "viewCategory": ${uiMsg("viewCategory")}
 }`;
 
-export const productDetailLabelsProjection = (namespace = "productDetailLabels") => `*[_type == "uiMessages" && namespace == "${namespace}"][0]{
+export const productDetailLabelsProjection = (namespace = "productDetailLabels") => `*[_type == "uiMessages" && (namespace == "${namespace}" || name == "${namespace}")][0]{
   "overviewTitle": ${uiMsg("overviewTitle")},
   "featuresTitle": ${uiMsg("featuresTitle")},
   "specificationsTitle": ${uiMsg("specificationsTitle")},
@@ -214,7 +214,7 @@ export const productDetailLabelsProjection = (namespace = "productDetailLabels")
   "galleryView": ${uiMsg("galleryView")}
 }`;
 
-export const caseStudiesExplorerLabelsProjection = (namespace = "caseStudiesExplorerLabels") => `*[_type == "uiMessages" && namespace == "${namespace}"][0]{
+export const caseStudiesExplorerLabelsProjection = (namespace = "caseStudiesExplorerLabels") => `*[_type == "uiMessages" && (namespace == "${namespace}" || name == "${namespace}")][0]{
   "searchPlaceholder": ${uiMsg("searchPlaceholder")},
   "all": ${uiMsg("all")},
   "year": ${uiMsg("year")},
@@ -228,7 +228,7 @@ export const caseStudiesExplorerLabelsProjection = (namespace = "caseStudiesExpl
   "contactLabel": ${uiMsg("contactLabel")}
 }`;
 
-export const blogDetailLabelsProjection = (namespace = "blogDetailLabels") => `*[_type == "uiMessages" && namespace == "${namespace}"][0]{
+export const blogDetailLabelsProjection = (namespace = "blogDetailLabels") => `*[_type == "uiMessages" && (namespace == "${namespace}" || name == "${namespace}")][0]{
   "blogLabel": ${uiMsg("blogLabel")},
   "minRead": ${uiMsg("minRead")},
   "authorLabel": ${uiMsg("authorLabel")},
@@ -237,7 +237,7 @@ export const blogDetailLabelsProjection = (namespace = "blogDetailLabels") => `*
   "contactCta": ${uiMsg("contactCta")}
 }`;
 
-export const solutionChildLabelsProjection = (namespace = "solutionChildLabels") => `*[_type == "uiMessages" && namespace == "${namespace}"][0]{
+export const solutionChildLabelsProjection = (namespace = "solutionChildLabels") => `*[_type == "uiMessages" && (namespace == "${namespace}" || name == "${namespace}")][0]{
   "introductionTitle": ${uiMsg("introductionTitle")},
   "capabilitiesTitle": ${uiMsg("capabilitiesTitle")},
   "relatedServicesTitle": ${uiMsg("relatedServicesTitle")},
@@ -245,7 +245,7 @@ export const solutionChildLabelsProjection = (namespace = "solutionChildLabels")
   "browseGroupLabel": ${uiMsg("browseGroupLabel")}
 }`;
 
-export const layoutChromeProjection = (namespace = "chrome") => `*[_type == "uiMessages" && namespace == "${namespace}"][0]{
+export const layoutChromeProjection = (namespace = "chrome") => `*[_type == "uiMessages" && (namespace == "${namespace}" || name == "${namespace}")][0]{
   "home": ${uiMsg("home")},
   "products": ${uiMsg("products")},
   "solutions": ${uiMsg("solutions")},
@@ -280,7 +280,7 @@ export const layoutChromeProjection = (namespace = "chrome") => `*[_type == "uiM
   "language": ${uiMsg("language")}
 }`;
 
-export const contactFormCopyProjection = (namespace = "contactFormCopy") => `*[_type == "uiMessages" && namespace == "${namespace}"][0]{
+export const contactFormCopyProjection = (namespace = "contactFormCopy") => `*[_type == "uiMessages" && (namespace == "${namespace}" || name == "${namespace}")][0]{
   "title": ${uiMsg("title")},
   "intro": ${uiMsg("intro")},
   "quoteFor": ${uiMsg("quoteFor")},
@@ -304,7 +304,7 @@ export const contactFormCopyProjection = (namespace = "contactFormCopy") => `*[_
   "validationMessage": ${uiMsg("validationMessage")}
 }`;
 
-export const quoteFormCopyProjection = (namespace = "quoteFormCopy") => `*[_type == "uiMessages" && namespace == "${namespace}"][0]{
+export const quoteFormCopyProjection = (namespace = "quoteFormCopy") => `*[_type == "uiMessages" && (namespace == "${namespace}" || name == "${namespace}")][0]{
   "badge": ${uiMsg("badge")},
   "step1": ${uiMsg("step1")},
   "step2": ${uiMsg("step2")},
@@ -337,7 +337,7 @@ export const quoteFormCopyProjection = (namespace = "quoteFormCopy") => `*[_type
   "validationDescription": ${uiMsg("validationDescription")}
 }`;
 
-export const caseStudyLabelsProjection = (namespace = "caseStudyLabels") => `*[_type == "uiMessages" && namespace == "${namespace}"][0]{
+export const caseStudyLabelsProjection = (namespace = "caseStudyLabels") => `*[_type == "uiMessages" && (namespace == "${namespace}" || name == "${namespace}")][0]{
   "scopeLabel": ${uiMsg("scopeLabel")},
   "challengeLabel": ${uiMsg("challengeLabel")},
   "approachLabel": ${uiMsg("approachLabel")},

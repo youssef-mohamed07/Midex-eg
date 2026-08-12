@@ -53,67 +53,35 @@ function structure(S: StructureBuilder) {
                     .title("UI Messages by area")
                     .items([
                       S.listItem()
-                        .title("Nav")
-                        .id("nav-list-item")
+                        .title("Chrome & Layout")
+                        .id("chrome-list-item")
                         .child(
                           S.documentList()
-                            .title("Nav")
-                            .id("nav-messages")
+                            .title("Chrome & Layout")
+                            .id("chrome-messages")
                             .apiVersion(apiVersion)
-                            .filter('_type == "uiMessages" && namespace == "nav"'),
+                            .filter('_type == "uiMessages" && (namespace in ["chrome", "nav", "footer"] || name in ["chrome", "nav", "footer"])'),
                         ),
                       S.listItem()
-                        .title("Footer")
-                        .id("footer-list-item")
+                        .title("Forms (Contact & Quote)")
+                        .id("forms-list-item")
                         .child(
                           S.documentList()
-                            .title("Footer")
-                            .id("footer-messages")
+                            .title("Forms")
+                            .id("forms-messages")
                             .apiVersion(apiVersion)
-                            .filter('_type == "uiMessages" && namespace == "footer"'),
+                            .filter('_type == "uiMessages" && (namespace in ["contactFormCopy", "quoteFormCopy", "contact"] || name in ["contactFormCopy", "quoteFormCopy", "contact"])'),
                         ),
                       S.listItem()
-                        .title("Forms (contact)")
-                        .id("contact-list-item")
+                        .title("Pages (Products, Solutions, Case Studies, Blog)")
+                        .id("pages-list-item")
                         .child(
                           S.documentList()
-                            .title("Contact")
-                            .id("contact-messages")
-                            .apiVersion(apiVersion)
-                            .filter('_type == "uiMessages" && namespace == "contact"'),
-                        ),
-                      S.listItem()
-                        .title("Home chrome")
-                        .id("home-chrome-list-item")
-                        .child(
-                          S.documentList()
-                            .title("Home")
-                            .id("home-messages")
-                            .apiVersion(apiVersion)
-                            .filter('_type == "uiMessages" && namespace == "home"'),
-                        ),
-                      S.listItem()
-                        .title("About / Products / Solutions / Blog")
-                        .id("pages-namespaces-list-item")
-                        .child(
-                          S.documentList()
-                            .title("Page namespaces")
-                            .id("pages-namespaces-messages")
+                            .title("Pages")
+                            .id("pages-messages")
                             .apiVersion(apiVersion)
                             .filter(
-                              '_type == "uiMessages" && namespace in ["about", "products", "solutions", "blog", "hero"]',
-                            ),
-                        ),
-                      S.listItem()
-                        .title("Common / Social / Meta")
-                        .id("common-namespaces-list-item")
-                        .child(
-                          S.documentList()
-                            .title("Shell extras")
-                            .id("common-namespaces-messages")
-                            .apiVersion(apiVersion)
-                            .filter(
-                              '_type == "uiMessages" && namespace in ["common", "socialFab", "meta"]',
+                              '_type == "uiMessages" && (namespace in ["productExplorerLabels", "productDetailLabels", "caseStudiesExplorerLabels", "caseStudyLabels", "blogDetailLabels", "solutionChildLabels"] || name in ["productExplorerLabels", "productDetailLabels", "caseStudiesExplorerLabels", "caseStudyLabels", "blogDetailLabels", "solutionChildLabels"])',
                             ),
                         ),
                       S.divider(),

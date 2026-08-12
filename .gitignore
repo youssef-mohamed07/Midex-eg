@@ -29,3 +29,7 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+# backups and extracted migration data
+*.tar.gz
+extracted-ui-messages.json

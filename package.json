@@ -23,7 +23,9 @@
     "patch:testimonial-names": "tsx scripts/patch-testimonial-names.ts",
     "sanity:case-studies": "tsx scripts/sync-case-studies.ts",
     "sanity:case-studies:dry-run": "DRY_RUN=true tsx scripts/sync-case-studies.ts",
-    "sanity:ui-messages:dry": "tsx scripts/migrate-ui-messages.ts",
+    "sanity:ui-messages:cleanup:dry": "tsx scripts/cleanup-ui-messages.ts --dry-run",
+    "sanity:ui-messages:cleanup": "tsx scripts/cleanup-ui-messages.ts --execute",
+    "sanity:ui-messages:migrate:dry": "tsx scripts/migrate-ui-messages.ts --dry-run",
     "sanity:ui-messages:migrate": "tsx scripts/migrate-ui-messages.ts --execute"
   },
   "dependencies": {

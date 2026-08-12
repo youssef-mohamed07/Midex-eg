@@ -16,6 +16,10 @@ export const loc = (field: string, fallback = '""') =>
 export const locOptional = (field: string) =>
   `coalesce(${field}[$locale], ${field}.en)`;
 
+/** Helper for fetching uiMessages entry. */
+export const uiMsg = (key: string) =>
+  `coalesce(entries[key == "${key}"][0].value[$locale], entries[key == "${key}"][0].value.en)`;
+
 /** Localized string list with English fallback. */
 export const locList = (field: string) =>
   `coalesce(${field}[$locale], ${field}.en, [])`;
@@ -182,165 +186,165 @@ export const timelineSectionProjection = (field: string) => `${field}{
   }, [])
 }`;
 
-export const productExplorerLabelsProjection = (field: string) => `${field}{
-  "allCategories": ${locOptional("allCategories")},
-  "viewDetails": ${locOptional("viewDetails")},
-  "requestQuote": ${locOptional("requestQuote")},
-  "quoteShort": ${locOptional("quoteShort")},
-  "noResults": ${locOptional("noResults")},
-  "searchPlaceholder": ${locOptional("searchPlaceholder")},
-  "productsLabel": ${locOptional("productsLabel")},
-  "categoriesLabel": ${locOptional("categoriesLabel")},
-  "viewCategory": ${locOptional("viewCategory")}
+export const productExplorerLabelsProjection = (namespace = "productExplorerLabels") => `*[_type == "uiMessages" && namespace == "${namespace}"][0]{
+  "allCategories": ${uiMsg("allCategories")},
+  "viewDetails": ${uiMsg("viewDetails")},
+  "requestQuote": ${uiMsg("requestQuote")},
+  "quoteShort": ${uiMsg("quoteShort")},
+  "noResults": ${uiMsg("noResults")},
+  "searchPlaceholder": ${uiMsg("searchPlaceholder")},
+  "productsLabel": ${uiMsg("productsLabel")},
+  "categoriesLabel": ${uiMsg("categoriesLabel")},
+  "viewCategory": ${uiMsg("viewCategory")}
 }`;
 
-export const productDetailLabelsProjection = (field: string) => `${field}{
-  "overviewTitle": ${locOptional("overviewTitle")},
-  "featuresTitle": ${locOptional("featuresTitle")},
-  "specificationsTitle": ${locOptional("specificationsTitle")},
-  "applicationsTitle": ${locOptional("applicationsTitle")},
-  "relatedProductsTitle": ${locOptional("relatedProductsTitle")},
-  "backToCatalog": ${locOptional("backToCatalog")},
-  "requestQuote": ${locOptional("requestQuote")},
-  "relatedSolutionTitle": ${locOptional("relatedSolutionTitle")},
-  "contactUs": ${locOptional("contactUs")},
-  "galleryTitle": ${locOptional("galleryTitle")},
-  "galleryPrevious": ${locOptional("galleryPrevious")},
-  "galleryNext": ${locOptional("galleryNext")},
-  "galleryView": ${locOptional("galleryView")}
+export const productDetailLabelsProjection = (namespace = "productDetailLabels") => `*[_type == "uiMessages" && namespace == "${namespace}"][0]{
+  "overviewTitle": ${uiMsg("overviewTitle")},
+  "featuresTitle": ${uiMsg("featuresTitle")},
+  "specificationsTitle": ${uiMsg("specificationsTitle")},
+  "applicationsTitle": ${uiMsg("applicationsTitle")},
+  "relatedProductsTitle": ${uiMsg("relatedProductsTitle")},
+  "backToCatalog": ${uiMsg("backToCatalog")},
+  "requestQuote": ${uiMsg("requestQuote")},
+  "relatedSolutionTitle": ${uiMsg("relatedSolutionTitle")},
+  "contactUs": ${uiMsg("contactUs")},
+  "galleryTitle": ${uiMsg("galleryTitle")},
+  "galleryPrevious": ${uiMsg("galleryPrevious")},
+  "galleryNext": ${uiMsg("galleryNext")},
+  "galleryView": ${uiMsg("galleryView")}
 }`;
 
-export const caseStudiesExplorerLabelsProjection = (field: string) => `${field}{
-  "searchPlaceholder": ${locOptional("searchPlaceholder")},
-  "all": ${locOptional("all")},
-  "year": ${locOptional("year")},
-  "capability": ${locOptional("capability")},
-  "industry": ${locOptional("industry")},
-  "results": ${locOptional("results")},
-  "noResults": ${locOptional("noResults")},
-  "clearFilters": ${locOptional("clearFilters")},
-  "read": ${locOptional("read")},
-  "countLabel": ${locOptional("countLabel")},
-  "contactLabel": ${locOptional("contactLabel")}
+export const caseStudiesExplorerLabelsProjection = (namespace = "caseStudiesExplorerLabels") => `*[_type == "uiMessages" && namespace == "${namespace}"][0]{
+  "searchPlaceholder": ${uiMsg("searchPlaceholder")},
+  "all": ${uiMsg("all")},
+  "year": ${uiMsg("year")},
+  "capability": ${uiMsg("capability")},
+  "industry": ${uiMsg("industry")},
+  "results": ${uiMsg("results")},
+  "noResults": ${uiMsg("noResults")},
+  "clearFilters": ${uiMsg("clearFilters")},
+  "read": ${uiMsg("read")},
+  "countLabel": ${uiMsg("countLabel")},
+  "contactLabel": ${uiMsg("contactLabel")}
 }`;
 
-export const blogDetailLabelsProjection = (field: string) => `${field}{
-  "blogLabel": ${locOptional("blogLabel")},
-  "minRead": ${locOptional("minRead")},
-  "authorLabel": ${locOptional("authorLabel")},
-  "relatedPosts": ${locOptional("relatedPosts")},
-  "backToBlog": ${locOptional("backToBlog")},
-  "contactCta": ${locOptional("contactCta")}
+export const blogDetailLabelsProjection = (namespace = "blogDetailLabels") => `*[_type == "uiMessages" && namespace == "${namespace}"][0]{
+  "blogLabel": ${uiMsg("blogLabel")},
+  "minRead": ${uiMsg("minRead")},
+  "authorLabel": ${uiMsg("authorLabel")},
+  "relatedPosts": ${uiMsg("relatedPosts")},
+  "backToBlog": ${uiMsg("backToBlog")},
+  "contactCta": ${uiMsg("contactCta")}
 }`;
 
-export const solutionChildLabelsProjection = (field: string) => `${field}{
-  "introductionTitle": ${locOptional("introductionTitle")},
-  "capabilitiesTitle": ${locOptional("capabilitiesTitle")},
-  "relatedServicesTitle": ${locOptional("relatedServicesTitle")},
-  "heroCtaLabel": ${locOptional("heroCtaLabel")},
-  "browseGroupLabel": ${locOptional("browseGroupLabel")}
+export const solutionChildLabelsProjection = (namespace = "solutionChildLabels") => `*[_type == "uiMessages" && namespace == "${namespace}"][0]{
+  "introductionTitle": ${uiMsg("introductionTitle")},
+  "capabilitiesTitle": ${uiMsg("capabilitiesTitle")},
+  "relatedServicesTitle": ${uiMsg("relatedServicesTitle")},
+  "heroCtaLabel": ${uiMsg("heroCtaLabel")},
+  "browseGroupLabel": ${uiMsg("browseGroupLabel")}
 }`;
 
-export const layoutChromeProjection = (field = "chrome") => `${field}{
-  "home": ${locOptional("home")},
-  "products": ${locOptional("products")},
-  "solutions": ${locOptional("solutions")},
-  "blog": ${locOptional("blog")},
-  "caseStudies": ${locOptional("caseStudies")},
-  "aboutUs": ${locOptional("aboutUs")},
-  "contactUs": ${locOptional("contactUs")},
-  "allSolutions": ${locOptional("allSolutions")},
-  "allCategories": ${locOptional("allCategories")},
-  "menu": ${locOptional("menu")},
-  "close": ${locOptional("close")},
-  "capabilitiesTitle": ${locOptional("capabilitiesTitle")},
-  "capabilitiesSubtitle": ${locOptional("capabilitiesSubtitle")},
-  "servicesLabel": ${locOptional("servicesLabel")},
-  "footerTagline": ${locOptional("footerTagline")},
-  "footerServices": ${locOptional("footerServices")},
-  "footerUsefulLinks": ${locOptional("footerUsefulLinks")},
-  "footerContactUs": ${locOptional("footerContactUs")},
-  "footerRights": ${locOptional("footerRights")},
-  "footerAddressFallback": ${locOptional("footerAddressFallback")},
-  "socialOpen": ${locOptional("socialOpen")},
-  "socialClose": ${locOptional("socialClose")},
-  "socialLinkedIn": ${locOptional("socialLinkedIn")},
-  "socialFacebook": ${locOptional("socialFacebook")},
-  "socialYoutube": ${locOptional("socialYoutube")},
-  "socialWhatsapp": ${locOptional("socialWhatsapp")},
-  "socialEmail": ${locOptional("socialEmail")},
-  "socialTwitter": ${locOptional("socialTwitter")},
-  "langEn": ${locOptional("langEn")},
-  "langAr": ${locOptional("langAr")},
-  "langDe": ${locOptional("langDe")},
-  "language": ${locOptional("language")}
+export const layoutChromeProjection = (namespace = "chrome") => `*[_type == "uiMessages" && namespace == "${namespace}"][0]{
+  "home": ${uiMsg("home")},
+  "products": ${uiMsg("products")},
+  "solutions": ${uiMsg("solutions")},
+  "blog": ${uiMsg("blog")},
+  "caseStudies": ${uiMsg("caseStudies")},
+  "aboutUs": ${uiMsg("aboutUs")},
+  "contactUs": ${uiMsg("contactUs")},
+  "allSolutions": ${uiMsg("allSolutions")},
+  "allCategories": ${uiMsg("allCategories")},
+  "menu": ${uiMsg("menu")},
+  "close": ${uiMsg("close")},
+  "capabilitiesTitle": ${uiMsg("capabilitiesTitle")},
+  "capabilitiesSubtitle": ${uiMsg("capabilitiesSubtitle")},
+  "servicesLabel": ${uiMsg("servicesLabel")},
+  "footerTagline": ${uiMsg("footerTagline")},
+  "footerServices": ${uiMsg("footerServices")},
+  "footerUsefulLinks": ${uiMsg("footerUsefulLinks")},
+  "footerContactUs": ${uiMsg("footerContactUs")},
+  "footerRights": ${uiMsg("footerRights")},
+  "footerAddressFallback": ${uiMsg("footerAddressFallback")},
+  "socialOpen": ${uiMsg("socialOpen")},
+  "socialClose": ${uiMsg("socialClose")},
+  "socialLinkedIn": ${uiMsg("socialLinkedIn")},
+  "socialFacebook": ${uiMsg("socialFacebook")},
+  "socialYoutube": ${uiMsg("socialYoutube")},
+  "socialWhatsapp": ${uiMsg("socialWhatsapp")},
+  "socialEmail": ${uiMsg("socialEmail")},
+  "socialTwitter": ${uiMsg("socialTwitter")},
+  "langEn": ${uiMsg("langEn")},
+  "langAr": ${uiMsg("langAr")},
+  "langDe": ${uiMsg("langDe")},
+  "language": ${uiMsg("language")}
 }`;
 
-export const contactFormCopyProjection = (field: string) => `${field}{
-  "title": ${locOptional("title")},
-  "intro": ${locOptional("intro")},
-  "quoteFor": ${locOptional("quoteFor")},
-  "fullName": ${locOptional("fullName")},
-  "emailLabel": ${locOptional("emailLabel")},
-  "phoneLabel": ${locOptional("phoneLabel")},
-  "company": ${locOptional("company")},
-  "subject": ${locOptional("subject")},
-  "productProject": ${locOptional("productProject")},
-  "productPlaceholder": ${locOptional("productPlaceholder")},
-  "message": ${locOptional("message")},
-  "messagePlaceholder": ${locOptional("messagePlaceholder")},
-  "submit": ${locOptional("submit")},
-  "subjectQuote": ${locOptional("subjectQuote")},
-  "subjectProduct": ${locOptional("subjectProduct")},
-  "subjectGeneral": ${locOptional("subjectGeneral")},
-  "success": ${locOptional("success")},
-  "error": ${locOptional("error")},
-  "validationName": ${locOptional("validationName")},
-  "validationEmail": ${locOptional("validationEmail")},
-  "validationMessage": ${locOptional("validationMessage")}
+export const contactFormCopyProjection = (namespace = "contactFormCopy") => `*[_type == "uiMessages" && namespace == "${namespace}"][0]{
+  "title": ${uiMsg("title")},
+  "intro": ${uiMsg("intro")},
+  "quoteFor": ${uiMsg("quoteFor")},
+  "fullName": ${uiMsg("fullName")},
+  "emailLabel": ${uiMsg("emailLabel")},
+  "phoneLabel": ${uiMsg("phoneLabel")},
+  "company": ${uiMsg("company")},
+  "subject": ${uiMsg("subject")},
+  "productProject": ${uiMsg("productProject")},
+  "productPlaceholder": ${uiMsg("productPlaceholder")},
+  "message": ${uiMsg("message")},
+  "messagePlaceholder": ${uiMsg("messagePlaceholder")},
+  "submit": ${uiMsg("submit")},
+  "subjectQuote": ${uiMsg("subjectQuote")},
+  "subjectProduct": ${uiMsg("subjectProduct")},
+  "subjectGeneral": ${uiMsg("subjectGeneral")},
+  "success": ${uiMsg("success")},
+  "error": ${uiMsg("error")},
+  "validationName": ${uiMsg("validationName")},
+  "validationEmail": ${uiMsg("validationEmail")},
+  "validationMessage": ${uiMsg("validationMessage")}
 }`;
 
-export const quoteFormCopyProjection = (field: string) => `${field}{
-  "badge": ${locOptional("badge")},
-  "step1": ${locOptional("step1")},
-  "step2": ${locOptional("step2")},
-  "step3": ${locOptional("step3")},
-  "step4": ${locOptional("step4")},
-  "step1Question": ${locOptional("step1Question")},
-  "step2Question": ${locOptional("step2Question")},
-  "step3Question": ${locOptional("step3Question")},
-  "step4Question": ${locOptional("step4Question")},
-  "step1Hint": ${locOptional("step1Hint")},
-  "step2Hint": ${locOptional("step2Hint")},
-  "step3Hint": ${locOptional("step3Hint")},
-  "step4Hint": ${locOptional("step4Hint")},
-  "projectTypes": ${locList("projectTypes")},
-  "industries": ${locList("industries")},
-  "location": ${locOptional("location")},
-  "timeline": ${locOptional("timeline")},
-  "description": ${locOptional("description")},
-  "locationPlaceholder": ${locOptional("locationPlaceholder")},
-  "timelinePlaceholder": ${locOptional("timelinePlaceholder")},
-  "descriptionPlaceholder": ${locOptional("descriptionPlaceholder")},
-  "next": ${locOptional("next")},
-  "back": ${locOptional("back")},
-  "submit": ${locOptional("submit")},
-  "success": ${locOptional("success")},
-  "again": ${locOptional("again")},
-  "progress": ${locOptional("progress")},
-  "validationProjectType": ${locOptional("validationProjectType")},
-  "validationIndustry": ${locOptional("validationIndustry")},
-  "validationDescription": ${locOptional("validationDescription")}
+export const quoteFormCopyProjection = (namespace = "quoteFormCopy") => `*[_type == "uiMessages" && namespace == "${namespace}"][0]{
+  "badge": ${uiMsg("badge")},
+  "step1": ${uiMsg("step1")},
+  "step2": ${uiMsg("step2")},
+  "step3": ${uiMsg("step3")},
+  "step4": ${uiMsg("step4")},
+  "step1Question": ${uiMsg("step1Question")},
+  "step2Question": ${uiMsg("step2Question")},
+  "step3Question": ${uiMsg("step3Question")},
+  "step4Question": ${uiMsg("step4Question")},
+  "step1Hint": ${uiMsg("step1Hint")},
+  "step2Hint": ${uiMsg("step2Hint")},
+  "step3Hint": ${uiMsg("step3Hint")},
+  "step4Hint": ${uiMsg("step4Hint")},
+  "projectTypes": coalesce(entries[key == "projectTypes"][0].value[$locale], entries[key == "projectTypes"][0].value.en, []),
+  "industries": coalesce(entries[key == "industries"][0].value[$locale], entries[key == "industries"][0].value.en, []),
+  "location": ${uiMsg("location")},
+  "timeline": ${uiMsg("timeline")},
+  "description": ${uiMsg("description")},
+  "locationPlaceholder": ${uiMsg("locationPlaceholder")},
+  "timelinePlaceholder": ${uiMsg("timelinePlaceholder")},
+  "descriptionPlaceholder": ${uiMsg("descriptionPlaceholder")},
+  "next": ${uiMsg("next")},
+  "back": ${uiMsg("back")},
+  "submit": ${uiMsg("submit")},
+  "success": ${uiMsg("success")},
+  "again": ${uiMsg("again")},
+  "progress": ${uiMsg("progress")},
+  "validationProjectType": ${uiMsg("validationProjectType")},
+  "validationIndustry": ${uiMsg("validationIndustry")},
+  "validationDescription": ${uiMsg("validationDescription")}
 }`;
 
-export const caseStudyLabelsProjection = (field: string) => `${field}{
-  "scopeLabel": ${locOptional("scopeLabel")},
-  "challengeLabel": ${locOptional("challengeLabel")},
-  "approachLabel": ${locOptional("approachLabel")},
-  "highlightsLabel": ${locOptional("highlightsLabel")},
-  "outcomeLabel": ${locOptional("outcomeLabel")},
-  "discuss": ${locOptional("discuss")},
-  "related": ${locOptional("related")},
-  "back": ${locOptional("back")},
-  "galleryTitle": ${locOptional("galleryTitle")}
+export const caseStudyLabelsProjection = (namespace = "caseStudyLabels") => `*[_type == "uiMessages" && namespace == "${namespace}"][0]{
+  "scopeLabel": ${uiMsg("scopeLabel")},
+  "challengeLabel": ${uiMsg("challengeLabel")},
+  "approachLabel": ${uiMsg("approachLabel")},
+  "highlightsLabel": ${uiMsg("highlightsLabel")},
+  "outcomeLabel": ${uiMsg("outcomeLabel")},
+  "discuss": ${uiMsg("discuss")},
+  "related": ${uiMsg("related")},
+  "back": ${uiMsg("back")},
+  "galleryTitle": ${uiMsg("galleryTitle")}
 }`;

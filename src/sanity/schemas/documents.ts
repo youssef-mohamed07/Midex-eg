@@ -59,13 +59,6 @@ export const siteSettings = defineType({
       hidden: true,
     }),
     defineField({
-      name: "chrome",
-      title: "Navigation, footer & social labels",
-      type: "layoutChrome",
-      group: "chrome",
-      description: "All shell labels editable here. Leave blank to use bundled fallbacks / UI Messages.",
-    }),
-    defineField({
       name: "manifestDescription",
       title: "Web app manifest description",
       type: "text",
@@ -217,12 +210,6 @@ export const homePage = defineType({
     defineField({ name: "newsSection", title: "News / blog section", type: "sectionHeader", group: "news", description: "Hidden on homepage by default — enable in Show section to display." }),
     defineField({ name: "clientLogosSection", title: "Client logos section", type: "sectionHeader", group: "clients", description: "Hidden on homepage by default — enable in Show section to display." }),
     defineField({ name: "quoteFormSection", title: "Quote form section", type: "sectionHeader", group: "quoteForm" }),
-    defineField({
-      name: "quoteFormCopy",
-      title: "Quote form fields & steps",
-      type: "quoteFormCopy",
-      group: "quoteForm",
-    }),
     defineField({
       name: "caseStudyLabels",
       title: "Case study detail labels",
@@ -392,12 +379,6 @@ export const contactPage = defineType({
       fields: [
         defineField({ name: "title", title: "Title", type: "localeString" }),
         defineField({ name: "intro", title: "Intro", type: "localeText" }),
-        defineField({
-          name: "copy",
-          title: "Field labels & messages",
-          type: "contactFormCopy",
-          description: "All contact form microcopy. Overrides bundled messages when set.",
-        }),
       ],
     }),
     defineField({
@@ -430,18 +411,6 @@ export const productsPage = defineType({
   fields: [
     defineField({ name: "hero", title: "Hero", type: "pageHero", group: "hero" }),
     defineField({ name: "catalogSection", title: "Catalog section", type: "sectionHeader", group: "catalog" }),
-    defineField({
-      name: "explorerLabels",
-      title: "Catalog explorer labels",
-      type: "productExplorerLabels",
-      group: "catalog",
-    }),
-    defineField({
-      name: "detailLabels",
-      title: "Detail page labels",
-      type: "productDetailLabels",
-      group: "detail",
-    }),
     defineField({
       name: "detailCta",
       title: "Detail page CTA",
@@ -516,7 +485,6 @@ export const blogPage = defineType({
         defineField({ name: "viewAllArticles", title: "View all articles", type: "localeString" }),
       ],
     }),
-    defineField({ name: "detailLabels", title: "Article detail labels", type: "blogDetailLabels", group: "detail" }),
     defineField({ name: "cta", title: "Sidebar CTA", type: "pageCta", group: "cta" }),
   ],
   preview: { prepare: () => ({ title: "Blog Page" }) },
@@ -538,12 +506,6 @@ export const caseStudiesPage = defineType({
   fields: [
     defineField({ name: "hero", title: "Hero", type: "pageHero", group: "hero" }),
     defineField({
-      name: "explorerLabels",
-      title: "Explorer labels",
-      type: "caseStudiesExplorerLabels",
-      group: "explorer",
-    }),
-    defineField({
       name: "testimonialsSection",
       title: "Testimonials section",
       type: "sectionHeader",
@@ -555,9 +517,7 @@ export const caseStudiesPage = defineType({
       type: "sectionHeader",
       group: "quoteForm",
     }),
-    defineField({ name: "quoteFormCopy", title: "Quote form copy", type: "quoteFormCopy", group: "quoteForm" }),
     defineField({ name: "faq", title: "FAQ", type: "faqSection", group: "faq" }),
-    defineField({ name: "detailLabels", title: "Detail labels", type: "caseStudyLabels", group: "detail" }),
     defineField({ name: "cta", title: "Bottom CTA", type: "pageCta", group: "cta" }),
   ],
   preview: { prepare: () => ({ title: "Case Studies Page" }) },

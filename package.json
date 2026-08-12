@@ -22,7 +22,9 @@
     "patch:promo-popup": "tsx scripts/patch-promo-popup.ts",
     "patch:testimonial-names": "tsx scripts/patch-testimonial-names.ts",
     "sanity:case-studies": "tsx scripts/sync-case-studies.ts",
-    "sanity:case-studies:dry-run": "DRY_RUN=true tsx scripts/sync-case-studies.ts"
+    "sanity:case-studies:dry-run": "DRY_RUN=true tsx scripts/sync-case-studies.ts",
+    "sanity:ui-messages:dry": "tsx scripts/migrate-ui-messages.ts",
+    "sanity:ui-messages:migrate": "tsx scripts/migrate-ui-messages.ts --execute"
   },
   "dependencies": {
     "@sanity/image-url": "^2.1.1",

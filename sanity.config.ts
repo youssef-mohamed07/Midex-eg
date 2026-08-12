@@ -54,41 +54,51 @@ function structure(S: StructureBuilder) {
                     .items([
                       S.listItem()
                         .title("Nav")
+                        .id("nav-list-item")
                         .child(
                           S.documentList()
                             .title("Nav")
+                            .id("nav-messages")
                             .apiVersion(apiVersion)
                             .filter('_type == "uiMessages" && namespace == "nav"'),
                         ),
                       S.listItem()
                         .title("Footer")
+                        .id("footer-list-item")
                         .child(
                           S.documentList()
                             .title("Footer")
+                            .id("footer-messages")
                             .apiVersion(apiVersion)
                             .filter('_type == "uiMessages" && namespace == "footer"'),
                         ),
                       S.listItem()
                         .title("Forms (contact)")
+                        .id("contact-list-item")
                         .child(
                           S.documentList()
                             .title("Contact")
+                            .id("contact-messages")
                             .apiVersion(apiVersion)
                             .filter('_type == "uiMessages" && namespace == "contact"'),
                         ),
                       S.listItem()
                         .title("Home chrome")
+                        .id("home-chrome-list-item")
                         .child(
                           S.documentList()
                             .title("Home")
+                            .id("home-messages")
                             .apiVersion(apiVersion)
                             .filter('_type == "uiMessages" && namespace == "home"'),
                         ),
                       S.listItem()
                         .title("About / Products / Solutions / Blog")
+                        .id("pages-namespaces-list-item")
                         .child(
                           S.documentList()
                             .title("Page namespaces")
+                            .id("pages-namespaces-messages")
                             .apiVersion(apiVersion)
                             .filter(
                               '_type == "uiMessages" && namespace in ["about", "products", "solutions", "blog", "hero"]',
@@ -96,9 +106,11 @@ function structure(S: StructureBuilder) {
                         ),
                       S.listItem()
                         .title("Common / Social / Meta")
+                        .id("common-namespaces-list-item")
                         .child(
                           S.documentList()
                             .title("Shell extras")
+                            .id("common-namespaces-messages")
                             .apiVersion(apiVersion)
                             .filter(
                               '_type == "uiMessages" && namespace in ["common", "socialFab", "meta"]',

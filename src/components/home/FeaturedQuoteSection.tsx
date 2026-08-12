@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { getLocale } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { WordRevealText } from "@/components/ui/WordRevealText";
 import { getAboutFounders } from "@/lib/cms";
 import { isValidImageSrc } from "@/lib/cms/images";
@@ -23,31 +23,17 @@ type Props = {
   content: QuoteBlockContent & { quote: string; name: string; role: string };
 };
 
-async function resolveFounderImage(
-  locale: Locale,
-  quoteImage: string | undefined,
-  quoteName: string,
-): Promise<string | undefined> {
-  if (isValidImageSrc(quoteImage)) return quoteImage;
-
-  const founders = await getAboutFounders(locale);
-  const normalizedName = quoteName.toLowerCase();
-
-  const matched =
-    founders.find((founder) => founder.nameKey === "founder2Name") ||
-    founders.find((founder) => {
-      const name = `${founder.name ?? ""} ${founder.nameKey ?? ""}`.toLowerCase();
-      return name.includes("abdelrahman") || normalizedName.includes("abdelrahman");
-    }) ||
-    founders[0];
-
-  return isValidImageSrc(matched?.image) ? matched.image : undefined;
-}
-
 export async function FeaturedQuoteSection({ content }: Props) {
   const locale = (await getLocale()) as Locale;
   const isLatin = locale !== "ar";
-  const photo = await resolveFounderImage(locale, content.image, content.name);
+  const founders = await getAboutFounders(locale);
+  const t = await getTranslations("about");
+  
+  const displayFounders = founders.slice(0, 2).map((f) => ({
+    name: f.name || (f.nameKey ? t(f.nameKey as any) : content.name),
+    role: f.role || (f.roleKey ? t(f.roleKey as any) : content.role),
+    image: isValidImageSrc(f.image) ? f.image : undefined,
+  }));
 
   return (
     <section className="relative overflow-hidden mx-section">
@@ -61,29 +47,36 @@ export async function FeaturedQuoteSection({ content }: Props) {
             </p>
           </blockquote>
 
-          <figcaption className="mt-8 flex flex-col items-center gap-3 sm:mt-10 sm:gap-4">
+          <div className="mt-8 flex justify-center sm:mt-10">
             <span className="h-px w-10 bg-midex-blue/30" aria-hidden />
+          </div>
 
-            {photo ? (
-              <div className="relative h-14 w-14 overflow-hidden rounded-full border-2 border-white bg-midex-surface shadow-md ring-2 ring-midex-mint/35 sm:h-16 sm:w-16">
-                <Image
-                  src={photo}
-                  alt={content.name}
-                  fill
-                  className="object-cover object-top"
-                  sizes="64px"
-                />
+          <figcaption className="mt-6 flex flex-row flex-wrap justify-center gap-8 sm:gap-16">
+            {displayFounders.map((founder, idx) => (
+              <div key={idx} className="flex flex-col items-center gap-3 sm:gap-4">
+                {founder.image ? (
+                  <div className="relative h-14 w-14 overflow-hidden rounded-full border-2 border-white bg-midex-surface shadow-md ring-2 ring-midex-mint/35 sm:h-16 sm:w-16">
+                    <Image
+                      src={founder.image}
+                      alt={founder.name}
+                      fill
+                      className="object-cover object-top"
+                      sizes="64px"
+                    />
+                  </div>
+                ) : null}
+
+                <cite
+                  className={`text-[11px] font-semibold not-italic sm:text-xs ${
+                    isLatin ? "uppercase tracking-[0.2em]" : "tracking-wide"
+                  }`}
+                >
+                  <span className="text-midex-blue block sm:inline">{founder.name}</span>
+                  <span className="text-midex-gray/45 hidden sm:inline">, </span>
+                  <span className="text-midex-gray/45 block sm:inline">{founder.role}</span>
+                </cite>
               </div>
-            ) : null}
-
-            <cite
-              className={`text-[11px] font-semibold not-italic sm:text-xs ${
-                isLatin ? "uppercase tracking-[0.2em]" : "tracking-wide"
-              }`}
-            >
-              <span className="text-midex-blue">{content.name}</span>
-              <span className="text-midex-gray/45">, {content.role}</span>
-            </cite>
+            ))}
           </figcaption>
         </figure>
       </div>

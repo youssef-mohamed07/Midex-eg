@@ -32,14 +32,14 @@ export function ClientLogosSection({ title, logos }: Props) {
             {track.map((logo, index) => (
               <div
                 key={`${logo}-${index}`}
-                className="flex h-14 w-36 shrink-0 items-center justify-center px-3 sm:h-[4.5rem] sm:w-44 sm:px-4"
+                className="flex h-16 w-32 shrink-0 items-center justify-center px-4 sm:h-20 sm:w-48 sm:px-6 lg:h-24 lg:w-56"
               >
                 <Image
                   src={logo}
                   alt=""
-                  width={140}
-                  height={64}
-                  className="max-h-8 w-auto max-w-full object-contain opacity-80 sm:max-h-11"
+                  width={224}
+                  height={96}
+                  className="h-full w-full object-contain opacity-70 transition-opacity hover:opacity-100 grayscale hover:grayscale-0"
                 />
               </div>
             ))}

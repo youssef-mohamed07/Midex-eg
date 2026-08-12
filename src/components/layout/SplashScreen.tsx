@@ -1,13 +1,13 @@
 "use client";
 
-import { useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState, useRef } from "react";
 import {
   SPLASH_PENDING_CLASS,
   SPLASH_STORAGE_KEY,
 } from "@/components/layout/splash-boot";
 
 /** Full playthrough of /public/gif.gif (91 frames ≈ 3.03s). */
-const GIF_DURATION_MS = 3_100;
+const GIF_DURATION_MS = 2950;
 const FADE_DURATION_MS = 350;
 
 /** Module state survives Strict Mode remounts in the same page load. */
@@ -61,6 +61,7 @@ export function SplashScreen() {
   const [visible, setVisible] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [exiting, setExiting] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
 
   useLayoutEffect(() => {
     setMounted(true);
@@ -82,9 +83,13 @@ export function SplashScreen() {
 
     if (finishStarted) return;
 
+    if (imgRef.current?.complete) {
+      finishSplash(GIF_DURATION_MS);
+    }
+
     const safetyTimer = window.setTimeout(() => {
       finishSplash(0);
-    }, GIF_DURATION_MS + 4_000);
+    }, GIF_DURATION_MS + 2_000);
 
     return () => {
       window.clearTimeout(safetyTimer);
@@ -110,9 +115,10 @@ export function SplashScreen() {
         decoding="async"
         fetchPriority="high"
         draggable={false}
+        ref={imgRef}
         onLoad={() => finishSplash(GIF_DURATION_MS)}
         onError={() => finishSplash(0)}
-        className="h-full w-full object-cover"
+        className="h-full w-full object-contain"
       />
     </div>
   );

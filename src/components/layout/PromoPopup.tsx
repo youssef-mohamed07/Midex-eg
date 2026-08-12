@@ -83,7 +83,7 @@ export function PromoPopup({ data }: { data?: PromoPopupData }) {
           />
         </div>
 
-        <div className="flex flex-col overflow-y-auto p-6 sm:p-8">
+        <div className="flex flex-col items-center text-center overflow-y-auto p-6 sm:p-8">
           {data.date && (
             <div className="mb-4">
               <span className="inline-flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 text-xs font-semibold text-midex-navy shadow-md ring-1 ring-midex-navy/5 sm:text-[13px]">
@@ -110,7 +110,7 @@ export function PromoPopup({ data }: { data?: PromoPopupData }) {
           )}
 
           {data.ctaUrl && data.ctaLabel && (
-            <div className="mt-8">
+            <div className="mt-8 flex justify-center w-full">
               <a
                 href={data.ctaUrl}
                 target="_blank"

@@ -24,7 +24,7 @@ const splashHandlers: {
 
 function markSplashSeen() {
   try {
-    window.sessionStorage.setItem(SPLASH_STORAGE_KEY, "1");
+    window.localStorage.setItem(SPLASH_STORAGE_KEY, "1");
   } catch {
     // ignore
   }
@@ -83,17 +83,9 @@ export function SplashScreen() {
 
     if (finishStarted) return;
 
-    if (imgRef.current?.complete) {
-      finishSplash(GIF_DURATION_MS);
-    }
-
-    const safetyTimer = window.setTimeout(() => {
-      finishSplash(0);
-    }, GIF_DURATION_MS + 2_000);
-
-    return () => {
-      window.clearTimeout(safetyTimer);
-    };
+    // Start the strict timer immediately upon mounting.
+    // This ensures the GIF never loops, even on slow connections.
+    finishSplash(GIF_DURATION_MS);
   }, []);
 
   if (!mounted || !visible) return null;
@@ -116,9 +108,7 @@ export function SplashScreen() {
         fetchPriority="high"
         draggable={false}
         ref={imgRef}
-        onLoad={() => finishSplash(GIF_DURATION_MS)}
-        onError={() => finishSplash(0)}
-        className="h-full w-full object-contain"
+        className="h-full w-full object-cover"
       />
     </div>
   );

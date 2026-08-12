@@ -46,7 +46,7 @@ function StatCounter({
 
   return (
     <span className="tabular-nums">
-      {count.toLocaleString()}
+      {count.toLocaleString("en-US")}
       {suffix}
     </span>
   );

@@ -161,46 +161,46 @@ export function MultiStepQuoteForm({
       value: key,
       label: th(key),
     }));
-  }, [copy.industries, th]);
+  }, [safeCopy.industries, th]);
 
   const L = {
     validationProjectType: pickLabel(
-      copy.validationProjectType,
+      safeCopy.validationProjectType,
       th("quoteFormValidationProjectType"),
     ),
-    validationIndustry: pickLabel(copy.validationIndustry, th("quoteFormValidationIndustry")),
+    validationIndustry: pickLabel(safeCopy.validationIndustry, th("quoteFormValidationIndustry")),
     validationDescription: pickLabel(
-      copy.validationDescription,
+      safeCopy.validationDescription,
       th("quoteFormValidationDescription"),
     ),
     validationName: pickLabel(undefined, t("validationName")),
     validationEmail: pickLabel(undefined, t("validationEmail")),
     error: pickLabel(undefined, t("error")),
-    success: pickLabel(copy.success, th("quoteFormSuccess")),
-    again: pickLabel(copy.again, th("quoteFormAgain")),
-    progress: pickLabel(copy.progress, th("quoteFormProgress")),
-    location: pickLabel(copy.location, th("quoteFormLocation")),
-    timeline: pickLabel(copy.timeline, th("quoteFormTimeline")),
-    description: pickLabel(copy.description, th("quoteFormDescription")),
+    success: pickLabel(safeCopy.success, th("quoteFormSuccess")),
+    again: pickLabel(safeCopy.again, th("quoteFormAgain")),
+    progress: pickLabel(safeCopy.progress, th("quoteFormProgress")),
+    location: pickLabel(safeCopy.location, th("quoteFormLocation")),
+    timeline: pickLabel(safeCopy.timeline, th("quoteFormTimeline")),
+    description: pickLabel(safeCopy.description, th("quoteFormDescription")),
     locationPlaceholder: pickLabel(
-      copy.locationPlaceholder,
+      safeCopy.locationPlaceholder,
       th("quoteFormLocationPlaceholder"),
     ),
     timelinePlaceholder: pickLabel(
-      copy.timelinePlaceholder,
+      safeCopy.timelinePlaceholder,
       th("quoteFormTimelinePlaceholder"),
     ),
     descriptionPlaceholder: pickLabel(
-      copy.descriptionPlaceholder,
+      safeCopy.descriptionPlaceholder,
       th("quoteFormDescriptionPlaceholder"),
     ),
     fullName: pickLabel(undefined, t("fullName")),
     company: pickLabel(undefined, t("company")),
     emailLabel: pickLabel(undefined, t("emailLabel")),
     phoneLabel: pickLabel(undefined, t("phoneLabel")),
-    back: pickLabel(copy.back, th("quoteFormBack")),
-    next: pickLabel(copy.next, th("quoteFormNext")),
-    submit: pickLabel(copy.submit, th("quoteFormSubmit")),
+    back: pickLabel(safeCopy.back, th("quoteFormBack")),
+    next: pickLabel(safeCopy.next, th("quoteFormNext")),
+    submit: pickLabel(safeCopy.submit, th("quoteFormSubmit")),
   };
 
   function updateField<K extends keyof FormData>(key: K, value: FormData[K]) {

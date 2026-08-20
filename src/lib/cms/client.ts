@@ -13,13 +13,13 @@ function requireConfig(): string {
 let _client: SanityClient | undefined;
 let _previewClient: SanityClient | undefined;
 
-/** Read client for published content (CDN-backed). */
+/** Read client for published content (direct API to prevent stale CDN cache on revalidation). */
 export function getClient(): SanityClient {
   _client ??= createClient({
     projectId: requireConfig(),
     dataset,
     apiVersion,
-    useCdn: true,
+    useCdn: false,
     perspective: "published",
   });
   return _client;

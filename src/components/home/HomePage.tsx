@@ -219,6 +219,7 @@ export async function HomePage() {
 
   return (
     <>
+      <h1 className="sr-only">{heroCopy.slide1Title}</h1>
       <HeroSlider
         collage={home.heroCollage}
         heroCopy={heroCopy}

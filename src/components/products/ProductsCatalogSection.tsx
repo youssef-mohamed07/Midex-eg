@@ -73,7 +73,7 @@ export async function ProductsCatalogSection({
               </p>
               {image && (
                 <div className="relative hidden h-24 w-36 overflow-hidden rounded-xl border border-midex-line/60 shadow-sm lg:block">
-                  <Image src={image} alt="" fill className="object-cover" sizes="144px" />
+                  <Image src={image} alt={title || "Category"} fill className="object-cover" sizes="144px" />
                 </div>
               )}
             </div>

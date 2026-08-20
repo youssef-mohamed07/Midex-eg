@@ -36,7 +36,7 @@ export function ClientLogosSection({ title, logos }: Props) {
               >
                 <Image
                   src={logo}
-                  alt=""
+                  alt="Client logo"
                   width={224}
                   height={96}
                   className="h-full w-full object-contain opacity-70 transition-opacity hover:opacity-100 grayscale hover:grayscale-0"

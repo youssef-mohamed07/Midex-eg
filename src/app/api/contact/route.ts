@@ -1,6 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getSiteContact } from "@/lib/cms";
-import { deepMerge, getCmsMessages } from "@/lib/cms/messages";
 import { saveFormSubmission } from "@/lib/forms/save-submission";
 import { routing, type Locale } from "@/i18n/routing";
 
@@ -47,9 +45,7 @@ async function getContactStrings(locale: Locale): Promise<ContactStrings> {
       string,
       unknown
     >;
-    const cms = await getCmsMessages(locale);
-    const messages = cms ? deepMerge(bundled, cms) : bundled;
-    const contact = (messages.contact ?? {}) as Record<string, string>;
+    const contact = (bundled.contact ?? {}) as Record<string, string>;
 
     return {
       validationName: contact.validationName ?? fallbackStrings.validationName,
@@ -136,9 +132,21 @@ export async function POST(request: NextRequest) {
       message,
     ].filter(Boolean);
 
-    const recipient = await getSiteContact()
-      .then((contact) => contact.email || FALLBACK_RECIPIENT)
-      .catch(() => FALLBACK_RECIPIENT);
+    let recipient = FALLBACK_RECIPIENT;
+    try {
+      const client = require("next-sanity").createClient({
+        projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+        dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
+        apiVersion: "2024-06-20",
+        useCdn: false,
+      });
+      const settings = await client.fetch(`*[_type == "siteSettings"][0]{ contact }`);
+      if (settings?.contact?.email) {
+        recipient = settings.contact.email.trim();
+      }
+    } catch (e) {
+      console.error("[form] Failed to fetch recipient from Sanity:", e);
+    }
 
     const mailSubject = `[Midex] ${subjectLabel}${body.item ? ` — ${body.item}` : ""}`;
     const mailBody = lines.join("\n");

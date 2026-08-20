@@ -14,7 +14,7 @@ type Props = {
 };
 
 export function PageCtaSection({ content, variant = "band" }: Props) {
-  if (!isSectionEnabled(content.enabled)) return null;
+  if (!content || !isSectionEnabled(content.enabled)) return null;
   if (!content.title?.trim()) return null;
 
   if (variant === "card") {

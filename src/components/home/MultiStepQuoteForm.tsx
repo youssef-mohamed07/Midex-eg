@@ -102,11 +102,12 @@ function OptionGrid({
 
 export function MultiStepQuoteForm({
   size = "default",
-  copy = {},
+  copy,
 }: {
   size?: "default" | "large";
-  copy?: QuoteFormCopy;
+  copy?: QuoteFormCopy | null;
 }) {
+  const safeCopy = copy ?? {};
   const t = useTranslations("contact");
   const th = useTranslations("home");
   const isLarge = size === "large";
@@ -116,29 +117,29 @@ export function MultiStepQuoteForm({
   const [formData, setFormData] = useState<FormData>(initialFormData);
 
   const steps = [
-    pickLabel(copy.step1, th("quoteFormStep1")),
-    pickLabel(copy.step2, th("quoteFormStep2")),
-    pickLabel(copy.step3, th("quoteFormStep3")),
-    pickLabel(copy.step4, th("quoteFormStep4")),
+    pickLabel(safeCopy.step1, th("quoteFormStep1")),
+    pickLabel(safeCopy.step2, th("quoteFormStep2")),
+    pickLabel(safeCopy.step3, th("quoteFormStep3")),
+    pickLabel(safeCopy.step4, th("quoteFormStep4")),
   ];
 
   const stepQuestions = [
-    pickLabel(copy.step1Question, th("quoteFormStep1Question")),
-    pickLabel(copy.step2Question, th("quoteFormStep2Question")),
-    pickLabel(copy.step3Question, th("quoteFormStep3Question")),
-    pickLabel(copy.step4Question, th("quoteFormStep4Question")),
+    pickLabel(safeCopy.step1Question, th("quoteFormStep1Question")),
+    pickLabel(safeCopy.step2Question, th("quoteFormStep2Question")),
+    pickLabel(safeCopy.step3Question, th("quoteFormStep3Question")),
+    pickLabel(safeCopy.step4Question, th("quoteFormStep4Question")),
   ];
 
   const stepHints = [
-    pickLabel(copy.step1Hint, th("quoteFormStep1Hint")),
-    pickLabel(copy.step2Hint, th("quoteFormStep2Hint")),
-    pickLabel(copy.step3Hint, th("quoteFormStep3Hint")),
-    pickLabel(copy.step4Hint, th("quoteFormStep4Hint")),
+    pickLabel(safeCopy.step1Hint, th("quoteFormStep1Hint")),
+    pickLabel(safeCopy.step2Hint, th("quoteFormStep2Hint")),
+    pickLabel(safeCopy.step3Hint, th("quoteFormStep3Hint")),
+    pickLabel(safeCopy.step4Hint, th("quoteFormStep4Hint")),
   ];
 
   const projectTypeOptions = useMemo(() => {
-    if (copy.projectTypes?.length) {
-      return copy.projectTypes.map((label, index) => ({
+    if (safeCopy.projectTypes?.length) {
+      return safeCopy.projectTypes.map((label, index) => ({
         value: `cms-project-${index}`,
         label,
       }));
@@ -147,11 +148,11 @@ export function MultiStepQuoteForm({
       value: key,
       label: th(key),
     }));
-  }, [copy.projectTypes, th]);
+  }, [safeCopy.projectTypes, th]);
 
   const industryOptions = useMemo(() => {
-    if (copy.industries?.length) {
-      return copy.industries.map((label, index) => ({
+    if (safeCopy.industries?.length) {
+      return safeCopy.industries.map((label, index) => ({
         value: `cms-industry-${index}`,
         label,
       }));

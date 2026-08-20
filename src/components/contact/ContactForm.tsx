@@ -15,34 +15,35 @@ function pickLabel(cms: string | undefined, fallback: string): string {
 export function ContactForm({
   title,
   intro,
-  copy = {},
+  copy,
 }: {
   title?: string;
   intro?: string;
-  copy?: ContactFormCopy;
+  copy?: ContactFormCopy | null;
 } = {}) {
+  const safeCopy = copy ?? {};
   const t = useTranslations("contact");
   const searchParams = useSearchParams();
   const defaultItem = searchParams.get("item") ?? "";
   const labels = {
-    title: pickLabel(copy.title, title ?? t("sendMessage")),
-    intro: pickLabel(copy.intro, intro ?? t("formIntro")),
-    quoteFor: pickLabel(copy.quoteFor, t("quoteFor")),
-    fullName: pickLabel(copy.fullName, t("fullName")),
-    emailLabel: pickLabel(copy.emailLabel, t("emailLabel")),
-    phoneLabel: pickLabel(copy.phoneLabel, t("phoneLabel")),
-    company: pickLabel(copy.company, t("company")),
-    subject: pickLabel(copy.subject, t("subject")),
-    productProject: pickLabel(copy.productProject, t("productProject")),
-    productPlaceholder: pickLabel(copy.productPlaceholder, t("productPlaceholder")),
-    message: pickLabel(copy.message, t("message")),
-    messagePlaceholder: pickLabel(copy.messagePlaceholder, t("messagePlaceholder")),
-    submit: pickLabel(copy.submit, t("submit")),
-    subjectQuote: pickLabel(copy.subjectQuote, t("subjectQuote")),
-    subjectProduct: pickLabel(copy.subjectProduct, t("subjectProduct")),
-    subjectGeneral: pickLabel(copy.subjectGeneral, t("subjectGeneral")),
-    success: pickLabel(copy.success, t("success")),
-    error: pickLabel(copy.error, t("error")),
+    title: pickLabel(safeCopy.title, title ?? t("sendMessage")),
+    intro: pickLabel(safeCopy.intro, intro ?? t("formIntro")),
+    quoteFor: pickLabel(safeCopy.quoteFor, t("quoteFor")),
+    fullName: pickLabel(safeCopy.fullName, t("fullName")),
+    emailLabel: pickLabel(safeCopy.emailLabel, t("emailLabel")),
+    phoneLabel: pickLabel(safeCopy.phoneLabel, t("phoneLabel")),
+    company: pickLabel(safeCopy.company, t("company")),
+    subject: pickLabel(safeCopy.subject, t("subject")),
+    productProject: pickLabel(safeCopy.productProject, t("productProject")),
+    productPlaceholder: pickLabel(safeCopy.productPlaceholder, t("productPlaceholder")),
+    message: pickLabel(safeCopy.message, t("message")),
+    messagePlaceholder: pickLabel(safeCopy.messagePlaceholder, t("messagePlaceholder")),
+    submit: pickLabel(safeCopy.submit, t("submit")),
+    subjectQuote: pickLabel(safeCopy.subjectQuote, t("subjectQuote")),
+    subjectProduct: pickLabel(safeCopy.subjectProduct, t("subjectProduct")),
+    subjectGeneral: pickLabel(safeCopy.subjectGeneral, t("subjectGeneral")),
+    success: pickLabel(safeCopy.success, t("success")),
+    error: pickLabel(safeCopy.error, t("error")),
   };
 
   const [state, setState] = useState<FormState>("idle");

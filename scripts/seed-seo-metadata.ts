@@ -27,62 +27,70 @@ const entries = [
     _type: "seoEntry",
     routeKey: "home",
     seo: {
-      title: {
-        _type: "localeString",
-        en: "Advanced Pharmaceutical & Hygienic Process Engineering in Egypt | Midex",
-        ar: "الحلول الهندسية للصناعات الدوائية والغذائية في مصر | ميديكس",
-        de: "Fortschrittliche Pharma- und Hygienetechnik in Ägypten | Midex",
-      },
-      description: {
-        _type: "localeText",
-        en: "Midex is a leading engineering company in Egypt providing purified water systems, WFI, CIP/SIP, hygienic piping, and orbital welding for pharmaceutical and biotechnology industries.",
-        ar: "ميديكس هي شركة هندسية رائدة في مصر تقدم أنظمة المياه المنقاة، WFI، وأنظمة التنظيف المعقم (CIP/SIP) وشبكات المواسير الصحية للصناعات الدوائية والتكنولوجيا الحيوية.",
-        de: "Midex ist ein führendes Ingenieurunternehmen in Ägypten, das Reinwassersysteme, WFI, CIP/SIP und hygienische Rohrleitungen für die Pharma- und Biotechnologieindustrie anbietet.",
-      },
-    },
-  },
-  {
-    _id: "seo-entry-solutions",
-    _type: "seoEntry",
-    routeKey: "solutions",
-    seo: {
-      title: {
-        _type: "localeString",
-        en: "Pharmaceutical Water Systems & Process Engineering Solutions | Midex",
-        ar: "أنظمة المياه الدوائية وحلول الهندسة الصناعية | ميديكس",
-        de: "Pharmazeutische Wassersysteme & Verfahrenstechnik | Midex",
-      },
-      description: {
-        _type: "localeText",
-        en: "Explore Midex's engineering solutions including Turnkey Process Systems, PW/WFI distribution loops, Automatic Orbital Welding, and Validation Documentation.",
-        ar: "استكشف الحلول الهندسية المتكاملة من ميديكس، بما في ذلك محطات المياه المنقاة، اللحام المداري الأوتوماتيكي، ووثائق الاعتماد الخاصة بصناعة الدواء.",
-        de: "Entdecken Sie die technischen Lösungen von Midex, einschließlich schlüsselfertiger Prozesssysteme, PW/WFI-Verteilungsschleifen und automatischem Orbitalschweißen.",
-      },
-    },
+      title: { _type: "localeString", en: "Advanced Pharmaceutical & Hygienic Process Engineering in Egypt | Midex", ar: "الحلول الهندسية للصناعات الدوائية والغذائية في مصر | ميديكس", de: "Fortschrittliche Pharma- und Hygienetechnik in Ägypten | Midex" },
+      description: { _type: "localeText", en: "Midex is a leading engineering company in Egypt providing purified water systems, WFI, CIP/SIP, hygienic piping, and orbital welding for pharmaceutical and biotechnology industries.", ar: "ميديكس هي شركة هندسية رائدة في مصر تقدم أنظمة المياه المنقاة، WFI، وأنظمة التنظيف المعقم (CIP/SIP) وشبكات المواسير الصحية للصناعات الدوائية والتكنولوجيا الحيوية.", de: "Midex ist ein führendes Ingenieurunternehmen in Ägypten, das Reinwassersysteme, WFI, CIP/SIP und hygienische Rohrleitungen für die Pharma- und Biotechnologieindustrie anbietet." },
+      focusKeyword: { _type: "localeString", en: "pharmaceutical engineering company Egypt", ar: "شركة هندسة دوائية في مصر", de: "Pharma Engineering Ägypten" }
+    }
   },
   {
     _id: "seo-entry-about",
     _type: "seoEntry",
     routeKey: "about",
     seo: {
-      title: {
-        _type: "localeString",
-        en: "About Midex | Leaders in Hygienic Piping & Orbital Welding in Egypt",
-        ar: "عن ميديكس | رواد شبكات المواسير الصحية واللحام المداري في مصر",
-        de: "Über Midex | Führend in hygienischen Rohrleitungen und Orbitalschweißen",
-      },
-      description: {
-        _type: "localeText",
-        en: "Learn about Midex's mission, engineering standards, and expertise in ASME BPE hygienic piping installations and pharmaceutical process engineering across the Middle East.",
-        ar: "تعرف على رؤية ميديكس ومعاييرها الهندسية الصارمة وخبراتها العميقة في تركيبات المواسير الصحية طبقا لمعايير ASME BPE عبر الشرق الأوسط.",
-        de: "Erfahren Sie mehr über die Mission, die technischen Standards und die Expertise von Midex bei ASME BPE-Rohrleitungsinstallationen.",
-      },
-    },
+      title: { _type: "localeString", en: "About Midex | Pharmaceutical Engineering Leaders", ar: "عن ميديكس | رواد الهندسة الدوائية وشبكات المواسير", de: "Über Midex | Führend in Pharmazeutischer Technik" },
+      description: { _type: "localeText", en: "Learn about Midex's mission, quality standards, and expertise in ASME BPE hygienic piping and engineering across the Middle East.", ar: "تعرف على رؤية ميديكس ومعاييرها الهندسية وخبراتها العميقة في تركيبات المواسير الصحية طبقا لمعايير ASME BPE.", de: "Erfahren Sie mehr über die Mission, Standards und Expertise von Midex bei ASME BPE-Rohrleitungsinstallationen." }
+    }
+  },
+  {
+    _id: "seo-entry-solutions",
+    _type: "seoEntry",
+    routeKey: "solutions",
+    seo: {
+      title: { _type: "localeString", en: "Engineering Solutions | Process Systems & Water | Midex", ar: "الحلول الهندسية وأنظمة المياه الدوائية | ميديكس", de: "Lösungen für Verfahrenstechnik & Wassersysteme | Midex" },
+      description: { _type: "localeText", en: "Explore Midex's engineering solutions including Turnkey Process Systems, PW/WFI distribution loops, and Automatic Orbital Welding.", ar: "استكشف الحلول الهندسية المتكاملة من ميديكس، بما في ذلك محطات المياه المنقاة واللحام المداري الأوتوماتيكي.", de: "Entdecken Sie die technischen Lösungen von Midex, einschließlich schlüsselfertiger Prozesssysteme und PW/WFI-Verteilungsschleifen." }
+    }
+  },
+  {
+    _id: "seo-entry-products",
+    _type: "seoEntry",
+    routeKey: "products",
+    seo: {
+      title: { _type: "localeString", en: "Hygienic Products & Engineering Components | Midex", ar: "كتالوج المنتجات الصحية والمكونات الهندسية | ميديكس", de: "Hygienische Produkte & technische Komponenten | Midex" },
+      description: { _type: "localeText", en: "Browse Midex's catalog of sanitary valves, hygienic pumps, multi-effect stills, and ASME BPE fittings.", ar: "تصفح كتالوج ميديكس للمحابس الصحية والمضخات ومعدات التقطير ووصلات ASME BPE.", de: "Durchsuchen Sie den Midex-Katalog mit Sanitären Ventilen, Hygienepumpen und ASME BPE-Fittings." }
+    }
+  },
+  {
+    _id: "seo-entry-case-studies",
+    _type: "seoEntry",
+    routeKey: "case-studies",
+    seo: {
+      title: { _type: "localeString", en: "Case Studies | Midex Engineering Projects", ar: "دراسات الحالة | مشاريع هندسة ميدكس", de: "Fallstudien | Midex Engineering-Projekte" },
+      description: { _type: "localeText", en: "Explore Midex project case studies across pharmaceutical, food, and cosmetics facilities — purified water, CIP/SIP, piping, and turnkey delivery.", ar: "استكشف مشاريع ميدكس في مصانع الأدوية والأغذية ومستحضرات التجميل — مياه معالجة و CIP/SIP وأنابيب وتسليم متكامل.", de: "Entdecken Sie Midex-Projekte in Pharma-, Lebensmittel- und Kosmetikbetrieben — Reinwasser, CIP/SIP, Rohrleitungen und Turnkey-Lieferung." },
+      focusKeyword: { _type: "localeString", en: "pharmaceutical engineering case studies Egypt", ar: "دراسات حالة هندسة دوائية", de: "Pharma Engineering Fallstudien" }
+    }
+  },
+  {
+    _id: "seo-entry-blog",
+    _type: "seoEntry",
+    routeKey: "blog",
+    seo: {
+      title: { _type: "localeString", en: "Engineering Insights & News | Midex Blog", ar: "المدونة الهندسية والأخبار | ميديكس", de: "Einblicke in die Technik & Neuigkeiten | Midex Blog" },
+      description: { _type: "localeText", en: "Read the latest insights on hygienic process engineering, pharmaceutical water systems, and ASME BPE standards from Midex experts.", ar: "اقرأ أحدث المقالات والرؤى حول الهندسة الدوائية وأنظمة المياه ومعايير ASME BPE من خبراء ميديكس.", de: "Lesen Sie die neuesten Erkenntnisse zur hygienischen Verfahrenstechnik und zu pharmazeutischen Wassersystemen." }
+    }
+  },
+  {
+    _id: "seo-entry-contact",
+    _type: "seoEntry",
+    routeKey: "contact",
+    seo: {
+      title: { _type: "localeString", en: "Contact Midex | Pharmaceutical Engineering Requests", ar: "اتصل بنا | طلبات مشاريع الهندسة الدوائية | ميديكس", de: "Kontaktieren Sie Midex | Pharmazeutische Projekte" },
+      description: { _type: "localeText", en: "Get in touch with Midex for turnkey pharmaceutical projects, purified water systems, or hygienic piping installations in Egypt and the region.", ar: "تواصل مع ميديكس لمشاريع الأدوية، أنظمة المياه المنقاة، أو تركيبات المواسير الصحية في مصر والمنطقة.", de: "Kontaktieren Sie Midex für pharmazeutische Projekte, Reinwassersysteme oder Rohrleitungsinstallationen in Ägypten und der Region." }
+    }
   }
 ];
 
 async function run() {
-  console.log("Seeding SEO entries into Sanity...");
+  console.log("Seeding comprehensive SEO entries into Sanity...");
   const transaction = client.transaction();
 
   for (const entry of entries) {
